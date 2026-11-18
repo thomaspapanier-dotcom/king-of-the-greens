@@ -1,0 +1,11 @@
+# Claude / local tooling
+.claude/
+
+# Source pictures (includes licensed stock previews) — not published
+assets/originals/
+
+# Only for the claude.ai preview link
+publish/
+
+__pycache__/
+*.pyc
