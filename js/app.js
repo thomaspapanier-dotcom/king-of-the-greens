@@ -578,6 +578,91 @@ const FACEOFF_ART = `<span class="mode-art faceoff" aria-hidden="true">
   <img class="fo-card fo-r1" src="assets/duos/king-clubs.webp" alt=""><img class="fo-card fo-r2" src="assets/duos/king-spades.webp" alt="">
 </span>`;
 
+// ---------- Casual mode boxes: chilled-out Kings (drawn here, faint like the Ranked art) ----------
+// One King lounging in a striped deck chair, side view, facing right (flip = facing left).
+function loungeKing({ x, y, s = 1, flip = false, shirt = '#22325a', stripe = '#e03131', cap = '#fff', cigar = false, drink = 'beer' }) {
+  const glass = drink === 'beer'
+    ? '<rect x="13" y="19" width="7" height="10" rx="1" fill="#f0b429"/><ellipse cx="16.5" cy="19" rx="4" ry="1.8" fill="#fff"/>'
+    : drink === 'whiskey'
+      ? '<rect x="13" y="22" width="7" height="7" rx="1" fill="#e9f5ff"/><rect x="13.8" y="25" width="5.4" height="3.4" fill="#c97a1e" stroke="none"/>'
+      : '';
+  const arm = drink
+    ? `<path d="M-4 28 L10 36 L16 30" fill="none" stroke-width="7.5"/><path d="M-4 28 L10 36 L16 30" fill="none" stroke="${shirt}" stroke-width="5"/><circle cx="16" cy="30" r="3" fill="#f5d3b0"/>${glass}`
+    : `<path d="M-4 28 L16 41" fill="none" stroke-width="7.5"/><path d="M-4 28 L16 41" fill="none" stroke="${shirt}" stroke-width="5"/><circle cx="17" cy="41.5" r="3" fill="#f5d3b0"/>`;
+  const smoke = cigar
+    ? `<path d="M5 16 L17 14" stroke-width="3.6"/><path d="M5 16 L17 14" stroke="#8a5a2b" stroke-width="2.2"/><circle cx="17.6" cy="14" r="1.5" fill="#ff7a1a" stroke="none"/>
+       <path d="M18.5 11 q-3 -4 1 -7 q4 -3 0 -7" fill="none" stroke="#fff" stroke-width="1.4" opacity=".9"/>`
+    : '';
+  return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})" stroke="#1b1b1b" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M0 64 L-10 92 M40 64 L48 92 M-6 64 L44 92" fill="none" stroke="#6b4423" stroke-width="2.4"/>
+    <path d="M-24 2 L-12 0 L6 56 L-6 58 Z" fill="#fff"/>
+    <path d="M-20 1.3 L-2 57.3 M-16 .6 L2 56.6" stroke="${stripe}" stroke-width="2.2"/>
+    <path d="M-6 58 L44 58 L44 64 L-4 64 Z" fill="#fff"/>
+    <path d="M-4 61 L44 61" stroke="${stripe}" stroke-width="2"/>
+    <path d="M10 54 L34 50 L56 54" fill="none" stroke-width="12"/><path d="M10 54 L34 50 L56 54" fill="none" stroke="#f3ead2" stroke-width="9"/>
+    <ellipse cx="60" cy="54" rx="6" ry="4" fill="#fff"/>
+    <path d="M10 52 L-6 22" fill="none" stroke-width="20"/><path d="M10 52 L-6 22" fill="none" stroke="${shirt}" stroke-width="17"/>
+    <path d="M-4 19 L4 21 L-1 28 Z" fill="#fff" stroke-width="1"/>
+    <g fill="#fff" stroke-width="1.1"><circle cx="-16" cy="9" r="5"/><circle cx="-16" cy="17" r="5"/><circle cx="-12" cy="23" r="4.5"/></g>
+    <circle cx="-5" cy="10" r="9" fill="#f5d3b0"/>
+    <g fill="#fff" stroke-width="1.1"><circle cx="-2" cy="20" r="4.5"/><circle cx="4" cy="18" r="4"/></g>
+    <path d="M0 16 q3 -2 6 0" fill="none" stroke-width="1.2"/>
+    <path d="M7.5 9 l3 3 l-3 .6" fill="#f5d3b0" stroke-width="1"/>
+    <rect x="-1" y="6" width="9" height="4.5" rx="1.6" fill="#1b1b1b"/><path d="M-1 8 L-9 7" fill="none" stroke-width="1.2"/>
+    <path d="M-15 5 Q-12 -6 -2 -5 Q6 -4 6 3.5 Z" fill="${cap}"/>
+    <path d="M3 2.5 L15 5.5 L4 6 Z" fill="${cap}"/>
+    <path d="M-12 -3 L-13 -12 L-9 -8 L-6 -15 L-3 -8 L1 -12 L0 -3 Z" fill="#f2c53d"/>
+    <g fill="#f2c53d" stroke-width=".9"><circle cx="-13" cy="-12.5" r="1.5"/><circle cx="-6" cy="-15.5" r="1.6"/><circle cx="1" cy="-12.5" r="1.5"/></g>
+    ${smoke}
+    ${arm}
+  </g>`;
+}
+
+const casualBackdrop = `
+  <defs><linearGradient id="chill-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fcdf0"/><stop offset="1" stop-color="#e6f6ff"/></linearGradient></defs>
+  <g stroke="#1b1b1b" stroke-width="1.2" stroke-linejoin="round">
+    <rect width="360" height="140" fill="url(#chill-sky)" stroke="none"/>
+    <circle cx="330" cy="20" r="10" fill="#ffe27a"/>
+    <g fill="#fff"><path d="M40 26 a8 8 0 0 1 12 -7 a10 10 0 0 1 18 3 a7 7 0 0 1 3 13 h-31 a6 6 0 0 1 -2 -9 z"/><path d="M230 20 a7 7 0 0 1 11 -6 a9 9 0 0 1 16 3 a6 6 0 0 1 3 11 h-28 a5 5 0 0 1 -2 -8 z"/></g>
+    <path d="M0 74 Q60 58 130 70 T250 64 T360 70 V140 H0 Z" fill="#4f9a55"/>
+    <g fill="#2f7d3a"><circle cx="16" cy="68" r="9"/><circle cx="30" cy="64" r="11"/><circle cx="150" cy="66" r="9"/><circle cx="292" cy="62" r="10"/><circle cx="306" cy="66" r="8"/></g>
+    <path d="M0 92 Q180 80 360 90 V140 H0 Z" fill="#94da7e"/>
+    <g stroke="none" fill="#fff" opacity=".2"><path d="M0 110 Q180 100 360 108 V114 Q180 106 0 116 Z"/><path d="M0 126 Q180 118 360 124 V130 Q180 124 0 132 Z"/></g>
+    <line x1="210" y1="86" x2="210" y2="62" stroke-width="1.1"/><path d="M210.5 62 L219 65 L210.5 68 Z" fill="#e03131" stroke-width=".8"/>
+  </g>`;
+
+// Beach umbrella with a little table: golf balls in a bowl, an ashtray, a deck of cards.
+const umbrellaTable = (cx) => `<g stroke="#1b1b1b" stroke-width="1.4" stroke-linejoin="round">
+    <line x1="${cx}" y1="132" x2="${cx}" y2="34" stroke-width="2"/>
+    <path d="M${cx - 44} 46 Q${cx} 14 ${cx + 44} 46 Q${cx + 33} 41 ${cx + 22} 46 Q${cx + 11} 41 ${cx} 46 Q${cx - 11} 41 ${cx - 22} 46 Q${cx - 33} 41 ${cx - 44} 46 Z" fill="#fff"/>
+    <path d="M${cx - 22} 46 Q${cx - 14} 24 ${cx} 22 Q${cx - 6} 30 ${cx} 46 Q${cx - 11} 41 ${cx - 22} 46 Z M${cx + 22} 46 Q${cx + 14} 24 ${cx} 22 Q${cx + 6} 30 ${cx} 46 Q${cx + 11} 41 ${cx + 22} 46 Z" fill="#e03131"/>
+    <ellipse cx="${cx}" cy="112" rx="22" ry="5" fill="#b07a45"/>
+    <path d="M${cx - 16} 116 L${cx - 18} 132 M${cx + 16} 116 L${cx + 18} 132" fill="none" stroke="#6b4423" stroke-width="2.4"/>
+    <path d="M${cx - 14} 110 q6 6 12 0 z" fill="#c9a26b"/>
+    <g fill="#fff" stroke-width=".7"><circle cx="${cx - 10.5}" cy="108.6" r="2"/><circle cx="${cx - 6.5}" cy="108.2" r="2"/><circle cx="${cx - 8.5}" cy="106.4" r="2"/></g>
+    <ellipse cx="${cx + 9}" cy="110" rx="5" ry="1.8" fill="#3b3b3b"/><path d="M${cx + 9} 109 l7 -1.5" stroke="#8a5a2b" stroke-width="1.8"/>
+    <rect x="${cx - 2}" y="108.4" width="7" height="3.4" rx=".6" fill="#fff" stroke-width=".8" transform="rotate(-8 ${cx} 110)"/>
+  </g>`;
+
+// Head-to-Head (casual): two Kings kicked back under an umbrella, one with a cigar, one with a cold beer.
+const CHILL_H2H_ART = `<svg class="mode-art chill-scene" viewBox="0 0 360 140" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  ${casualBackdrop}
+  <line x1="244" y1="132" x2="252" y2="66" stroke="#1b1b1b" stroke-width="2.6"/><line x1="244" y1="132" x2="252" y2="66" stroke="#c9ced3" stroke-width="1.3"/>
+  ${umbrellaTable(182)}
+  ${loungeKing({ x: 104, y: 42, s: 0.9, shirt: '#22325a', stripe: '#1971c2', cigar: true, drink: 'whiskey' })}
+  ${loungeKing({ x: 262, y: 42, s: 0.9, flip: true, shirt: '#1f5f3a', stripe: '#e03131', drink: 'beer' })}
+</svg>`;
+
+// Duos (casual): two pairs of Kings lounging on either side of the umbrella, red team vs black team.
+const CHILL_DUOS_ART = `<svg class="mode-art chill-scene" viewBox="0 0 360 140" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  ${casualBackdrop}
+  ${umbrellaTable(180)}
+  ${loungeKing({ x: 34, y: 56, s: 0.72, shirt: '#c92a2a', stripe: '#e03131', drink: 'beer' })}
+  ${loungeKing({ x: 100, y: 52, s: 0.72, shirt: '#f3ead2', stripe: '#e03131', cigar: true, drink: null })}
+  ${loungeKing({ x: 260, y: 52, s: 0.72, flip: true, shirt: '#22325a', stripe: '#3b3b3b', drink: 'whiskey' })}
+  ${loungeKing({ x: 326, y: 56, s: 0.72, flip: true, shirt: '#2b2b2b', stripe: '#3b3b3b', cigar: true, drink: 'beer' })}
+</svg>`;
+
 /** Ranked or Casual → pick Head-to-Head / 1v1v1 or Duos. */
 function viewModes(kind) {
   const ranked = kind === 'ranked';
@@ -591,14 +676,14 @@ function viewModes(kind) {
   <main class="page">
     ${ranked ? `<p class="muted small">Ranked matches open once accounts are switched on. Until then, tap a mode to see how ranks and points will work.</p>` : ''}
     <div class="play-choices modes">
-      <button class="choice primary ${ranked ? 'art-mode' : ''}" ${h2h}>
-        ${ranked ? CROWNING_ART : ''}
+      <button class="choice primary art-mode" ${h2h}>
+        ${ranked ? CROWNING_ART : CHILL_H2H_ART}
         <span class="choice-ico">${ICON.person}</span>
         <span class="choice-title">Head-to-Head / 1v1v1</span>
         <span class="choice-sub">${ranked ? '2 or 3 players, everyone for themselves' : '1–3 players, everyone putts their own balls. Solo practice too.'}</span>
       </button>
-      <button class="choice ${ranked ? 'art-mode' : ''}" ${duos}>
-        ${ranked ? FACEOFF_ART : ''}
+      <button class="choice art-mode" ${duos}>
+        ${ranked ? FACEOFF_ART : CHILL_DUOS_ART}
         <span class="choice-ico">${ICON.people}</span>
         <span class="choice-title">Duos · 2 vs 2</span>
         <span class="choice-sub">${ranked ? 'Team up with any rank. Each of you gains or loses your own points.' : 'A foursome in two teams. Teammates split the balls, so it runs about twice as fast.'}</span>
