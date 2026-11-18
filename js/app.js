@@ -1887,17 +1887,19 @@ function viewStore() {
   const card = (it) => `<article class="shop-card rarity-${it.rarity}">
       <div class="shop-art">${it.art()}<span class="rarity-pill">${RARITY[it.rarity].label}</span></div>
       <div class="shop-info">
-        <div class="shop-type">${it.type === 'Hats' ? 'Hat' : it.type === 'Tops' ? 'Top' : 'Bottoms'} · ${it.colorway}</div>
+        <div class="shop-type">${{ Hats: 'Hat', Tops: 'Top', Bottoms: 'Bottoms', Logos: 'Logo' }[it.type]} · ${it.colorway}</div>
         <h3 class="shop-name">${it.name}</h3>
         <p class="shop-note">${it.note}</p>
-        <div class="shop-buy"><span class="shop-price">Free</span><button class="btn small-btn" disabled>Try on soon</button></div>
+        <div class="shop-buy"><span class="shop-price">Free</span><button class="btn small-btn" disabled>${it.displayOnly ? 'Display only' : 'Try on soon'}</button></div>
       </div>
     </article>`;
   // One section per brand, rarest pieces first inside each.
   const sections = Object.entries(BRANDS).map(([key, brand]) => {
     const list = items.filter((it) => it.brand === key).sort((a, b) => RARITY[b.rarity].rank - RARITY[a.rarity].rank);
     if (!list.length) return '';
-    const mark = key === '2cozy' ? cozyBadge(58, 'sb') : `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`;
+    const mark = key === '2cozy' ? cozyBadge(58, 'sb')
+      : key === 'kog' ? `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`
+      : `<img class="cozy-badge" src="assets/store/logos/${key}-1.webp" width="58" height="58" alt="" draggable="false">`;
     return `<section class="brand-head">${mark}<div><h2>${brand.name}</h2><p class="muted small">${brand.tagline}</p></div></section>
     <div class="shop-grid">${list.map(card).join('')}</div>`;
   }).join('');

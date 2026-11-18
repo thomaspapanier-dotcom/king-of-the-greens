@@ -911,3 +911,10 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .shop-card.rarity-very-rare, .shop-card.rarity-legendary { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: none; }
 .shop-card.rarity-very-rare .shop-info, .shop-card.rarity-legendary .shop-info { align-content: center; }
 .cozy-badge { display: block; flex: none; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45)); }
+
+/* Store: logo concepts */
+.shop-logo { width: 86%; height: 86%; object-fit: contain; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45)); animation: item-float 4.5s ease-in-out infinite; }
+.shop-card:nth-child(2n) .shop-logo { animation-delay: -1.6s; }
+@media (prefers-reduced-motion: reduce) { .shop-logo { animation: none; } }
+.rarity-concept .rarity-pill { background: #3d5a73; }
+.rarity-concept .shop-art { background: radial-gradient(circle at 50% 42%, #f6ecd8, #d8c9a8 75%); }

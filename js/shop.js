@@ -10,6 +10,18 @@ export const BRANDS = {
     name: '2Cozy Golf Co.',
     tagline: 'Stay cozy over every putt.',
   },
+  mccarthy: {
+    name: 'McCarthy Links',
+    tagline: 'Since the first green.',
+  },
+  stazz: {
+    name: 'Stazz Stance Co.',
+    tagline: 'It starts with your stance.',
+  },
+  quiggs: {
+    name: 'Quiggs Break Co.',
+    tagline: 'Read it. Roll it. Quigg it.',
+  },
 };
 
 // How hard an item is to get. Only Common and Very Rare are in use so far; the rest are ready.
@@ -19,6 +31,8 @@ export const RARITY = {
   rare: { label: 'Rare', rank: 2 },
   'very-rare': { label: 'Very Rare', rank: 3 },
   legendary: { label: 'Legendary', rank: 4 },
+  // Not a rarity: logo ideas on display while each brand picks its look.
+  concept: { label: 'Logo concept', rank: -1 },
 };
 
 /** 2Cozy Co. brand logo: the spade crest. `variant` picks the color to match a garment. */
@@ -206,4 +220,20 @@ export const ITEMS = [
   { id: '2c-baroque-shorts', brand: '2cozy', type: 'Bottoms', rarity: 'common', name: 'Royal Court Shorts', colorway: 'Baroque Print', note: 'Drawstring shorts in a gold baroque and zebra print, with the 2Cozy crest.', art: baroqueShorts },
 ];
 
-export const ITEM_TYPES = ['All', 'Hats', 'Tops', 'Bottoms'];
+// Potential logos for the three brands still choosing their look (display only, not wearable).
+const LOGO_STYLES = {
+  mccarthy: ['Shield crest', 'Cap profile', 'Round badge', 'Script banner'],
+  stazz: ['Shield crest', 'Cap profile', 'Round badge', 'Lounge banner'],
+  quiggs: ['Shield crest', 'Cap profile', 'Round badge', 'Course banner', 'Q monogram'],
+};
+const logoArt = (src) => () => `<img class="shop-logo" src="${src}" alt="" draggable="false">`;
+for (const [brand, styles] of Object.entries(LOGO_STYLES)) {
+  styles.forEach((style, i) => ITEMS.push({
+    id: `logo-${brand}-${i + 1}`, brand, type: 'Logos', rarity: 'concept', displayOnly: true,
+    name: `Potential ${BRANDS[brand].name.replace(' Co.', '')} logo ${i + 1}`, colorway: style,
+    note: `Logo idea ${i + 1} for ${BRANDS[brand].name}.`,
+    art: logoArt(`assets/store/logos/${brand}-${i + 1}.webp`),
+  }));
+}
+
+export const ITEM_TYPES = ['All', 'Hats', 'Tops', 'Bottoms', 'Logos'];
