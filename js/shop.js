@@ -227,6 +227,13 @@ const LOGO_STYLES = {
   quiggs: ['Shield crest', 'Cap profile', 'Round badge', 'Course banner', 'Q monogram'],
 };
 const logoArt = (src) => () => `<img class="shop-logo" src="${src}" alt="" draggable="false">`;
+
+// Legendary drops: one signature piece per house, from the user's product art.
+ITEMS.push(
+  { id: 'quiggs-raglan-7', brand: 'quiggs', type: 'Tops', rarity: 'legendary', name: 'Quiggs Break Raglan #7', colorway: 'Cream & Navy', note: 'Baseball-style raglan with the Q crest, Quiggs script and a navy #7.', art: logoArt('assets/store/items/quiggs-raglan-7.webp') },
+  { id: 'stazz-stance-beanie', brand: 'stazz', type: 'Hats', rarity: 'legendary', name: 'Stazz Stance Beanie', colorway: 'White, Black & Red', note: 'Chunky rib-knit beanie with the round Stazz Stance patch.', art: logoArt('assets/store/items/stazz-beanie-white.webp') },
+  { id: 'mccarthy-argyle-polo', brand: 'mccarthy', type: 'Tops', rarity: 'legendary', name: 'McCarthy Links Argyle Polo', colorway: 'Cream & Forest', note: 'Cream polo with an argyle band, a forest-green body and the tartan heart crest.', art: logoArt('assets/store/items/mccarthy-argyle-polo.webp') },
+);
 for (const [brand, styles] of Object.entries(LOGO_STYLES)) {
   styles.forEach((style, i) => ITEMS.push({
     id: `logo-${brand}-${i + 1}`, brand, type: 'Logos', rarity: 'concept', displayOnly: true,

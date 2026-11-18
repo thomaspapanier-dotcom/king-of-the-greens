@@ -1880,9 +1880,18 @@ function viewAvatar() {
 }
 
 // ---------- store ----------
+const HOUSES = ['2cozy', 'mccarthy', 'stazz', 'quiggs']; // the four brands, in suit order
+const houseMark = (key, size) => (key === '2cozy' ? cozyBadge(size, 'sb')
+  : key === 'kog' ? `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`
+  : `<img class="cozy-badge" src="assets/store/logos/${key}-1.webp" width="${size}" height="${size}" alt="" draggable="false">`);
+
 function viewStore() {
   const filter = ui.storeFilter || 'All';
-  const items = ITEMS.filter((it) => filter === 'All' || it.type === filter);
+  const house = ui.storeBrand || null;
+  const items = ITEMS.filter((it) => (filter === 'All' || it.type === filter) && (!house || it.brand === house));
+  const tiles = HOUSES.map((key) => `<button class="house-tile ${house === key ? 'on' : ''}" data-action="store-brand" data-v="${key}" aria-pressed="${house === key}">
+      ${houseMark(key, 52)}<span class="house-name">${BRANDS[key].name}</span><span class="house-count">${ITEMS.filter((it) => it.brand === key).length} items</span>
+    </button>`).join('');
   const chips = ITEM_TYPES.map((t) => `<button class="chip ${t === filter ? 'on' : ''}" data-action="store-filter" data-v="${t}" aria-pressed="${t === filter}">${t}</button>`).join('');
   const card = (it) => `<article class="shop-card rarity-${it.rarity}">
       <div class="shop-art">${it.art()}<span class="rarity-pill">${RARITY[it.rarity].label}</span></div>
@@ -1894,12 +1903,11 @@ function viewStore() {
       </div>
     </article>`;
   // One section per brand, rarest pieces first inside each.
-  const sections = Object.entries(BRANDS).map(([key, brand]) => {
+  const order = house ? [house] : ['kog', ...HOUSES];
+  const sections = order.map((key) => [key, BRANDS[key]]).map(([key, brand]) => {
     const list = items.filter((it) => it.brand === key).sort((a, b) => RARITY[b.rarity].rank - RARITY[a.rarity].rank);
     if (!list.length) return '';
-    const mark = key === '2cozy' ? cozyBadge(58, 'sb')
-      : key === 'kog' ? `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`
-      : `<img class="cozy-badge" src="assets/store/logos/${key}-1.webp" width="58" height="58" alt="" draggable="false">`;
+    const mark = houseMark(key, 58);
     return `<section class="brand-head">${mark}<div><h2>${brand.name}</h2><p class="muted small">${brand.tagline}</p></div></section>
     <div class="shop-grid">${list.map(card).join('')}</div>`;
   }).join('');
@@ -1913,8 +1921,10 @@ function viewStore() {
         <p class="muted small">Look around: items are on display while we build try-ons. Soon you'll dress your avatar, unlock limited drops and earn gear from challenges.</p>
       </div>
     </section>
+    <div class="section-head"><h2>Shop by brand</h2>${house ? '<button class="link" data-action="store-brand" data-v="">All brands</button>' : ''}</div>
+    <div class="house-grid">${tiles}</div>
     <div class="chips store-chips">${chips}</div>
-    ${sections}
+    ${sections || '<p class="muted">Nothing here yet.</p>'}
   </main>`;
 }
 
@@ -2723,6 +2733,10 @@ const actions = {
     ui.avatarTab = null;
     go(ui.params.back || 'home');
     if (changed) toast(`You're ${avatarById(pick).name}`);
+  },
+  'store-brand': (d) => {
+    ui.storeBrand = d.v && d.v !== ui.storeBrand ? d.v : null;
+    render();
   },
   'store-filter': (d) => {
     ui.storeFilter = d.v;
