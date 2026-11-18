@@ -27,18 +27,8 @@ function setPref(key, value) {
     /* storage blocked: preference lasts until reload */
   }
 }
-function applyTheme() {
-  const t = getPref('kog.theme', 'system');
-  const root = document.documentElement;
-  if (t === 'light' || t === 'dark') {
-    root.dataset.theme = t;
-    root.dataset.kogTheme = t;
-  } else if (root.dataset.kogTheme) {
-    delete root.dataset.theme;
-    delete root.dataset.kogTheme;
-  }
-}
-applyTheme();
+// KOG is dark-only: it looks best that way, so there's no light mode or theme setting.
+document.documentElement.dataset.theme = 'dark';
 const soundOn = () => getPref('kog.sound', 'on') === 'on';
 
 const $app = document.getElementById('app');
@@ -1902,14 +1892,10 @@ function viewRules() {
 }
 
 function viewSettings() {
-  const theme = getPref('kog.theme', 'system');
-  const seg = (v, label) => `<button class="seg-opt" data-action="set-theme" data-v="${v}" aria-pressed="${theme === v}">${label}</button>`;
   return `${topbar('Settings')}
   <main class="page">
     <div class="section-head"><h2>Account</h2></div>
     <button class="btn wide" data-action="nav" data-view="account">${A.currentUser() ? (ui.profile ? `@${esc(ui.profile.gamertag)}` : 'Finish setting up your account') : 'Sign in'}</button>
-    <div class="section-head"><h2>Appearance</h2></div>
-    <div class="seg-wide" role="group" aria-label="Appearance">${seg('light', 'Light')}${seg('dark', 'Dark')}${seg('system', 'Match phone')}</div>
     <div class="section-head"><h2>Sound</h2></div>
     <label class="switch-row">
       <input type="checkbox" id="sound" data-pref="sound" ${soundOn() ? 'checked' : ''}>
@@ -2479,11 +2465,6 @@ const actions = {
         go('home');
       },
     });
-  },
-  'set-theme': (d) => {
-    setPref('kog.theme', d.v);
-    applyTheme();
-    render();
   },
   'test-sound': () => playHawk(),
   'flash-close': () => {
