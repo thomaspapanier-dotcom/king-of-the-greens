@@ -508,9 +508,7 @@ input {
 .lag-scene .lag-bg { opacity: 0.3; }
 /* Quickplay: faint compass-rose green behind the words */
 .quick-choice { position: relative; overflow: hidden; isolation: isolate; }
-.compass-scene { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-.compass-scene .cmp-bg { opacity: 0.3; }
-.compass-scene .cmp-play { opacity: 0.42; }
+.compass-scene { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: url("../assets/quickplay-compass.webp") center 55% / cover no-repeat; opacity: 0.3; }
 .modes .choice { min-height: 132px; }
 
 /* Ranked mode boxes: faint pictures behind the words */
