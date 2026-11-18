@@ -33,7 +33,9 @@ function setPref(key, value) {
 document.documentElement.dataset.theme = 'dark';
 const soundOn = () => getPref('kog.sound', 'on') === 'on';
 /** The player's base avatar. Store items will live in their own locker, so they carry over when this changes. */
-const myAvatar = () => (avatarById(getPref('kog.avatar', '')) ? getPref('kog.avatar', '') : null);
+// Choosing an avatar is coming soon: until then everyone shows the default King.
+const AVATAR_PICKING = false;
+const myAvatar = () => (AVATAR_PICKING && avatarById(getPref('kog.avatar', '')) ? getPref('kog.avatar', '') : null);
 
 const $app = document.getElementById('app');
 const db = load();
@@ -442,9 +444,9 @@ function viewHome() {
     </section>`;
   }
   return `<main class="page home">
-    <div class="hero">
-      <img class="hero-card" src="${KOG_CARD}" alt="The four Kings of the Greens">
-      <h1>King of the Greens</h1>
+    <div class="hero hero-open">
+      <h1 class="hero-title"><span>King</span> <span class="ht-of">of the</span> <span>Greens</span></h1>
+      <div class="hero-kog" aria-label="K.O.G.">K.O.G.</div>
       <p>The putting game for 1–4 players</p>
     </div>
     ${profileBox()}
@@ -455,14 +457,19 @@ function viewHome() {
       <div class="play-choices">
         <button class="choice primary art-choice art-ranked" data-action="nav" data-view="ranked-modes" data-confetti="kings">
           <span class="choice-ico">${ICON.crown}</span>
-          <span class="choice-title">Ranked</span>
+          <span class="choice-title">KOG Ranked</span>
           <span class="choice-sub">Climb from the depths of Copper V to Putt Master</span>
         </button>
         <button class="choice art-choice art-casual" data-action="nav" data-view="casual-modes">
           <span class="choice-ico">${ICON.flag}</span>
-          <span class="choice-title">Casual</span>
+          <span class="choice-title">KOG Casual</span>
           <span class="choice-sub">Just for fun, solo or with friends</span>
         </button>
+        <button class="choice wide-choice rules-choice" data-action="nav" data-view="rules">
+          <span class="choice-ico">${ICON.card}</span>
+          <span class="choice-text"><span class="choice-title">How to play</span><span class="choice-sub">The rounds, the scoring and how the KOG sets the markers</span></span>
+        </button>
+        <div class="alt-head"><h2>Alternate games</h2></div>
         <button class="choice wide-choice quick-choice" data-action="quick-new">
           ${COMPASS_SCENE}
           <span class="choice-ico">${ICON.clock}</span>
@@ -483,7 +490,7 @@ function viewHome() {
       <button class="btn" data-action="nav" data-view="players">Players &amp; stats</button>
       <button class="btn" data-action="nav" data-view="history">Past games</button>
       <button class="btn ghost" data-action="nav" data-view="ranked">Ranked · preview</button>
-      <button class="btn ghost" data-action="nav" data-view="rules">How to play</button>
+      <button class="btn ghost" data-action="nav" data-view="avatar">Avatars</button>
       <button class="btn ghost" data-action="nav" data-view="settings">Settings</button>
     </div>
   </main>`;
@@ -579,7 +586,7 @@ function viewModes(kind) {
   const duos = ranked
     ? 'data-action="nav" data-view="ranked" data-back="ranked-modes"'
     : 'data-action="new-game" data-mode="coop"';
-  return `${topbar(ranked ? 'Ranked' : 'Casual')}
+  return `${topbar(ranked ? 'KOG Ranked' : 'KOG Casual')}
   <main class="page">
     ${ranked ? `<p class="muted small">Ranked matches open once accounts are switched on. Until then, tap a mode to see how ranks and points will work.</p>` : ''}
     <div class="play-choices modes">
@@ -1844,25 +1851,23 @@ function profileBox() {
       <span class="pb-main">${inner}<span class="pb-sub">${sub}</span></span>
       <span class="pb-go">${ICON.chevron}</span>
     </button>
-    <button class="pb-avatar-btn" data-action="nav" data-view="avatar" aria-label="Change your avatar">
+    <button class="pb-avatar-btn" data-action="nav" data-view="avatar" aria-label="See the avatars">
       ${avatarFigure(myAvatar() || DEFAULT_AVATAR, 92)}
-      <span class="pb-edit" aria-hidden="true">${ICON.pencil || "✎"}</span>
     </button>
   </div>`;
 }
 
 // ---------- avatars ----------
-/** Choose your avatar: on first launch, and any time after from the home screen or Settings. */
+/** Avatars: browse all 18 Kings and Queens. Choosing one is coming soon. */
 function viewAvatar() {
-  const first = !myAvatar();
-  const pick = ui.avatarPick || myAvatar() || DEFAULT_AVATAR;
+  const pick = ui.avatarPick || DEFAULT_AVATAR;
   const tab = ui.avatarTab || avatarById(pick).kind;
   const a = avatarById(pick);
   const tiles = AVATARS.filter((x) => x.kind === tab).map((x) => `<button class="av-tile ${x.id === pick ? 'on' : ''}" data-action="avatar-pick" data-v="${x.id}" aria-pressed="${x.id === pick}">
       ${avatarFigure(x.id, 104, { still: true })}
       <span class="av-tile-name">${x.name}</span>
     </button>`).join('');
-  return `${first ? `<header class="topbar"><div class="topbar-left"></div><h1>Choose your avatar</h1><div class="topbar-right"></div></header>` : topbar('Your avatar', ui.params.back || 'home')}
+  return `${topbar('Avatars', ui.params.back || 'home')}
   <main class="page avatar-page">
     <section class="av-stage">
       ${avatarFigure(pick, 230)}
@@ -1874,9 +1879,9 @@ function viewAvatar() {
       <button class="seg-opt" data-action="avatar-tab" data-v="queen" aria-pressed="${tab === 'queen'}">Queens</button>
     </div>
     <div class="av-grid">${tiles}</div>
-    <p class="muted small av-note">Change your avatar anytime. Anything you get from the store stays with you when you switch.</p>
+    <p class="muted small av-note">Picking your own King or Queen is coming soon. Anything you get from the store will stay with you when you switch.</p>
   </main>
-  <footer class="dock"><button class="btn primary big" data-action="avatar-save">${first ? `Play as ${a.name}` : pick === myAvatar() ? 'Done' : `Switch to ${a.name}`}</button></footer>`;
+  <footer class="dock"><button class="btn primary big" disabled>Choosing an avatar · coming soon</button></footer>`;
 }
 
 // ---------- store ----------
@@ -1896,7 +1901,7 @@ function viewStore() {
   const card = (it) => `<article class="shop-card rarity-${it.rarity}">
       <div class="shop-art">${it.art()}<span class="rarity-pill">${RARITY[it.rarity].label}</span></div>
       <div class="shop-info">
-        <div class="shop-type">${{ Hats: 'Hat', Tops: 'Top', Bottoms: 'Bottoms', Logos: 'Logo' }[it.type]} · ${it.colorway}</div>
+        <div class="shop-type">${{ Hats: 'Hat', Tops: 'Top', Bottoms: 'Bottoms', Accessories: 'Accessory', Logos: 'Logo' }[it.type]} · ${it.colorway}</div>
         <h3 class="shop-name">${it.name}</h3>
         <p class="shop-note">${it.note}</p>
         <div class="shop-buy"><span class="shop-price">Free</span><button class="btn small-btn" disabled>${it.displayOnly ? 'Display only' : 'Try on soon'}</button></div>
@@ -2129,7 +2134,7 @@ function viewSettings() {
   return `${topbar('Settings')}
   <main class="page">
     <div class="section-head"><h2>Avatar</h2></div>
-    <button class="btn wide av-settings-btn" data-action="nav" data-view="avatar" data-back="settings">${avatarFigure(myAvatar() || DEFAULT_AVATAR, 40, { still: true })}<span>Change your avatar</span></button>
+    <button class="btn wide av-settings-btn" data-action="nav" data-view="avatar" data-back="settings">${avatarFigure(myAvatar() || DEFAULT_AVATAR, 40, { still: true })}<span>Avatars · coming soon</span></button>
     <div class="section-head"><h2>Account</h2></div>
     <button class="btn wide" data-action="nav" data-view="account">${A.currentUser() ? (ui.profile ? `@${esc(ui.profile.gamertag)}` : 'Finish setting up your account') : 'Sign in'}</button>
     <div class="section-head"><h2>Sound</h2></div>
@@ -3005,7 +3010,6 @@ document.addEventListener('submit', (e) => {
 if (A.accountsAvailable()) A.handleRedirect().then(refreshProfile);
 new Image().src = KOG_CARD; // preload the King card so it flashes instantly
 if (activeGame() && activeGame().status !== 'done') ui.view = 'game';
-if (!myAvatar()) ui.view = 'avatar';
 const joinParam = new URLSearchParams(location.search).get('join');
 if (joinParam && SYNC) {
   history.replaceState(null, '', location.pathname);
