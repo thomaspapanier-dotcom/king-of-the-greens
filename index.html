@@ -13,9 +13,11 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" as="image" href="assets/splash.webp">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<div class="splash" id="splash" aria-hidden="true"><img src="assets/splash.webp" alt=""><h1 class="splash-title">King of the Greens</h1></div>
 <div id="app"></div>
 <noscript>King of the Greens needs JavaScript turned on.</noscript>
 <script type="module" src="js/app.js"></script>

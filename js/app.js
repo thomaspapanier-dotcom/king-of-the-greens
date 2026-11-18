@@ -2942,6 +2942,13 @@ if (SYNC) {
 try {
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('./sw.js').catch(() => {});
   preloadKings();
+  // Opening splash (markup in index.html, timing in CSS): tap to skip, and tidy it away when done.
+  const splash = document.getElementById('splash');
+  if (splash) {
+    const done = () => splash.remove();
+    splash.addEventListener('click', () => { splash.classList.add('out'); setTimeout(done, 400); }, { once: true });
+    setTimeout(done, 4200);
+  }
 } catch {
   /* not available here */
 }

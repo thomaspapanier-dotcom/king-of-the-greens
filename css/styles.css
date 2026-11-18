@@ -519,6 +519,22 @@ input {
 .fo-r1 { right: 4%; transform: translateY(-50%) rotate(8deg); }
 .fo-r2 { right: 17%; transform: translateY(-46%) rotate(-6deg); }
 
+/* Opening splash: the Kings crest pops up, the title fades in, then it all fades away (~3.8s).
+   Pure CSS so it works even before the app's code loads; a tap skips it. */
+.splash { position: fixed; inset: 0; z-index: 100; background: #0d2a1a; display: grid; place-items: center; overflow: hidden; animation: splash-out 0.6s ease 3.2s forwards; }
+.splash img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; animation: splash-pop 3.8s cubic-bezier(.2, .7, .3, 1) both; }
+.splash-title {
+  position: absolute; left: 16px; right: 16px; top: 66%; margin: 0; text-align: center;
+  font: 800 clamp(34px, 10vw, 54px)/1.05 Georgia, "Times New Roman", serif; letter-spacing: 0.01em;
+  color: #f5d76e; text-shadow: 0 2px 0 #6b4a00, 0 4px 18px rgba(0, 0, 0, 0.85), 0 0 28px rgba(245, 215, 110, 0.35);
+  opacity: 0; animation: splash-title 1s ease 0.7s forwards;
+}
+.splash.out { animation: splash-out 0.35s ease forwards; }
+@keyframes splash-pop { from { transform: scale(1.08); opacity: 0; } 15% { opacity: 1; } to { transform: scale(1); opacity: 1; } }
+@keyframes splash-title { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes splash-out { to { opacity: 0; visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { .splash img { animation: none; } }
+
 /* The putting-green photo behind every screen, washed out so text stays easy to read */
 #app::before {
   content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
