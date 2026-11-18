@@ -503,7 +503,7 @@ input {
 /* Ranked mode boxes: faint pictures behind the words */
 .choice.art-mode { position: relative; overflow: hidden; isolation: isolate; }
 .mode-art { position: absolute; z-index: -1; pointer-events: none; }
-.mode-art.crowning { right: -4px; top: 44%; transform: translateY(-50%); height: 112%; width: auto; opacity: 0.3; }
+.mode-art.h2h-banner { inset: 0; background: url("../assets/h2h-banner.webp") center 40% / cover no-repeat; opacity: 0.28; }
 .mode-art.faceoff { inset: 0; opacity: 0.2; }
 .fo-card { position: absolute; top: 50%; height: 88%; width: auto; border-radius: 5px; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45); }
 .fo-l1 { left: 4%; transform: translateY(-50%) rotate(-8deg); }

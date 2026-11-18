@@ -480,32 +480,8 @@ function viewHome() {
 }
 
 // Faint pictures behind the Ranked mode boxes.
-// Head-to-Head: two hands lowering a King's crown onto the winner's head.
-const CROWNING_ART = `<svg class="mode-art crowning" viewBox="0 0 200 130" aria-hidden="true">
-  <g class="crown-art" stroke="#1b1b1b" stroke-width="2" stroke-linejoin="round">
-    <path d="M66 66 L64 32 L83 50 L100 22 L117 50 L136 32 L134 66 Z" fill="#f2c53d"/>
-    <rect x="64" y="64" width="72" height="16" rx="3" fill="#f2c53d"/>
-    <circle cx="64" cy="30" r="4.5" fill="#f2c53d"/><circle cx="100" cy="20" r="5" fill="#f2c53d"/><circle cx="136" cy="30" r="4.5" fill="#f2c53d"/>
-    <circle cx="82" cy="72" r="3.4" fill="#e03131"/><circle cx="100" cy="72" r="3.8" fill="#1971c2"/><circle cx="118" cy="72" r="3.4" fill="#e03131"/>
-    <path d="M72 58 L128 58" stroke="#fff" stroke-opacity=".6" stroke-width="1.4"/>
-  </g>
-  <g class="hand-art" stroke="#1b1b1b" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
-    <g id="kog-hand">
-      <path d="M-16 -6 L12 -26 L54 50 L34 62 Z" fill="#ffffff"/>
-      <path d="M30 58 L52 44 L58 54 L36 68 Z" fill="#f2c53d"/>
-      <ellipse cx="52" cy="71" rx="12" ry="14" fill="#ffe0bd"/>
-      <rect x="54" y="60.5" width="21" height="6" rx="3" fill="#ffe0bd"/>
-      <rect x="55" y="66.8" width="22" height="6" rx="3" fill="#ffe0bd"/>
-      <rect x="55" y="73.1" width="21" height="6" rx="3" fill="#ffe0bd"/>
-      <rect x="54" y="79.4" width="18" height="6" rx="3" fill="#ffe0bd"/>
-      <rect x="50" y="52" width="20" height="7" rx="3.5" fill="#ffe0bd" transform="rotate(18 50 55)"/>
-    </g>
-    <use href="#kog-hand" transform="translate(200 0) scale(-1 1)"/>
-  </g>
-  <g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".8">
-    <path d="M84 96 Q100 102 116 96"/><path d="M90 106 Q100 110 110 106"/><path d="M95 115 Q100 117 105 115"/>
-  </g>
-</svg>`;
+// Head-to-Head: the user's banner of two Kings on the green, faint behind the words.
+const CROWNING_ART = '<span class="mode-art h2h-banner" aria-hidden="true"></span>';
 
 // Duos: a face-off by color, using the user's golf-brand Kings exactly as drawn.
 // Red Kings (hearts, diamonds) on the left, black Kings (spades, clubs) on the right.
