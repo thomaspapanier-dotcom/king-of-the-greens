@@ -808,3 +808,23 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .cr-bar { position: relative; height: 8px; margin: 14px 8px 2px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
 .cr-bar span { position: absolute; inset: 0 auto 0 0; border-radius: 99px; background: linear-gradient(90deg, var(--over), var(--gold), var(--under)); }
 .cr-note { text-align: center; margin: 10px 0 0; }
+
+/* Text on the picture boxes: a soft shadow so it reads over the art */
+.choice .choice-title, .choice .choice-sub, .choice .choice-fine { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95), 0 0 6px rgba(0, 0, 0, 0.75), 0 0 14px rgba(0, 0, 0, 0.45); }
+/* the light-green boxes (Compass Putt, Lag 21) have dark letters, so they get a light halo instead */
+.choice.wide-choice .choice-title, .choice.wide-choice .choice-sub, .choice.wide-choice .choice-fine { text-shadow: 0 0 2px #fff, 0 0 5px rgba(255, 255, 255, 0.9), 0 0 12px rgba(255, 255, 255, 0.6); }
+.choice-paren { font-size: 13px; font-weight: 600; opacity: 0.85; white-space: nowrap; }
+
+/* Ranked: View all ranks */
+.ranks-btn { margin-top: 10px; gap: 8px; }
+.ranks-pop { top: calc(env(safe-area-inset-top, 0px) + 16px); max-height: calc(100dvh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); grid-template-rows: auto minmax(0, 1fr) auto auto; }
+.ranks-head { display: flex; justify-content: space-between; align-items: baseline; padding-right: 6px; }
+.ranks-list { list-style: none; margin: 0; padding: 0; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--line); border-radius: 12px; }
+.ranks-list li { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 6px 12px; border-bottom: 1px solid var(--line); }
+.ranks-list li:last-child { border-bottom: 0; }
+.ranks-list .rank-badge { justify-self: center; }
+.rc-name { font-weight: 700; font-size: 15px; }
+.rc-name em { font-style: normal; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: #1a1405; background: var(--gold); padding: 1px 6px; border-radius: 99px; margin-left: 4px; }
+.rc-elo { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 14px; }
+.ranks-list li.me { background: color-mix(in srgb, var(--gold) 16%, transparent); box-shadow: inset 3px 0 0 var(--gold); }
+.ranks-list li.tier-master .rc-name { color: #ff7cc8; }

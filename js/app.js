@@ -112,6 +112,7 @@ function commit() {
   render();
 }
 function go(view, params = {}) {
+  ui.ranksChart = false;
   ui.view = view;
   ui.params = params;
   render();
@@ -451,7 +452,7 @@ function viewHome() {
         <button class="choice primary art-choice art-ranked" data-action="nav" data-view="ranked-modes" data-confetti="kings">
           <span class="choice-ico">${ICON.crown}</span>
           <span class="choice-title">Ranked</span>
-          <span class="choice-sub">Climb from Copper to Putt Master</span>
+          <span class="choice-sub">Climb from the depths of Copper V to Putt Master</span>
         </button>
         <button class="choice art-choice art-casual" data-action="nav" data-view="casual-modes">
           <span class="choice-ico">${ICON.flag}</span>
@@ -461,7 +462,7 @@ function viewHome() {
         <button class="choice wide-choice quick-choice" data-action="quick-new">
           ${COMPASS_SCENE}
           <span class="choice-ico">${ICON.clock}</span>
-          <span class="choice-text"><span class="choice-title">Quickplay</span><span class="choice-sub">Compass Putt: A putting game that runs under 20 minutes; Play solo or head-to-head</span><span class="choice-fine">*Does not affect rank</span></span>
+          <span class="choice-text"><span class="choice-title">Compass Putt <span class="choice-paren">(Quickest putting game)</span></span><span class="choice-sub">A putting game that runs under 20 minutes; Play solo or head-to-head</span><span class="choice-fine">*Does not affect rank</span></span>
         </button>
         <button class="choice wide-choice lag-choice" data-action="lag-new">
           <span class="choice-ico ico-red">${ICON.target}</span>
@@ -625,7 +626,25 @@ function currentRankPanel() {
     </div>
     ${above ? `<div class="cr-bar" role="img" aria-label="${toUp} Elo to ${above.name}"><span style="width:${pos.toFixed(0)}%"></span></div>` : ''}
     ${example ? '<p class="muted small cr-note">Sign in and play ranked to see your own.</p>' : ''}
-  </section>`;
+  </section>
+  <button class="btn wide ranks-btn" data-action="ranks-open">${rankBadge(RK.RANKS[RK.RANKS.length - 1], 22)} View all ranks</button>`;
+}
+
+/** Window listing every rank, top to bottom, with the Elo range for each; yours is highlighted. */
+function ranksChartHtml() {
+  const pf = A.accountsAvailable() && A.currentUser() ? ui.profile : null;
+  const mine = pf ? pf.ranked_rank_index : RK.rankFor(1447).index;
+  const range = (r) => (r.min === -Infinity ? `Under ${RK.RANKS[1].min}` : r.max === Infinity ? `${r.min}+` : `${r.min}–${r.max}`);
+  const rows = RK.RANKS.slice().reverse().map((r) => `<li class="${r.index === mine ? 'me' : ''} tier-${r.tier}">
+      ${rankBadge(r, 30)}<span class="rc-name">${r.name}${r.index === mine ? ` <em>${pf ? 'you' : 'example'}</em>` : ''}</span><span class="rc-elo">${range(r)}</span>
+    </li>`).join('');
+  return `<div class="modal-backdrop" data-action="ranks-close"></div>
+  <div class="modal ranks-pop" role="dialog" aria-modal="true" aria-labelledby="ranks-title">
+    <div class="ranks-head"><h2 id="ranks-title">All ranks</h2><span class="muted small">Elo</span></div>
+    <ol class="ranks-list">${rows}</ol>
+    <p class="muted small">Everyone starts at ${RK.START_MMR} Elo, and the ${RK.PLACEMENT_MATCHES} placement matches move you fast from there. You drop a rank only once you're ${RK.DEMOTION_BUFFER} Elo under its floor.</p>
+    <button class="btn primary" data-action="ranks-close">Close</button>
+  </div>`;
 }
 
 function addPlayerForm(disabled) {
@@ -1168,7 +1187,7 @@ function viewPlayer() {
         ${p.photo ? `<button class="btn ghost small-btn" data-action="remove-photo" data-pid="${p.id}">Remove</button>` : ''}
       </div>
     </section>
-    ${qs.sessions ? `<p class="muted small">Includes ${qs.sessions} Quick Play ${qs.sessions === 1 ? 'session' : 'sessions'}${qs.wins ? ` (${qs.wins} head-to-head ${qs.wins === 1 ? 'win' : 'wins'})` : ''}.</p>` : ''}
+    ${qs.sessions ? `<p class="muted small">Includes ${qs.sessions} Compass Putt ${qs.sessions === 1 ? 'session' : 'sessions'}${qs.wins ? ` (${qs.wins} head-to-head ${qs.wins === 1 ? 'win' : 'wins'})` : ''}.</p>` : ''}
     ${(() => {
       const ls = L.lagStats(db.lag, idsOf(p));
       return ls.games ? `<p class="muted small">${L.GAME_NAME}: ${ls.wins} ${ls.wins === 1 ? 'win' : 'wins'} in ${ls.games} ${ls.games === 1 ? 'game' : 'games'}, ${ls.holed} of ${ls.balls} lag putts holed.</p>` : '';
@@ -1216,7 +1235,7 @@ function quickResumeCard() {
   const done = q.status === 'done';
   return `<section class="card resume">
     <div>
-      <div class="eyebrow">${done ? 'Quick Play · finished' : 'Quick Play in progress'}</div>
+      <div class="eyebrow">${done ? 'Compass Putt · finished' : 'Compass Putt in progress'}</div>
       <div class="resume-title">Compass · ${esc(qTitle(q))}</div>
       <div class="muted small">${distList(q.dists)}</div>
     </div>
@@ -1243,7 +1262,7 @@ function viewQuickSetup() {
   const players = d.pids.length;
   const balls = n * 12;
   const ready = n && players;
-  return `${topbar('Quick Play')}
+  return `${topbar('Compass Putt')}
   <main class="page">
     <p><b>Compass.</b> Put 4 tees around one hole: north, east, south and west. Putt 3 balls from each tee. Every ball is a birdie ball: −1 if it drops, E in two, +1 in three.</p>
     ${compassFigure(d.dists[0] || 'M', 0)}
@@ -1360,7 +1379,7 @@ function viewQuick() {
   else if (Q.teeDone(q, d, t) && nextTee >= 0) dock = `<button class="btn primary big" data-action="quick-tee" data-t="${nextTee}">Next: ${Q.TEES[nextTee]} tee ${ICON.chevron}</button>`;
   else if (Q.distDone(q, d) && nextDist >= 0) dock = `<button class="btn primary big" data-action="quick-tab" data-i="${nextDist}">Next: ${R.DISTANCES[q.dists[nextDist]].name} ${ICON.chevron}</button>`;
   else dock = `<button class="btn big" disabled>${atTee} of ${order.length * Q.BALLS_PER_TEE} balls at this tee</button>`;
-  return `${topbar(solo ? 'Compass' : 'Compass · head-to-head')}
+  return `${topbar(solo ? 'Compass Putt' : 'Compass Putt · head-to-head')}
   <main class="page">
     ${q.dists.length > 1 ? `<div class="quick-tabs">${distTabs}</div>` : ''}
     <div class="quick-tabs tee-tabs">${teeTabs}</div>
@@ -1404,7 +1423,7 @@ function viewQuickResult(q) {
     const rows = q.dists
       .map((d) => `<li><span class="board-name">${dn(d)} <span class="muted small">${q.tees[pid][d].flat().filter((x) => x === 1).length} of ${q.tees[pid][d].flat().length} made</span></span>${scoreTag(Q.distScore(q, pid, d))}</li>`)
       .join('');
-    return `${topbar('Compass')}
+    return `${topbar('Compass Putt')}
     <main class="page">
       <section class="result-big">
         <div class="eyebrow">${esc(q.players[0].name)} · ${distList(q.dists)}</div>
@@ -1926,7 +1945,7 @@ function viewHistory() {
   return `${topbar('Past games')}
   <main class="page">
     ${done.length ? `<div class="list">${rows}</div>` : '<p class="muted">Finished games show up here.</p>'}
-    ${quick.length ? `<div class="section-head"><h2>Quick Play</h2></div><div class="list">${qrows}</div>` : ''}
+    ${quick.length ? `<div class="section-head"><h2>Compass Putt</h2></div><div class="list">${qrows}</div>` : ''}
     ${lagHistory()}
   </main>`;
 }
@@ -2002,7 +2021,7 @@ function viewRules() {
     </table>
     <p>Whoever misses holes out their own ball. In the opening toss all four putt: the closest player’s team is the KOG, and the furthest player’s team putts first. The app shows whose ball is whose, and each player’s stats count only the balls they putted.</p>
 
-    <h2>9 · Quick Play: Compass</h2>
+    <h2>9 · Compass Putt</h2>
     <p>A putting session in under 20 minutes. Put 4 tees around one hole, north, east, south and west, at ${dn('S')}, ${dn('M')} or ${dn('L')} distance (or any mix). Putt 3 balls from each tee. Every ball is a birdie ball: −1 if it drops, E in two, +1 in three. The putts count toward your stats.</p>
     <p><b>Head-to-head (2–4 players):</b> a toss decides who putts first at the first tee, and the order rotates every tee so everyone leads equally. Each player putts all 3 balls before the next. Lowest total wins; a tie goes to the same toss tie-breaker as the main game.</p>
 
@@ -2156,7 +2175,7 @@ function render() {
     // One window at a time: a change of KOG first, then the order for the next round.
     (ui.kogFlash
       ? `<div class="kog-flash" data-action="flash-close" role="img" aria-label="You are the new King of the Greens"><img src="${KOG_CARD}" alt=""><div class="kog-flash-text">New KOG!</div></div>`
-      : ui.kogPopup ? kogPopupHtml(ui.kogPopup) : ui.orderPopup ? orderPopupHtml(ui.orderPopup) : '') +
+      : ui.kogPopup ? kogPopupHtml(ui.kogPopup) : ui.orderPopup ? orderPopupHtml(ui.orderPopup) : ui.ranksChart ? ranksChartHtml() : '') +
     (ui.dialog ? dialogHtml(ui.dialog) : '');
   if (ui.view === 'rules' || ui.view === 'game') mountIllustrations($app);
 }
@@ -2459,7 +2478,7 @@ const actions = {
   },
   'quick-delete': () =>
     ask({
-      title: 'Delete this Quick Play session?',
+      title: 'Delete this Compass Putt session?',
       text: 'Its putts won’t count toward stats.',
       confirmLabel: 'Delete',
       danger: true,
@@ -2601,6 +2620,16 @@ const actions = {
   },
   'order-close': () => {
     ui.orderPopup = null;
+    render();
+  },
+  'ranks-open': () => {
+    ui.ranksChart = true;
+    render();
+    const me = document.querySelector('.ranks-list .me');
+    if (me) me.scrollIntoView({ block: 'center' });
+  },
+  'ranks-close': () => {
+    ui.ranksChart = false;
     render();
   },
   'show-order': () => {
@@ -2775,6 +2804,7 @@ document.addEventListener('change', onBind);
 document.addEventListener('keydown', (e) => {
   if (ui.kogPopup && !ui.dialog && e.key === 'Escape') return actions['kog-close']();
   if (ui.orderPopup && !ui.dialog && e.key === 'Escape') return actions['order-close']();
+  if (ui.ranksChart && e.key === 'Escape') return actions['ranks-close']();
   if (!ui.dialog) return;
   if (e.key === 'Escape') actions['dialog-cancel']();
   else if (e.key === 'Enter' && e.target.id === 'dlg-input') {
