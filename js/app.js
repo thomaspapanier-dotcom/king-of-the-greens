@@ -2068,18 +2068,6 @@ function viewRules() {
   const fig = figures();
   return `${topbar('How to play')}
   <main class="page prose">
-    <p class="lede">7 rounds on the practice green, built for warming up before your tee time. Lowest total at the end wins.</p>
-    <table class="stats rules-table format-table">
-      <thead><tr><th>Round</th><th>Sets</th></tr></thead>
-      <tbody>
-        <tr><th>1, 3, 5</th><td>One ${dn('S')}, one ${dn('M')}, one ${dn('L')}</td></tr>
-        <tr><th>2</th><td>All ${dn('S')}</td></tr>
-        <tr><th>4</th><td>All ${dn('M')}</td></tr>
-        <tr><th>6</th><td>All ${dn('L')}</td></tr>
-        <tr><th>7</th><td>🦅 Eagle round (last)</td></tr>
-      </tbody>
-    </table>
-
     <h2>1 · Opening toss</h2>
     <p>Each round is run by the <b>current King of the Greens (KOG)</b>, who sets the markers. Nobody is KOG yet, so a toss decides it: whoever ends up closest to the hole is KOG for Round 1.</p>
     <p class="muted small">Tap <b>Next</b> to step through it.</p>
