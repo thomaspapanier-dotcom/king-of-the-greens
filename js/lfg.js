@@ -9,7 +9,7 @@ export const rankByName = (name) => RK.RANKS.find((r) => r.name === name);
 
 // ---------- example players ----------
 const P = (tag, rank, pct) => ({ tag, rank: rankByName(rank), pct });
-export const ME = { tag: 'You', rank: RK.rankFor(1447), pct: 52, me: true }; // same example as the Current rank panel
+export const ME = { tag: 'thetommyjohn', rank: RK.rankFor(1447), pct: 52, me: true }; // same example as the Current rank panel
 const PEOPLE = {
   pap: P('Pap_Daddy_Kush', 'Silver II', 54),
   chex: P('xXChexterXx', 'Gold IV', 57),
@@ -27,7 +27,7 @@ const PEOPLE = {
 /** [rank badge] gamertag [win % ball] 54% — the nameplate used on every ranked card. */
 export function plate(p, { badge = 20, ball = 15, check = false } = {}) {
   const level = WR.levelFor(p.pct, 100);
-  return `<span class="lf-plate${p.me ? ' me' : ''}">${rankBadge(p.rank, badge)}<b>${esc(p.tag)}</b>${WR.winBall(level, ball)}<span class="lf-pct" style="color:${level.light}">${p.pct}%</span>${check ? '<span class="check" title="Verified">✓</span>' : ''}</span>`;
+  return `<span class="lf-plate${p.me ? ' me' : ''}">${rankBadge(p.rank, badge)}<b>${esc(p.tag)}</b>${WR.winBall(level, ball)}${check ? '<span class="check" title="Verified">✓</span>' : ''}</span>`;
 }
 
 // ---------- courses near the user (example distances) ----------
@@ -137,9 +137,9 @@ export function challengeHtml(post, st) {
     body = `<p class="lf-cap">You both settle on a date and time inside their window: ${esc(post.when)}.</p>
       ${phone('Match chat', `
         <div class="lf-chat">
-          <div class="lf-msg me"><b>You</b> proposed <span class="lf-time">Sat · 8:30 AM</span></div>
+          <div class="lf-msg me"><b>${esc(ME.tag)}</b> proposed <span class="lf-time">Sat · 8:30 AM</span></div>
           <div class="lf-msg"><b>${esc(lead.tag)}</b> suggested <span class="lf-time">Sat · 9:00 AM</span><em>${esc(post.note || 'Works better for me')}</em></div>
-          <div class="lf-msg me"><b>You</b> accepted <span class="lf-time">Sat · 9:00 AM</span> ✓</div>
+          <div class="lf-msg me"><b>${esc(ME.tag)}</b> accepted <span class="lf-time">Sat · 9:00 AM</span> ✓</div>
           <div class="lf-msg"><b>${esc(lead.tag)}</b> accepted ✓</div>
         </div>`)}
       <button class="btn primary big wide" data-action="lfg-step" data-v="3">Both accepted: lock the match 🔒</button>`;
@@ -250,6 +250,20 @@ const tap = '<span class="mk-tap" aria-hidden="true"></span>';
 const mkRow = (p, right = '', cls = '') => `<div class="mk-row ${cls}">${plate(p, { badge: 18, ball: 13 })}<span class="mk-right">${right}</span></div>`;
 const KING = (suit) => `<img class="mk-king" src="assets/duos/king-${suit}.webp" alt="">`;
 
+/** A nameplate with tiny arrows labelling the rank badge, the KOG username and the win % ball. */
+function annotatedPlate(p) {
+  const level = WR.levelFor(p.pct, 100);
+  return `<div class="mk-anno">
+    <span class="an-lbl" style="grid-area:r1">Rank</span><span class="an-arr" style="grid-area:a1">↓</span>
+    <span class="an-item" style="grid-area:i1">${rankBadge(p.rank, 28)}</span>
+    <b class="an-name" style="grid-area:i2">${esc(p.tag)}</b>
+    <span class="an-arr" style="grid-area:a2">↑</span><span class="an-lbl" style="grid-area:r2">KOG username</span>
+    <span class="an-lbl" style="grid-area:r3">Win %</span><span class="an-arr" style="grid-area:a3">↓</span>
+    <span class="an-item" style="grid-area:i3">${WR.winBall(level, 20)}</span>
+    <span class="check an-check" style="grid-area:i4" title="Verified">✓</span>
+  </div>`;
+}
+
 function slides1v1() {
   const friend = PEOPLE.mac;
   const [a, b] = RK.rate1v1(rating(ME), rating(friend), 1);
@@ -262,7 +276,7 @@ function slides1v1() {
         <div class="mk-card"><div class="mk-label">Phone number</div><div class="mk-input">(352) ••• ••47</div>
           <div class="mk-label">Enter the 6-digit code</div><div class="mk-code">${'482916'.split('').map((d) => `<span>${d}</span>`).join('')}</div></div>
         <div class="mk-banner ok">✓ Phone-verified · Ranked unlocked</div>
-        <div class="mk-card">${mkRow(ME, '<span class="check">✓</span>')}</div>`,
+        <div class="mk-card"><div class="mk-label">Your nameplate</div>${annotatedPlate(ME)}</div>`,
     },
     {
       title: 'Start a ranked match', text: `On the practice green, open <b>KOG Ranked → Head-to-Head</b> and invite ${friend.tag}.`,
@@ -342,7 +356,7 @@ function slidesDuos() {
           <div class="mk-row lead"><span class="mk-tname red">${KING('hearts')} Red Kings</span><b class="mk-score">−3</b></div>
           <div class="mk-row"><span class="mk-tname black">${KING('spades')} Black Kings</span><b class="mk-score">−1</b></div></div>
         <div class="mk-card"><div class="mk-label">This set</div>
-          <div class="mk-balls"><span class="b">You · Birdie</span><span class="p">JimmBurg · Par</span></div></div>
+          <div class="mk-balls"><span class="b">thetommyjohn · Birdie</span><span class="p">JimmBurg · Par</span></div></div>
         <div class="mk-banner">✓ Black Kings confirmed round 5</div>`,
     },
     {

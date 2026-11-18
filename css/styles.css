@@ -1166,3 +1166,16 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .hw-caption h3 { font-size: 16px; }
 .mk-row .lf-plate { flex: 1 1 auto; overflow: hidden; }
 .mk-row .lf-plate b { min-width: 0; }
+
+/* How it works slide 1: labelled nameplate */
+.mk-anno { display: grid; justify-content: center; align-items: center; column-gap: 6px; row-gap: 1px; padding: 2px 0;
+  grid-template-areas: "r1 . r3 ." "a1 . a3 ." "i1 i2 i3 i4" ". a2 . ." ". r2 . ."; }
+.an-lbl { font-size: 9.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #f5d76e; text-align: center; white-space: nowrap; }
+.an-arr { font-size: 11px; line-height: 1; font-weight: 900; color: #f5d76e; text-align: center; }
+.an-item { display: grid; place-items: center; }
+.an-name { font-size: 13px; font-weight: 800; color: #f5d76e; justify-self: center; }
+.an-check { justify-self: start; }
+/* How it works / Find Match boxes on the Ranked screen: crisp letters (no white glow) */
+.choice.wide-choice.rk-menu-btn .choice-title, .choice.wide-choice.rk-menu-btn .choice-sub { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85); }
+.choice.wide-choice.rk-menu-btn .choice-title { color: #fff; }
+.choice.wide-choice.lfg-btn .choice-title { color: #f5d76e; }
