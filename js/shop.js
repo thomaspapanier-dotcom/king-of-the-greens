@@ -1,5 +1,5 @@
 // The KOG Store. For now every item is free and on display only (no try-ons yet).
-import { COZY_WEAR } from './cozy-wear.js';
+import { COZY_WEAR, KOG_WEAR } from './cozy-wear.js';
 
 // Items are drawn here as cartoon art. Each brand is built up slowly; 2Cozy Golf Co. is first.
 
@@ -185,34 +185,8 @@ function stripedTee() {
   </svg>`;
 }
 
-// White knit pullover with a navy collar and the Four Houses card print on the chest.
-function fourHousesPullover() {
-  const id = 'it8';
-  const body = 'M70 34 L130 34 L168 56 L178 128 L160 132 L152 82 L148 172 Q100 182 52 172 L48 82 L40 132 L22 128 L32 56 Z';
-  const knit = Array.from({ length: 16 }, (_, k) => `<path d="M${30 + k * 10} 40 L${30 + k * 10} 180" stroke="#d9d4c8" stroke-width=".8" opacity=".55"/>`).join('');
-  return `<svg viewBox="0 0 200 200" aria-hidden="true"><defs>${shade(id)}<clipPath id="${id}c"><path d="${body}"/></clipPath>
-      <clipPath id="${id}p"><rect x="68" y="76" width="64" height="80" rx="4"/></clipPath>
-      <linearGradient id="${id}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ece7dc"/></linearGradient></defs>
-    ${floor}
-    <path d="${body}" fill="url(#${id}w)"/>
-    <g clip-path="url(#${id}c)">
-      ${knit}
-      <path d="M48 160 Q100 170 152 160 L152 190 L48 190 Z" fill="#e4dfd3"/>
-      <path d="M50 164 Q100 174 150 164 M50 170 Q100 180 150 170" stroke="#cfc9bc" stroke-width="1" fill="none"/>
-      <path d="M20 120 L42 124 L40 140 L18 136 Z M158 124 L180 120 L182 136 L160 140 Z" fill="#e4dfd3"/>
-    </g>
-    <rect x="66" y="74" width="68" height="84" rx="5" fill="#c9a227"/>
-    <image href="assets/store/four-houses-print.webp" x="68" y="76" width="64" height="80" preserveAspectRatio="xMidYMid slice" clip-path="url(#${id}p)"/>
-    <g clip-path="url(#${id}c)"><rect width="200" height="200" fill="url(#${id}sh)"/></g>
-    <path d="M70 34 L100 64 L82 70 L66 40 Z" fill="#1b2a4a" stroke="#0f1a30" stroke-width="2"/>
-    <path d="M130 34 L100 64 L118 70 L134 40 Z" fill="#1b2a4a" stroke="#0f1a30" stroke-width="2"/>
-    <path d="M70 37 L99 62 M130 37 L101 62" stroke="#f3ead2" stroke-width="1.2" opacity=".7"/>
-    <path d="${body}" fill="none" stroke="#9a9488" stroke-width="2.4" stroke-linejoin="round"/>
-  </svg>`;
-}
-
 export const ITEMS = [
-  { id: 'kog-four-houses-pullover', brand: 'kog', type: 'Tops', rarity: 'very-rare', name: 'Four Houses Pullover', colorway: 'White & Navy', note: 'White knit pullover with a navy collar, printed with all four house Kings.', art: fourHousesPullover },
+  ...KOG_WEAR,
   { id: '2c-argyle-vest', brand: '2cozy', type: 'Tops', rarity: 'common', name: 'Clubhouse Argyle Vest', colorway: 'Forest & Sunflower', note: 'Knit V-neck vest with the 2Cozy spade crest on the chest.', art: argyleVest },
   { id: '2c-collar-pullover', brand: '2cozy', type: 'Tops', rarity: 'common', name: 'Range Collar Pullover', colorway: 'Deep Teal', note: 'Fleece pullover with a white collar, a teal 2Cozy crest and script.', art: collarPullover },
   { id: '2c-hooded-bomber', brand: '2cozy', type: 'Tops', rarity: 'common', name: 'Back Nine Hooded Bomber', colorway: 'Cocoa & Cream', note: 'Snap-front bomber with a cream hood, striped cuffs and a cocoa 2Cozy crest.', art: hoodedBomber },

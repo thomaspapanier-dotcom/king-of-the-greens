@@ -303,3 +303,76 @@ export const COZY_WEAR = [
   item('cap-cream-spade', 'Hats', 'common', 'Spade Cap', 'Cream', 'Clean cream cap with a single black spade.', capSpade),
   item('cap-black-cord', 'Hats', 'common', 'Gold Script Corduroy Cap', 'Black & Gold', 'Black corduroy cap with gold 2Cozy script.', capGoldCord),
 ];
+
+// ---------- K.O.G. Originals (drawn from the user's designs) ----------
+const SUITS = {
+  spade: SPADE,
+  heart: 'M50 94C22 72 5 55 5 33 5 17 17 6 30 6c9 0 16 5 20 13 4-8 11-13 20-13 13 0 25 11 25 27 0 22-17 39-45 61Z',
+  diamond: 'M50 3Q68 28 93 50 68 72 50 97 32 72 7 50 32 28 50 3Z',
+  club: 'M50 6a21 21 0 0 1 17 33 21 21 0 1 1-12 34q2 13 13 21H32q11-8 13-21a21 21 0 1 1-12-34A21 21 0 0 1 50 6Z',
+};
+const suitAt = (kind, x, y, s, fill, extra = '') => `<path d="${SUITS[kind]}" transform="translate(${x - s / 2} ${y - s / 2}) scale(${s / 100})" fill="${fill}" ${extra}/>`;
+const RED = '#e3141e';
+const INK = '#141414';
+
+// All-over suit print on a black crewneck: rows of white spades and clubs, red hearts and diamonds.
+function suitPrintCrewneck() {
+  const id = 'kw1';
+  const tile = `<pattern id="${id}p" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="translate(2 -4)">
+      <rect width="40" height="40" fill="${INK}"/>
+      ${suitAt('heart', 10, 10, 13, RED)}${suitAt('club', 30, 10, 13, '#fff')}
+      ${suitAt('spade', 10, 30, 13, '#fff')}${suitAt('diamond', 30, 30, 13, RED)}
+    </pattern>`;
+  return wear(id, {
+    fill: `url(#${id}p)`, defs: tile, outline: '#000',
+    inner: `${HEM('#0e0e0e')}<path d="M46 162 Q100 172 154 162 M46 168 Q100 178 154 168 M46 174 Q100 184 154 174" stroke="#262626" stroke-width="1.2" fill="none"/>${CUFFS('#0e0e0e')}`,
+    over: CREW_NECK('#0e0e0e', '#000', '#262626'),
+  });
+}
+
+// White tee: crossed irons with the four suits around them.
+function crossedClubsTee() {
+  const id = 'kw2';
+  const iron = (flip) => {
+    const t = flip ? 'transform="translate(200 0) scale(-1 1)"' : '';
+    return `<g ${t}>
+      <path d="M78 128 L122 66" stroke="${INK}" stroke-width="3.4" stroke-linecap="round"/>
+      <path d="M78 128 L122 66" stroke="#fff" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+      <path d="M74 134 L84 120" stroke="${INK}" stroke-width="7" stroke-linecap="round"/>
+      <path d="M75 131 L83 121 M77 133 L85 123" stroke="#fff" stroke-width=".8" opacity=".8"/>
+      <path d="M120 69 L127 53 Q130 47 137 49 Q142 51 140 56 L125 71 Z" fill="#fff" stroke="${INK}" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M127 60 L137 53 M126 63 L136 56 M125 66 L134 59" stroke="${INK}" stroke-width="1"/>
+    </g>`;
+  };
+  return wear(id, {
+    body: TEE, fill: '#fbfaf6', outline: '#9a968c',
+    inner: `<path d="M18 84 L44 92 L42 98 L16 90 Z M156 92 L182 84 L184 90 L158 98 Z" fill="#ecebe5"/>
+      ${iron(false)}${iron(true)}
+      <circle cx="100" cy="97" r="4" fill="#fff" stroke="${INK}" stroke-width="2"/><circle cx="100" cy="97" r="1.4" fill="${INK}"/>
+      ${suitAt('diamond', 100, 64, 20, RED)}${suitAt('spade', 72, 97, 22, INK)}${suitAt('club', 128, 97, 22, INK)}${suitAt('heart', 100, 128, 22, RED)}`,
+    over: CREW_NECK('#eceae3', '#00000030'),
+  });
+}
+
+// White long sleeve with the four suits in a row, each with a cracked, lava-style finish.
+function crackedSuitsLongSleeve() {
+  const id = 'kw3';
+  const row = [['spade', 62, INK, RED], ['heart', 87, RED, '#8f1515'], ['club', 113, INK, RED], ['diamond', 138, RED, '#8f1515']];
+  const cracks = (x, y) => `M${x - 11} ${y - 5} l5 3 l3 -4 l5 5 l4 -1 l3 3 M${x - 9} ${y + 6} l4 -3 l4 4 l5 -1 l3 3 M${x + 1} ${y - 12} l-2 5 l3 4 l-3 5 l2 4 M${x + 6} ${y + 2} l4 5 l-1 4 M${x - 4} ${y - 1} l-4 -4`;
+  const suits = row.map(([kind, x, fill, crack], i) => `<clipPath id="${id}s${i}"><path d="${SUITS[kind]}" transform="translate(${x - 12} 74) scale(.24)"/></clipPath>
+      ${suitAt(kind, x, 86, 24, fill)}
+      <path d="${cracks(x, 86)}" clip-path="url(#${id}s${i})" stroke="${crack}" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>`).join('');
+  return wear(id, {
+    fill: '#fbfaf6', outline: '#9a968c',
+    inner: `${HEM('#efeee8')}${CUFFS('#efeee8')}
+      <path d="M18 122 L43 126 M157 126 L182 122" stroke="#d8d6ce" stroke-width="1.2"/>
+      ${suits}`,
+    over: CREW_NECK('#eceae3', '#00000030'),
+  });
+}
+
+export const KOG_WEAR = [
+  { id: 'kog-suit-print-crewneck', brand: 'kog', type: 'Tops', rarity: 'very-rare', name: 'Full House Crewneck', colorway: 'Black, Red & White', note: 'Black crewneck covered in all four suits: white spades and clubs, red hearts and diamonds.', art: suitPrintCrewneck },
+  { id: 'kog-cracked-suits-ls', brand: 'kog', type: 'Tops', rarity: 'rare', name: 'Cracked Suits Long Sleeve', colorway: 'White, Black & Red', note: 'White long sleeve with the four suits across the chest in a cracked, lava-style finish.', art: crackedSuitsLongSleeve },
+  { id: 'kog-crossed-clubs-tee', brand: 'kog', type: 'Tops', rarity: 'uncommon', name: 'Crossed Irons Tee', colorway: 'White', note: 'White tee with two crossed irons and the four suits around them.', art: crossedClubsTee },
+];
