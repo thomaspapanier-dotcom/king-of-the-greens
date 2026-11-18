@@ -451,7 +451,8 @@ function viewHome() {
           <span class="choice-title">Casual</span>
           <span class="choice-sub">Just for fun, solo or with friends</span>
         </button>
-        <button class="choice wide-choice" data-action="quick-new">
+        <button class="choice wide-choice quick-choice" data-action="quick-new">
+          ${COMPASS_SCENE}
           <span class="choice-ico">${ICON.clock}</span>
           <span class="choice-text"><span class="choice-title">Quickplay</span><span class="choice-sub">Compass Putt: A putting game that runs under 20 minutes; Play solo or head-to-head</span><span class="choice-fine">*Does not affect rank</span></span>
         </button>
@@ -470,6 +471,62 @@ function viewHome() {
     </div>
   </main>`;
 }
+
+// A mini crowned King, side view, putting toward the right. Shared by the Lag 21 and Quickplay boxes.
+const MINI_KING_PARTS = `
+      <path d="M24 108 L33 108 L31 141 L23 141 Z" fill="#f3ead2"/>
+      <path d="M33 108 L44 110 L46 141 L37 141 Z" fill="#f3ead2"/>
+      <path d="M19 141 h13 q3 0 3 3 v1.5 h-16 z" fill="#fff"/>
+      <path d="M35 141 h13 q3 0 3 3 v1.5 h-16 z" fill="#fff"/>
+      <path d="M21 111 L45 113 L59 90 L40 79 Z" fill="#1f5f3a"/>
+      <path d="M45 82 L52 86 L49 92 Z" fill="#fff" stroke-width="1"/>
+      <path d="M41 98 L49 94 M37 104 L46 101" stroke="#f2c53d" stroke-width="1.4" fill="none"/>
+      <path d="M52 86 Q60 97 57 106" fill="none" stroke-width="7.5"/>
+      <path d="M52 86 Q60 97 57 106" fill="none" stroke="#1f5f3a" stroke-width="4.8"/>
+      <g fill="#fff" stroke-width="1.1"><circle cx="53" cy="74" r="4.2"/><circle cx="52" cy="80" r="4"/><circle cx="55" cy="85.5" r="3.8"/><circle cx="61" cy="86" r="3.8"/><circle cx="66.5" cy="83.5" r="3.2"/></g>
+      <circle cx="60.5" cy="76" r="7.4" fill="#f5d3b0"/>
+      <g fill="#fff" stroke-width="1.1"><circle cx="61" cy="84" r="3.2"/><circle cx="65.5" cy="82" r="2.8"/></g>
+      <path d="M62 80 q2.5 -1.6 5 0" fill="none" stroke-width="1.2"/>
+      <circle cx="64" cy="75" r=".9" fill="#1b1b1b" stroke="none"/>
+      <path d="M66.5 76 l2.4 2.6 l-2.6 .6" fill="#f5d3b0" stroke-width="1"/>
+      <path d="M51.5 73 Q53 62 62 62.5 Q69.5 63.5 69 71 Z" fill="#fff"/>
+      <path d="M66 70 L77 74.5 L67 73.5 Z" fill="#fff"/>
+      <path d="M53.5 64 L52.5 55.5 L56.5 59.5 L59.5 52.5 L62.5 59.5 L66.5 55.5 L66 64 Z" fill="#f2c53d"/>
+      <g fill="#f2c53d" stroke-width=".9"><circle cx="52.5" cy="55" r="1.4"/><circle cx="59.5" cy="52" r="1.5"/><circle cx="66.5" cy="55" r="1.4"/></g>
+      <line x1="55" y1="103" x2="64" y2="141" stroke="#1b1b1b" stroke-width="3.2"/>
+      <line x1="55" y1="103" x2="64" y2="141" stroke="#c9ced3" stroke-width="1.6"/>
+      <line x1="54.5" y1="101" x2="56.5" y2="110" stroke="#1b1b1b" stroke-width="3.4"/>
+      <rect x="59" y="139.5" width="12" height="4" rx="1.2" fill="#dfe3e7"/>
+      <circle cx="56.5" cy="106.5" r="3.6" fill="#f5d3b0"/>`;
+const miniKing = (transform) => `<g class="mini-king" transform="${transform}" stroke="#1b1b1b" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">${MINI_KING_PARTS}</g>`;
+
+// Quickplay box: a faint top-down putting green on a compass rose. Tees at N, E, S and W,
+// three balls at each, dotted putts into the hole, and a mini King putting from the West tee.
+const COMPASS_SCENE = `<svg class="compass-scene" viewBox="0 0 360 116" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <g class="cmp-bg" stroke="#1b1b1b" stroke-width="1.2" stroke-linejoin="round">
+    <rect width="360" height="116" fill="#6fbf62" stroke="none"/>
+    <g fill="#2f7d3a"><circle cx="20" cy="16" r="14"/><circle cx="40" cy="8" r="11"/><circle cx="14" cy="100" r="15"/><circle cx="38" cy="110" r="10"/><circle cx="352" cy="12" r="12"/><circle cx="354" cy="106" r="13"/></g>
+    <g fill="#3f9a48" stroke="none" opacity=".7"><circle cx="24" cy="12" r="6"/><circle cx="18" cy="96" r="7"/><circle cx="350" cy="104" r="6"/></g>
+    <path d="M120 96 q14 -12 30 -4 q10 8 -4 14 q-18 6 -26 -10 z" fill="#f1dfa4"/>
+    <ellipse cx="252" cy="58" rx="104" ry="56" fill="#5fae5a"/>
+    <ellipse cx="252" cy="58" rx="97" ry="51" fill="#94da7e"/>
+    <g stroke="none" fill="#fff" opacity=".18"><ellipse cx="252" cy="58" rx="80" ry="40"/></g>
+    <circle cx="252" cy="58" r="35" fill="none" stroke="#b8860b" stroke-width="1.4"/>
+    <g stroke="#b8860b" stroke-width="1"><line x1="252.0" y1="25.0" x2="252.0" y2="19.5"/><line x1="260.5" y1="26.1" x2="261.6" y2="22.3"/><line x1="268.5" y1="29.4" x2="270.5" y2="26.0"/><line x1="275.3" y1="34.7" x2="278.2" y2="31.8"/><line x1="280.6" y1="41.5" x2="284.0" y2="39.5"/><line x1="283.9" y1="49.5" x2="287.7" y2="48.4"/><line x1="285.0" y1="58.0" x2="290.5" y2="58.0"/><line x1="283.9" y1="66.5" x2="287.7" y2="67.6"/><line x1="280.6" y1="74.5" x2="284.0" y2="76.5"/><line x1="275.3" y1="81.3" x2="278.2" y2="84.2"/><line x1="268.5" y1="86.6" x2="270.5" y2="90.0"/><line x1="260.5" y1="89.9" x2="261.6" y2="93.7"/><line x1="252.0" y1="91.0" x2="252.0" y2="96.5"/><line x1="243.5" y1="89.9" x2="242.4" y2="93.7"/><line x1="235.5" y1="86.6" x2="233.5" y2="90.0"/><line x1="228.7" y1="81.3" x2="225.8" y2="84.2"/><line x1="223.4" y1="74.5" x2="220.0" y2="76.5"/><line x1="220.1" y1="66.5" x2="216.3" y2="67.6"/><line x1="219.0" y1="58.0" x2="213.5" y2="58.0"/><line x1="220.1" y1="49.5" x2="216.3" y2="48.4"/><line x1="223.4" y1="41.5" x2="220.0" y2="39.5"/><line x1="228.7" y1="34.7" x2="225.8" y2="31.8"/><line x1="235.5" y1="29.4" x2="233.5" y2="26.0"/><line x1="243.5" y1="26.1" x2="242.4" y2="22.3"/></g>
+    <g stroke="#1b1b1b" stroke-width=".9"><path d="M252 58 L252.0 52.0 L269.7 40.3 Z" fill="#fff3c4"/><path d="M252 58 L258.0 58.0 L269.7 40.3 Z" fill="#d9b44a"/><path d="M252 58 L258.0 58.0 L269.7 75.7 Z" fill="#fff3c4"/><path d="M252 58 L252.0 64.0 L269.7 75.7 Z" fill="#d9b44a"/><path d="M252 58 L252.0 64.0 L234.3 75.7 Z" fill="#fff3c4"/><path d="M252 58 L246.0 58.0 L234.3 75.7 Z" fill="#d9b44a"/><path d="M252 58 L246.0 58.0 L234.3 40.3 Z" fill="#fff3c4"/><path d="M252 58 L252.0 52.0 L234.3 40.3 Z" fill="#d9b44a"/><path d="M252 58 L246.3 52.3 L252.0 16.0 Z" fill="#f2c53d"/><path d="M252 58 L257.7 52.3 L252.0 16.0 Z" fill="#b8860b"/><path d="M252 58 L257.7 52.3 L294.0 58.0 Z" fill="#f2c53d"/><path d="M252 58 L257.7 63.7 L294.0 58.0 Z" fill="#b8860b"/><path d="M252 58 L257.7 63.7 L252.0 100.0 Z" fill="#f2c53d"/><path d="M252 58 L246.3 63.7 L252.0 100.0 Z" fill="#b8860b"/><path d="M252 58 L246.3 63.7 L210.0 58.0 Z" fill="#f2c53d"/><path d="M252 58 L246.3 52.3 L210.0 58.0 Z" fill="#b8860b"/></g>
+  </g>
+  <g class="cmp-play">
+    <g fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="1.5 3.5" stroke-linecap="round"><path d="M252 13 L252 58"/><path d="M338 58 L252 58"/><path d="M252 103 L252 58"/><path d="M166 58 L252 58"/></g>
+    <g stroke="#1b1b1b" stroke-width=".8"><rect x="243" y="11.2" width="4" height="3.6" rx="1" fill="#e03131"/><rect x="257" y="11.2" width="4" height="3.6" rx="1" fill="#e03131"/><rect x="336.2" y="49" width="3.6" height="4" rx="1" fill="#e03131"/><rect x="336.2" y="63" width="3.6" height="4" rx="1" fill="#e03131"/><rect x="243" y="101.2" width="4" height="3.6" rx="1" fill="#e03131"/><rect x="257" y="101.2" width="4" height="3.6" rx="1" fill="#e03131"/><rect x="164.2" y="49" width="3.6" height="4" rx="1" fill="#e03131"/><rect x="164.2" y="63" width="3.6" height="4" rx="1" fill="#e03131"/></g>
+    <g fill="#fff" stroke="#1b1b1b" stroke-width=".7"><circle cx="248.5" cy="13" r="1.7"/><circle cx="252" cy="13" r="1.7"/><circle cx="255.5" cy="13" r="1.7"/><circle cx="338" cy="54.5" r="1.7"/><circle cx="338" cy="58" r="1.7"/><circle cx="338" cy="61.5" r="1.7"/><circle cx="248.5" cy="103" r="1.7"/><circle cx="252" cy="103" r="1.7"/><circle cx="255.5" cy="103" r="1.7"/><circle cx="166" cy="54.5" r="1.7"/><circle cx="166" cy="58" r="1.7"/><circle cx="166" cy="61.5" r="1.7"/></g>
+    <circle cx="252" cy="58" r="4" fill="#1b1b1b"/>
+    <line x1="252" y1="58" x2="252" y2="34" stroke="#1b1b1b" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="252" y1="58" x2="252" y2="34" stroke="#f4f4f4" stroke-width="1" stroke-linecap="round"/>
+    <path d="M252.5 34 L266 38.5 L252.5 43 Z" fill="#e03131" stroke="#1b1b1b" stroke-width=".8" stroke-linejoin="round"/>
+    <g font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="11" fill="#b8860b" stroke="#1b1b1b" stroke-width=".5"><text x="267" y="17" text-anchor="middle">N</text><text x="338" y="48" text-anchor="middle">E</text><text x="267" y="107" text-anchor="middle">S</text><text x="166" y="48" text-anchor="middle">W</text></g>
+    ${miniKing('translate(139 9) scale(.42)')}
+  </g>
+</svg>`;
 
 // Lag 21 box: a faint scenic putting green, with a mini King on the far left lagging
 // a putt toward the pin. His white ball is halfway there; two colored balls already sit by the hole.
@@ -506,32 +563,7 @@ const LAG_SCENE = `<svg class="lag-scene" viewBox="0 0 360 150" preserveAspectRa
     <path d="M324.5 90 L342 95.5 L324.5 101 Z" fill="#e03131" stroke="#1b1b1b" stroke-width=".9" stroke-linejoin="round"/>
     <circle cx="307" cy="141" r="3.6" fill="#f5c400" stroke="#1b1b1b" stroke-width=".9"/>
     <circle cx="339" cy="144.5" r="3.6" fill="#f2641c" stroke="#1b1b1b" stroke-width=".9"/>
-    <g class="mini-king" transform="translate(-2 55) scale(.62)" stroke="#1b1b1b" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
-      <path d="M24 108 L33 108 L31 141 L23 141 Z" fill="#f3ead2"/>
-      <path d="M33 108 L44 110 L46 141 L37 141 Z" fill="#f3ead2"/>
-      <path d="M19 141 h13 q3 0 3 3 v1.5 h-16 z" fill="#fff"/>
-      <path d="M35 141 h13 q3 0 3 3 v1.5 h-16 z" fill="#fff"/>
-      <path d="M21 111 L45 113 L59 90 L40 79 Z" fill="#1f5f3a"/>
-      <path d="M45 82 L52 86 L49 92 Z" fill="#fff" stroke-width="1"/>
-      <path d="M41 98 L49 94 M37 104 L46 101" stroke="#f2c53d" stroke-width="1.4" fill="none"/>
-      <path d="M52 86 Q60 97 57 106" fill="none" stroke-width="7.5"/>
-      <path d="M52 86 Q60 97 57 106" fill="none" stroke="#1f5f3a" stroke-width="4.8"/>
-      <g fill="#fff" stroke-width="1.1"><circle cx="53" cy="74" r="4.2"/><circle cx="52" cy="80" r="4"/><circle cx="55" cy="85.5" r="3.8"/><circle cx="61" cy="86" r="3.8"/><circle cx="66.5" cy="83.5" r="3.2"/></g>
-      <circle cx="60.5" cy="76" r="7.4" fill="#f5d3b0"/>
-      <g fill="#fff" stroke-width="1.1"><circle cx="61" cy="84" r="3.2"/><circle cx="65.5" cy="82" r="2.8"/></g>
-      <path d="M62 80 q2.5 -1.6 5 0" fill="none" stroke-width="1.2"/>
-      <circle cx="64" cy="75" r=".9" fill="#1b1b1b" stroke="none"/>
-      <path d="M66.5 76 l2.4 2.6 l-2.6 .6" fill="#f5d3b0" stroke-width="1"/>
-      <path d="M51.5 73 Q53 62 62 62.5 Q69.5 63.5 69 71 Z" fill="#fff"/>
-      <path d="M66 70 L77 74.5 L67 73.5 Z" fill="#fff"/>
-      <path d="M53.5 64 L52.5 55.5 L56.5 59.5 L59.5 52.5 L62.5 59.5 L66.5 55.5 L66 64 Z" fill="#f2c53d"/>
-      <g fill="#f2c53d" stroke-width=".9"><circle cx="52.5" cy="55" r="1.4"/><circle cx="59.5" cy="52" r="1.5"/><circle cx="66.5" cy="55" r="1.4"/></g>
-      <line x1="55" y1="103" x2="64" y2="141" stroke="#1b1b1b" stroke-width="3.2"/>
-      <line x1="55" y1="103" x2="64" y2="141" stroke="#c9ced3" stroke-width="1.6"/>
-      <line x1="54.5" y1="101" x2="56.5" y2="110" stroke="#1b1b1b" stroke-width="3.4"/>
-      <rect x="59" y="139.5" width="12" height="4" rx="1.2" fill="#dfe3e7"/>
-      <circle cx="56.5" cy="106.5" r="3.6" fill="#f5d3b0"/>
-    </g>
+    ${miniKing('translate(-2 55) scale(.62)')}
   </g>
 </svg>`;
 
