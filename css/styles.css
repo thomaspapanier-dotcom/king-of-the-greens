@@ -483,6 +483,7 @@ input {
 
 /* Home: black rims on every box except Ranked (gold) */
 .home .choice:not(.art-ranked), .home .profile-box, .home .btn, .home .card { border: 2px solid #111; }
+.home .profile-box { border-color: #7c3aed; } /* "Your gamertag" box: purple rim */
 
 /* Quickplay and Lag 21: a lighter, fresher green than Ranked */
 :root { --fresh: #bfe8c4; --fresh-line: #8fd09b; --fresh-ink: #12301c; }
