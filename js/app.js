@@ -458,15 +458,7 @@ function viewHome() {
         <button class="choice wide-choice lag-choice" data-action="lag-new">
           <span class="choice-ico ico-red">${ICON.target}</span>
           <span class="choice-text"><span class="choice-title">${L.GAME_NAME}</span><span class="choice-sub">Practice your lag putting in this cornhole-style game. First to 21 wins; Play 1v1 or 2v2</span></span>
-          <svg class="lag-roll" viewBox="0 0 120 24" aria-hidden="true">
-            <path d="M8 19 Q40 15 70 17 T103 19" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="1.5 3" stroke-linecap="round" opacity=".5"/>
-            <ellipse cx="56" cy="21.6" rx="3.4" ry=".9" fill="#000" opacity=".15"/>
-            <circle cx="56" cy="17.6" r="3.2" fill="#fff" stroke="#3b3b3b" stroke-width=".8"/>
-            <circle cx="55" cy="16.6" r=".5" fill="#9aa" /><circle cx="57" cy="17.4" r=".5" fill="#9aa"/><circle cx="55.6" cy="18.8" r=".5" fill="#9aa"/>
-            <ellipse cx="108" cy="20" rx="5.5" ry="1.8" fill="#1b1b1b"/>
-            <line x1="108" y1="20" x2="108" y2="2.5" stroke="#3b3b3b" stroke-width="1" stroke-linecap="round"/>
-            <path d="M108 2.5 L117 5.5 L108 8.5 Z" fill="#e03131"/>
-          </svg>
+          ${LAG_SCENE}
         </button>
       </div>
       ${SYNC ? '<button class="btn" data-action="open-join">Join a game</button>' : ''}
@@ -478,6 +470,70 @@ function viewHome() {
     </div>
   </main>`;
 }
+
+// Lag 21 box: a faint scenic putting green, with a mini King on the far left lagging
+// a putt toward the pin. His white ball is halfway there; two colored balls already sit by the hole.
+const LAG_SCENE = `<svg class="lag-scene" viewBox="0 0 360 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="lag-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fcdf0"/><stop offset="1" stop-color="#e6f6ff"/></linearGradient>
+  </defs>
+  <g class="lag-bg" stroke="#1b1b1b" stroke-width="1.2" stroke-linejoin="round">
+    <rect width="360" height="150" fill="url(#lag-sky)" stroke="none"/>
+    <circle cx="300" cy="22" r="11" fill="#ffe27a"/>
+    <g fill="#fff"><path d="M28 30 a9 9 0 0 1 14 -8 a11 11 0 0 1 20 3 a8 8 0 0 1 4 15 h-36 a7 7 0 0 1 -2 -10 z"/><path d="M150 22 a8 8 0 0 1 12 -7 a10 10 0 0 1 18 3 a7 7 0 0 1 3 13 h-31 a6 6 0 0 1 -2 -9 z"/><path d="M222 40 a7 7 0 0 1 11 -6 a9 9 0 0 1 16 3 a6 6 0 0 1 3 11 h-28 a5 5 0 0 1 -2 -8 z"/></g>
+    <path d="M0 80 Q50 62 110 74 T230 68 T360 74 V150 H0 Z" fill="#4f9a55"/>
+    <g fill="#2f7d3a">
+      <circle cx="18" cy="74" r="9"/><circle cx="30" cy="70" r="11"/><circle cx="44" cy="75" r="8"/>
+      <circle cx="120" cy="72" r="8"/><circle cx="131" cy="68" r="10"/>
+      <circle cx="205" cy="70" r="9"/><circle cx="218" cy="66" r="11"/><circle cx="231" cy="71" r="8"/>
+      <circle cx="330" cy="72" r="9"/><circle cx="344" cy="68" r="11"/>
+    </g>
+    <path d="M0 94 Q90 80 180 90 T360 86 V150 H0 Z" fill="#79c167"/>
+    <ellipse cx="96" cy="97" rx="24" ry="4.5" fill="#f1dfa4"/>
+    <path d="M262 96 q14 -5 30 0 q-14 5 -30 0 z" fill="#8fd0f0"/>
+    <path d="M-10 150 V112 Q180 98 370 110 V150 Z" fill="#94da7e"/>
+    <g stroke="none" fill="#fff" opacity=".22"><path d="M-10 124 Q180 112 370 122 V130 Q180 120 -10 132 Z"/><path d="M-10 140 Q180 130 370 138 V146 Q180 138 -10 148 Z"/></g>
+  </g>
+  <g class="lag-play">
+    <path d="M44 143 Q110 140 172 141" fill="none" stroke="#fff" stroke-width="1.6" stroke-dasharray="1.5 4" stroke-linecap="round" opacity=".9"/>
+    <g stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".9"><path d="M163 137 h-7"/><path d="M161 141 h-9"/><path d="M163 145 h-7"/></g>
+    <ellipse cx="183" cy="145" rx="4" ry="1" fill="#000" opacity=".2"/>
+    <circle cx="182" cy="141" r="3.8" fill="#fff" stroke="#1b1b1b" stroke-width=".9"/>
+    <circle cx="181" cy="140" r=".55" fill="#9aa"/><circle cx="183.2" cy="141.2" r=".55" fill="#9aa"/><circle cx="181.6" cy="142.6" r=".55" fill="#9aa"/>
+    <ellipse cx="324" cy="142.5" rx="7.5" ry="2.3" fill="#1b1b1b"/>
+    <line x1="324" y1="142" x2="324" y2="90" stroke="#1b1b1b" stroke-width="2.4" stroke-linecap="round"/>
+    <line x1="324" y1="142" x2="324" y2="90" stroke="#f4f4f4" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M324.5 90 L342 95.5 L324.5 101 Z" fill="#e03131" stroke="#1b1b1b" stroke-width=".9" stroke-linejoin="round"/>
+    <circle cx="307" cy="141" r="3.6" fill="#f5c400" stroke="#1b1b1b" stroke-width=".9"/>
+    <circle cx="339" cy="144.5" r="3.6" fill="#f2641c" stroke="#1b1b1b" stroke-width=".9"/>
+    <g class="mini-king" transform="translate(-2 55) scale(.62)" stroke="#1b1b1b" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M24 108 L33 108 L31 141 L23 141 Z" fill="#f3ead2"/>
+      <path d="M33 108 L44 110 L46 141 L37 141 Z" fill="#f3ead2"/>
+      <path d="M19 141 h13 q3 0 3 3 v1.5 h-16 z" fill="#fff"/>
+      <path d="M35 141 h13 q3 0 3 3 v1.5 h-16 z" fill="#fff"/>
+      <path d="M21 111 L45 113 L59 90 L40 79 Z" fill="#1f5f3a"/>
+      <path d="M45 82 L52 86 L49 92 Z" fill="#fff" stroke-width="1"/>
+      <path d="M41 98 L49 94 M37 104 L46 101" stroke="#f2c53d" stroke-width="1.4" fill="none"/>
+      <path d="M52 86 Q60 97 57 106" fill="none" stroke-width="7.5"/>
+      <path d="M52 86 Q60 97 57 106" fill="none" stroke="#1f5f3a" stroke-width="4.8"/>
+      <g fill="#fff" stroke-width="1.1"><circle cx="53" cy="74" r="4.2"/><circle cx="52" cy="80" r="4"/><circle cx="55" cy="85.5" r="3.8"/><circle cx="61" cy="86" r="3.8"/><circle cx="66.5" cy="83.5" r="3.2"/></g>
+      <circle cx="60.5" cy="76" r="7.4" fill="#f5d3b0"/>
+      <g fill="#fff" stroke-width="1.1"><circle cx="61" cy="84" r="3.2"/><circle cx="65.5" cy="82" r="2.8"/></g>
+      <path d="M62 80 q2.5 -1.6 5 0" fill="none" stroke-width="1.2"/>
+      <circle cx="64" cy="75" r=".9" fill="#1b1b1b" stroke="none"/>
+      <path d="M66.5 76 l2.4 2.6 l-2.6 .6" fill="#f5d3b0" stroke-width="1"/>
+      <path d="M51.5 73 Q53 62 62 62.5 Q69.5 63.5 69 71 Z" fill="#fff"/>
+      <path d="M66 70 L77 74.5 L67 73.5 Z" fill="#fff"/>
+      <path d="M53.5 64 L52.5 55.5 L56.5 59.5 L59.5 52.5 L62.5 59.5 L66.5 55.5 L66 64 Z" fill="#f2c53d"/>
+      <g fill="#f2c53d" stroke-width=".9"><circle cx="52.5" cy="55" r="1.4"/><circle cx="59.5" cy="52" r="1.5"/><circle cx="66.5" cy="55" r="1.4"/></g>
+      <line x1="55" y1="103" x2="64" y2="141" stroke="#1b1b1b" stroke-width="3.2"/>
+      <line x1="55" y1="103" x2="64" y2="141" stroke="#c9ced3" stroke-width="1.6"/>
+      <line x1="54.5" y1="101" x2="56.5" y2="110" stroke="#1b1b1b" stroke-width="3.4"/>
+      <rect x="59" y="139.5" width="12" height="4" rx="1.2" fill="#dfe3e7"/>
+      <circle cx="56.5" cy="106.5" r="3.6" fill="#f5d3b0"/>
+    </g>
+  </g>
+</svg>`;
 
 // Faint pictures behind the Ranked mode boxes.
 // Head-to-Head: the user's banner of two Kings on the green, faint behind the words.
