@@ -571,12 +571,8 @@ const LAG_SCENE = `<svg class="lag-scene" viewBox="0 0 360 150" preserveAspectRa
 // Head-to-Head: the user's banner of two Kings on the green, faint behind the words.
 const CROWNING_ART = '<span class="mode-art h2h-banner" aria-hidden="true"></span>';
 
-// Duos: a face-off by color, using the user's golf-brand Kings exactly as drawn.
-// Red Kings (hearts, diamonds) on the left, black Kings (spades, clubs) on the right.
-const FACEOFF_ART = `<span class="mode-art faceoff" aria-hidden="true">
-  <img class="fo-card fo-l1" src="assets/duos/king-hearts.webp" alt=""><img class="fo-card fo-l2" src="assets/duos/king-diamonds.webp" alt="">
-  <img class="fo-card fo-r1" src="assets/duos/king-clubs.webp" alt=""><img class="fo-card fo-r2" src="assets/duos/king-spades.webp" alt="">
-</span>`;
+// Duos: the user's banner of three Kings crouched reading the line while the fourth putts.
+const FACEOFF_ART = '<span class="mode-art duos-banner" aria-hidden="true"></span>';
 
 // ---------- Casual mode boxes: chilled-out Kings (drawn here, faint like the Ranked art) ----------
 // One King lounging in a striped deck chair, side view, facing right (flip = facing left).
