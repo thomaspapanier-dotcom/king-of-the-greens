@@ -371,8 +371,39 @@ function crackedSuitsLongSleeve() {
   });
 }
 
+// White tee: the four suits dripping, over "King Drippy" in script with a little crown.
+function kingDrippyTee() {
+  const id = 'kw4';
+  // A drip: a thin run that ends in a round drop, hanging from (x, y) for `len`.
+  const drip = (x, y, len, w, fill) => `<path d="M${x - w / 2} ${y} L${x - w / 2} ${y + len} a${w / 2} ${w / 2} 0 0 0 ${w} 0 L${x + w / 2} ${y} Z" fill="${fill}"/>`;
+  const drips = (x, y, fill, list) => list.map(([dx, len, w = 2.2]) => drip(x + dx, y, len, w, fill)).join('');
+  const row = [
+    ['spade', 66, INK, [[-6, 6], [-1, 9], [5, 5]]],
+    ['diamond', 89, RED, [[-4, 7], [1, 10], [4, 5]]],
+    ['club', 111, INK, [[-6, 5], [-1, 8], [5, 7]]],
+    ['heart', 134, RED, [[-7, 6], [-2, 10], [3, 6], [7, 4]]],
+  ];
+  const suits = row.map(([kind, x, fill, list]) => `${suitAt(kind, x, 62, 18, fill)}${drips(x, kind === 'heart' ? 64 : 66, fill, list)}`).join('');
+  const crownMark = `<path d="M66 89 L68 82 L71.5 86 L74 80.5 L76.5 86 L80 82 L82 89 Z" fill="none" stroke="${INK}" stroke-width="1.3" stroke-linejoin="round"/>
+    <circle cx="68" cy="81.3" r="1" fill="${INK}"/><circle cx="74" cy="79.6" r="1" fill="${INK}"/><circle cx="80" cy="81.3" r="1" fill="${INK}"/>`;
+  const font = `font-family="'Brush Script MT','Segoe Script','Snell Roundhand',cursive" font-style="italic" font-weight="700"`;
+  return wear(id, {
+    body: TEE, fill: '#fbfaf6', outline: '#9a968c',
+    inner: `<path d="M18 84 L44 92 L42 98 L16 90 Z M156 92 L182 84 L184 90 L158 98 Z" fill="#ecebe5"/>
+      ${suits}
+      ${crownMark}
+      <text x="96" y="104" text-anchor="end" ${font} font-size="20" fill="${INK}">King</text>
+      <text x="97" y="104" text-anchor="start" ${font} font-size="20" fill="${RED}">Drippy</text>
+      <path d="M99 108 Q117 104 136 107" stroke="${RED}" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      ${drips(72, 104, INK, [[0, 6, 1.8], [8, 9, 1.8], [16, 5, 1.8]])}
+      ${drips(103, 108, RED, [[0, 6, 1.8], [8, 9, 1.8], [16, 5, 1.8], [24, 8, 1.8], [31, 4, 1.8]])}`,
+    over: CREW_NECK('#eceae3', '#00000030'),
+  });
+}
+
 export const KOG_WEAR = [
   { id: 'kog-suit-print-crewneck', brand: 'kog', type: 'Tops', rarity: 'very-rare', name: 'Full House Crewneck', colorway: 'Black, Red & White', note: 'Black crewneck covered in all four suits: white spades and clubs, red hearts and diamonds.', art: suitPrintCrewneck },
   { id: 'kog-cracked-suits-ls', brand: 'kog', type: 'Tops', rarity: 'rare', name: 'Cracked Suits Long Sleeve', colorway: 'White, Black & Red', note: 'White long sleeve with the four suits across the chest in a cracked, lava-style finish.', art: crackedSuitsLongSleeve },
+  { id: 'kog-king-drippy-tee', brand: 'kog', type: 'Tops', rarity: 'rare', name: 'King Drippy Tee', colorway: 'White, Black & Red', note: 'White tee with all four suits dripping over King Drippy script and a little crown.', art: kingDrippyTee },
   { id: 'kog-crossed-clubs-tee', brand: 'kog', type: 'Tops', rarity: 'uncommon', name: 'Crossed Irons Tee', colorway: 'White', note: 'White tee with two crossed irons and the four suits around them.', art: crossedClubsTee },
 ];
