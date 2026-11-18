@@ -159,6 +159,7 @@ button:disabled { cursor: default; }
 .hero-crown .ico { width: 44px; height: 44px; }
 .hero h1 { margin: 0; font-size: 30px; letter-spacing: -0.02em; }
 .hero p { margin: 4px 0 0; color: var(--muted); }
+.hero h1, .hero p { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 14px rgba(0, 0, 0, 0.75); } /* readable over the Kings picture */
 .resume { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .resume-title { font-weight: 700; font-size: 17px; }
 
@@ -523,7 +524,7 @@ input {
   content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background:
     linear-gradient(color-mix(in srgb, var(--bg) var(--bg-wash, 62%), transparent), color-mix(in srgb, var(--bg) var(--bg-wash, 62%), transparent)),
-    url("../assets/green-bg.jpg") center 30% / cover no-repeat;
+    url("../assets/app-bg.webp") center top / cover no-repeat;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg-wash: 74%; } }
 :root[data-theme="dark"] { --bg-wash: 74%; }
