@@ -964,3 +964,109 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .suit-mark { position: relative; display: block; flex: none; }
 .suit-mark svg { display: block; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45)); }
 .suit-mark img { position: absolute; left: 50%; width: 74%; height: 74%; object-fit: contain; transform: translate(-50%, -50%); filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5)); }
+
+/* KOG Ranked: (coming soon) tag, How it works, Find Match / Post Match */
+.soon-tag { font-size: 0.62em; font-weight: 700; opacity: 0.85; white-space: nowrap; }
+.rk-menu { display: grid; gap: 10px; margin-top: 12px; }
+.choice.wide-choice.rk-menu-btn { background: linear-gradient(135deg, #1d3b2a, #12261b); border: 2px solid #111; }
+.choice.wide-choice.lfg-btn { background: linear-gradient(135deg, #3b2a0c, #1f1606); border-color: #c9961d; box-shadow: 0 0 12px rgba(245, 196, 0, 0.25); }
+.lfg-btn .choice-ico { color: #f5d76e; }
+.lf-page { padding-bottom: 32px; }
+.lf-tabs { margin-bottom: 10px; }
+.lf-plate { display: inline-flex; align-items: center; gap: 5px; font-size: 14px; white-space: nowrap; }
+.lf-plate b { font-weight: 800; }
+.lf-plate.me b { color: #f5d76e; }
+.lf-plate .rank-badge, .lf-plate .win-ball { flex: none; }
+.lf-pct { font-size: 12px; font-weight: 800; }
+.lf-amp { margin: 0 6px; color: var(--muted); font-weight: 700; }
+.lf-filters { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin: 10px 0; }
+.lf-filters .chip { min-height: 38px; padding: 6px 12px; font-size: 14px; }
+.lf-miles { font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.lf-miles select { min-height: 38px; }
+.lf-list { display: grid; gap: 10px; }
+.lf-post { position: relative; padding: 12px 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.lf-post.duo { border-color: #6d4bc2; box-shadow: 0 0 0 1px rgba(122, 82, 220, 0.35), var(--shadow); }
+.lf-mode { position: absolute; top: 10px; right: 12px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.lf-post.duo .lf-mode { color: #b197fc; }
+.lf-who { display: flex; flex-wrap: wrap; align-items: center; row-gap: 4px; padding-right: 74px; }
+.lf-says { font-size: 14px; margin-top: 3px; }
+.lf-where { margin-top: 6px; font-size: 13px; font-weight: 600; }
+.lf-where span { color: var(--muted); font-weight: 500; }
+.lf-when, .lf-wants { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.lf-go { width: 100%; margin-top: 10px; }
+.lf-mine-tag { font-size: 12px; font-weight: 800; color: #f5d76e; margin: 0 2px -4px; }
+.lf-example { text-align: center; margin-top: 14px; }
+.lf-steps { display: flex; gap: 4px; list-style: none; padding: 0; margin: 4px 0 14px; }
+.lf-steps li { flex: 1; display: grid; justify-items: center; gap: 3px; font-size: 10.5px; font-weight: 700; color: var(--muted); text-align: center; }
+.lf-steps li span { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--line); font-size: 12px; }
+.lf-steps li.on { color: #f5d76e; }
+.lf-steps li.on span { border-color: #f5d76e; background: #f5d76e; color: #1a1405; }
+.lf-steps li.done span { border-color: var(--green); background: var(--green); color: var(--on-green); }
+.lf-checks { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 6px; font-size: 14px; }
+.lf-checks li { padding: 8px 10px; border-radius: 10px; background: var(--surface-2); }
+.lf-checks li.ok { border-left: 4px solid var(--green); }
+.lf-checks li.no { border-left: 4px solid #e03131; }
+.lf-note { font-size: 14px; }
+.lf-cap { font-size: 15px; margin: 4px 0 10px; }
+.lf-phone { border: 3px solid #2b2b2f; border-radius: 26px; padding: 12px; background: #0d1410; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); margin: 8px 0 12px; }
+.lf-phone-top { text-align: center; font-size: 11px; font-weight: 700; color: var(--muted); margin-bottom: 10px; letter-spacing: 0.04em; }
+.lf-notif { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); border-radius: 16px; padding: 10px 12px; margin-bottom: 12px; }
+.lf-notif-app { font-size: 12px; font-weight: 700; display: flex; justify-content: space-between; color: #f5d76e; }
+.lf-notif-app span { color: var(--muted); font-weight: 500; }
+.lf-notif-text { font-size: 14px; margin-top: 3px; }
+.lf-challenger { padding: 10px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); margin-bottom: 12px; display: grid; gap: 4px; }
+.lf-challenger .lf-who { padding-right: 0; }
+.lf-chat { display: grid; gap: 8px; }
+.lf-msg { max-width: 85%; padding: 8px 11px; border-radius: 14px 14px 14px 4px; background: var(--surface-2); font-size: 13.5px; display: grid; gap: 2px; }
+.lf-msg.me { justify-self: end; border-radius: 14px 14px 4px 14px; background: #1f6b45; }
+.lf-msg em { font-size: 12px; color: var(--muted); font-style: normal; }
+.lf-time { font-weight: 800; color: #f5d76e; }
+.lf-locked { border: 2px solid #f5d76e; box-shadow: 0 0 14px rgba(245, 196, 0, 0.25); }
+.lf-vs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0; }
+.lf-vs .vs, .hw-teams .vs { font-weight: 900; color: var(--muted); font-size: 13px; }
+.lf-rules { margin: 10px 0 14px; padding-left: 20px; font-size: 14px; display: grid; gap: 6px; }
+.lf-noshow { border-color: #e03131; }
+.lf-pen { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 10px; background: rgba(224, 49, 49, 0.15); margin: 6px 0; }
+.lf-pen.ok { background: var(--surface-2); }
+.lf-pen-n { font-weight: 900; color: #ff8787; }
+.lf-pen.ok .lf-pen-n { color: var(--muted); }
+.lf-show { border-color: var(--green); }
+.lf-noshow, .lf-show { margin-top: 12px; }
+.lf-back { display: block; margin: 12px auto 0; }
+.lf-form { display: grid; gap: 14px; }
+.lf-courses .chip { min-height: 38px; padding: 6px 11px; font-size: 13px; }
+.lf-courses .chip small { opacity: 0.75; font-weight: 500; }
+.lf-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.lf-row3 select { min-width: 0; }
+.lf-row2 { display: flex; align-items: center; gap: 8px; }
+.lf-row2 select { flex: 1; min-width: 0; }
+.lf-to { color: var(--muted); font-weight: 600; }
+.lf-summary { margin: 0; padding: 10px 12px; border-radius: 10px; background: rgba(245, 196, 0, 0.1); border: 1px solid rgba(245, 196, 0, 0.35); font-size: 14px; }
+.hw-story { margin-top: 12px; }
+.hw-story p { margin: 6px 0 0; }
+.hw-steps { list-style: none; padding: 0; margin: 14px 0; display: grid; gap: 4px; }
+.hw-steps > li { display: grid; grid-template-columns: 32px 1fr; gap: 10px; position: relative; padding-bottom: 12px; }
+.hw-steps > li:not(:last-child)::before { content: ""; position: absolute; left: 15px; top: 32px; bottom: 0; width: 2px; background: var(--line); }
+.hw-n { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: #f5d76e; color: #1a1405; font-weight: 900; }
+.hw-steps h3 { margin: 5px 0 2px; font-size: 16px; }
+.hw-steps p { margin: 0 0 6px; font-size: 14px; color: var(--muted); }
+.hw-plates, .hw-results { display: grid; gap: 6px; margin-top: 4px; }
+.hw-res { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-radius: 10px; background: var(--surface-2); }
+.hw-delta { font-weight: 900; }
+.hw-delta.up { color: #69db7c; }
+.hw-delta.down { color: #ff8787; }
+.hw-teams { display: grid; gap: 6px; }
+.hw-team { display: grid; gap: 4px; padding: 8px 10px; border-radius: 12px; border: 2px solid; }
+.hw-team span { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.hw-team.red { border-color: #c92a2a; background: rgba(201, 42, 42, 0.12); }
+.hw-team.red span { color: #ff8787; }
+.hw-team.black { border-color: #555; background: rgba(0, 0, 0, 0.3); }
+.hw-team.black span { color: #f2c53d; }
+.hw-teams .vs { text-align: center; }
+.hw-other { display: grid; gap: 10px; font-size: 14px; }
+
+.hw-steps { background: rgba(12, 24, 17, 0.88); border: 1px solid var(--line); border-radius: 16px; padding: 14px 12px 4px; }
+.hw-steps p { color: #c9d3cc; }
+.choice.wide-choice.rk-menu-btn .choice-sub { color: rgba(255, 255, 255, 0.78); }
+.lf-page > .muted.small, .lf-page .lf-example { background: rgba(12, 24, 17, 0.75); border-radius: 10px; padding: 6px 10px; color: #c9d3cc; }
+.lf-cap { background: rgba(12, 24, 17, 0.8); border-radius: 10px; padding: 8px 10px; }

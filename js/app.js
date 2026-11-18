@@ -13,6 +13,7 @@ import { playHawk, unlockAudio } from './sound.js';
 import { kingRain, preloadKings } from './confetti.js';
 import { AVATARS, DEFAULT_AVATAR, avatarById, avatarFigure } from './avatars.js';
 import { BRANDS, ITEMS, ITEM_TYPES, RARITY, cozyBadge } from './shop.js';
+import * as LF from './lfg.js';
 
 // Per-device preferences (theme, sound).
 function getPref(key, fallback) {
@@ -457,7 +458,7 @@ function viewHome() {
       <div class="play-choices">
         <button class="choice primary art-choice art-ranked" data-action="nav" data-view="ranked-modes" data-confetti="kings">
           <span class="choice-ico">${ICON.crown}</span>
-          <span class="choice-title">KOG Ranked</span>
+          <span class="choice-title">KOG Ranked <span class="soon-tag">(coming soon)</span></span>
           <span class="choice-sub">Climb from the depths of Copper V to Putt Master</span>
         </button>
         <button class="choice art-choice art-casual" data-action="nav" data-view="casual-modes">
@@ -603,8 +604,38 @@ function viewModes(kind) {
         <span class="choice-sub">${ranked ? 'Team up with any rank. Each of you gains or loses your own points.' : 'A foursome in two teams. Teammates split the balls, so it runs about twice as fast.'}</span>
       </button>
     </div>
+    ${ranked ? `<div class="rk-menu">
+      <button class="choice wide-choice rk-menu-btn" data-action="nav" data-view="ranked-how" data-back="ranked-modes">
+        <span class="choice-ico">${ICON.card}</span>
+        <span class="choice-text"><span class="choice-title">How it works</span><span class="choice-sub">A ranked 1 v 1 and a ranked duos match before your tee time</span></span>
+      </button>
+      <button class="choice wide-choice rk-menu-btn lfg-btn" data-action="nav" data-view="lfg" data-back="ranked-modes">
+        <span class="choice-ico">${ICON.target}</span>
+        <span class="choice-text"><span class="choice-title">Find Match / Post Match</span><span class="choice-sub">Play ranked against golfers near you</span></span>
+      </button>
+    </div>` : ''}
     ${ranked ? currentRankPanel() : ''}
   </main>`;
+}
+
+// ---------- ranked: how it works, find match / post match ----------
+function viewRankedHow() {
+  return `${topbar('How ranked works', ui.params.back || 'ranked-modes')}
+  <main class="page lf-page">${LF.howHtml(ui.howTab || '1v1')}</main>`;
+}
+const lfgState = () => ui.lfg || (ui.lfg = { tab: 'find', show: 'all', miles: 50, near: 0, pick: null, step: 0, outcome: 'show', mine: null, form: LF.newForm() });
+function viewLfg() {
+  const st = lfgState();
+  if (st.pick) {
+    const post = LF.postById(st.pick);
+    return `${topbar('Ranked challenge', 'lfg')}
+    <main class="page lf-page">${LF.challengeHtml(post, st)}</main>`;
+  }
+  const tabs = `<div class="seg-wide lf-tabs" role="group" aria-label="Find or post">
+    <button class="seg-opt" data-action="lfg-tab" data-v="find" aria-pressed="${st.tab === 'find'}">Find Match</button>
+    <button class="seg-opt" data-action="lfg-tab" data-v="post" aria-pressed="${st.tab === 'post'}">Post Match</button></div>`;
+  return `${topbar('Find / Post Match', ui.params.back || 'ranked-modes')}
+  <main class="page lf-page">${tabs}${st.tab === 'post' ? LF.postHtml(st.form) : LF.findHtml(st)}</main>`;
 }
 
 /**
@@ -2269,7 +2300,7 @@ function render() {
     history: viewHistory, rules: viewRules, join: viewJoin, whoami: viewWhoami, share: viewShare, settings: viewSettings,
     'quick-setup': viewQuickSetup, quick: viewQuick, 'lag-setup': viewLagSetup, lag: viewLag, ranked: viewRanked, account: viewAccount, winballs: viewWinBalls,
     'ranked-modes': () => viewModes('ranked'), 'casual-modes': () => viewModes('casual'),
-    avatar: viewAvatar, store: viewStore,
+    avatar: viewAvatar, store: viewStore, 'ranked-how': viewRankedHow, lfg: viewLfg,
   };
   // Keep a half-typed code if the screen redraws (e.g. a sync update).
   const codeInput = document.getElementById('join-code');
@@ -2363,6 +2394,7 @@ const actions = {
     render();
   },
   nav: (d) => {
+    if (d.view === 'lfg' && ui.lfg) ui.lfg.pick = null; // opening the board always starts at the list
     go(d.view, { pid: d.pid, game: d.game, back: d.back });
     if (d.confetti === 'kings') kingRain();
   },
@@ -2748,6 +2780,55 @@ const actions = {
     ui.storeBrand = d.v && d.v !== ui.storeBrand ? d.v : null;
     render();
   },
+  'how-tab': (d) => {
+    ui.howTab = d.v;
+    render();
+  },
+  'lfg-tab': (d) => {
+    lfgState().tab = d.v;
+    render();
+  },
+  'lfg-show': (d) => {
+    lfgState().show = d.v;
+    render();
+  },
+  'lfg-pick': (d) => {
+    Object.assign(lfgState(), { pick: d.v, step: 0, outcome: 'show' });
+    render();
+    window.scrollTo(0, 0);
+  },
+  'lfg-step': (d) => {
+    lfgState().step = Number(d.v);
+    render();
+    window.scrollTo(0, 0);
+  },
+  'lfg-outcome': (d) => {
+    lfgState().outcome = d.v;
+    render();
+  },
+  'lfg-decline': () => toast('They declined: you get a polite “not this time”. Tap Accept to keep the walkthrough going.'),
+  'lfg-done': () => {
+    Object.assign(lfgState(), { pick: null, step: 0, tab: 'find' });
+    render();
+    window.scrollTo(0, 0);
+  },
+  'lfg-form-mode': (d) => {
+    lfgState().form.mode = d.v;
+    render();
+  },
+  'lfg-course': (d) => {
+    const f = lfgState().form;
+    f.courses = f.courses.includes(d.v) ? f.courses.filter((c) => c !== d.v) : [...f.courses, d.v];
+    render();
+  },
+  'lfg-post': () => {
+    const st = lfgState();
+    st.mine = LF.formToPost(st.form);
+    Object.assign(st, { tab: 'find', show: 'all', miles: 50 });
+    render();
+    window.scrollTo(0, 0);
+    toast('Posted (demo). It’s at the top of Find Match.');
+  },
   'store-filter': (d) => {
     ui.storeFilter = d.v;
     render();
@@ -2859,6 +2940,21 @@ async function photoToDataUrl(file, size = 160) {
 
 document.addEventListener('change', async (e) => {
   const t = e.target;
+  if (t.dataset.lfg) {
+    lfgState()[t.dataset.lfg] = Number(t.value);
+    render();
+    return;
+  }
+  if (t.dataset.lfgForm) {
+    const f = lfgState().form;
+    const k = t.dataset.lfgForm;
+    f[k] = k === 'wrFrom' || k === 'wrTo' ? Number(t.value) : t.value;
+    // Keep the ranges the right way round.
+    if (LF.rankByName(f.to).index < LF.rankByName(f.from).index) f.to = f.from;
+    if (f.wrTo <= f.wrFrom) f.wrTo = 100;
+    render();
+    return;
+  }
   if (t.dataset.rkd) {
     ui.rkd[t.dataset.rkd] = Number(t.value);
     ui.rkd.result = null;
