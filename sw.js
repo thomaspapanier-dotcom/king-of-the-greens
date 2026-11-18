@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v57';
+const VERSION = 'kog-v58';
 const SHELL = [
   './',
   './index.html',
@@ -38,6 +38,11 @@ const SHELL = [
   './js/avatars.js',
   './js/shop.js',
   './assets/store/four-houses-print.webp',
+  './assets/brands/2cozy-green.webp',
+  './assets/brands/2cozy-teal.webp',
+  './assets/brands/2cozy-cocoa.webp',
+  './assets/brands/2cozy-red.webp',
+  './assets/brands/2cozy-royal.webp',
   './assets/avatars/king-classic.webp',
   './assets/avatars/king-closer.webp',
   './assets/avatars/king-elder.webp',

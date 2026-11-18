@@ -1897,7 +1897,7 @@ function viewStore() {
   const sections = Object.entries(BRANDS).map(([key, brand]) => {
     const list = items.filter((it) => it.brand === key).sort((a, b) => RARITY[b.rarity].rank - RARITY[a.rarity].rank);
     if (!list.length) return '';
-    const mark = key === '2cozy' ? cozyBadge(54, 'sb') : `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`;
+    const mark = key === '2cozy' ? cozyBadge(58, 'sb') : `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`;
     return `<section class="brand-head">${mark}<div><h2>${brand.name}</h2><p class="muted small">${brand.tagline}</p></div></section>
     <div class="shop-grid">${list.map(card).join('')}</div>`;
   }).join('');

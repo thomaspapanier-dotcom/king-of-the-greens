@@ -910,3 +910,4 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .kog-mark .ico { width: 28px; height: 28px; }
 .shop-card.rarity-very-rare, .shop-card.rarity-legendary { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: none; }
 .shop-card.rarity-very-rare .shop-info, .shop-card.rarity-legendary .shop-info { align-content: center; }
+.cozy-badge { display: block; flex: none; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45)); }
