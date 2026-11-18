@@ -431,7 +431,7 @@ function viewHome() {
   }
   return `<main class="page home">
     <div class="hero">
-      <img class="hero-card" src="${KOG_CARD}" alt="">
+      <img class="hero-card" src="assets/four-kings.webp" alt="The four Kings of the Greens">
       <h1>King of the Greens</h1>
       <p>The putting game for 1–4 players</p>
     </div>
