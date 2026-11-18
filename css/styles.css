@@ -935,7 +935,9 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 @media (max-width: 360px) { .house-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Home: open hero (the Kings background shows through) and a dressed-up title */
-.hero.hero-open { padding: clamp(150px, 42vw, 230px) 0 14px; }
+/* The title sits right under the putting King's feet: they are 1002px down the 941x1672 background,
+   which covers the screen from the top (scale = max(width/941, height/1672)). */
+.hero.hero-open { padding: calc(max(106.5vw, 59.9vh) - 20px) 0 14px; padding-top: calc(max(106.5vw, 59.9dvh) - 20px); }
 .hero-title { margin: 0; font: 900 clamp(38px, 11vw, 56px)/1 Georgia, "Times New Roman", serif; letter-spacing: 0.01em;
   background: linear-gradient(180deg, #fff6c9 0%, #f5d76e 45%, #c9961d 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
   filter: drop-shadow(0 2px 0 #5b3d00) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.85)); text-shadow: none; }
