@@ -12,7 +12,7 @@ import { figures, mountIllustrations, nextRoundFigure, tossFigure, tiebreakFigur
 import { playHawk, unlockAudio } from './sound.js';
 import { kingRain, preloadKings } from './confetti.js';
 import { AVATARS, DEFAULT_AVATAR, avatarById, avatarFigure } from './avatars.js';
-import { BRANDS, ITEMS, ITEM_TYPES, cozyBadge } from './shop.js';
+import { BRANDS, ITEMS, ITEM_TYPES, RARITY, cozyBadge } from './shop.js';
 
 // Per-device preferences (theme, sound).
 function getPref(key, fallback) {
@@ -476,7 +476,7 @@ function viewHome() {
         <button class="choice wide-choice store-choice" data-action="nav" data-view="store">
           <span class="store-choice-badge">${cozyBadge(44, 'hb')}</span>
           <span class="choice-text"><span class="choice-title">KOG Store</span><span class="choice-sub">Drip for your King or Queen. First drop: 2Cozy Golf Co. Everything's free for now.</span></span>
-          <span class="store-choice-art" aria-hidden="true">${ITEMS[4].art()}</span>
+          <span class="store-choice-art" aria-hidden="true">${ITEMS.find((it) => it.id === '2c-cap-black-red').art()}</span>
         </button>
       </div>
       ${SYNC ? '<button class="btn" data-action="open-join">Join a game</button>' : ''}
@@ -1883,17 +1883,24 @@ function viewAvatar() {
 function viewStore() {
   const filter = ui.storeFilter || 'All';
   const items = ITEMS.filter((it) => filter === 'All' || it.type === filter);
-  const brand = BRANDS['2cozy'];
   const chips = ITEM_TYPES.map((t) => `<button class="chip ${t === filter ? 'on' : ''}" data-action="store-filter" data-v="${t}" aria-pressed="${t === filter}">${t}</button>`).join('');
-  const cards = items.map((it) => `<article class="shop-card">
-      <div class="shop-art">${it.art()}</div>
+  const card = (it) => `<article class="shop-card rarity-${it.rarity}">
+      <div class="shop-art">${it.art()}<span class="rarity-pill">${RARITY[it.rarity].label}</span></div>
       <div class="shop-info">
         <div class="shop-type">${it.type === 'Hats' ? 'Hat' : it.type === 'Tops' ? 'Top' : 'Bottoms'} · ${it.colorway}</div>
         <h3 class="shop-name">${it.name}</h3>
         <p class="shop-note">${it.note}</p>
         <div class="shop-buy"><span class="shop-price">Free</span><button class="btn small-btn" disabled>Try on soon</button></div>
       </div>
-    </article>`).join('');
+    </article>`;
+  // One section per brand, rarest pieces first inside each.
+  const sections = Object.entries(BRANDS).map(([key, brand]) => {
+    const list = items.filter((it) => it.brand === key).sort((a, b) => RARITY[b.rarity].rank - RARITY[a.rarity].rank);
+    if (!list.length) return '';
+    const mark = key === '2cozy' ? cozyBadge(54, 'sb') : `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`;
+    return `<section class="brand-head">${mark}<div><h2>${brand.name}</h2><p class="muted small">${brand.tagline}</p></div></section>
+    <div class="shop-grid">${list.map(card).join('')}</div>`;
+  }).join('');
   return `${topbar('KOG Store')}
   <main class="page store-page">
     <section class="store-hero">
@@ -1904,9 +1911,8 @@ function viewStore() {
         <p class="muted small">Look around: items are on display while we build try-ons. Soon you'll dress your avatar, unlock limited drops and earn gear from challenges.</p>
       </div>
     </section>
-    <section class="brand-head">${cozyBadge(54, 'sb')}<div><h2>${brand.name}</h2><p class="muted small">${brand.tagline}</p></div></section>
     <div class="chips store-chips">${chips}</div>
-    <div class="shop-grid">${cards}</div>
+    ${sections}
   </main>`;
 }
 

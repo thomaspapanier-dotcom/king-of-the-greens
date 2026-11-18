@@ -2,10 +2,23 @@
 // Items are drawn here as cartoon art. Each brand is built up slowly; 2Cozy Golf Co. is first.
 
 export const BRANDS = {
+  kog: {
+    name: 'KOG Originals',
+    tagline: 'Limited pieces from the King of the Greens.',
+  },
   '2cozy': {
     name: '2Cozy Golf Co.',
     tagline: 'Stay cozy over every putt.',
   },
+};
+
+// How hard an item is to get. Only Common and Very Rare are in use so far; the rest are ready.
+export const RARITY = {
+  common: { label: 'Common', rank: 0 },
+  uncommon: { label: 'Uncommon', rank: 1 },
+  rare: { label: 'Rare', rank: 2 },
+  'very-rare': { label: 'Very Rare', rank: 3 },
+  legendary: { label: 'Legendary', rank: 4 },
 };
 
 /** 2Cozy mascot: a knit putter headcover wearing a crown. */
@@ -168,14 +181,41 @@ function stripedTee() {
   </svg>`;
 }
 
+// White knit pullover with a navy collar and the Four Houses card print on the chest.
+function fourHousesPullover() {
+  const id = 'it8';
+  const body = 'M70 34 L130 34 L168 56 L178 128 L160 132 L152 82 L148 172 Q100 182 52 172 L48 82 L40 132 L22 128 L32 56 Z';
+  const knit = Array.from({ length: 16 }, (_, k) => `<path d="M${30 + k * 10} 40 L${30 + k * 10} 180" stroke="#d9d4c8" stroke-width=".8" opacity=".55"/>`).join('');
+  return `<svg viewBox="0 0 200 200" aria-hidden="true"><defs>${shade(id)}<clipPath id="${id}c"><path d="${body}"/></clipPath>
+      <clipPath id="${id}p"><rect x="68" y="76" width="64" height="80" rx="4"/></clipPath>
+      <linearGradient id="${id}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ece7dc"/></linearGradient></defs>
+    ${floor}
+    <path d="${body}" fill="url(#${id}w)"/>
+    <g clip-path="url(#${id}c)">
+      ${knit}
+      <path d="M48 160 Q100 170 152 160 L152 190 L48 190 Z" fill="#e4dfd3"/>
+      <path d="M50 164 Q100 174 150 164 M50 170 Q100 180 150 170" stroke="#cfc9bc" stroke-width="1" fill="none"/>
+      <path d="M20 120 L42 124 L40 140 L18 136 Z M158 124 L180 120 L182 136 L160 140 Z" fill="#e4dfd3"/>
+    </g>
+    <rect x="66" y="74" width="68" height="84" rx="5" fill="#c9a227"/>
+    <image href="assets/store/four-houses-print.webp" x="68" y="76" width="64" height="80" preserveAspectRatio="xMidYMid slice" clip-path="url(#${id}p)"/>
+    <g clip-path="url(#${id}c)"><rect width="200" height="200" fill="url(#${id}sh)"/></g>
+    <path d="M70 34 L100 64 L82 70 L66 40 Z" fill="#1b2a4a" stroke="#0f1a30" stroke-width="2"/>
+    <path d="M130 34 L100 64 L118 70 L134 40 Z" fill="#1b2a4a" stroke="#0f1a30" stroke-width="2"/>
+    <path d="M70 37 L99 62 M130 37 L101 62" stroke="#f3ead2" stroke-width="1.2" opacity=".7"/>
+    <path d="${body}" fill="none" stroke="#9a9488" stroke-width="2.4" stroke-linejoin="round"/>
+  </svg>`;
+}
+
 export const ITEMS = [
-  { id: '2c-argyle-vest', brand: '2cozy', type: 'Tops', name: 'Clubhouse Argyle Vest', colorway: 'Forest & Sunflower', note: 'Knit V-neck vest with the 2Cozy crest patch.', art: argyleVest },
-  { id: '2c-collar-pullover', brand: '2cozy', type: 'Tops', name: 'Range Collar Pullover', colorway: 'Deep Teal', note: 'Fleece pullover with a crisp white collar and 2Cozy script.', art: collarPullover },
-  { id: '2c-hooded-bomber', brand: '2cozy', type: 'Tops', name: 'Back Nine Hooded Bomber', colorway: 'Cocoa & Cream', note: 'Snap-front bomber with a cream hood and striped cuffs.', art: hoodedBomber },
-  { id: '2c-striped-tee', brand: '2cozy', type: 'Tops', name: 'Rough Stripe Tee', colorway: 'Red & Black', note: 'Heavy cotton tee with bold stripes and a woven hem tag.', art: stripedTee },
-  { id: '2c-cap-black-red', brand: '2cozy', type: 'Hats', name: '2C Fitted Cap', colorway: 'Black & Red', note: 'Structured fitted cap with a gold 2C monogram.', art: () => fittedCap('it4', '#d62f2f', '#9c1d1d', '#d62f2f', '#f2c230', '#b81f1f') },
-  { id: '2c-cap-black-royal', brand: '2cozy', type: 'Hats', name: '2C Fitted Cap', colorway: 'Black & Royal', note: 'Structured fitted cap with a royal 2C monogram.', art: () => fittedCap('it5', '#2f5fe0', '#1d3c9c', '#2f5fe0', '#2f5fe0', '#f2722b') },
-  { id: '2c-baroque-shorts', brand: '2cozy', type: 'Bottoms', name: 'Royal Court Shorts', colorway: 'Baroque Print', note: 'Drawstring shorts in a gold baroque, zebra and crest print.', art: baroqueShorts },
+  { id: 'kog-four-houses-pullover', brand: 'kog', type: 'Tops', rarity: 'very-rare', name: 'Four Houses Pullover', colorway: 'White & Navy', note: 'White knit pullover with a navy collar, printed with all four house Kings.', art: fourHousesPullover },
+  { id: '2c-argyle-vest', brand: '2cozy', type: 'Tops', rarity: 'common', name: 'Clubhouse Argyle Vest', colorway: 'Forest & Sunflower', note: 'Knit V-neck vest with the 2Cozy crest patch.', art: argyleVest },
+  { id: '2c-collar-pullover', brand: '2cozy', type: 'Tops', rarity: 'common', name: 'Range Collar Pullover', colorway: 'Deep Teal', note: 'Fleece pullover with a crisp white collar and 2Cozy script.', art: collarPullover },
+  { id: '2c-hooded-bomber', brand: '2cozy', type: 'Tops', rarity: 'common', name: 'Back Nine Hooded Bomber', colorway: 'Cocoa & Cream', note: 'Snap-front bomber with a cream hood and striped cuffs.', art: hoodedBomber },
+  { id: '2c-striped-tee', brand: '2cozy', type: 'Tops', rarity: 'common', name: 'Rough Stripe Tee', colorway: 'Red & Black', note: 'Heavy cotton tee with bold stripes and a woven hem tag.', art: stripedTee },
+  { id: '2c-cap-black-red', brand: '2cozy', type: 'Hats', rarity: 'common', name: '2C Fitted Cap', colorway: 'Black & Red', note: 'Structured fitted cap with a gold 2C monogram.', art: () => fittedCap('it4', '#d62f2f', '#9c1d1d', '#d62f2f', '#f2c230', '#b81f1f') },
+  { id: '2c-cap-black-royal', brand: '2cozy', type: 'Hats', rarity: 'common', name: '2C Fitted Cap', colorway: 'Black & Royal', note: 'Structured fitted cap with a royal 2C monogram.', art: () => fittedCap('it5', '#2f5fe0', '#1d3c9c', '#2f5fe0', '#2f5fe0', '#f2722b') },
+  { id: '2c-baroque-shorts', brand: '2cozy', type: 'Bottoms', rarity: 'common', name: 'Royal Court Shorts', colorway: 'Baroque Print', note: 'Drawstring shorts in a gold baroque, zebra and crest print.', art: baroqueShorts },
 ];
 
 export const ITEM_TYPES = ['All', 'Hats', 'Tops', 'Bottoms'];
