@@ -500,6 +500,17 @@ input {
 .lag-roll { position: absolute; right: 12px; bottom: 6px; width: 130px; height: 26px; color: var(--muted); pointer-events: none; }
 .modes .choice { min-height: 132px; }
 
+/* Ranked mode boxes: faint pictures behind the words */
+.choice.art-mode { position: relative; overflow: hidden; isolation: isolate; }
+.mode-art { position: absolute; z-index: -1; pointer-events: none; }
+.mode-art.crowning { right: -4px; top: 44%; transform: translateY(-50%); height: 112%; width: auto; opacity: 0.3; }
+.mode-art.faceoff { inset: 0; opacity: 0.2; }
+.fo-card { position: absolute; top: 50%; height: 88%; width: auto; border-radius: 5px; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45); }
+.fo-l1 { left: 4%; transform: translateY(-50%) rotate(-8deg); }
+.fo-l2 { left: 17%; transform: translateY(-46%) rotate(6deg); }
+.fo-r1 { right: 4%; transform: translateY(-50%) rotate(8deg); }
+.fo-r2 { right: 17%; transform: translateY(-46%) rotate(-6deg); }
+
 /* The putting-green photo behind every screen, washed out so text stays easy to read */
 #app::before {
   content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
