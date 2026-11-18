@@ -88,7 +88,14 @@ function playerName(g, pid) {
 const idsOf = (p) => [p.id, ...(p.aliases || [])];
 /** A person's name in a game (team members in co-op, otherwise players). */
 const personName = (g, id) => (R.people(g).find((x) => x.id === id) || { name: '?' }).name;
-/** Co-op name colors by team: Team 1 blue, Team 2 orange. */
+/** Duos teams are themed by suit color with the user's golf Kings:
+ *  Team 1 = the red Kings (Hearts, Diamonds), Team 2 = the black Kings (Clubs, Spades). */
+const TEAM_THEMES = [
+  { name: 'Red Kings', cls: 'team-red', cards: ['assets/duos/king-hearts.webp', 'assets/duos/king-diamonds.webp'] },
+  { name: 'Black Kings', cls: 'team-black', cards: ['assets/duos/king-clubs.webp', 'assets/duos/king-spades.webp'] },
+];
+const teamCards = (i, cls = '') => `<span class="team-cards ${cls}" aria-hidden="true">${TEAM_THEMES[i].cards.map((src) => `<img src="${src}" alt="">`).join('')}</span>`;
+/** Co-op name colors by team: Team 1 red Kings, Team 2 black Kings. */
 function personColor(g, id) {
   if (!R.isCoop(g)) return '';
   return `pc-${Object.keys(g.teams).indexOf(R.unitOf(g, id)) + 1}`;
@@ -711,7 +718,7 @@ function viewNew() {
   const ready = coop ? n === R.COOP_PLAYERS : n >= 1;
   const live = SYNC && n > 1;
   const startLabel = ui.goingLive ? 'Going live…'
-    : coop ? (n < R.COOP_PLAYERS ? `Pick ${R.COOP_PLAYERS - n} more` : live && d.live ? 'Start live co-op game' : 'Start co-op game')
+    : coop ? (n < R.COOP_PLAYERS ? `Pick ${R.COOP_PLAYERS - n} more` : live && d.live ? 'Start live Duos game' : 'Start Duos game')
     : n === 0 ? 'Pick who’s playing'
     : n === 1 ? 'Start solo game'
     : live && d.live ? 'Start live game' : 'Start game';
@@ -721,9 +728,9 @@ function viewNew() {
     const [t1, t2] = coopPairs(d);
     teams = `<section class="card teams">
       <div class="team-row">
-        <div class="team"><div class="eyebrow">Team 1</div><b>${name(t1[0])} &amp; ${name(t1[1])}</b></div>
+        <div class="team team-red">${teamCards(0)}<div class="eyebrow">Team 1 · Red Kings</div><b>${name(t1[0])} &amp; ${name(t1[1])}</b></div>
         <span class="vs">vs</span>
-        <div class="team"><div class="eyebrow">Team 2</div><b>${name(t2[0])} &amp; ${name(t2[1])}</b></div>
+        <div class="team team-black">${teamCards(1)}<div class="eyebrow">Team 2 · Black Kings</div><b>${name(t2[0])} &amp; ${name(t2[1])}</b></div>
       </div>
       <button class="btn small-btn" data-action="switch-pairs">Switch teammates</button>
     </section>`;
@@ -949,7 +956,8 @@ function viewPlay(g) {
     .map((pid, i) => {
       const sc = R.playerStageScore(g, idx, pid, { partial: true });
       const done = R.playerDone(g, idx, pid);
-      return `<button class="turn ${pid === active ? 'active' : ''} ${done ? 'done' : ''}" data-action="select-player" data-pid="${pid}" aria-pressed="${pid === active}">
+      const theme = R.isCoop(g) ? TEAM_THEMES[Object.keys(g.teams).indexOf(pid)].cls : '';
+      return `<button class="turn ${theme} ${pid === active ? 'active' : ''} ${done ? 'done' : ''}" data-action="select-player" data-pid="${pid}" aria-pressed="${pid === active}">
         <span class="turn-n">${i + 1}</span>
         <span class="turn-name">${pid === st.kingId && !solo ? ICON.crown : ''}${esc(playerName(g, pid))}${pid === me ? ' <em class="you">you</em>' : ''}</span>
         <span class="turn-score">${done ? fs(sc) : sc !== null ? `${fs(sc)}…` : '—'}</span>
@@ -989,7 +997,7 @@ function viewPlay(g) {
         <div class="panel-score"><span class="muted small">Round</span> ${scoreTag(R.playerStageScore(g, idx, active, { partial: true }))} <span class="muted small">Total</span> ${scoreTag(t[active])}</div>
       </div>
       <p class="hint">Score each ball by its own putts. The order you clean up in doesn’t change the score.</p>
-      ${coop ? '<p class="hint">Co-op: each ball shows which teammate putts it.</p>' : ''}
+      ${coop ? '<p class="hint">Duos: each ball shows which teammate putts it.</p>' : ''}
       ${entries.map((e, k) => setBlock(def, k, e, coop ? e.balls.map((_, j) => { const id = R.ballOwner(g, idx, active, k, j); return { name: personName(g, id), cls: personColor(g, id) }; }) : null)).join('')}
     </section>
   </main>
@@ -1149,7 +1157,7 @@ function viewCard() {
       }).join('');
       return `<div class="sc-block">
         ${R.isCoop(g)
-          ? `<div class="sc-name team-bar team-${Object.keys(g.teams).indexOf(p.id) + 1}"><span class="team-names">${g.winnerId === p.id ? ICON.crown : ''}${g.teams[p.id].map((m) => esc(m.name)).join(' &amp; ')}</span><span class="sc-total">${scoreTag(t[p.id])}</span></div>`
+          ? (() => { const ti = Object.keys(g.teams).indexOf(p.id); return `<div class="sc-name team-bar team-${ti + 1} ${TEAM_THEMES[ti].cls}">${teamCards(ti, 'mini')}<span class="team-names"><span class="team-label">${TEAM_THEMES[ti].name}</span><span>${g.winnerId === p.id ? ICON.crown : ''}${g.teams[p.id].map((m) => esc(m.name)).join(' &amp; ')}</span></span><span class="sc-total">${scoreTag(t[p.id])}</span></div>`; })()
           : `<div class="sc-name">${g.winnerId === p.id ? `<span class="gold">${ICON.crown}</span>` : ''}${esc(p.name)} <span class="sc-total">${scoreTag(t[p.id])}</span></div>`}
         <div class="sc-scroll"><table class="sc">
           <thead>${head}</thead>
