@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v55';
+const VERSION = 'kog-v56';
 const SHELL = [
   './',
   './index.html',
@@ -35,6 +35,26 @@ const SHELL = [
   './assets/duos/king-hearts.webp',
   './assets/duos/king-clubs.webp',
   './js/confetti.js',
+  './js/avatars.js',
+  './js/shop.js',
+  './assets/avatars/king-classic.webp',
+  './assets/avatars/king-closer.webp',
+  './assets/avatars/king-elder.webp',
+  './assets/avatars/king-gentleman.webp',
+  './assets/avatars/king-jolly-redhead.webp',
+  './assets/avatars/king-showman.webp',
+  './assets/avatars/king-smooth-operator.webp',
+  './assets/avatars/king-wink.webp',
+  './assets/avatars/king-young-gun.webp',
+  './assets/avatars/queen-boss.webp',
+  './assets/avatars/queen-crowned-afro.webp',
+  './assets/avatars/queen-focused.webp',
+  './assets/avatars/queen-free-spirit.webp',
+  './assets/avatars/queen-matriarch.webp',
+  './assets/avatars/queen-radiant.webp',
+  './assets/avatars/queen-sharp-shooter.webp',
+  './assets/avatars/queen-silver.webp',
+  './assets/avatars/queen-sunny.webp',
   './js/sync.js',
   './js/auth.js',
   './js/config.js',

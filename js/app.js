@@ -11,6 +11,8 @@ import * as A from './auth.js';
 import { figures, mountIllustrations, nextRoundFigure, tossFigure, tiebreakFigure, compassFigure, lagFigure, dn } from './illustrations.js';
 import { playHawk, unlockAudio } from './sound.js';
 import { kingRain, preloadKings } from './confetti.js';
+import { AVATARS, DEFAULT_AVATAR, avatarById, avatarFigure } from './avatars.js';
+import { BRANDS, ITEMS, ITEM_TYPES, cozyBadge } from './shop.js';
 
 // Per-device preferences (theme, sound).
 function getPref(key, fallback) {
@@ -30,6 +32,8 @@ function setPref(key, value) {
 // KOG is dark-only: it looks best that way, so there's no light mode or theme setting.
 document.documentElement.dataset.theme = 'dark';
 const soundOn = () => getPref('kog.sound', 'on') === 'on';
+/** The player's base avatar. Store items will live in their own locker, so they carry over when this changes. */
+const myAvatar = () => (avatarById(getPref('kog.avatar', '')) ? getPref('kog.avatar', '') : null);
 
 const $app = document.getElementById('app');
 const db = load();
@@ -468,6 +472,11 @@ function viewHome() {
           <span class="choice-ico ico-red">${ICON.target}</span>
           <span class="choice-text"><span class="choice-title">${L.GAME_NAME}</span><span class="choice-sub">Practice your lag putting in this cornhole-style game. First to 21 wins; Play 1v1 or 2v2</span></span>
           ${LAG_SCENE}
+        </button>
+        <button class="choice wide-choice store-choice" data-action="nav" data-view="store">
+          <span class="store-choice-badge">${cozyBadge(44, 'hb')}</span>
+          <span class="choice-text"><span class="choice-title">KOG Store</span><span class="choice-sub">Drip for your King or Queen. First drop: 2Cozy Golf Co. Everything's free for now.</span></span>
+          <span class="store-choice-art" aria-hidden="true">${ITEMS[4].art()}</span>
         </button>
       </div>
       ${SYNC ? '<button class="btn" data-action="open-join">Join a game</button>' : ''}
@@ -1830,10 +1839,75 @@ function profileBox() {
     inner = `<span class="nameplate big">${rankBadge(null, 34)}<b>${label}</b>${WR.winBall(WR.LEVELS[0], '0.95em')}</span>`;
     sub = A.accountsAvailable() ? 'Your profile and stats' : 'Accounts turn on with the KOG server';
   }
-  return `<button class="profile-box" data-action="nav" data-view="account">
-    <span class="pb-main">${inner}<span class="pb-sub">${sub}</span></span>
-    <span class="pb-go">${ICON.chevron}</span>
-  </button>`;
+  return `<div class="profile-box">
+    <button class="pb-main-btn" data-action="nav" data-view="account">
+      <span class="pb-main">${inner}<span class="pb-sub">${sub}</span></span>
+      <span class="pb-go">${ICON.chevron}</span>
+    </button>
+    <button class="pb-avatar-btn" data-action="nav" data-view="avatar" aria-label="Change your avatar">
+      ${avatarFigure(myAvatar() || DEFAULT_AVATAR, 92)}
+      <span class="pb-edit" aria-hidden="true">${ICON.pencil || "✎"}</span>
+    </button>
+  </div>`;
+}
+
+// ---------- avatars ----------
+/** Choose your avatar: on first launch, and any time after from the home screen or Settings. */
+function viewAvatar() {
+  const first = !myAvatar();
+  const pick = ui.avatarPick || myAvatar() || DEFAULT_AVATAR;
+  const tab = ui.avatarTab || avatarById(pick).kind;
+  const a = avatarById(pick);
+  const tiles = AVATARS.filter((x) => x.kind === tab).map((x) => `<button class="av-tile ${x.id === pick ? 'on' : ''}" data-action="avatar-pick" data-v="${x.id}" aria-pressed="${x.id === pick}">
+      ${avatarFigure(x.id, 104, { still: true })}
+      <span class="av-tile-name">${x.name}</span>
+    </button>`).join('');
+  return `${first ? `<header class="topbar"><div class="topbar-left"></div><h1>Choose your avatar</h1><div class="topbar-right"></div></header>` : topbar('Your avatar', ui.params.back || 'home')}
+  <main class="page avatar-page">
+    <section class="av-stage">
+      ${avatarFigure(pick, 230)}
+      <div class="av-stage-name">${a.name}</div>
+      <div class="av-stage-sub">${a.kind === 'king' ? 'King' : 'Queen'} of the Greens</div>
+    </section>
+    <div class="seg-wide" role="group" aria-label="Kings or Queens">
+      <button class="seg-opt" data-action="avatar-tab" data-v="king" aria-pressed="${tab === 'king'}">Kings</button>
+      <button class="seg-opt" data-action="avatar-tab" data-v="queen" aria-pressed="${tab === 'queen'}">Queens</button>
+    </div>
+    <div class="av-grid">${tiles}</div>
+    <p class="muted small av-note">Change your avatar anytime. Anything you get from the store stays with you when you switch.</p>
+  </main>
+  <footer class="dock"><button class="btn primary big" data-action="avatar-save">${first ? `Play as ${a.name}` : pick === myAvatar() ? 'Done' : `Switch to ${a.name}`}</button></footer>`;
+}
+
+// ---------- store ----------
+function viewStore() {
+  const filter = ui.storeFilter || 'All';
+  const items = ITEMS.filter((it) => filter === 'All' || it.type === filter);
+  const brand = BRANDS['2cozy'];
+  const chips = ITEM_TYPES.map((t) => `<button class="chip ${t === filter ? 'on' : ''}" data-action="store-filter" data-v="${t}" aria-pressed="${t === filter}">${t}</button>`).join('');
+  const cards = items.map((it) => `<article class="shop-card">
+      <div class="shop-art">${it.art()}</div>
+      <div class="shop-info">
+        <div class="shop-type">${it.type === 'Hats' ? 'Hat' : it.type === 'Tops' ? 'Top' : 'Bottoms'} · ${it.colorway}</div>
+        <h3 class="shop-name">${it.name}</h3>
+        <p class="shop-note">${it.note}</p>
+        <div class="shop-buy"><span class="shop-price">Free</span><button class="btn small-btn" disabled>Try on soon</button></div>
+      </div>
+    </article>`).join('');
+  return `${topbar('KOG Store')}
+  <main class="page store-page">
+    <section class="store-hero">
+      <div class="store-hero-av">${avatarFigure(myAvatar() || DEFAULT_AVATAR, 150)}</div>
+      <div class="store-hero-text">
+        <div class="eyebrow">Drip for your ${avatarById(myAvatar() || DEFAULT_AVATAR).kind === 'queen' ? 'Queen' : 'King'}</div>
+        <h2>Everything's free</h2>
+        <p class="muted small">Look around: items are on display while we build try-ons. Soon you'll dress your avatar, unlock limited drops and earn gear from challenges.</p>
+      </div>
+    </section>
+    <section class="brand-head">${cozyBadge(54, 'sb')}<div><h2>${brand.name}</h2><p class="muted small">${brand.tagline}</p></div></section>
+    <div class="chips store-chips">${chips}</div>
+    <div class="shop-grid">${cards}</div>
+  </main>`;
 }
 
 function viewAccount() {
@@ -2036,6 +2110,8 @@ function viewRules() {
 function viewSettings() {
   return `${topbar('Settings')}
   <main class="page">
+    <div class="section-head"><h2>Avatar</h2></div>
+    <button class="btn wide av-settings-btn" data-action="nav" data-view="avatar" data-back="settings">${avatarFigure(myAvatar() || DEFAULT_AVATAR, 40, { still: true })}<span>Change your avatar</span></button>
     <div class="section-head"><h2>Account</h2></div>
     <button class="btn wide" data-action="nav" data-view="account">${A.currentUser() ? (ui.profile ? `@${esc(ui.profile.gamertag)}` : 'Finish setting up your account') : 'Sign in'}</button>
     <div class="section-head"><h2>Sound</h2></div>
@@ -2165,6 +2241,7 @@ function render() {
     history: viewHistory, rules: viewRules, join: viewJoin, whoami: viewWhoami, share: viewShare, settings: viewSettings,
     'quick-setup': viewQuickSetup, quick: viewQuick, 'lag-setup': viewLagSetup, lag: viewLag, ranked: viewRanked, account: viewAccount, winballs: viewWinBalls,
     'ranked-modes': () => viewModes('ranked'), 'casual-modes': () => viewModes('casual'),
+    avatar: viewAvatar, store: viewStore,
   };
   // Keep a half-typed code if the screen redraws (e.g. a sync update).
   const codeInput = document.getElementById('join-code');
@@ -2622,6 +2699,27 @@ const actions = {
     ui.orderPopup = null;
     render();
   },
+  'avatar-pick': (d) => {
+    ui.avatarPick = d.v;
+    render();
+  },
+  'avatar-tab': (d) => {
+    ui.avatarTab = d.v;
+    render();
+  },
+  'avatar-save': () => {
+    const pick = ui.avatarPick || myAvatar() || DEFAULT_AVATAR;
+    const changed = pick !== myAvatar();
+    setPref('kog.avatar', pick);
+    ui.avatarPick = null;
+    ui.avatarTab = null;
+    go(ui.params.back || 'home');
+    if (changed) toast(`You're ${avatarById(pick).name}`);
+  },
+  'store-filter': (d) => {
+    ui.storeFilter = d.v;
+    render();
+  },
   'ranks-open': () => {
     ui.ranksChart = true;
     render();
@@ -2885,6 +2983,7 @@ document.addEventListener('submit', (e) => {
 if (A.accountsAvailable()) A.handleRedirect().then(refreshProfile);
 new Image().src = KOG_CARD; // preload the King card so it flashes instantly
 if (activeGame() && activeGame().status !== 'done') ui.view = 'game';
+if (!myAvatar()) ui.view = 'avatar';
 const joinParam = new URLSearchParams(location.search).get('join');
 if (joinParam && SYNC) {
   history.replaceState(null, '', location.pathname);
