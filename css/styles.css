@@ -518,7 +518,8 @@ input {
 .mode-art { position: absolute; z-index: -1; pointer-events: none; }
 .mode-art.duos-banner { inset: 0; background: url("../assets/duos-banner.webp") center 45% / cover no-repeat; opacity: 0.28; }
 .mode-art.h2h-banner { inset: 0; background: url("../assets/h2h-banner.webp") center 40% / cover no-repeat; opacity: 0.28; }
-.mode-art.chill-scene { inset: 0; width: 100%; height: 100%; opacity: 0.3; }
+.mode-art.casual-h2h { inset: 0; background: url("../assets/casual-h2h.webp") center 38% / cover no-repeat; opacity: 0.28; }
+.mode-art.casual-duos { inset: 0; background: url("../assets/casual-duos.webp") center 45% / cover no-repeat; opacity: 0.28; }
 
 /* Opening splash: the Kings crest pops up, the title fades in, then it all fades away (~3.8s).
    Pure CSS so it works even before the app's code loads; a tap skips it. */
