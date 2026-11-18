@@ -959,3 +959,8 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .rarity-rare .shop-type { color: #74c0fc; }
 .shop-card.rarity-rare { border-color: #1c7ed6; }
 .shop-card.rarity-uncommon { border-color: #2f9e44; }
+
+/* Store: each house's logo sits on its suit (heart, diamond, club) */
+.suit-mark { position: relative; display: block; flex: none; }
+.suit-mark svg { display: block; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45)); }
+.suit-mark img { position: absolute; left: 50%; width: 74%; height: 74%; object-fit: contain; transform: translate(-50%, -50%); filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5)); }

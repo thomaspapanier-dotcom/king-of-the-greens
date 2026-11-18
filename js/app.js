@@ -1886,9 +1886,26 @@ function viewAvatar() {
 
 // ---------- store ----------
 const HOUSES = ['2cozy', 'mccarthy', 'stazz', 'quiggs']; // the four brands, in suit order
-const houseMark = (key, size) => (key === '2cozy' ? cozyBadge(size, 'sb')
-  : key === 'kog' ? `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`
-  : `<img class="cozy-badge" src="assets/store/logos/${key}-1.webp" width="${size}" height="${size}" alt="" draggable="false">`);
+// Each house's logo sits on its suit, like the 2Cozy crest sits on its spade.
+const SUIT_PATHS = {
+  heart: 'M50 94C22 72 5 55 5 33 5 17 17 6 30 6c9 0 16 5 20 13 4-8 11-13 20-13 13 0 25 11 25 27 0 22-17 39-45 61Z',
+  diamond: 'M50 3Q68 28 93 50 68 72 50 97 32 72 7 50 32 28 50 3Z',
+  club: 'M50 6a21 21 0 0 1 17 33 21 21 0 1 1-12 34q2 13 13 21H32q11-8 13-21a21 21 0 1 1-12-34A21 21 0 0 1 50 6Z',
+};
+const HOUSE_SUITS = {
+  mccarthy: { suit: 'heart', fill: '#7a1420', y: 46 },
+  stazz: { suit: 'diamond', fill: '#b3141e', y: 50 },
+  quiggs: { suit: 'club', fill: '#1b2b4a', y: 47 },
+};
+const houseMark = (key, size) => {
+  if (key === '2cozy') return cozyBadge(size, 'sb');
+  if (key === 'kog') return `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`;
+  const h = HOUSE_SUITS[key];
+  const d = SUIT_PATHS[h.suit];
+  return `<span class="suit-mark" style="width:${size}px;height:${size}px" aria-hidden="true">
+    <svg viewBox="0 0 100 100" width="${size}" height="${size}"><path d="${d}" fill="#e6be4a" stroke="#e6be4a" stroke-width="7" stroke-linejoin="round"/><path d="${d}" fill="${h.fill}"/></svg>
+    <img src="assets/store/logos/${key}-1.webp" style="top:${h.y}%" alt="" draggable="false"></span>`;
+};
 
 function viewStore() {
   const filter = ui.storeFilter || 'All';
