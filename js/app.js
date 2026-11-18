@@ -1930,6 +1930,7 @@ const HOUSE_SUITS = {
 const houseMark = (key, size) => {
   if (key === '2cozy') return cozyBadge(size, 'sb');
   if (key === 'kog') return `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`;
+  if (key === 'crowns') return `<img class="crown-mark" src="assets/store/crowns/legendary-royal.webp" width="${size}" alt="" draggable="false">`;
   const h = HOUSE_SUITS[key];
   const d = SUIT_PATHS[h.suit];
   return `<span class="suit-mark" style="width:${size}px;height:${size}px" aria-hidden="true">
@@ -1948,14 +1949,14 @@ function viewStore() {
   const card = (it) => `<article class="shop-card rarity-${it.rarity}">
       <div class="shop-art">${it.art()}<span class="rarity-pill">${RARITY[it.rarity].label}</span></div>
       <div class="shop-info">
-        <div class="shop-type">${{ Hats: 'Hat', Tops: 'Top', Bottoms: 'Bottoms', Accessories: 'Accessory', Logos: 'Logo' }[it.type]} · ${it.colorway}</div>
+        <div class="shop-type">${{ Hats: 'Hat', Tops: 'Top', Bottoms: 'Bottoms', Accessories: 'Accessory', Logos: 'Logo', Crowns: 'Crown' }[it.type]} · ${it.colorway}</div>
         <h3 class="shop-name">${it.name}</h3>
         <p class="shop-note">${it.note}</p>
         <div class="shop-buy"><span class="shop-price">Free</span><button class="btn small-btn" disabled>${it.displayOnly ? 'Display only' : 'Try on soon'}</button></div>
       </div>
     </article>`;
   // One section per brand, rarest pieces first inside each.
-  const order = house ? [house] : ['kog', ...HOUSES];
+  const order = house ? [house] : ['kog', 'crowns', ...HOUSES];
   const sections = order.map((key) => [key, BRANDS[key]]).map(([key, brand]) => {
     const list = items.filter((it) => it.brand === key).sort((a, b) => RARITY[b.rarity].rank - RARITY[a.rarity].rank);
     if (!list.length) return '';

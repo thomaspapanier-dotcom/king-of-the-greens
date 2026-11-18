@@ -1199,3 +1199,9 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
     linear-gradient(color-mix(in srgb, var(--bg) 86%, transparent), color-mix(in srgb, var(--bg) 86%, transparent)),
     url("../assets/store-pattern.webp") 0 0 / 120px auto repeat;
 }
+
+/* Store: Crowns */
+.shop-crown { width: 88%; height: 88%; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.5)); animation: item-float 4.5s ease-in-out infinite; }
+.shop-card:nth-child(2n) .shop-crown { animation-delay: -1.6s; }
+@media (prefers-reduced-motion: reduce) { .shop-crown { animation: none; } }
+.crown-mark { display: block; flex: none; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5)); }

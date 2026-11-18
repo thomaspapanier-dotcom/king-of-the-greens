@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v74';
+const VERSION = 'kog-v75';
 const SHELL = [
   './',
   './index.html',
@@ -28,6 +28,18 @@ const SHELL = [
   './assets/splash.webp',
   './assets/store-front.webp',
   './assets/store-pattern.webp',
+  './assets/store/crowns/common-black.webp',
+  './assets/store/crowns/common-gold.webp',
+  './assets/store/crowns/common-silver.webp',
+  './assets/store/crowns/legendary-royal.webp',
+  './assets/store/crowns/rare-ivory.webp',
+  './assets/store/crowns/rare-onyx.webp',
+  './assets/store/crowns/uncommon-black.webp',
+  './assets/store/crowns/uncommon-ivory.webp',
+  './assets/store/crowns/uncommon-velvet.webp',
+  './assets/store/crowns/veryrare-obsidian.webp',
+  './assets/store/crowns/veryrare-platinum.webp',
+  './assets/store/crowns/veryrare-ruby.webp',
   './assets/kings/king-s.webp',
   './assets/kings/king-h.webp',
   './assets/kings/king-d.webp',

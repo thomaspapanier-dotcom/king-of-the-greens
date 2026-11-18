@@ -8,6 +8,10 @@ export const BRANDS = {
     name: 'KOG Originals',
     tagline: 'Limited pieces from the King of the Greens.',
   },
+  crowns: {
+    name: 'Crowns',
+    tagline: 'Every King needs one. Suits, jewels and gold.',
+  },
   '2cozy': {
     name: '2Cozy Golf Co.',
     tagline: 'Stay cozy over every putt.',
@@ -222,4 +226,22 @@ for (const [brand, styles] of Object.entries(LOGO_STYLES)) {
 // 2Cozy Co. collection, drawn as cartoon clothing from the user's lookbook (see cozy-wear.js).
 ITEMS.push(...COZY_WEAR);
 
-export const ITEM_TYPES = ['All', 'Hats', 'Tops', 'Bottoms', 'Logos'];
+// Crowns: cut from the user's crown tier sheet (3 common, 3 uncommon, 2 rare, 3 very rare, 1 legendary).
+const crownArt = (src) => () => `<img class="shop-crown" src="assets/store/crowns/${src}.webp" alt="" draggable="false">`;
+const crown = (file, rarity, name, colorway, note) => ({ id: `crown-${file}`, brand: 'crowns', type: 'Crowns', rarity, name, colorway, note, art: crownArt(file) });
+ITEMS.push(
+  crown('common-gold', 'common', 'Gold Suit Crown', 'Gold', 'Classic gold crown with a spade, heart, club and diamond around the band.'),
+  crown('common-silver', 'common', 'Silver Spade Crown', 'Silver', 'Polished silver crown with a black spade up front and red diamonds.'),
+  crown('common-black', 'common', 'Black Heart Crown', 'Black & Gold', 'Black crown trimmed in gold, with a red heart and white clubs.'),
+  crown('uncommon-velvet', 'uncommon', 'Velvet Club Crown', 'Red Velvet & Gold', 'Gold crown over red velvet, with a black club and red diamonds.'),
+  crown('uncommon-black', 'uncommon', 'Midnight Spade Crown', 'Black & Gold', 'Black crown with a white spade, red hearts and diamonds and a studded gold band.'),
+  crown('uncommon-ivory', 'uncommon', 'Ivory Diamond Crown', 'Ivory & Gold', 'Ivory crown with a big red diamond, red hearts and a jeweled band.'),
+  crown('rare-onyx', 'rare', 'Onyx Spade Crown', 'Black & Red', 'Spiked black crown with a glowing red spade, white clubs and red gems.'),
+  crown('rare-ivory', 'rare', 'Royal Heart Crown', 'Ivory, Gold & Ruby', 'Ivory and gold crown with a ruby heart, black clubs and red velvet.'),
+  crown('veryrare-obsidian', 'very-rare', 'Obsidian Club Crown', 'Black Diamond', 'Sparkling black crown with a diamond club, red gems and a crystal band.'),
+  crown('veryrare-ruby', 'very-rare', 'Ruby Heart Crown', 'Gold & Ruby', 'Gold crown on red velvet with a ruby heart, black spades and a crystal band.'),
+  crown('veryrare-platinum', 'very-rare', 'Platinum Diamond Crown', 'Platinum', 'Filigree platinum crown with a red diamond, black spades and crystals.'),
+  crown('legendary-royal', 'legendary', 'The King of the Greens Crown', 'Gold, Velvet & Diamonds', 'The royal crown: all four suits in gold, red velvet, a jeweled cross and diamonds all around.'),
+);
+
+export const ITEM_TYPES = ['All', 'Crowns', 'Hats', 'Tops', 'Bottoms', 'Logos'];
