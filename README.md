@@ -19,7 +19,7 @@ Then open http://localhost:5173. Rules tests are at http://localhost:5173/tests/
 | `js/rules.js` | Rules engine: scoring, King, putting order, special rounds, Eagle round, putt-off, stats. Pure functions, no UI. |
 | `js/app.js` | Screens and taps |
 | `js/store.js` | Saves players and games on the device (localStorage) |
-| `css/styles.css` | Styles (light and dark mode) |
+| `css/styles.css` | Styles (dark mode only) |
 | `sw.js`, `manifest.webmanifest`, `icons/` | Offline support and home-screen install |
 | `tests/` | Rules tests that run in the browser |
 
