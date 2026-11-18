@@ -1192,3 +1192,10 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .choice.wide-choice.store-choice > * { position: relative; }
 .choice.wide-choice.store-choice > .store-choice-art { position: absolute; }
 .choice.wide-choice.store-choice::before { background: url("../assets/store-pattern.webp") 0 0 / 96px auto repeat; opacity: 0.14; }
+
+/* K.O.G. Store page: the faint card-suit pattern instead of the putting-green photo */
+#app:has(.store-page)::before {
+  background:
+    linear-gradient(color-mix(in srgb, var(--bg) 86%, transparent), color-mix(in srgb, var(--bg) 86%, transparent)),
+    url("../assets/store-pattern.webp") 0 0 / 120px auto repeat;
+}
