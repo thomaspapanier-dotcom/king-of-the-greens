@@ -222,8 +222,8 @@ export const ITEMS = [
 
 // Potential logos for the three brands still choosing their look (display only, not wearable).
 const LOGO_STYLES = {
-  mccarthy: ['Shield crest', 'Cap profile', 'Round badge', 'Script banner'],
-  stazz: ['Shield crest', 'Cap profile', 'Round badge', 'Lounge banner'],
+  mccarthy: ['Shield crest', 'Cap profile', 'Round badge', 'Script banner', 'Heart hands crest'],
+  stazz: ['Shield crest', 'Cap profile', 'Round badge', 'Lounge banner', 'Diamond hands crest'],
   quiggs: ['Shield crest', 'Cap profile', 'Round badge', 'Course banner', 'Q monogram'],
 };
 const logoArt = (src) => () => `<img class="shop-logo" src="${src}" alt="" draggable="false">`;
