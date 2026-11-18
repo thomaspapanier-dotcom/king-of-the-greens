@@ -482,9 +482,8 @@ function viewHome() {
           ${LAG_SCENE}
         </button>
         <button class="choice wide-choice store-choice" data-action="nav" data-view="store">
-          <span class="store-choice-badge">${cozyBadge(44, 'hb')}</span>
-          <span class="choice-text"><span class="choice-title">KOG Store</span><span class="choice-sub">Drip for your King or Queen. First drop: 2Cozy Golf Co. Everything's free for now.</span></span>
-          <span class="store-choice-art" aria-hidden="true">${ITEMS.find((it) => it.id === '2c-cap-black-red').art()}</span>
+          <span class="choice-text"><span class="choice-title">K.O.G. Store</span><span class="choice-sub">Drip for your King or Queen. First drop: 2Cozy Golf Co. Everything's free for now.</span></span>
+          <img class="store-choice-art store-front" src="assets/store-front.webp" alt="" aria-hidden="true" draggable="false">
         </button>
       </div>
       ${SYNC ? '<button class="btn" data-action="open-join">Join a game</button>' : ''}
@@ -1964,7 +1963,7 @@ function viewStore() {
     return `<section class="brand-head">${mark}<div><h2>${brand.name}</h2><p class="muted small">${brand.tagline}</p></div></section>
     <div class="shop-grid">${list.map(card).join('')}</div>`;
   }).join('');
-  return `${topbar('KOG Store')}
+  return `${topbar('K.O.G. Store')}
   <main class="page store-page">
     <section class="store-hero">
       <div class="store-hero-av">${avatarFigure(myAvatar() || DEFAULT_AVATAR, 150)}</div>
