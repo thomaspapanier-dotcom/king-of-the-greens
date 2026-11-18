@@ -507,11 +507,11 @@ const CROWNING_ART = `<svg class="mode-art crowning" viewBox="0 0 200 130" aria-
   </g>
 </svg>`;
 
-// Duos: a face-off by color. Red Kings (hearts, diamonds) on the left facing right,
-// black Kings (spades, clubs) on the right facing left.
+// Duos: a face-off by color, using the user's golf-brand Kings exactly as drawn.
+// Red Kings (hearts, diamonds) on the left, black Kings (spades, clubs) on the right.
 const FACEOFF_ART = `<span class="mode-art faceoff" aria-hidden="true">
-  <img class="fo-card fo-l1" src="assets/kings/king-h.webp" alt=""><img class="fo-card fo-l2" src="assets/kings/king-d.webp" alt="">
-  <img class="fo-card fo-r1" src="assets/kings/king-s-left.webp" alt=""><img class="fo-card fo-r2" src="assets/kings/king-c-left.webp" alt="">
+  <img class="fo-card fo-l1" src="assets/duos/king-hearts.webp" alt=""><img class="fo-card fo-l2" src="assets/duos/king-diamonds.webp" alt="">
+  <img class="fo-card fo-r1" src="assets/duos/king-clubs.webp" alt=""><img class="fo-card fo-r2" src="assets/duos/king-spades.webp" alt="">
 </span>`;
 
 /** Ranked or Casual → pick Head-to-Head / 1v1v1 or Duos. */
