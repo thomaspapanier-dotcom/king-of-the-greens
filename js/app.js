@@ -692,7 +692,46 @@ function viewModes(kind) {
         <span class="choice-sub">${ranked ? 'Team up with any rank. Each of you gains or loses your own points.' : 'A foursome in two teams. Teammates split the balls, so it runs about twice as fast.'}</span>
       </button>
     </div>
+    ${ranked ? currentRankPanel() : ''}
   </main>`;
+}
+
+/**
+ * "Current rank" on the Ranked screen: your rank big in the middle with your Elo, and the two
+ * ranks you're pinched between on either side (smaller), so you can see how far the next rank
+ * is and how close you are to dropping. Signed out, it shows an example.
+ */
+function currentRankPanel() {
+  const pf = A.accountsAvailable() && A.currentUser() ? ui.profile : null;
+  const example = !pf;
+  const mmr = example ? 1447 : pf.ranked_mmr;
+  const idx = example ? RK.rankFor(mmr).index : pf.ranked_rank_index;
+  const head = `<div class="section-head"><h2>Current rank</h2>${example ? '<span class="muted small">Example</span>' : ''}</div>`;
+  if (idx == null || mmr == null) {
+    return `${head}<section class="card cur-rank unranked">
+      <div class="cr-mid">${rankBadge(null, 64)}<div class="cr-name">Unranked</div><div class="cr-elo">Finish ${RK.PLACEMENT_MATCHES} placement matches</div></div>
+    </section>`;
+  }
+  const cur = RK.RANKS[idx];
+  const below = RK.RANKS[idx - 1] || null;
+  const above = RK.RANKS[idx + 1] || null;
+  const dropAt = cur.min - RK.DEMOTION_BUFFER; // you only drop once you're this far under the floor
+  const toUp = above ? above.min - mmr : null;
+  const toDrop = below ? mmr - dropAt + 1 : null;
+  const side = (r, cls, label, sub) => r
+    ? `<div class="cr-side ${cls}">${rankBadge(r, 42)}<div class="cr-side-name">${r.name}</div><div class="cr-side-elo">${label}</div><div class="cr-gap">${sub}</div></div>`
+    : `<div class="cr-side ${cls} cr-end"><div class="cr-side-name">${cls === 'down' ? 'Bottom of the ladder' : 'Top of the ladder'}</div></div>`;
+  const low = Math.max(cur.min, dropAt);
+  const pos = above ? Math.min(100, Math.max(0, ((mmr - low) / (above.min - low)) * 100)) : 100;
+  return `${head}<section class="card cur-rank">
+    <div class="cr-row">
+      ${side(below, 'down', `Under ${dropAt} Elo`, `▼ ${toDrop} to drop`)}
+      <div class="cr-mid">${rankBadge(cur, 64)}<div class="cr-name">${cur.name}</div><div class="cr-elo">${mmr} Elo</div></div>
+      ${side(above, 'up', `${above ? above.min : ''} Elo`, `▲ ${toUp} to go`)}
+    </div>
+    ${above ? `<div class="cr-bar" role="img" aria-label="${toUp} Elo to ${above.name}"><span style="width:${pos.toFixed(0)}%"></span></div>` : ''}
+    ${example ? '<p class="muted small cr-note">Sign in and play ranked to see your own.</p>' : ''}
+  </section>`;
 }
 
 function addPlayerForm(disabled) {

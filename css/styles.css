@@ -790,3 +790,22 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .np-example .nameplate { margin: 8px 0 4px; }
 .wb-min { text-align: right; font-size: 15px; }
 .wb-button { gap: 10px; }
+
+/* Ranked screen: Current rank, pinched between the rank below and the rank above */
+.cur-rank { padding: 16px 10px 14px; }
+.cr-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 6px; }
+.cr-mid { text-align: center; display: grid; justify-items: center; gap: 2px; }
+.cr-mid .rank-badge { filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45)); }
+.cr-name { font-size: 19px; font-weight: 800; margin-top: 4px; }
+.cr-elo { font-size: 15px; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+.cr-side { text-align: center; display: grid; justify-items: center; gap: 1px; opacity: 0.85; }
+.cr-side .rank-badge { margin-bottom: 2px; }
+.cr-side-name { font-size: 12.5px; font-weight: 700; }
+.cr-side-elo { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.cr-gap { font-size: 11.5px; font-weight: 800; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.cr-side.up .cr-gap { color: var(--under); }
+.cr-side.down .cr-gap { color: var(--over); }
+.cr-end { align-self: center; color: var(--muted); }
+.cr-bar { position: relative; height: 8px; margin: 14px 8px 2px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--line); overflow: hidden; }
+.cr-bar span { position: absolute; inset: 0 auto 0 0; border-radius: 99px; background: linear-gradient(90deg, var(--over), var(--gold), var(--under)); }
+.cr-note { text-align: center; margin: 10px 0 0; }
