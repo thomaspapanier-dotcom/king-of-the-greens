@@ -621,7 +621,7 @@ function viewModes(kind) {
 // ---------- ranked: how it works, find match / post match ----------
 function viewRankedHow() {
   return `${topbar('How ranked works', ui.params.back || 'ranked-modes')}
-  <main class="page lf-page">${LF.howHtml(ui.howTab || '1v1')}</main>`;
+  <main class="page lf-page">${LF.howHtml(ui.howTab || '1v1', ui.howSlide || 0)}</main>`;
 }
 const lfgState = () => ui.lfg || (ui.lfg = { tab: 'find', show: 'all', miles: 50, near: 0, pick: null, step: 0, outcome: 'show', mine: null, form: LF.newForm() });
 function viewLfg() {
@@ -2782,6 +2782,11 @@ const actions = {
   },
   'how-tab': (d) => {
     ui.howTab = d.v;
+    ui.howSlide = 0;
+    render();
+  },
+  'how-slide': (d) => {
+    ui.howSlide = Math.max(0, Math.min(Number(d.v), LF.HOW_COUNT[ui.howTab || '1v1'] - 1));
     render();
   },
   'lfg-tab': (d) => {
@@ -2992,6 +2997,19 @@ document.addEventListener('change', async (e) => {
       toast('That photo couldn’t be opened. Try a JPG or PNG.');
     }
   }
+});
+// Swipe the How it works slides left and right.
+let swipeX = null;
+document.addEventListener('touchstart', (e) => {
+  swipeX = e.target.closest('.hw-slide') ? e.touches[0].clientX : null;
+}, { passive: true });
+document.addEventListener('touchend', (e) => {
+  if (swipeX === null) return;
+  const dx = e.changedTouches[0].clientX - swipeX;
+  swipeX = null;
+  if (Math.abs(dx) < 40) return;
+  ui.howSlide = Math.max(0, Math.min((ui.howSlide || 0) + (dx < 0 ? 1 : -1), LF.HOW_COUNT[ui.howTab || '1v1'] - 1));
+  render();
 });
 let tagTimer;
 document.addEventListener('input', (e) => {

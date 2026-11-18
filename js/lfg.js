@@ -11,7 +11,7 @@ export const rankByName = (name) => RK.RANKS.find((r) => r.name === name);
 const P = (tag, rank, pct) => ({ tag, rank: rankByName(rank), pct });
 export const ME = { tag: 'You', rank: RK.rankFor(1447), pct: 52, me: true }; // same example as the Current rank panel
 const PEOPLE = {
-  pap: P('Pap_Daddy_Kid', 'Silver II', 54),
+  pap: P('Pap_Daddy_Kush', 'Silver II', 54),
   chex: P('xXChexterXx', 'Gold IV', 57),
   fupa: P('littleFUPA', 'Platinum III', 56),
   joey: P('JoeyStazz92', 'Diamond IV', 60),
@@ -234,52 +234,154 @@ export function postHtml(f) {
 }
 PEOPLE.me = ME;
 
-// ---------- How it works ----------
-function timeline(steps) {
-  return `<ol class="hw-steps">${steps.map(([title, text], i) => `<li><span class="hw-n">${i + 1}</span><div><h3>${title}</h3>${text}</div></li>`).join('')}</ol>`;
-}
+// ---------- How it works: a clickable slideshow of phone screens ----------
 const deltaTag = (n) => `<span class="hw-delta ${n >= 0 ? 'up' : 'down'}">${n >= 0 ? '+' : '−'}${Math.abs(n)}</span>`;
 const rating = (p) => ({ mmr: p.rank.min + 20, games: 40, rankIndex: p.rank.index });
 
-export function howHtml(tab) {
-  const tabs = `<div class="seg-wide" role="group" aria-label="Which match">
-    <button class="seg-opt" data-action="how-tab" data-v="1v1" aria-pressed="${tab === '1v1'}">1 v 1 before tee time</button>
-    <button class="seg-opt" data-action="how-tab" data-v="duos" aria-pressed="${tab === 'duos'}">Duos with your foursome</button></div>`;
-  if (tab === 'duos') {
-    const t1 = [ME, PEOPLE.jimm];
-    const t2 = [PEOPLE.moose, PEOPLE.mike];
-    const [a, b] = RK.rateTeams(t1.map(rating), t2.map(rating), 1);
-    const row = (p, r) => `<div class="hw-res">${plate(p)}${deltaTag(r.change)}</div>`;
-    return `${tabs}
-      <section class="card hw-story"><div class="eyebrow">Saturday · Tee time 9:00 AM</div>
-        <p>You and three friends show up an hour early and play a <b>ranked duos</b> match on the practice green.</p></section>
-      ${timeline([
-        ['All four are verified', `<p>Ranked duos needs four phone-verified players. Each of you verifies your number once.</p>
-          <div class="hw-plates">${[...t1, ...t2].map((p) => plate(p, { check: true })).join('')}</div>`],
-        ['Pick the teams', `<p>Any ranks can team up. Here you (${ME.rank.name}) pair with JimmBurg (${PEOPLE.jimm.rank.name}).</p>
-          <div class="hw-teams"><div class="hw-team red"><span>Red Kings</span>${t1.map((p) => plate(p)).join('')}</div><div class="vs">vs</div><div class="hw-team black"><span>Black Kings</span>${t2.map((p) => plate(p)).join('')}</div></div>`],
-        ['Start the match and check in', '<p>You tap <b>KOG Ranked → Duos</b> and invite the other three. Everyone accepts on their own phone, and all four phones check in at the course.</p>'],
-        ['Play', '<p>Teammates split the balls, so a duos match runs about 25 minutes. Each team enters its own balls and the other team confirms each round.</p>'],
-        ['Everyone signs off, ranks update', `<p>Red Kings win. Each player moves on their <b>own</b> rating against the other team, so the higher-ranked teammate gains less on a win (and would lose more on a loss).</p>
-          <div class="hw-results">${row(t1[0], a[0])}${row(t1[1], a[1])}${row(t2[0], b[0])}${row(t2[1], b[1])}</div>`],
-        ['Rematch or tee off', '<p>Still time? A rematch with the same four counts half today, then a quarter, so nobody can farm points off friends. Then head to the first tee.</p>'],
-      ])}`;
-  }
+/** An iPhone-style frame around a mock app screen. */
+function phoneFrame(body, { lock = false, time = '9:41' } = {}) {
+  return `<div class="mk-phone${lock ? ' lock' : ''}"><div class="mk-island"></div>
+    <div class="mk-status"><span>${time}</span><span class="mk-icons">▂▄▆ ᯤ ▮</span></div>
+    <div class="mk-screen">${body}</div><div class="mk-home"></div></div>`;
+}
+const mkTop = (title) => `<div class="mk-top"><span class="mk-back">‹</span><b>${title}</b><span></span></div>`;
+const mkBtn = (label, cls = '') => `<div class="mk-btn ${cls}">${label}</div>`;
+const tap = '<span class="mk-tap" aria-hidden="true"></span>';
+const mkRow = (p, right = '', cls = '') => `<div class="mk-row ${cls}">${plate(p, { badge: 18, ball: 13 })}<span class="mk-right">${right}</span></div>`;
+const KING = (suit) => `<img class="mk-king" src="assets/duos/king-${suit}.webp" alt="">`;
+
+function slides1v1() {
   const friend = PEOPLE.mac;
   const [a, b] = RK.rate1v1(rating(ME), rating(friend), 1);
+  const rank = ME.rank;
+  const next = RK.RANKS[rank.index + 1];
+  return [
+    {
+      title: 'Verify your phone', text: 'Ranked needs a verified phone number, one per player. You each do this once, the first time you play ranked.',
+      screen: `${mkTop('Your account')}
+        <div class="mk-card"><div class="mk-label">Phone number</div><div class="mk-input">(352) ••• ••47</div>
+          <div class="mk-label">Enter the 6-digit code</div><div class="mk-code">${'482916'.split('').map((d) => `<span>${d}</span>`).join('')}</div></div>
+        <div class="mk-banner ok">✓ Phone-verified · Ranked unlocked</div>
+        <div class="mk-card">${mkRow(ME, '<span class="check">✓</span>')}</div>`,
+    },
+    {
+      title: 'Start a ranked match', text: `On the practice green, open <b>KOG Ranked → Head-to-Head</b> and invite ${friend.tag}.`,
+      screen: `${mkTop('KOG Ranked')}
+        <div class="mk-mode on"><img src="assets/h2h-banner.webp" alt="">${tap}<b>Head-to-Head</b></div>
+        <div class="mk-mode"><img src="assets/duos-banner.webp" alt=""><b>Duos · 2 v 2</b></div>
+        <div class="mk-sheet"><div class="mk-grab"></div><b>Invite to a ranked match</b>
+          <div class="mk-input search">🔍 mcc</div>
+          <div class="mk-row">${plate(friend, { badge: 18, ball: 13 })}<span class="mk-pill">Invite${tap}</span></div></div>`,
+    },
+    {
+      title: 'Your friend accepts', text: `${friend.tag} gets the invite on their own phone and taps Accept.`,
+      screen: `<div class="mk-lock"><div class="mk-lock-day">Saturday, November 21</div><div class="mk-lock-time">9:32</div></div>
+        <div class="mk-notif"><div class="mk-notif-app">👑 KOG Ranked <span>now</span></div>
+          <b>Ranked match invite from</b><div>${plate(ME, { badge: 16, ball: 12 })}</div><div>wants a ranked 1 v 1 at Skyview Golf Course.</div>
+          <div class="mk-notif-btns"><span>Decline</span><span class="yes">Accept${tap}</span></div></div>`,
+      lock: true, time: '9:32',
+    },
+    {
+      title: 'Check in at the course', text: 'Both phones confirm you’re at the course (within about 200 m). That keeps every ranked match real.',
+      screen: `${mkTop('Check in')}
+        <div class="mk-map"><div class="mk-ring"></div><div class="mk-pin">📍</div><span>Skyview Golf Course</span></div>
+        <div class="mk-card">${mkRow(ME, '<span class="mk-ok">✓</span>')}${mkRow(friend, '<span class="mk-ok">✓</span>')}</div>
+        ${mkBtn(`Start ranked match${tap}`, 'primary')}`,
+    },
+    {
+      title: 'Play the 7 rounds', text: 'About 30 minutes. Each of you enters your own balls, and the other confirms every round.',
+      screen: `${mkTop('Round 3 of 7')}
+        <div class="mk-card"><div class="mk-label">Totals</div>${mkRow(ME, '<b class="mk-score">−2</b>', 'lead')}${mkRow(friend, '<b class="mk-score">−1</b>')}</div>
+        <div class="mk-card"><div class="mk-label">Your balls this round</div>
+          <div class="mk-balls"><span class="b">Birdie</span><span class="p">Par</span><span class="b">Birdie</span></div></div>
+        <div class="mk-banner">✓ ${friend.tag} confirmed round 3</div>
+        ${mkBtn('Next round', 'primary')}`,
+    },
+    {
+      title: 'Both sign off, ranks update', text: `You win. Beating a higher rank (${friend.rank.name}) pays more than beating a lower one. Then head to your tee time.`,
+      screen: `${mkTop('Ranked result')}
+        <div class="mk-win">🏆 Victory</div>
+        <div class="mk-card"><div class="mk-label">MMR change</div>${mkRow(ME, deltaTag(a.change))}${mkRow(friend, deltaTag(b.change))}</div>
+        <div class="mk-card"><div class="mk-label">${rank.name} → ${next.name}</div><div class="mk-bar"><span style="width:${Math.min(96, 40 + a.change * 2)}%"></span></div></div>
+        ${mkBtn('⛳ Head to your tee time', 'primary')}`,
+    },
+  ];
+}
+
+function slidesDuos() {
+  const t1 = [ME, PEOPLE.jimm];
+  const t2 = [PEOPLE.moose, PEOPLE.mike];
+  const [a, b] = RK.rateTeams(t1.map(rating), t2.map(rating), 1);
+  const team = (cls, name, kings, ps) => `<div class="mk-team ${cls}"><div class="mk-team-head">${kings}<b>${name}</b></div>${ps.map((p) => plate(p, { badge: 18, ball: 13 })).join('')}</div>`;
+  return [
+    {
+      title: 'All four are verified', text: 'You and three friends show up an hour early. Ranked duos needs all four players phone-verified.',
+      screen: `${mkTop('Ranked duos lobby')}
+        <div class="mk-card">${[...t1, ...t2].map((p) => mkRow(p, '<span class="check">✓</span>')).join('')}</div>
+        <div class="mk-banner ok">4 of 4 verified · ready</div>
+        ${mkBtn(`Pick teams${tap}`, 'primary')}`,
+    },
+    {
+      title: 'Pick the teams', text: `Any ranks can team up. You (${ME.rank.name}) pair with JimmBurg (${PEOPLE.jimm.rank.name}).`,
+      screen: `${mkTop('Teams')}
+        ${team('red', 'Red Kings', KING('hearts') + KING('diamonds'), t1)}
+        <div class="mk-vs">VS</div>
+        ${team('black', 'Black Kings', KING('clubs') + KING('spades'), t2)}
+        ${mkBtn(`Lock teams${tap}`, 'primary')}`,
+    },
+    {
+      title: 'Everyone checks in', text: 'All four phones confirm you’re at the course before the match opens.',
+      screen: `${mkTop('Check in')}
+        <div class="mk-map"><div class="mk-ring"></div><div class="mk-pin">📍</div><span>The Meadows at Citrus Hills</span></div>
+        <div class="mk-card">${[...t1, ...t2].map((p) => mkRow(p, '<span class="mk-ok">✓</span>')).join('')}</div>`,
+    },
+    {
+      title: 'Play as teams', text: 'Teammates split the balls, so duos runs about 25 minutes. The other team confirms every round.',
+      screen: `${mkTop('Round 5 of 7')}
+        <div class="mk-card"><div class="mk-label">Team totals</div>
+          <div class="mk-row lead"><span class="mk-tname red">${KING('hearts')} Red Kings</span><b class="mk-score">−3</b></div>
+          <div class="mk-row"><span class="mk-tname black">${KING('spades')} Black Kings</span><b class="mk-score">−1</b></div></div>
+        <div class="mk-card"><div class="mk-label">This set</div>
+          <div class="mk-balls"><span class="b">You · Birdie</span><span class="p">JimmBurg · Par</span></div></div>
+        <div class="mk-banner">✓ Black Kings confirmed round 5</div>`,
+    },
+    {
+      title: 'Ranks update for each player', text: 'Red Kings win. Everyone moves on their own rating, so the higher-ranked teammate gains less on a win and loses more on a loss.',
+      screen: `${mkTop('Ranked result')}
+        <div class="mk-win">🏆 Red Kings win</div>
+        <div class="mk-card"><div class="mk-label">MMR change</div>${mkRow(t1[0], deltaTag(a[0].change))}${mkRow(t1[1], deltaTag(a[1].change))}${mkRow(t2[0], deltaTag(b[0].change))}${mkRow(t2[1], deltaTag(b[1].change))}</div>`,
+    },
+    {
+      title: 'Run it back, or tee off', text: 'Still time? A rematch with the same four counts half today, then a quarter, so nobody can farm points off friends.',
+      screen: `${mkTop('Ranked result')}
+        <div class="mk-card mk-center"><div class="mk-big">Run it back?</div><div class="mk-label">Same four players today counts ½</div></div>
+        ${mkBtn('Rematch (½ points)')}
+        ${mkBtn('⛳ Head to the first tee', 'primary')}`,
+    },
+  ];
+}
+
+export const HOW_COUNT = { '1v1': 6, duos: 6 };
+
+export function howHtml(tab, idx = 0) {
+  const list = tab === 'duos' ? slidesDuos() : slides1v1();
+  const i = Math.max(0, Math.min(idx, list.length - 1));
+  const s = list[i];
+  const tabs = `<div class="seg-wide" role="group" aria-label="Which match">
+    <button class="seg-opt" data-action="how-tab" data-v="1v1" aria-pressed="${tab !== 'duos'}">1 v 1 before tee time</button>
+    <button class="seg-opt" data-action="how-tab" data-v="duos" aria-pressed="${tab === 'duos'}">Duos with your foursome</button></div>`;
+  const dots = list.map((_, k) => `<button class="hw-dot ${k === i ? 'on' : ''}" data-action="how-slide" data-v="${k}" aria-label="Slide ${k + 1}"></button>`).join('');
   return `${tabs}
-    <section class="card hw-story"><div class="eyebrow">Saturday · Tee time 10:10 AM</div>
-      <p>You and a friend get to the course 40 minutes early and play a <b>ranked 1 v 1</b> on the practice green.</p></section>
-    ${timeline([
-      ['Both of you are verified', `<p>Ranked needs a phone-verified account, one number per player. You each verify once, the first time you play ranked.</p>
-        <div class="hw-plates">${plate(ME, { check: true })}${plate(friend, { check: true })}</div>`],
-      ['Start a ranked match', `<p>You tap <b>KOG Ranked → Head-to-Head</b> and invite ${friend.tag}, who accepts on their own phone.</p>`],
-      ['Check in', '<p>Both phones confirm you’re at the course (within about 200 m). That keeps ranked matches real.</p>'],
-      ['Play the 7 rounds', '<p>About 30 minutes. Each of you scores your own balls on your own phone, and the other confirms each round.</p>'],
-      ['Both sign off, ranks update', `<p>You win. Ranks move by the gap between you, so beating a higher rank (${friend.rank.name}) pays more.</p>
-        <div class="hw-results"><div class="hw-res">${plate(ME)}${deltaTag(a.change)}</div><div class="hw-res">${plate(friend)}${deltaTag(b.change)}</div></div>`],
-      ['Head to the first tee', '<p>Done with time to spare for a warm-up swing.</p>'],
-    ])}
-    <section class="card hw-other"><b>No friend free?</b> Use <b>Find Match / Post Match</b> to play a ranked match against someone near you.
-      <button class="btn wide" data-action="nav" data-view="lfg" data-back="ranked-how">Find Match / Post Match</button></section>`;
+    <div class="hw-deck" data-deck="${tab}">
+      <div class="hw-slide" key="${tab}-${i}">${phoneFrame(s.screen, s)}</div>
+      <div class="hw-caption"><div class="hw-count">${i + 1} of ${list.length}</div><h3>${s.title}</h3><p>${s.text}</p></div>
+      <div class="hw-nav">
+        <button class="btn" data-action="how-slide" data-v="${i - 1}" ${i === 0 ? 'disabled' : ''}>‹ Back</button>
+        <div class="hw-dots">${dots}</div>
+        ${i < list.length - 1 ? `<button class="btn primary" data-action="how-slide" data-v="${i + 1}">Next ›</button>` : `<button class="btn primary" data-action="how-slide" data-v="0">Replay</button>`}
+      </div>
+    </div>
+    <section class="card hw-other"><b>No friends free?</b> Use <b>Find Match / Post Match</b> to play a ranked match against someone near you.
+      <button class="btn wide" data-action="nav" data-view="lfg" data-back="ranked-how">Find Match / Post Match</button></section>
+    <p class="muted small lf-example">How ranked could look once it’s live. Example players.</p>`;
 }
