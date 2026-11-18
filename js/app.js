@@ -292,7 +292,7 @@ function announce(g, events) {
   }
 }
 
-const KOG_CARD = 'assets/kog-card.webp';
+const KOG_CARD = 'assets/four-kings.webp'; // the Four Kings: home screen and the New KOG flash
 let flashTimer;
 /** Full-screen King card for a newly crowned KOG; the change-of-KOG window follows it. */
 function flashKogCard() {
@@ -431,7 +431,7 @@ function viewHome() {
   }
   return `<main class="page home">
     <div class="hero">
-      <img class="hero-card" src="assets/four-kings.webp" alt="The four Kings of the Greens">
+      <img class="hero-card" src="${KOG_CARD}" alt="The four Kings of the Greens">
       <h1>King of the Greens</h1>
       <p>The putting game for 1–4 players</p>
     </div>
