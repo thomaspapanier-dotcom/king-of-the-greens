@@ -1423,3 +1423,27 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 /* Home example nameplate: show the Kings' crowns and faces, a touch taller */
 .profile-box.pb-example, .pb-plate { min-height: 92px; }
 .pb-example .pb-bn { object-position: center 6%; }
+
+/* Banners are the same size as the Lag 21 box, so more of each picture shows */
+.ch-art { height: 140px; }
+.ch-art.big { height: 160px; }
+.ch-art .ch-bn { object-position: center 12%; }
+.profile-box.pb-example, .pb-plate { min-height: 140px; }
+.pb-example .pb-bn { object-position: center 12%; }
+.pb-badge { width: 96px; height: 96px; }
+.pb-tag { font-size: 24px; }
+
+/* A dark outline so the gamertag, rank badge and win % ball pop off any banner */
+.pb-tag, .np b { text-shadow: 0 0 2px #000, 0 0 2px #000, 0 0 3px #000, 0 2px 6px rgba(0, 0, 0, 0.85); }
+.pb-plate .rank-badge, .pb-plate .win-ball, .np .rank-badge, .np .win-ball {
+  filter: drop-shadow(0 0 1px #000) drop-shadow(0 0 1px #000) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.7)); }
+.bn-ivory b { text-shadow: 0 0 2px #fff, 0 0 2px #fff; }
+
+/* Press and hold a banner: the whole picture, full screen, until you let go */
+[data-peek] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+[data-peek] img { -webkit-user-drag: none; pointer-events: none; }
+.peek { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 12px; background: rgba(0, 0, 0, 0.92); animation: peek-in 0.15s ease-out; touch-action: none; }
+.peek img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); -webkit-user-drag: none; }
+@keyframes peek-in { from { opacity: 0; transform: scale(0.96); } }
+.profile-box.pb-example { box-sizing: border-box; height: 140px; min-height: 0; }
+.pb-plate { min-height: 136px; }

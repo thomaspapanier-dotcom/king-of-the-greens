@@ -1887,7 +1887,7 @@ function viewChallenges() {
   const sections = CH.SECTIONS.map((sec) => {
     const list = CH.CHALLENGES.filter((ch) => ch.section === sec);
     return `<div class="section-head ch-head"><h2>${sec} Challenges</h2><span class="muted small">${list[0].mode === 'Ranked' ? 'Ranked · ' : ''}${list.length}</span></div>
-    <div class="ch-grid">${list.map((ch) => `<button class="ch-tile" data-action="ch-open" data-v="${ch.id}" aria-label="${isDone(ch) ? esc(ch.name) : 'Locked challenge'}">${challengeTile(ch, isDone(ch))}</button>`).join('')}</div>`;
+    <div class="ch-grid">${list.map((ch) => `<button class="ch-tile" data-action="ch-open" data-v="${ch.id}"${CH.ART.has(ch.id) && isDone(ch) ? ` data-peek="assets/challenges/banner-${ch.id}.webp"` : ''} aria-label="${isDone(ch) ? esc(ch.name) : 'Locked challenge'}">${challengeTile(ch, isDone(ch))}</button>`).join('')}</div>`;
   }).join('');
   const open = ui.chOpen ? CH.CHALLENGES.find((x) => x.id === ui.chOpen) : null;
   const sheet = open ? `<div class="ch-pop" data-action="ch-close">
@@ -1943,13 +1943,13 @@ function profileBox() {
     // No accounts yet: show what a real nameplate looks like. A challenge banner across the box,
     // its badge on the left, then rank, gamertag and win % crown.
     const gold2 = RK.RANKS.find((r) => r.name === 'Gold II');
-    return `<div class="profile-box pb-example" role="img" aria-label="Example nameplate: TJ2Cozy, Gold II, 59% wins">
+    return `<div class="profile-box pb-example" role="img" aria-label="Example nameplate: TJ2Cozy, Gold II, 59% wins. Press and hold to see the whole banner." data-peek="assets/challenges/banner-west.webp">
       <img class="pb-bn" src="assets/challenges/banner-west.webp" alt="" draggable="false">
       <span class="pb-plate">
         <img class="pb-badge" src="assets/challenges/badge-west.webp" alt="" draggable="false">
-        ${rankBadge(gold2, 34)}
+        ${rankBadge(gold2, 40)}
         <b class="pb-tag">TJ2Cozy</b>
-        ${WR.winBall(WR.levelFor(59, 100), 30)}
+        ${WR.winBall(WR.levelFor(59, 100), 34)}
       </span>
     </div>
     <p class="pb-note">(Clickable gamertag that leads to player profile coming soon)</p>`;
@@ -2743,6 +2743,7 @@ const actions = {
   },
   'ch-open': (d) => {
     ui.chOpen = d.v;
+    ui.chIntroDone = true;
     render();
   },
   'ch-close': () => {
@@ -2879,8 +2880,38 @@ const actions = {
     }),
 };
 
+// Press and hold a banner (your gamertag, or an earned challenge) to see the whole picture
+// full screen; it closes when you let go.
+let peekTimer = null;
+let peekOpen = false;
+let peekJustClosed = false;
+document.addEventListener('pointerdown', (e) => {
+  const el = e.target.closest('[data-peek]');
+  if (!el) return;
+  clearTimeout(peekTimer);
+  peekTimer = setTimeout(() => {
+    peekOpen = true;
+    const d = document.createElement('div');
+    d.className = 'peek';
+    d.innerHTML = `<img src="${el.dataset.peek}" alt="" draggable="false">`;
+    document.body.appendChild(d);
+    if (navigator.vibrate) navigator.vibrate(10);
+  }, 320);
+});
+function endPeek() {
+  clearTimeout(peekTimer);
+  if (!peekOpen) return;
+  peekOpen = false;
+  document.querySelectorAll('.peek').forEach((n) => n.remove());
+  peekJustClosed = true; // the lift that closes it shouldn't also count as a tap
+  setTimeout(() => { peekJustClosed = false; }, 450);
+}
+['pointerup', 'pointercancel'].forEach((t) => document.addEventListener(t, endPeek));
+document.addEventListener('contextmenu', (e) => { if (e.target.closest('[data-peek], .peek')) e.preventDefault(); });
+
 document.addEventListener('click', (e) => {
   unlockAudio(); // phones only allow sound after a tap
+  if (peekJustClosed) return;
   const el = e.target.closest('[data-action]');
   if (!el || el.disabled) return;
   const fn = actions[el.dataset.action];
@@ -2912,6 +2943,7 @@ document.addEventListener('change', async (e) => {
   const t = e.target;
   if (t.dataset.chPreview) {
     ui.chPreview = t.checked;
+    ui.chIntroDone = true; // don't replay the neon intro on a redraw
     render();
     return;
   }
