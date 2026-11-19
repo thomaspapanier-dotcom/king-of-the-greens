@@ -29,7 +29,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **The Bird with Big Wings** · Rare: Make an eagle putt (sink an eagle ball on the first putt) in a ranked match.
 - **Albatross** · Very Rare: Make 2 eagle putts in the same ranked match. (Two eagles make an albatross, golf’s rarest bird.)
 
-### Perfect Rounds
+### Money Rounds
 
 - **Flawless Shawty** · Very Rare: One-putt all 9 balls in the Short-putt round (Round 2) of a ranked match.
 - **Triple Threat** · Very Rare: One-putt all 3 balls of a Long set (both birdie balls and the par ball, from 10–15 ft).
@@ -122,16 +122,16 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 - **Files:** `badge-king-of-skies.png`, `banner-king-of-skies.png`
 
 
-### Perfect Rounds
+### Money Rounds
 
-#### Dead Center · Impossible
-- **How to complete (Ranked):** One-putt all 9 balls in the Medium-putt round (Round 4) of a ranked match.
+#### Dead Center · Very Rare
+- **How to complete (Ranked):** Sink 7 of the 9 balls on the first putt in the Medium-putt round (Round 4) of a ranked match.
 - **Badge:** A bullseye with a golf ball dead center and a crown on top.
 - **Banner:** A green with target rings mowed into it, the suited Kings standing with arms crossed.
 - **Files:** `badge-dead-center.png`, `banner-dead-center.png`
 
 #### Long Live the King · Impossible
-- **How to complete (Ranked):** One-putt all 9 balls in the Long-putt round (Round 6) of a ranked match.
+- **How to complete (Ranked):** Sink 6 of the 9 balls on the first putt in the Long-putt round (Round 6) of a ranked match.
 - **Badge:** A golden crown floating above a putter, glowing like a holy relic.
 - **Banner:** A royal procession on a cathedral-lit green, crowds cheering as the King walks to the cup.
 - **Files:** `badge-long-live.png`, `banner-long-live.png`
