@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v103';
+const VERSION = 'kog-v104';
 const SHELL = [
   './',
   './index.html',
@@ -60,12 +60,20 @@ const SHELL = [
   './assets/challenges/banner-blackjack.webp',
   './assets/challenges/badge-big-wings.webp',
   './assets/challenges/banner-big-wings.webp',
+  './assets/challenges/badge-albatross.webp',
+  './assets/challenges/banner-albatross.webp',
+  './assets/challenges/badge-flawless-shawty.webp',
+  './assets/challenges/banner-flawless-shawty.webp',
+  './assets/challenges/badge-triple-threat.webp',
+  './assets/challenges/banner-triple-threat.webp',
   './assets/challenges/badge-even-steven.webp',
   './assets/challenges/banner-even-steven.webp',
   './assets/challenges/badge-under-radar.webp',
   './assets/challenges/banner-under-radar.webp',
   './assets/challenges/badge-seeing-red.webp',
   './assets/challenges/banner-seeing-red.webp',
+  './assets/challenges/badge-lights-out.webp',
+  './assets/challenges/banner-lights-out.webp',
   './assets/challenges/badge-might-be-him.webp',
   './assets/challenges/banner-might-be-him.webp',
   './assets/challenges/badge-himothy.webp',
@@ -82,6 +90,8 @@ const SHELL = [
   './assets/challenges/banner-regicide.webp',
   './assets/challenges/badge-ice-cold.webp',
   './assets/challenges/banner-ice-cold.webp',
+  './assets/challenges/badge-smooth.webp',
+  './assets/challenges/banner-smooth.webp',
   './assets/challenges/badge-back-from-dead.webp',
   './assets/challenges/banner-back-from-dead.webp',
   './assets/challenges/badge-two-better.webp',
@@ -96,6 +106,8 @@ const SHELL = [
   './assets/challenges/banner-lead-the-way.webp',
   './assets/challenges/badge-follow-me.webp',
   './assets/challenges/banner-follow-me.webp',
+  './assets/challenges/badge-goose-maverick.webp',
+  './assets/challenges/banner-goose-maverick.webp',
   './assets/challenges/badge-fresh-blood.webp',
   './assets/challenges/banner-fresh-blood.webp',
   './assets/challenges/badge-silver-lining.webp',

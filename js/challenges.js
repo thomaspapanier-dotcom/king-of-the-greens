@@ -379,6 +379,6 @@ export const CHALLENGES = [
 ];
 
 // Challenges whose badge and banner art is in assets/challenges (badge-<id>.webp, banner-<id>.webp).
-export const ART = new Set(['north', 'west', 'east', 'south', 'compass-rose', 'blackjack', 'big-wings', 'even-steven', 'under-radar', 'seeing-red', 'might-be-him', 'himothy', 'downtown', 'sharpshooter', 'not-so-fast', 'wire-to-wire', 'regicide', 'ice-cold', 'back-from-dead', 'two-better', 'dynamic-duo', 'full-house', 'shoulder-burden', 'lead-the-way', 'follow-me', 'fresh-blood', 'silver-lining', 'heart-of-gold', 'hat-trick', 'heater', 'four-of-a-kind', 'iron-man', 'dawn-patrol', 'long-way-home', 'birdie-500', 'par-500', 'medium-250', 'long-100']);
+export const ART = new Set(['north', 'west', 'east', 'south', 'compass-rose', 'blackjack', 'big-wings', 'albatross', 'flawless-shawty', 'triple-threat', 'even-steven', 'under-radar', 'seeing-red', 'lights-out', 'might-be-him', 'himothy', 'downtown', 'sharpshooter', 'not-so-fast', 'wire-to-wire', 'regicide', 'ice-cold', 'smooth', 'back-from-dead', 'two-better', 'dynamic-duo', 'full-house', 'shoulder-burden', 'lead-the-way', 'follow-me', 'goose-maverick', 'fresh-blood', 'silver-lining', 'heart-of-gold', 'hat-trick', 'heater', 'four-of-a-kind', 'iron-man', 'dawn-patrol', 'long-way-home', 'birdie-500', 'par-500', 'medium-250', 'long-100']);
 
 export const SECTIONS = [...new Set(CHALLENGES.map((x) => x.section))];
