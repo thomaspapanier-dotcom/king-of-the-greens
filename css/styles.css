@@ -1389,3 +1389,7 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .ch-art .ch-bn { inset: 0 0 0 auto; width: 72%; height: 100%; object-position: center 22%;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%); mask-image: linear-gradient(90deg, transparent, #000 22%); }
 .ch-art.locked .ch-bg { filter: grayscale(1) blur(10px) brightness(0.1); }
+/* A little taller strips, and the banner shrunk further so more of it shows */
+.ch-art { height: 104px; }
+.ch-art.big { height: 136px; }
+.ch-art .ch-bn { width: 66%; object-position: center 25%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%); mask-image: linear-gradient(90deg, transparent, #000 18%); }
