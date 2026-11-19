@@ -1888,7 +1888,7 @@ function viewChallenges() {
   const sections = CH.SECTIONS.map((sec) => {
     const list = CH.CHALLENGES.filter((ch) => ch.section === sec);
     return `<div class="section-head ch-head"><h2>${sec} Challenges</h2><span class="muted small">${list[0].mode === 'Ranked' ? 'Ranked · ' : ''}${list.length}</span></div>
-    <div class="ch-grid">${list.map((ch) => `<button class="ch-tile" data-action="ch-open" data-v="${ch.id}"${CH.ART.has(ch.id) && isDone(ch) ? ` data-peek="assets/challenges/banner-${ch.id}.webp"` : ''} aria-label="${isDone(ch) ? esc(ch.name) : 'Locked challenge'}">${challengeTile(ch, isDone(ch))}</button>`).join('')}</div>`;
+    <div class="ch-grid">${list.map((ch) => `<button class="ch-tile" data-action="ch-open" data-v="${ch.id}" aria-label="${isDone(ch) ? esc(ch.name) : 'Locked challenge'}">${challengeTile(ch, isDone(ch))}</button>`).join('')}</div>`;
   }).join('');
   const open = ui.chOpen ? CH.CHALLENGES.find((x) => x.id === ui.chOpen) : null;
   const sheet = open ? `<div class="ch-pop" data-action="ch-close">

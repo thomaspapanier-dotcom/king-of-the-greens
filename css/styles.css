@@ -1453,3 +1453,8 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 
 /* Home: a hard line between the main menu and the alternate games */
 .alt-rule { grid-column: 1 / -1; width: 100%; height: 0; margin: 14px 0 2px; border: 0; border-top: 2px solid rgba(245, 215, 110, 0.75); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.6); }
+
+/* Challenge details: the whole banner picture, not the cropped strip */
+.ch-art.big:not(.ph) { height: auto; aspect-ratio: 3 / 2; }
+.ch-art.big:not(.ph) .ch-bn { object-position: center; }
+.ch-art.big:not(.ph) .ch-bd { height: 36%; left: 10px; top: auto; bottom: 10px; transform: none; }
