@@ -1285,3 +1285,6 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
   background: radial-gradient(ellipse 46% 62% at 50% 52%, rgba(62, 66, 64, 0.94), rgba(62, 66, 64, 0.75) 55%, rgba(30, 32, 31, 0) 100%), linear-gradient(rgba(20, 22, 21, 0.55), rgba(20, 22, 21, 0.55)), url("../assets/challenges-pattern.webp") center / 100% 100% no-repeat;
 }
 .challenges-art { filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.55)) drop-shadow(0 0 10px rgba(255, 40, 40, 0.35)); }
+/* Same height as the Compass Putt box */
+.choice.wide-choice.challenges-choice { padding: 8px 10px; }
+.challenges-art { height: 92px; }
