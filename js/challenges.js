@@ -2,22 +2,14 @@
 // them on their nameplate. Almost everything comes from ranked play, where results are
 // confirmed by both sides, so they can't be faked. Only a few come from Compass Putt and Lag 21.
 //
-// `badge` and `banner` describe the final art (ready to hand to an image generator).
-// Until that art exists, each challenge shows placeholder art from the four suit Kings.
+// `badge` and `banner` describe the final art; docs/CHALLENGE-PROMPTS.md turns them into image prompts.
+// Until that art exists, each challenge shows a plain placeholder tile.
 
 export const RARITY = {
   common: { label: 'Common', color: '#cfd6dd' },
   rare: { label: 'Rare', color: '#4dabf7' },
   'very-rare': { label: 'Very Rare', color: '#b197fc' },
   impossible: { label: 'Impossible', color: '#ff4d4d' },
-};
-
-// Placeholder art: [banner, badge, suit] from the new King images.
-const SUIT_ART = {
-  spades: { bn: ['card-spades', 'gfx-spades'], bd: ['emblem-spades', 'logo-spades'] },
-  hearts: { bn: ['card-hearts', 'gfx-hearts'], bd: ['emblem-hearts', 'logo-hearts'] },
-  diamonds: { bn: ['card-diamonds', 'gfx-diamonds'], bd: ['emblem-diamonds', 'logo-diamonds'] },
-  clubs: { bn: ['card-clubs', 'gfx-clubs'], bd: ['emblem-clubs', 'logo-clubs'] },
 };
 
 const c = (id, section, mode, rarity, suit, name, how, badge, banner) => ({ id, section, mode, rarity, suit, name, how, badge, banner });
@@ -247,10 +239,3 @@ export const CHALLENGES = [
 ];
 
 export const SECTIONS = [...new Set(CHALLENGES.map((x) => x.section))];
-
-/** Placeholder art for a challenge until its own badge and banner are made. */
-export function artFor(ch) {
-  const k = CHALLENGES.indexOf(ch);
-  const a = SUIT_ART[ch.suit];
-  return { banner: `assets/challenges/bn-${a.bn[k % 2]}.webp`, badge: `assets/challenges/bd-${a.bd[Math.floor(k / 2) % 2]}.webp` };
-}

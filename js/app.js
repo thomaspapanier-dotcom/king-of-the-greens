@@ -1857,17 +1857,20 @@ function viewWinBalls() {
 
 // ---------- challenges ----------
 /** A challenge's banner with its badge on it; dark and locked until it's earned. */
+const SUIT_CHAR = { spades: '♠', hearts: '♥', diamonds: '♦', clubs: '♣' };
 function challengeTile(ch, on, cls = '') {
-  const art = CH.artFor(ch);
-  return `<span class="ch-art ${on ? 'on' : 'locked'} ${cls}">
-    <img class="ch-bn" src="${art.banner}" alt="" loading="lazy" draggable="false">
-    <img class="ch-bd" src="${art.badge}" alt="" loading="lazy" draggable="false">
-    ${on ? '' : `<span class="ch-lock">${ICON.lock}</span>`}
+  // Each challenge's own badge and banner art drops in here once it's made.
+  return `<span class="ch-art ph rar-${ch.rarity} suit-${ch.suit} ${on ? 'on' : 'locked'} ${cls}">
+    <span class="ch-ph-bd">${SUIT_CHAR[ch.suit]}</span>
+    ${on ? '<span class="ch-ph-note">Art coming</span>' : `<span class="ch-lock">${ICON.lock}</span>`}
   </span>`;
 }
 const rarityInk = (r) => `<span class="ch-ink ink-${r}" style="color:${CH.RARITY[r].color}">${CH.RARITY[r].label}</span>`;
 
 function viewChallenges() {
+  // The neon sign splits and slides away once each time the menu is opened, then the list appears.
+  const intro = !ui.chIntroDone;
+  if (intro && !ui.chIntroTimer) ui.chIntroTimer = setTimeout(() => { ui.chIntroDone = true; ui.chIntroTimer = null; }, 2900);
   const preview = Boolean(ui.chPreview);
   const isDone = () => preview; // real progress arrives with accounts and ranked play
   const total = CH.CHALLENGES.length;
@@ -1892,7 +1895,11 @@ function viewChallenges() {
   </div>` : '';
   return `${topbar('Challenges')}
   <main class="page challenges-page">
-    <section class="challenges-hero"><img src="assets/neon-suits.webp" alt="" draggable="false"></section>
+    <section class="ch-stage ${intro ? 'intro' : 'done'}" aria-label="The four Kings">
+      ${intro ? '<div class="ch-neon" aria-hidden="true"><img class="nl" src="assets/neon-left.webp" alt="" draggable="false"><img class="nr" src="assets/neon-right.webp" alt="" draggable="false"></div>' : ''}
+      <div class="ch-cards">${['spades', 'hearts', 'clubs', 'diamonds'].map((k) => `<img src="assets/cards/king-${k}.webp" alt="King of ${k[0].toUpperCase() + k.slice(1)}" draggable="false">`).join('')}</div>
+    </section>
+    <div class="ch-body ${intro ? 'intro' : ''}">
     <section class="card ch-intro">
       <p>Every challenge earns a <b>badge</b> and a <b>banner</b>. Wear them together or mix and match. Almost all of them come from <b>ranked</b>, where both players confirm the score, so nobody can fake them.</p>
       <div class="ch-legend">${Object.keys(CH.RARITY).map(rarityInk).join('<span class="ch-dot">·</span>')}</div>
@@ -1900,6 +1907,7 @@ function viewChallenges() {
       <label class="switch-row compact"><input type="checkbox" data-ch-preview="1" ${preview ? 'checked' : ''}><span><b>Preview them unlocked</b><span class="muted small">Light everything up to see the art. Real progress comes with accounts.</span></span></label>
     </section>
     ${sections}
+    </div>
   </main>
   ${sheet}`;
 }
@@ -2353,6 +2361,7 @@ const actions = {
   },
   nav: (d) => {
     if (d.view === 'lfg' && ui.lfg) ui.lfg.pick = null; // opening the board always starts at the list
+    if (d.view === 'challenges') ui.chIntroDone = false; // play the neon intro each time the menu opens
     go(d.view, { pid: d.pid, game: d.game, back: d.back });
     if (d.confetti === 'kings') kingRain();
   },

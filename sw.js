@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v83';
+const VERSION = 'kog-v84';
 const SHELL = [
   './',
   './index.html',
@@ -27,6 +27,12 @@ const SHELL = [
   './assets/app-bg.webp',
   './assets/splash.webp',
   './assets/neon-suits.webp',
+  './assets/neon-left.webp',
+  './assets/neon-right.webp',
+  './assets/cards/king-spades.webp',
+  './assets/cards/king-hearts.webp',
+  './assets/cards/king-clubs.webp',
+  './assets/cards/king-diamonds.webp',
   './assets/challenges-pattern.webp',
   './assets/kings/king-s.webp',
   './assets/kings/king-h.webp',
@@ -40,22 +46,6 @@ const SHELL = [
   './js/lfg.js',
   './js/flair.js',
   './js/challenges.js',
-  './assets/challenges/bd-emblem-clubs.webp',
-  './assets/challenges/bd-emblem-diamonds.webp',
-  './assets/challenges/bd-emblem-hearts.webp',
-  './assets/challenges/bd-emblem-spades.webp',
-  './assets/challenges/bd-logo-clubs.webp',
-  './assets/challenges/bd-logo-diamonds.webp',
-  './assets/challenges/bd-logo-hearts.webp',
-  './assets/challenges/bd-logo-spades.webp',
-  './assets/challenges/bn-card-clubs.webp',
-  './assets/challenges/bn-card-diamonds.webp',
-  './assets/challenges/bn-card-hearts.webp',
-  './assets/challenges/bn-card-spades.webp',
-  './assets/challenges/bn-gfx-clubs.webp',
-  './assets/challenges/bn-gfx-diamonds.webp',
-  './assets/challenges/bn-gfx-hearts.webp',
-  './assets/challenges/bn-gfx-spades.webp',
   './js/sync.js',
   './js/auth.js',
   './js/config.js',
