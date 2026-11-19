@@ -477,6 +477,10 @@ function viewHome() {
           <span class="choice-ico">${ICON.card}</span>
           <span class="choice-text"><span class="choice-title">How to play</span><span class="choice-sub">The rounds, the scoring and how the KOG sets the markers</span></span>
         </button>
+        <button class="choice wide-choice challenges-choice" data-action="nav" data-view="challenges" aria-label="Challenges">
+          <img class="challenges-art" src="assets/neon-suits.webp" alt="" draggable="false">
+        </button>
+        <hr class="alt-rule" aria-hidden="true">
         <div class="alt-head"><h2>Alternate games</h2></div>
         <button class="choice wide-choice quick-choice" data-action="quick-new">
           ${COMPASS_SCENE}
@@ -487,9 +491,6 @@ function viewHome() {
           <span class="choice-ico ico-red">${ICON.target}</span>
           <span class="choice-text"><span class="choice-title">${L.GAME_NAME}</span><span class="choice-sub">Practice your lag putting in this cornhole-style game. First to 21 wins; Play 1v1 or 2v2</span></span>
           ${LAG_SCENE}
-        </button>
-        <button class="choice wide-choice challenges-choice" data-action="nav" data-view="challenges" aria-label="Challenges">
-          <img class="challenges-art" src="assets/neon-suits.webp" alt="" draggable="false">
         </button>
       </div>
       ${SYNC ? '<button class="btn" data-action="open-join">Join a game</button>' : ''}
