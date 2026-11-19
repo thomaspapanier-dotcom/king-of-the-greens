@@ -350,6 +350,6 @@ export const CHALLENGES = [
 ];
 
 // Challenges whose badge and banner art is in assets/challenges (badge-<id>.webp, banner-<id>.webp).
-export const ART = new Set(['north', 'west', 'east', 'south', 'compass-rose', 'blackjack', 'big-wings', 'even-steven', 'under-radar', 'seeing-red', 'might-be-him', 'himothy', 'downtown', 'sharpshooter', 'not-so-fast', 'two-better', 'full-house', 'fresh-blood', 'silver-lining', 'hat-trick', 'dawn-patrol']);
+export const ART = new Set(['north', 'west', 'east', 'south', 'compass-rose', 'blackjack', 'big-wings', 'even-steven', 'under-radar', 'seeing-red', 'might-be-him', 'himothy', 'downtown', 'sharpshooter', 'not-so-fast', 'wire-to-wire', 'regicide', 'ice-cold', 'back-from-dead', 'two-better', 'dynamic-duo', 'full-house', 'shoulder-burden', 'lead-the-way', 'follow-me', 'fresh-blood', 'silver-lining', 'heart-of-gold', 'hat-trick', 'dawn-patrol']);
 
 export const SECTIONS = [...new Set(CHALLENGES.map((x) => x.section))];
