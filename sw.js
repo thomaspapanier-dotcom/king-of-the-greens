@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v108';
+const VERSION = 'kog-v110';
 const SHELL = [
   './',
   './index.html',
@@ -112,6 +112,8 @@ const SHELL = [
   './assets/challenges/banner-follow-me.webp',
   './assets/challenges/badge-goose-maverick.webp',
   './assets/challenges/banner-goose-maverick.webp',
+  './assets/challenges/badge-hit-it-end-it.webp',
+  './assets/challenges/banner-hit-it-end-it.webp',
   './assets/challenges/badge-fresh-blood.webp',
   './assets/challenges/banner-fresh-blood.webp',
   './assets/challenges/badge-silver-lining.webp',

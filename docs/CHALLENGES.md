@@ -5,11 +5,11 @@ Almost all of them come from **ranked**, where both players confirm the score. O
 
 Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impossible** (red).
 
-**52 of 83 challenges have their art.** 31 still need a badge and banner.
+**53 of 83 challenges have their art.** 30 still need a badge and banner.
 
 ---
 
-## Already in the app (52)
+## Already in the app (53)
 
 
 ### Compass Putt
@@ -74,6 +74,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **I’ll Lead the Way** · Rare: Win a ranked duos match where your team is the KOG for 5 or more rounds.
 - **Follow Me to Victory** · Rare: Win a ranked duos match with a partner who is playing their very first ranked match.
 - **Goose & Maverick** · Very Rare: Win 10 ranked duos matches with the same partner.
+- **You Hit It, I’ll End It** · Rare: Win a ranked duos match where the Eagle round (the last round) decides it: you and your teammate’s Eagle-round scores together take the lead and seal the win.
 
 ### The Climb
 
@@ -111,7 +112,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 
 ---
 
-## Still missing (31)
+## Still missing (30)
 
 These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
@@ -209,12 +210,6 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 - **Badge:** A crowned vulture perched on a golf ball, looking very pleased with itself.
 - **Banner:** The King of Clubs lounging in a lawn chair with an iced coffee while his teammate sinks putt after putt behind him.
 - **Files:** `badge-scavenger.png`, `banner-scavenger.png`
-
-#### You Hit It, I’ll End It · Rare
-- **How to complete (Ranked):** Win a ranked duos match where the Eagle round (the last round) decides it: you and your teammate’s Eagle-round scores together take the lead and seal the win.
-- **Badge:** Two crowned hands, one red-sleeved and one with a diamond-print cuff, each holding a crowned ping-pong ball over a red party cup filled with golf balls.
-- **Banner:** A beer pong showdown on the practice green at golden hour: the King of Hearts and King of Diamonds with 4 cups on their end and both balls, the King of Diamonds cocked back to shoot across at the King of Spades and King of Clubs, who are down to 2 cups.
-- **Files:** `badge-hit-it-end-it.png`, `banner-hit-it-end-it.png`
 
 
 ### The Climb

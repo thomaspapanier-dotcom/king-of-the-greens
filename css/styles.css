@@ -1479,3 +1479,7 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 /* Challenge panel: a grab bar hints that it can be swiped down to close */
 .ch-grab { justify-self: center; width: 44px; height: 5px; margin: -6px 0 2px; border-radius: 3px; background: rgba(255, 255, 255, 0.35); }
 .ch-sheet { overscroll-behavior: contain; }
+
+/* Compass Putt and Lag 21 are paused for now: greyed out with a lock, not tappable */
+.choice.wide-choice.locked { position: relative; cursor: not-allowed; filter: grayscale(0.85) brightness(0.72); }
+.choice.wide-choice.locked:active { transform: none; }

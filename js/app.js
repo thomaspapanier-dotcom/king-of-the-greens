@@ -482,14 +482,15 @@ function viewHome() {
         </button>
         <hr class="alt-rule" aria-hidden="true">
         <div class="alt-head"><h2>Alternate games</h2></div>
-        <button class="choice wide-choice quick-choice" data-action="quick-new">
-          ${COMPASS_SCENE}
+        <button class="choice wide-choice quick-choice locked" disabled aria-disabled="true">
+          ${COMPASS_SCENE}<span class="mode-lock" aria-hidden="true">${ICON.lock}</span>
           <span class="choice-ico">${ICON.clock}</span>
-          <span class="choice-text"><span class="choice-title">Compass Putt <span class="choice-paren">(Quickest putting game)</span></span><span class="choice-sub">A putting game that runs under 20 minutes; Play solo or head-to-head</span><span class="choice-fine">*Does not affect rank</span></span>
+          <span class="choice-text"><span class="choice-title">Compass Putt <span class="mode-soon">(coming soon)</span></span><span class="choice-sub">A putting game that runs under 20 minutes; Play solo or head-to-head</span><span class="choice-fine">*Does not affect rank</span></span>
         </button>
-        <button class="choice wide-choice lag-choice" data-action="lag-new">
+        <button class="choice wide-choice lag-choice locked" disabled aria-disabled="true">
+          <span class="mode-lock" aria-hidden="true">${ICON.lock}</span>
           <span class="choice-ico ico-red">${ICON.target}</span>
-          <span class="choice-text"><span class="choice-title">${L.GAME_NAME}</span><span class="choice-sub">Practice your lag putting in this cornhole-style game. First to 21 wins; Play 1v1 or 2v2</span></span>
+          <span class="choice-text"><span class="choice-title">${L.GAME_NAME} <span class="mode-soon">(coming soon)</span></span><span class="choice-sub">Practice your lag putting in this cornhole-style game. First to 21 wins; Play 1v1 or 2v2</span></span>
           ${LAG_SCENE}
         </button>
       </div>
