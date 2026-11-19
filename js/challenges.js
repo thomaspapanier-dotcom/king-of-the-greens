@@ -217,8 +217,8 @@ export const CHALLENGES = [
     'Two Kings riding side by side on vintage motorcycles down a long fairway road into a blazing sunset, a trail of trophies behind them.'),
   c('scavenger', 'Duos & Groups', 'Ranked', 'rare', 'clubs', 'Scavenger',
     'Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.',
-    'A crowned vulture perched on a golf ball, looking very pleased with itself.',
-    'The King of Clubs lounging in a lawn chair with an iced coffee while his teammate sinks putt after putt behind him.'),
+    'A scruffy vulture wearing a tiny crown, perched on a golf ball with a chicken drumstick in its beak, looking very pleased with itself.',
+    'Two teammates at a picnic on the green after the win: the King of Spades feasting at a fancy table piled with food, tossing scraps over his shoulder without looking, while the King of Clubs sits happily on the grass with a circle of crowned vultures, grinning and sharing the scraps with them.'),
 
   c('hit-it-end-it', 'Duos & Groups', 'Ranked', 'rare', 'hearts', 'You Hit It, I’ll End It',
     'Win a ranked duos match where the Eagle round (the last round) decides it: you and your teammate’s Eagle-round scores together take the lead and seal the win.',

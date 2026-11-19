@@ -133,8 +133,8 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 1. Scavenger (Rare), file names: `badge-scavenger.png` and `banner-scavenger.png`
    - Earned by: Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.
    - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
-   - Badge: A crowned vulture perched on a golf ball, looking very pleased with itself.
-   - Banner: The King of Clubs lounging in a lawn chair with an iced coffee while his teammate sinks putt after putt behind him.
+   - Badge: A scruffy vulture wearing a tiny crown, perched on a golf ball with a chicken drumstick in its beak, looking very pleased with itself.
+   - Banner: Two teammates at a picnic on the green after the win: the King of Spades feasting at a fancy table piled with food, tossing scraps over his shoulder without looking, while the King of Clubs sits happily on the grass with a circle of crowned vultures, grinning and sharing the scraps with them.
 
 2. Social Butterfly (Rare), file names: `badge-social-butterfly.png` and `banner-social-butterfly.png`
    - Earned by: Play ranked matches against 25 different opponents.

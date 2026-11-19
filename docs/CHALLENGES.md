@@ -207,8 +207,8 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 #### Scavenger · Rare
 - **How to complete (Ranked):** Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.
-- **Badge:** A crowned vulture perched on a golf ball, looking very pleased with itself.
-- **Banner:** The King of Clubs lounging in a lawn chair with an iced coffee while his teammate sinks putt after putt behind him.
+- **Badge:** A scruffy vulture wearing a tiny crown, perched on a golf ball with a chicken drumstick in its beak, looking very pleased with itself.
+- **Banner:** Two teammates at a picnic on the green after the win: the King of Spades feasting at a fancy table piled with food, tossing scraps over his shoulder without looking, while the King of Clubs sits happily on the grass with a circle of crowned vultures, grinning and sharing the scraps with them.
 - **Files:** `badge-scavenger.png`, `banner-scavenger.png`
 
 
