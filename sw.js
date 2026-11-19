@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v100';
+const VERSION = 'kog-v101';
 const SHELL = [
   './',
   './index.html',
@@ -104,8 +104,24 @@ const SHELL = [
   './assets/challenges/banner-heart-of-gold.webp',
   './assets/challenges/badge-hat-trick.webp',
   './assets/challenges/banner-hat-trick.webp',
+  './assets/challenges/badge-heater.webp',
+  './assets/challenges/banner-heater.webp',
+  './assets/challenges/badge-four-of-a-kind.webp',
+  './assets/challenges/banner-four-of-a-kind.webp',
+  './assets/challenges/badge-iron-man.webp',
+  './assets/challenges/banner-iron-man.webp',
   './assets/challenges/badge-dawn-patrol.webp',
   './assets/challenges/banner-dawn-patrol.webp',
+  './assets/challenges/badge-long-way-home.webp',
+  './assets/challenges/banner-long-way-home.webp',
+  './assets/challenges/badge-birdie-500.webp',
+  './assets/challenges/banner-birdie-500.webp',
+  './assets/challenges/badge-par-500.webp',
+  './assets/challenges/banner-par-500.webp',
+  './assets/challenges/badge-medium-250.webp',
+  './assets/challenges/banner-medium-250.webp',
+  './assets/challenges/badge-long-100.webp',
+  './assets/challenges/banner-long-100.webp',
   './js/sync.js',
   './js/auth.js',
   './js/config.js',
