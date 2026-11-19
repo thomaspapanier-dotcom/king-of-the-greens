@@ -1380,3 +1380,12 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .ch-lock { top: 50%; right: 12px; transform: translateY(-50%); }
 .ch-art .ch-bn { object-position: center 24%; }
 .ch-art .ch-bn { object-position: center 12%; }
+
+/* Challenge section titles: "Compass Putt Challenges", bigger and bold */
+.ch-head h2 { font-size: 18px; font-weight: 800; }
+/* Zoomed-out banners: the picture fills the right ~72% of the strip so more of it shows,
+   fading into a soft blurred copy of itself behind the badge on the left */
+.ch-art .ch-bg { position: absolute; inset: -12px; width: calc(100% + 24px); height: calc(100% + 24px); object-fit: cover; filter: blur(10px) brightness(0.55); }
+.ch-art .ch-bn { inset: 0 0 0 auto; width: 72%; height: 100%; object-position: center 22%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%); mask-image: linear-gradient(90deg, transparent, #000 22%); }
+.ch-art.locked .ch-bg { filter: grayscale(1) blur(10px) brightness(0.1); }

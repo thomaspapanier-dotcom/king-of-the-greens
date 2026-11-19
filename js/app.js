@@ -1862,6 +1862,7 @@ function challengeTile(ch, on, cls = '') {
   const lock = on ? '' : `<span class="ch-lock">${ICON.lock}</span>`;
   if (CH.ART.has(ch.id)) {
     return `<span class="ch-art rar-${ch.rarity} ${on ? 'on' : 'locked'} ${cls}">
+    <img class="ch-bg" src="assets/challenges/banner-${ch.id}.webp" alt="" loading="lazy" draggable="false">
     <img class="ch-bn" src="assets/challenges/banner-${ch.id}.webp" alt="" loading="lazy" draggable="false">
     <img class="ch-bd" src="assets/challenges/badge-${ch.id}.webp" alt="" loading="lazy" draggable="false">
     ${lock}
@@ -1884,7 +1885,7 @@ function viewChallenges() {
   const total = CH.CHALLENGES.length;
   const sections = CH.SECTIONS.map((sec) => {
     const list = CH.CHALLENGES.filter((ch) => ch.section === sec);
-    return `<div class="section-head ch-head"><h2>${sec}</h2><span class="muted small">${list[0].mode === 'Ranked' ? 'Ranked · ' : ''}${list.length}</span></div>
+    return `<div class="section-head ch-head"><h2>${sec} Challenges</h2><span class="muted small">${list[0].mode === 'Ranked' ? 'Ranked · ' : ''}${list.length}</span></div>
     <div class="ch-grid">${list.map((ch) => `<button class="ch-tile" data-action="ch-open" data-v="${ch.id}" aria-label="${isDone(ch) ? esc(ch.name) : 'Locked challenge'}">${challengeTile(ch, isDone(ch))}</button>`).join('')}</div>`;
   }).join('');
   const open = ui.chOpen ? CH.CHALLENGES.find((x) => x.id === ui.chOpen) : null;
