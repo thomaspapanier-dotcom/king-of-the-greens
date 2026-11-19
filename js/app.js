@@ -13,6 +13,7 @@ import { playHawk, unlockAudio } from './sound.js';
 import { kingRain, preloadKings } from './confetti.js';
 import * as LF from './lfg.js';
 import { badgeHtml, bannerClass } from './flair.js';
+import * as CH from './challenges.js';
 
 // Per-device preferences (theme, sound).
 function getPref(key, fallback) {
@@ -1855,15 +1856,52 @@ function viewWinBalls() {
 }
 
 // ---------- challenges ----------
+/** A challenge's banner with its badge on it; dark and locked until it's earned. */
+function challengeTile(ch, on, cls = '') {
+  const art = CH.artFor(ch);
+  return `<span class="ch-art ${on ? 'on' : 'locked'} ${cls}">
+    <img class="ch-bn" src="${art.banner}" alt="" loading="lazy" draggable="false">
+    <img class="ch-bd" src="${art.badge}" alt="" loading="lazy" draggable="false">
+    ${on ? '' : `<span class="ch-lock">${ICON.lock}</span>`}
+  </span>`;
+}
+const rarityInk = (r) => `<span class="ch-ink ink-${r}" style="color:${CH.RARITY[r].color}">${CH.RARITY[r].label}</span>`;
+
 function viewChallenges() {
+  const preview = Boolean(ui.chPreview);
+  const isDone = () => preview; // real progress arrives with accounts and ranked play
+  const total = CH.CHALLENGES.length;
+  const sections = CH.SECTIONS.map((sec) => {
+    const list = CH.CHALLENGES.filter((ch) => ch.section === sec);
+    return `<div class="section-head ch-head"><h2>${sec}</h2><span class="muted small">${list[0].mode === 'Ranked' ? 'Ranked · ' : ''}${list.length}</span></div>
+    <div class="ch-grid">${list.map((ch) => `<button class="ch-tile" data-action="ch-open" data-v="${ch.id}" aria-label="${isDone(ch) ? esc(ch.name) : 'Locked challenge'}">${challengeTile(ch, isDone(ch))}</button>`).join('')}</div>`;
+  }).join('');
+  const open = ui.chOpen ? CH.CHALLENGES.find((x) => x.id === ui.chOpen) : null;
+  const sheet = open ? `<div class="ch-pop" data-action="ch-close">
+    <section class="ch-sheet" role="dialog" aria-label="${esc(open.name)}" data-action="ch-stay">
+      ${challengeTile(open, isDone(open), 'big')}
+      <div class="ch-title"><h2>${esc(open.name)}</h2>${rarityInk(open.rarity)}</div>
+      <div class="ch-mode">${open.mode}${isDone(open) ? ' · <b class="ch-earned">Earned</b>' : ' · Locked'}</div>
+      <p class="ch-how">${esc(open.how)}</p>
+      <p class="muted small ch-reward">Earn it and you get both this badge and this banner. Mix and match them with your other badges and banners on your nameplate.</p>
+      <details class="ch-artnote"><summary>Art idea</summary>
+        <p><b>Badge:</b> ${esc(open.badge)}</p><p><b>Banner:</b> ${esc(open.banner)}</p>
+        <p class="muted small">The art shown now is a stand-in from the suit Kings.</p></details>
+      <button class="btn primary wide" data-action="ch-close">Close</button>
+    </section>
+  </div>` : '';
   return `${topbar('Challenges')}
   <main class="page challenges-page">
     <section class="challenges-hero"><img src="assets/neon-suits.webp" alt="" draggable="false"></section>
-    <section class="card soon">
-      <div class="eyebrow">Coming soon</div>
-      <p>Putting challenges you take on at the practice green, on your own or against your crew. Finish them to earn badges and banners for your nameplate.</p>
+    <section class="card ch-intro">
+      <p>Every challenge earns a <b>badge</b> and a <b>banner</b>. Wear them together or mix and match. Almost all of them come from <b>ranked</b>, where both players confirm the score, so nobody can fake them.</p>
+      <div class="ch-legend">${Object.keys(CH.RARITY).map(rarityInk).join('<span class="ch-dot">·</span>')}</div>
+      <div class="ch-progress"><b>${preview ? total : 0}</b> of ${total} unlocked</div>
+      <label class="switch-row compact"><input type="checkbox" data-ch-preview="1" ${preview ? 'checked' : ''}><span><b>Preview them unlocked</b><span class="muted small">Light everything up to see the art. Real progress comes with accounts.</span></span></label>
     </section>
-  </main>`;
+    ${sections}
+  </main>
+  ${sheet}`;
 }
 
 // ---------- accounts ----------
@@ -2679,6 +2717,14 @@ const actions = {
     ui.orderPopup = null;
     render();
   },
+  'ch-open': (d) => {
+    ui.chOpen = d.v;
+    render();
+  },
+  'ch-close': () => {
+    ui.chOpen = null;
+    render();
+  },
   'how-tab': (d) => {
     ui.howTab = d.v;
     ui.howSlide = 0;
@@ -2840,6 +2886,11 @@ async function photoToDataUrl(file, size = 160) {
 
 document.addEventListener('change', async (e) => {
   const t = e.target;
+  if (t.dataset.chPreview) {
+    ui.chPreview = t.checked;
+    render();
+    return;
+  }
   if (t.dataset.lfg) {
     lfgState()[t.dataset.lfg] = Number(t.value);
     render();

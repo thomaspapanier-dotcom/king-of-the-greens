@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v82';
+const VERSION = 'kog-v83';
 const SHELL = [
   './',
   './index.html',
@@ -39,6 +39,23 @@ const SHELL = [
   './js/confetti.js',
   './js/lfg.js',
   './js/flair.js',
+  './js/challenges.js',
+  './assets/challenges/bd-emblem-clubs.webp',
+  './assets/challenges/bd-emblem-diamonds.webp',
+  './assets/challenges/bd-emblem-hearts.webp',
+  './assets/challenges/bd-emblem-spades.webp',
+  './assets/challenges/bd-logo-clubs.webp',
+  './assets/challenges/bd-logo-diamonds.webp',
+  './assets/challenges/bd-logo-hearts.webp',
+  './assets/challenges/bd-logo-spades.webp',
+  './assets/challenges/bn-card-clubs.webp',
+  './assets/challenges/bn-card-diamonds.webp',
+  './assets/challenges/bn-card-hearts.webp',
+  './assets/challenges/bn-card-spades.webp',
+  './assets/challenges/bn-gfx-clubs.webp',
+  './assets/challenges/bn-gfx-diamonds.webp',
+  './assets/challenges/bn-gfx-hearts.webp',
+  './assets/challenges/bn-gfx-spades.webp',
   './js/sync.js',
   './js/auth.js',
   './js/config.js',
