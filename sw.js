@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v95';
+const VERSION = 'kog-v96';
 const SHELL = [
   './',
   './index.html',
@@ -54,12 +54,18 @@ const SHELL = [
   './assets/challenges/banner-east.webp',
   './assets/challenges/badge-south.webp',
   './assets/challenges/banner-south.webp',
+  './assets/challenges/badge-compass-rose.webp',
+  './assets/challenges/banner-compass-rose.webp',
   './assets/challenges/badge-blackjack.webp',
   './assets/challenges/banner-blackjack.webp',
+  './assets/challenges/badge-big-wings.webp',
+  './assets/challenges/banner-big-wings.webp',
   './assets/challenges/badge-even-steven.webp',
   './assets/challenges/banner-even-steven.webp',
   './assets/challenges/badge-under-radar.webp',
   './assets/challenges/banner-under-radar.webp',
+  './assets/challenges/badge-seeing-red.webp',
+  './assets/challenges/banner-seeing-red.webp',
   './assets/challenges/badge-might-be-him.webp',
   './assets/challenges/banner-might-be-him.webp',
   './assets/challenges/badge-downtown.webp',
