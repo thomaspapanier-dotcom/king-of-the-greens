@@ -30,7 +30,7 @@ STYLE: Match the attached art: vintage engraved playing-card illustration, bold 
 
 FORMATS:
 - BADGE: square 1024x1024, transparent background. One centered emblem inside a rim. It must still read at a tiny size (about the size of a fingernail on a phone), so use a bold silhouette and no small text.
-- BANNER: landscape 1536x1024, no text. The app shows it as a wide strip and puts the badge on the left, so keep the main subject in the middle band and the left third calmer.
+- BANNER: landscape 1536x1024, no text. The app shows it as a long thin strip across the whole screen (about 4 wide by 1 tall), cut from the upper part of the image, with the round badge sitting on the far left. So keep the Kings' faces, crowns and the main action in the upper-middle band (roughly the top 15% to 50% of the image), and keep the far left calmer.
 
 RARITY sets how detailed and luxurious the art is. The badge rim tells you the rarity at a glance:
 - Common: simple and clean, brushed-silver rim.

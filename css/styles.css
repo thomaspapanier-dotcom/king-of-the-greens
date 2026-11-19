@@ -1366,3 +1366,17 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .rar-very-rare { --rar: #b197fc; }
 .rar-impossible { --rar: #ff4d4d; }
 .ch-art.big .ch-ph-bd { font-size: 54px; }
+
+/* Challenges: each one is a full-width strip (banner across, round badge on the left), the size of the home gamertag box */
+.ch-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.ch-tile { width: 100%; }
+.ch-art { aspect-ratio: auto; height: 90px; border-radius: 16px; }
+.ch-art .ch-bn { object-position: center 38%; }
+.ch-art .ch-bd { left: 10px; width: auto; height: 82%; aspect-ratio: 1; border: 0; border-radius: 50%; object-fit: contain; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6); }
+.ch-art.big { aspect-ratio: auto; height: 120px; }
+.ch-art.on { border-color: var(--rar, #e6be4a); box-shadow: 0 0 10px color-mix(in srgb, var(--rar, #e6be4a) 60%, transparent); }
+.ch-art.locked .ch-bn, .ch-art.locked .ch-bd { filter: grayscale(1) brightness(0.16) contrast(1.15); }
+.ch-ph-bd { left: 10px; width: auto; height: 82%; border-radius: 50%; }
+.ch-lock { top: 50%; right: 12px; transform: translateY(-50%); }
+.ch-art .ch-bn { object-position: center 24%; }
+.ch-art .ch-bn { object-position: center 12%; }

@@ -238,4 +238,7 @@ export const CHALLENGES = [
     'A royal vault full of jewels, the magenta crown under a single spotlight.'),
 ];
 
+// Challenges whose badge and banner art is in assets/challenges (badge-<id>.webp, banner-<id>.webp).
+export const ART = new Set(['north', 'east', 'south', 'west']);
+
 export const SECTIONS = [...new Set(CHALLENGES.map((x) => x.section))];

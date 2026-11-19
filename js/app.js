@@ -1859,10 +1859,18 @@ function viewWinBalls() {
 /** A challenge's banner with its badge on it; dark and locked until it's earned. */
 const SUIT_CHAR = { spades: '♠', hearts: '♥', diamonds: '♦', clubs: '♣' };
 function challengeTile(ch, on, cls = '') {
-  // Each challenge's own badge and banner art drops in here once it's made.
+  const lock = on ? '' : `<span class="ch-lock">${ICON.lock}</span>`;
+  if (CH.ART.has(ch.id)) {
+    return `<span class="ch-art rar-${ch.rarity} ${on ? 'on' : 'locked'} ${cls}">
+    <img class="ch-bn" src="assets/challenges/banner-${ch.id}.webp" alt="" loading="lazy" draggable="false">
+    <img class="ch-bd" src="assets/challenges/badge-${ch.id}.webp" alt="" loading="lazy" draggable="false">
+    ${lock}
+  </span>`;
+  }
+  // Placeholder until this challenge's badge and banner are made.
   return `<span class="ch-art ph rar-${ch.rarity} suit-${ch.suit} ${on ? 'on' : 'locked'} ${cls}">
     <span class="ch-ph-bd">${SUIT_CHAR[ch.suit]}</span>
-    ${on ? '<span class="ch-ph-note">Art coming</span>' : `<span class="ch-lock">${ICON.lock}</span>`}
+    ${on ? '<span class="ch-ph-note">Art coming</span>' : lock}
   </span>`;
 }
 const rarityInk = (r) => `<span class="ch-ink ink-${r}" style="color:${CH.RARITY[r].color}">${CH.RARITY[r].label}</span>`;
