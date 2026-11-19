@@ -486,6 +486,9 @@ function viewHome() {
           <span class="choice-text"><span class="choice-title">${L.GAME_NAME}</span><span class="choice-sub">Practice your lag putting in this cornhole-style game. First to 21 wins; Play 1v1 or 2v2</span></span>
           ${LAG_SCENE}
         </button>
+        <button class="choice wide-choice challenges-choice" data-action="nav" data-view="challenges" aria-label="Challenges">
+          <img class="challenges-art" src="assets/neon-suits.webp" alt="" draggable="false">
+        </button>
       </div>
       ${SYNC ? '<button class="btn" data-action="open-join">Join a game</button>' : ''}
       <button class="btn" data-action="nav" data-view="players">Players &amp; stats</button>
@@ -1851,6 +1854,18 @@ function viewWinBalls() {
   </main>`;
 }
 
+// ---------- challenges ----------
+function viewChallenges() {
+  return `${topbar('Challenges')}
+  <main class="page challenges-page">
+    <section class="challenges-hero"><img src="assets/neon-suits.webp" alt="" draggable="false"></section>
+    <section class="card soon">
+      <div class="eyebrow">Coming soon</div>
+      <p>Putting challenges you take on at the practice green, on your own or against your crew. Finish them to earn badges and banners for your nameplate.</p>
+    </section>
+  </main>`;
+}
+
 // ---------- accounts ----------
 async function refreshProfile() {
   if (!A.currentUser()) {
@@ -2205,7 +2220,7 @@ function render() {
     history: viewHistory, rules: viewRules, join: viewJoin, whoami: viewWhoami, share: viewShare, settings: viewSettings,
     'quick-setup': viewQuickSetup, quick: viewQuick, 'lag-setup': viewLagSetup, lag: viewLag, ranked: viewRanked, account: viewAccount, winballs: viewWinBalls,
     'ranked-modes': () => viewModes('ranked'), 'casual-modes': () => viewModes('casual'),
-    'ranked-how': viewRankedHow, lfg: viewLfg,
+    'ranked-how': viewRankedHow, lfg: viewLfg, challenges: viewChallenges,
   };
   // Keep a half-typed code if the screen redraws (e.g. a sync update).
   const codeInput = document.getElementById('join-code');
