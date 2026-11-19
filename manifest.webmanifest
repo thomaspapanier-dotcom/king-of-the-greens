@@ -1,7 +1,7 @@
 {
   "name": "King of the Greens",
   "short_name": "KOG",
-  "description": "The putting game for 1–4 players.",
+  "description": "A real-life putting game for the practice green. 1–4 players putt in person; the app keeps score.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

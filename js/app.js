@@ -11,8 +11,6 @@ import * as A from './auth.js';
 import { figures, mountIllustrations, nextRoundFigure, tossFigure, tiebreakFigure, compassFigure, lagFigure, dn } from './illustrations.js';
 import { playHawk, unlockAudio } from './sound.js';
 import { kingRain, preloadKings } from './confetti.js';
-import { AVATARS, DEFAULT_AVATAR, avatarById, avatarFigure } from './avatars.js';
-import { BRANDS, ITEMS, ITEM_TYPES, RARITY, cozyBadge } from './shop.js';
 import * as LF from './lfg.js';
 
 // Per-device preferences (theme, sound).
@@ -33,10 +31,7 @@ function setPref(key, value) {
 // KOG is dark-only: it looks best that way, so there's no light mode or theme setting.
 document.documentElement.dataset.theme = 'dark';
 const soundOn = () => getPref('kog.sound', 'on') === 'on';
-/** The player's base avatar. Store items will live in their own locker, so they carry over when this changes. */
-// Choosing an avatar is coming soon: until then everyone shows the default King.
-const AVATAR_PICKING = false;
-const myAvatar = () => (AVATAR_PICKING && avatarById(getPref('kog.avatar', '')) ? getPref('kog.avatar', '') : null);
+
 
 const $app = document.getElementById('app');
 const db = load();
@@ -448,8 +443,16 @@ function viewHome() {
     <div class="hero hero-open">
       <h1 class="hero-title"><span>King</span> <span class="ht-of">of the</span> <span>Greens</span></h1>
       <div class="hero-kog" aria-label="K.O.G.">K.O.G.</div>
-      <p>The putting game for 1–4 players</p>
+      <p class="hero-irl">A real-life putting game for 1–4 players</p>
     </div>
+    <section class="irl-card" aria-label="How King of the Greens is played">
+      <div class="irl-head"><span class="irl-pill">In person</span><span>Played on a real practice green, not on your phone</span></div>
+      <ol class="irl-steps">
+        <li><span class="irl-ico">${ICON.flag}</span><b>Meet at a practice green</b><span>Any course’s putting green, before your tee time</span></li>
+        <li><span class="irl-ico">${IRL_PUTTER}</span><b>Putt for real</b><span>Your own putter and golf balls, real holes, real pressure</span></li>
+        <li><span class="irl-ico">${IRL_PHONE}</span><b>The app keeps score</b><span>One phone tracks every putt, the rounds and who’s King</span></li>
+      </ol>
+    </section>
     ${profileBox()}
     ${resume}
     ${quickResumeCard()}
@@ -464,7 +467,7 @@ function viewHome() {
         <button class="choice art-choice art-casual" data-action="nav" data-view="casual-modes">
           <span class="choice-ico">${ICON.flag}</span>
           <span class="choice-title">KOG Casual</span>
-          <span class="choice-sub">Just for fun, solo or with friends</span>
+          <span class="choice-sub">Just for fun on the practice green, solo or with friends</span>
         </button>
         <button class="choice wide-choice rules-choice" data-action="nav" data-view="rules">
           <span class="choice-ico">${ICON.card}</span>
@@ -481,20 +484,19 @@ function viewHome() {
           <span class="choice-text"><span class="choice-title">${L.GAME_NAME}</span><span class="choice-sub">Practice your lag putting in this cornhole-style game. First to 21 wins; Play 1v1 or 2v2</span></span>
           ${LAG_SCENE}
         </button>
-        <button class="choice wide-choice store-choice" data-action="nav" data-view="store">
-          <span class="choice-text"><span class="choice-title">K.O.G. Store</span><span class="choice-sub">Drip for your King or Queen. First drop: 2Cozy Golf Co. Everything's free for now.</span></span>
-          <img class="store-choice-art store-front" src="assets/store-front.webp" alt="" aria-hidden="true" draggable="false">
-        </button>
       </div>
       ${SYNC ? '<button class="btn" data-action="open-join">Join a game</button>' : ''}
       <button class="btn" data-action="nav" data-view="players">Players &amp; stats</button>
       <button class="btn" data-action="nav" data-view="history">Past games</button>
       <button class="btn ghost" data-action="nav" data-view="ranked">Ranked · preview</button>
-      <button class="btn ghost" data-action="nav" data-view="avatar">Avatars</button>
       <button class="btn ghost" data-action="nav" data-view="settings">Settings</button>
     </div>
   </main>`;
 }
+
+// Icons for the in-person card on the home screen.
+const IRL_PUTTER = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2.5 L9.2 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M5 18.2 h6.4 a1.6 1.6 0 0 1 0 3.2 H5.6 a1.6 1.6 0 0 1-1.6-1.6z" fill="currentColor"/><circle cx="18.5" cy="19.5" r="2.4" fill="currentColor"/></svg>';
+const IRL_PHONE = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2" width="11" height="20" rx="2.6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 8.5h5M9.5 12h5M9.5 15.5h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
 
 // A mini crowned King, side view, putting toward the right. Shared by the Lag 21 and Quickplay boxes.
 const MINI_KING_PARTS = `
@@ -1881,104 +1883,7 @@ function profileBox() {
       <span class="pb-main">${inner}<span class="pb-sub">${sub}</span></span>
       <span class="pb-go">${ICON.chevron}</span>
     </button>
-    <button class="pb-avatar-btn" data-action="nav" data-view="avatar" aria-label="See the avatars">
-      ${avatarFigure(myAvatar() || DEFAULT_AVATAR, 92)}
-    </button>
   </div>`;
-}
-
-// ---------- avatars ----------
-/** Avatars: browse all 18 Kings and Queens. Choosing one is coming soon. */
-function viewAvatar() {
-  const pick = ui.avatarPick || DEFAULT_AVATAR;
-  const tab = ui.avatarTab || avatarById(pick).kind;
-  const a = avatarById(pick);
-  const tiles = AVATARS.filter((x) => x.kind === tab).map((x) => `<button class="av-tile ${x.id === pick ? 'on' : ''}" data-action="avatar-pick" data-v="${x.id}" aria-pressed="${x.id === pick}">
-      ${avatarFigure(x.id, 104, { still: true })}
-      <span class="av-tile-name">${x.name}</span>
-    </button>`).join('');
-  return `${topbar('Avatars', ui.params.back || 'home')}
-  <main class="page avatar-page">
-    <section class="av-stage">
-      ${avatarFigure(pick, 230)}
-      <div class="av-stage-name">${a.name}</div>
-      <div class="av-stage-sub">${a.kind === 'king' ? 'King' : 'Queen'} of the Greens</div>
-    </section>
-    <div class="seg-wide" role="group" aria-label="Kings or Queens">
-      <button class="seg-opt" data-action="avatar-tab" data-v="king" aria-pressed="${tab === 'king'}">Kings</button>
-      <button class="seg-opt" data-action="avatar-tab" data-v="queen" aria-pressed="${tab === 'queen'}">Queens</button>
-    </div>
-    <div class="av-grid">${tiles}</div>
-    <p class="muted small av-note">Picking your own King or Queen is coming soon. Anything you get from the store will stay with you when you switch.</p>
-  </main>
-  <footer class="dock"><button class="btn primary big" disabled>Choosing an avatar · coming soon</button></footer>`;
-}
-
-// ---------- store ----------
-const HOUSES = ['2cozy', 'mccarthy', 'stazz', 'quiggs']; // the four brands, in suit order
-// Each house's logo sits on its suit, like the 2Cozy crest sits on its spade.
-const SUIT_PATHS = {
-  heart: 'M50 94C22 72 5 55 5 33 5 17 17 6 30 6c9 0 16 5 20 13 4-8 11-13 20-13 13 0 25 11 25 27 0 22-17 39-45 61Z',
-  diamond: 'M50 3Q68 28 93 50 68 72 50 97 32 72 7 50 32 28 50 3Z',
-  club: 'M50 6a21 21 0 0 1 17 33 21 21 0 1 1-12 34q2 13 13 21H32q11-8 13-21a21 21 0 1 1-12-34A21 21 0 0 1 50 6Z',
-};
-const HOUSE_SUITS = {
-  mccarthy: { suit: 'heart', fill: '#7a1420', y: 46 },
-  stazz: { suit: 'diamond', fill: '#b3141e', y: 50 },
-  quiggs: { suit: 'club', fill: '#1b2b4a', y: 47 },
-};
-const houseMark = (key, size) => {
-  if (key === '2cozy') return cozyBadge(size, 'sb');
-  if (key === 'kog') return `<span class="kog-mark" aria-hidden="true">${ICON.crown}</span>`;
-  if (key === 'crowns') return `<img class="crown-mark" src="assets/store/crowns/legendary-royal.webp" width="${size}" alt="" draggable="false">`;
-  const h = HOUSE_SUITS[key];
-  const d = SUIT_PATHS[h.suit];
-  return `<span class="suit-mark" style="width:${size}px;height:${size}px" aria-hidden="true">
-    <svg viewBox="0 0 100 100" width="${size}" height="${size}"><path d="${d}" fill="#e6be4a" stroke="#e6be4a" stroke-width="7" stroke-linejoin="round"/><path d="${d}" fill="${h.fill}"/></svg>
-    <img src="assets/store/logos/${key}-1.webp" style="top:${h.y}%" alt="" draggable="false"></span>`;
-};
-
-function viewStore() {
-  const filter = ui.storeFilter || 'All';
-  const house = ui.storeBrand || null;
-  const items = ITEMS.filter((it) => (filter === 'All' || it.type === filter) && (!house || it.brand === house));
-  const tiles = HOUSES.map((key) => `<button class="house-tile ${house === key ? 'on' : ''}" data-action="store-brand" data-v="${key}" aria-pressed="${house === key}">
-      ${houseMark(key, 52)}<span class="house-name">${BRANDS[key].name}</span><span class="house-count">${ITEMS.filter((it) => it.brand === key).length} items</span>
-    </button>`).join('');
-  const chips = ITEM_TYPES.map((t) => `<button class="chip ${t === filter ? 'on' : ''}" data-action="store-filter" data-v="${t}" aria-pressed="${t === filter}">${t}</button>`).join('');
-  const card = (it) => `<article class="shop-card rarity-${it.rarity}">
-      <div class="shop-art">${it.art()}<span class="rarity-pill">${RARITY[it.rarity].label}</span></div>
-      <div class="shop-info">
-        <div class="shop-type">${{ Hats: 'Hat', Tops: 'Top', Bottoms: 'Bottoms', Accessories: 'Accessory', Logos: 'Logo', Crowns: 'Crown' }[it.type]} · ${it.colorway}</div>
-        <h3 class="shop-name">${it.name}</h3>
-        <p class="shop-note">${it.note}</p>
-        <div class="shop-buy"><span class="shop-price">Free</span><button class="btn small-btn" disabled>${it.displayOnly ? 'Display only' : 'Try on soon'}</button></div>
-      </div>
-    </article>`;
-  // One section per brand, rarest pieces first inside each.
-  const order = house ? [house] : ['kog', 'crowns', ...HOUSES];
-  const sections = order.map((key) => [key, BRANDS[key]]).map(([key, brand]) => {
-    const list = items.filter((it) => it.brand === key).sort((a, b) => RARITY[b.rarity].rank - RARITY[a.rarity].rank);
-    if (!list.length) return '';
-    const mark = houseMark(key, 58);
-    return `<section class="brand-head">${mark}<div><h2>${brand.name}</h2><p class="muted small">${brand.tagline}</p></div></section>
-    <div class="shop-grid">${list.map(card).join('')}</div>`;
-  }).join('');
-  return `${topbar('K.O.G. Store')}
-  <main class="page store-page">
-    <section class="store-hero">
-      <div class="store-hero-av">${avatarFigure(myAvatar() || DEFAULT_AVATAR, 150)}</div>
-      <div class="store-hero-text">
-        <div class="eyebrow">Drip for your ${avatarById(myAvatar() || DEFAULT_AVATAR).kind === 'queen' ? 'Queen' : 'King'}</div>
-        <h2>Everything's free</h2>
-        <p class="muted small">Look around: items are on display while we build try-ons. Soon you'll dress your avatar, unlock limited drops and earn gear from challenges.</p>
-      </div>
-    </section>
-    <div class="section-head"><h2>Shop by brand</h2>${house ? '<button class="link" data-action="store-brand" data-v="">All brands</button>' : ''}</div>
-    <div class="house-grid">${tiles}</div>
-    <div class="chips store-chips">${chips}</div>
-    ${sections || '<p class="muted">Nothing here yet.</p>'}
-  </main>`;
 }
 
 function viewAccount() {
@@ -2099,6 +2004,7 @@ function viewRules() {
   const fig = figures();
   return `${topbar('How to play')}
   <main class="page prose">
+    <p class="irl-note"><b>Played in person.</b> Everyone putts on a real practice green with their own putter and balls. The app is just the scorecard.</p>
     <h2>1 · Opening toss</h2>
     <p>Each round is run by the <b>current King of the Greens (KOG)</b>, who sets the markers. Nobody is KOG yet, so a toss decides it: whoever ends up closest to the hole is KOG for Round 1.</p>
     <p class="muted small">Tap <b>Next</b> to step through it.</p>
@@ -2169,8 +2075,6 @@ function viewRules() {
 function viewSettings() {
   return `${topbar('Settings')}
   <main class="page">
-    <div class="section-head"><h2>Avatar</h2></div>
-    <button class="btn wide av-settings-btn" data-action="nav" data-view="avatar" data-back="settings">${avatarFigure(myAvatar() || DEFAULT_AVATAR, 40, { still: true })}<span>Avatars · coming soon</span></button>
     <div class="section-head"><h2>Account</h2></div>
     <button class="btn wide" data-action="nav" data-view="account">${A.currentUser() ? (ui.profile ? `@${esc(ui.profile.gamertag)}` : 'Finish setting up your account') : 'Sign in'}</button>
     <div class="section-head"><h2>Sound</h2></div>
@@ -2300,7 +2204,7 @@ function render() {
     history: viewHistory, rules: viewRules, join: viewJoin, whoami: viewWhoami, share: viewShare, settings: viewSettings,
     'quick-setup': viewQuickSetup, quick: viewQuick, 'lag-setup': viewLagSetup, lag: viewLag, ranked: viewRanked, account: viewAccount, winballs: viewWinBalls,
     'ranked-modes': () => viewModes('ranked'), 'casual-modes': () => viewModes('casual'),
-    avatar: viewAvatar, store: viewStore, 'ranked-how': viewRankedHow, lfg: viewLfg,
+    'ranked-how': viewRankedHow, lfg: viewLfg,
   };
   // Keep a half-typed code if the screen redraws (e.g. a sync update).
   const codeInput = document.getElementById('join-code');
@@ -2759,27 +2663,6 @@ const actions = {
     ui.orderPopup = null;
     render();
   },
-  'avatar-pick': (d) => {
-    ui.avatarPick = d.v;
-    render();
-  },
-  'avatar-tab': (d) => {
-    ui.avatarTab = d.v;
-    render();
-  },
-  'avatar-save': () => {
-    const pick = ui.avatarPick || myAvatar() || DEFAULT_AVATAR;
-    const changed = pick !== myAvatar();
-    setPref('kog.avatar', pick);
-    ui.avatarPick = null;
-    ui.avatarTab = null;
-    go(ui.params.back || 'home');
-    if (changed) toast(`You're ${avatarById(pick).name}`);
-  },
-  'store-brand': (d) => {
-    ui.storeBrand = d.v && d.v !== ui.storeBrand ? d.v : null;
-    render();
-  },
   'how-tab': (d) => {
     ui.howTab = d.v;
     ui.howSlide = 0;
@@ -2833,10 +2716,6 @@ const actions = {
     render();
     window.scrollTo(0, 0);
     toast('Posted (demo). It’s at the top of Find Match.');
-  },
-  'store-filter': (d) => {
-    ui.storeFilter = d.v;
-    render();
   },
   'ranks-open': () => {
     ui.ranksChart = true;
