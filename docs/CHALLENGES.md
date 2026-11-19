@@ -44,6 +44,14 @@ The Badge and Banner lines describe the final art and can be handed to an image 
 - **Banner:** A green-felt casino table turned into a putting green, chips stacked by the cup and a neon "21" above.
 
 
+## Firsts
+
+### Built for This · Common
+- **How to complete (Ranked):** Win a solo ranked match (1 v 1 or 1v1v1).
+- **Badge:** The King of Hearts slumped in a tiled locker-room corner, cheek resting on one hand, hugging a giant golden golf-ball trophy.
+- **Banner:** Right after the title: the King of Hearts sitting in the corner of a tiled locker room, exhausted but satisfied, cheek on his hand, a giant golden golf-ball trophy on a gold putter-head base in his lap, tape on his fingers, a "K.O.G. CHAMPIONS" cap pulled low, his Heartbreak Golf warm-up jacket, confetti on the floor. No real people, teams or logos.
+
+
 ## Eagles
 
 ### The Bird with Big Wings · Rare
@@ -199,6 +207,11 @@ The Badge and Banner lines describe the final art and can be handed to an image 
 - **Badge:** A silk ribbon curling around a putter shaft.
 - **Banner:** A lounge with velvet curtains and warm jazz-club lights, the King putting in a smoking jacket.
 
+### Back from the Dead · Rare
+- **How to complete (Ranked):** Lose a ranked match, then beat the same opponent in your very next match.
+- **Badge:** A crowned skull cracking up out of a putting green, a putter rising beside it.
+- **Banner:** A foggy graveyard turned golf course at dawn, the King of Spades climbing out of a bunker and dusting off his argyle vest.
+
 
 ## Duos & Groups
 
@@ -216,6 +229,26 @@ The Badge and Banner lines describe the final art and can be handed to an image 
 - **How to complete (Ranked):** Win a 3-player (1v1v1) ranked match.
 - **Badge:** A fanned poker hand: three Kings and a pair of golf balls.
 - **Banner:** A poker table set up on the green, the King raking in a pile of chips.
+
+### Pickup Game · Common
+- **How to complete (Ranked):** Win a ranked duos match with a partner who isn’t on your friends list.
+- **Badge:** Two hands shaking over a golf ball, a crown above them.
+- **Banner:** A busy practice green where two Kings who just met bump fists, the others watching from the clubhouse.
+
+### Shoulder the Burden · Rare
+- **How to complete (Ranked):** Win a ranked duos match where your own balls score 4 or more strokes better than your partner’s.
+- **Badge:** A King carrying a smaller teammate on his shoulders, crown and all.
+- **Banner:** The King of Spades carrying his teammate across the green on his shoulders toward the flag, sunset behind them.
+
+### I’ll Lead the Way · Rare
+- **How to complete (Ranked):** Win a ranked duos match where your team is the KOG for 5 or more rounds.
+- **Badge:** A torch whose flame is shaped like a crown.
+- **Banner:** The King of Hearts holding a torch high, leading his teammate up a hill of greens at dusk.
+
+### Follow Me to Victory · Rare
+- **How to complete (Ranked):** Win a ranked duos match with a partner who is playing their very first ranked match.
+- **Badge:** Crowned footprints across a green leading to the cup.
+- **Banner:** The King of Diamonds pointing the way to the flag while a rookie King follows in his footsteps.
 
 
 ## The Climb
@@ -287,6 +320,112 @@ The Badge and Banner lines describe the final art and can be handed to an image 
 - **Banner:** A misty sunrise over a dewy green, the Kings holding coffee.
 
 ### Crown Jewel · Impossible
-- **How to complete (Ranked):** Earn the magenta win % crown by winning 65% or more of your ranked matches.
-- **Badge:** The magenta win % crown resting on a velvet pillow.
-- **Banner:** A royal vault full of jewels, the magenta crown under a single spotlight.
+- **How to complete (Ranked):** Earn the magenta win % golf ball by winning 65% or more of your ranked matches.
+- **Badge:** The glowing magenta win % golf ball resting on a velvet pillow under a crown.
+- **Banner:** A royal vault full of jewels, the magenta golf ball under a single spotlight.
+
+
+## Road Trips
+
+### Away Game · Common
+- **How to complete (Ranked):** Win a ranked match 50+ miles from your Home Court (the course you pick when you sign up).
+- **Badge:** A green highway sign with a golf flag and a crown on it.
+- **Banner:** The King of Clubs pulling into a new course in a convertible, golf bag in the back seat.
+
+### Fellow Traveler · Common
+- **How to complete (Ranked):** Win a ranked match 100+ miles from your Home Court.
+- **Badge:** A suitcase covered in suit-symbol travel stickers.
+- **Banner:** The Kings at a roadside diner booth with their golf bags, a road map spread across the table.
+
+### A Long Way from Home · Rare
+- **How to complete (Ranked):** Win a ranked match 500+ miles from your Home Court.
+- **Badge:** A crowned hot-air balloon drifting over rolling greens.
+- **Banner:** The King of Spades on a train platform with his golf bag, mountains and a faraway course out the window.
+
+### Foreign Soil · Very Rare
+- **How to complete (Ranked):** Win a ranked match 1,000+ miles from your Home Court.
+- **Badge:** A globe wrapped in a golf-flag ribbon with a crown on top.
+- **Banner:** A jet landing at sunset beside a dramatic far-off course, the King of Hearts stepping off with his putter.
+
+### Ivy League · Common
+- **How to complete (Ranked):** Win a ranked match in the Northeast (New England, New York, New Jersey or Pennsylvania).
+- **Badge:** A crown over an autumn maple leaf.
+- **Banner:** Fall foliage around a stone-walled New England green, the King of Spades in a cable-knit sweater.
+
+### Southern Hospitality · Common
+- **How to complete (Ranked):** Win a ranked match in the Southeast (Virginia down to Florida and west to Louisiana).
+- **Badge:** A crowned glass of sweet tea with a lemon slice.
+- **Banner:** Live oaks draped in Spanish moss over a Southern green, the Kings relaxing on a wraparound porch.
+
+### Heartland · Common
+- **How to complete (Ranked):** Win a ranked match in the Midwest (Ohio to the Dakotas, down to Missouri and Kansas).
+- **Badge:** A crowned red barn with a golf flag beside it.
+- **Banner:** Endless cornfields around a small-town green with a red barn and water tower, the King of Clubs in flannel.
+
+### Desert Heat · Common
+- **How to complete (Ranked):** Win a ranked match in the Southwest (Texas, Oklahoma, New Mexico or Arizona).
+- **Badge:** A cactus wearing a crown.
+- **Banner:** A desert course with saguaros and red-rock mesas, the King of Diamonds in a wide-brim hat.
+
+### Altitude Adjustment · Common
+- **How to complete (Ranked):** Win a ranked match in the Mountain West (Colorado, Utah, Nevada, Idaho, Montana or Wyoming).
+- **Badge:** A snowy mountain peak with a golf flag on the summit.
+- **Banner:** A green tucked between snow-capped peaks, the Kings in vests catching their breath in the thin air.
+
+### Pacific Time · Common
+- **How to complete (Ranked):** Win a ranked match on the West Coast (California, Oregon, Washington, Alaska or Hawaii).
+- **Badge:** A crowned wave curling around a golf ball.
+- **Banner:** A cliffside green over the Pacific with crashing waves, the King of Clubs at sunset.
+
+### Coast to Coast · Very Rare
+- **How to complete (Ranked):** Win a ranked match in all six regions: Northeast, Southeast, Midwest, Southwest, Mountain West and West Coast.
+- **Badge:** A map of the U.S. made of six puzzle pieces, each stamped with a suit and a crown.
+- **Banner:** A road-trip montage of the four Kings across the country, from an Atlantic lighthouse to the Pacific cliffs.
+
+
+## Milestones
+
+### Birdwatcher · Common
+- **How to complete (Ranked):** Sink 100 birdie balls on the first putt across your ranked matches.
+- **Badge:** Binoculars with a little bird perched on top.
+- **Banner:** The King of Clubs birdwatching from a lawn chair on the green, birds everywhere.
+
+### Flock Together · Rare
+- **How to complete (Ranked):** Sink 500 birdie balls on the first putt across your ranked matches.
+- **Badge:** A V of crowned birds in flight.
+- **Banner:** A huge flock of birds sweeping over the green at sunset as the Kings look up.
+
+### Bird Sanctuary · Very Rare
+- **How to complete (Ranked):** Sink 1,000 birdie balls on the first putt across your ranked matches.
+- **Badge:** A golden birdcage with a crown on top and a golf ball inside.
+- **Banner:** A grand glass aviary turned putting green, birds of every color, the King of Spades in the middle.
+
+### Par for the Course · Common
+- **How to complete (Ranked):** Sink 100 par balls on the first putt across your ranked matches.
+- **Badge:** A golf ball stamped with a bold golden E.
+- **Banner:** A calm sunny green with a perfectly straight putt line, the King of Spades sipping tea.
+
+### Steady Eddie · Rare
+- **How to complete (Ranked):** Sink 500 par balls on the first putt across your ranked matches.
+- **Badge:** A metronome with a crown on top.
+- **Banner:** A glassy lakeside green at dawn, the King of Clubs putting with his eyes closed.
+
+### Tap-In Machine · Common
+- **How to complete (Ranked):** Sink 250 Short putts (3–5 ft) on the first putt across your ranked matches.
+- **Badge:** A robot arm tapping a golf ball into a cup.
+- **Banner:** A factory line of golf balls dropping into cups, the King of Diamonds supervising with a clipboard.
+
+### Middle Child · Rare
+- **How to complete (Ranked):** Sink 250 Medium putts (6–9 ft) on the first putt across your ranked matches.
+- **Badge:** A golf ball in the middle cup of three.
+- **Banner:** The King of Hearts squeezed between two other Kings on a green, smirking as his putt drops.
+
+### Long Distance Relationship · Rare
+- **How to complete (Ranked):** Sink 100 Long putts (10–15 ft) on the first putt across your ranked matches.
+- **Badge:** A putt line shaped like a heart, stretching across a green to the cup.
+- **Banner:** A long winding putt line across a huge green into the sunset, the King of Spades watching it roll.
+
+### Eagle Scout · Very Rare
+- **How to complete (Ranked):** Make 10 eagle putts across your ranked matches.
+- **Badge:** A scout merit patch with an eagle and a crown.
+- **Banner:** A campfire on the green at night, the Kings in scout sashes covered in eagle patches.
