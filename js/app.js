@@ -1782,8 +1782,8 @@ function viewRanked() {
   </main>`;
 }
 
-// ---------- nameplate: [badge] [rank] gamertag [win % crown], all on a banner ----------
-/** A signed-in player's nameplate. The rank resets each season; the crown never does. */
+// ---------- nameplate: [badge] [rank] gamertag [win % ball], all on a banner ----------
+/** A signed-in player's nameplate. The rank resets each season; the win % ball never does. */
 function nameplate(pf, cls = '', { badge = cls === 'big' ? 30 : 18, ball = '0.85em' } = {}) {
   const rank = pf.ranked_rank_index != null ? RK.RANKS[pf.ranked_rank_index] : null;
   const level = WR.levelFor(pf.ranked_wins || 0, pf.ranked_games || 0);
@@ -1820,7 +1820,7 @@ function winSection(overall, ranked) {
     : ranked.games < WR.MIN_RANKED_GAMES
       ? `${ranked.games} of ${WR.MIN_RANKED_GAMES} ranked matches to earn a color.`
       : `${ranked.wins} wins in ${ranked.games} ranked matches. Never resets.`;
-  return `<div class="section-head"><h2>Win %</h2><button class="link" data-action="nav" data-view="winballs">How the win % crowns are earned</button></div>
+  return `<div class="section-head"><h2>Win %</h2><button class="link" data-action="nav" data-view="winballs">How the golf balls are earned</button></div>
   <div class="win-grid">
     <div class="pct-tile win-tile">
       ${WR.winCrown(level, 46)}
@@ -1831,7 +1831,7 @@ function winSection(overall, ranked) {
     <div class="pct-tile">
       <div class="pct-label">Overall</div>
       <div class="pct-val">${pct(overall.wins, overall.games)}</div>
-      <div class="pct-sub">${overall.games ? `${overall.wins} of ${overall.games} games against others` : 'No games against others yet'} · no crown</div>
+      <div class="pct-sub">${overall.games ? `${overall.wins} of ${overall.games} games against others` : 'No games against others yet'} · no ball</div>
     </div>
   </div>`;
 }
@@ -1845,12 +1845,12 @@ function viewWinBalls() {
   const example = { gamertag: 'thetommyjohn', ranked_rank_index: RK.RANKS.find((r) => r.name === 'Gold II').index, ranked_wins: 61, ranked_games: 100, badge: 'kog', banner: 'felt' };
   return `${topbar('Win % Breakdown', 'ranked')}
   <main class="page">
-    <p>The crown at the end of your nameplate shows your <b>ranked win %</b> across every season. The higher your win %, the more royal the crown. Ranks reset every 4 months; the crown never does. It’s a flex that sticks.</p>
-    <section class="card np-example"><div class="eyebrow">How it looks</div>${nameplate(example, 'big', { badge: 34, ball: '1.2em' })}<p class="muted small">Badge, Gold II rank, gamertag and an orange crown for winning 61% of ranked matches, all on a banner.</p></section>
+    <p>The golf ball at the end of your nameplate shows your <b>ranked win %</b> across every season. Ranks reset every 4 months; the ball never does. It’s a flex that sticks.</p>
+    <section class="card np-example"><div class="eyebrow">How it looks</div>${nameplate(example, 'big', { badge: 34, ball: '1.2em' })}<p class="muted small">Badge, Gold II rank, gamertag and an orange ball for winning 61% of ranked matches, all on a banner.</p></section>
     <ol class="board plain wb-table">${rows}</ol>
     <ul class="rk-rules">
       <li>Only <b>ranked</b> matches count. Your overall win % shows on your profile but doesn’t earn a color.</li>
-      <li>You need ${WR.MIN_RANKED_GAMES} ranked matches before the crown takes a color.</li>
+      <li>You need ${WR.MIN_RANKED_GAMES} ranked matches before the ball takes a color.</li>
       <li>It follows your win % up <i>and</i> down, so keep winning to keep your color.</li>
     </ul>
   </main>`;
@@ -1949,7 +1949,7 @@ function profileBox() {
         <img class="pb-badge" src="assets/challenges/badge-west.webp" alt="" draggable="false">
         ${rankBadge(gold2, 34)}
         <b class="pb-tag">TJ2Cozy</b>
-        ${WR.winCrown(WR.levelFor(59, 100), 34)}
+        ${WR.winBall(WR.levelFor(59, 100), 30)}
       </span>
     </div>
     <p class="pb-note">(Clickable gamertag that leads to player profile coming soon)</p>`;

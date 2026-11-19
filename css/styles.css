@@ -1420,3 +1420,6 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 @keyframes try-bob { 50% { transform: translateY(-3px); } }
 @media (prefers-reduced-motion: reduce) { .choice.try-me, .try-pill { animation: none; } }
 .ch-art .ch-bn { object-position: center 10%; }
+/* Home example nameplate: show the Kings' crowns and faces, a touch taller */
+.profile-box.pb-example, .pb-plate { min-height: 92px; }
+.pb-example .pb-bn { object-position: center 6%; }

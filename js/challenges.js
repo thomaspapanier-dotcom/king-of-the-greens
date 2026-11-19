@@ -233,12 +233,12 @@ export const CHALLENGES = [
     'A rooster wearing a crown.',
     'A misty sunrise over a dewy green, the Kings holding coffee.'),
   c('crown-jewel', 'Career', 'Ranked', 'impossible', 'diamonds', 'Crown Jewel',
-    'Earn the magenta win % crown by winning 65% or more of your ranked matches.',
-    'The magenta win % crown resting on a velvet pillow.',
-    'A royal vault full of jewels, the magenta crown under a single spotlight.'),
+    'Earn the magenta win % golf ball by winning 65% or more of your ranked matches.',
+    'The glowing magenta win % golf ball resting on a velvet pillow under a crown.',
+    'A royal vault full of jewels, the magenta golf ball under a single spotlight.'),
 ];
 
 // Challenges whose badge and banner art is in assets/challenges (badge-<id>.webp, banner-<id>.webp).
-export const ART = new Set(['north', 'east', 'south', 'west']);
+export const ART = new Set(['north', 'east', 'south', 'west', 'blackjack', 'even-steven', 'might-be-him', 'under-radar']);
 
 export const SECTIONS = [...new Set(CHALLENGES.map((x) => x.section))];
