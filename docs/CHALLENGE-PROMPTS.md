@@ -9,6 +9,12 @@ the setup message first, then one batch at a time. Easy ones go fast; the higher
 
 **Still missing (38):** everything below, easiest first.
 
+**Halfway point: switch up the fits.** Most of the art so far has the Kings in the same four shirts. Paste this into your ChatGPT chat once, before the next batch:
+
+```
+OUTFITS: Switch up the Kings' fits from image to image. Keep each King's face, crown and personality, and keep every outfit suit-themed and true to his brand, but don't keep repeating the same four shirts. King of Spades (Royal Spade): cable-knit sweaters, cardigans, blazers, tweed vests, rugby shirts, pullovers with subtle spade argyle. King of Hearts (Heartbreak Golf Co.): mock necks, tour polos, quarter-zips, windbreakers and rain jackets in red, black and white with heart graphics. King of Diamonds (Dirty Diamond Ltd.): hoodies, varsity and bomber jackets, oversized tees, track jackets, bucket hats, loud diamond prints. King of Clubs (Clubs2Cozy): linen shirts, knit polos, cozy cardigans, overshirts, joggers and shorts in coastal colors with club or palm prints.
+```
+
 **Tips**
 - Use one ChatGPT chat for everything, so it remembers the style and the Kings.
 - When an image comes out right, save it with the file name shown (for example `badge-north.png`). Send them to me in groups and I’ll drop them into the app.
@@ -29,6 +35,8 @@ CHARACTERS: The attached images are the four suit Kings. Keep each King exactly 
 - King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized diamond-print polo, gold chain, baggy pants, skateboard, cocky.
 - King of Clubs (Clubs2Cozy): laid-back coastal, palm-print camp shirt, sunglasses on his crown, iced coffee.
 You can also use eagles, animals, objects, places and other characters when a challenge calls for it, but the Kings are the stars.
+
+OUTFITS: Switch up the Kings' fits from image to image. Keep each King's face, crown and personality, and keep every outfit suit-themed and true to his brand, but don't keep repeating the same four shirts. King of Spades (Royal Spade): cable-knit sweaters, cardigans, blazers, tweed vests, rugby shirts, pullovers with subtle spade argyle. King of Hearts (Heartbreak Golf Co.): mock necks, tour polos, quarter-zips, windbreakers and rain jackets in red, black and white with heart graphics. King of Diamonds (Dirty Diamond Ltd.): hoodies, varsity and bomber jackets, oversized tees, track jackets, bucket hats, loud diamond prints. King of Clubs (Clubs2Cozy): linen shirts, knit polos, cozy cardigans, overshirts, joggers and shorts in coastal colors with club or palm prints.
 
 STYLE: Match the attached art: vintage engraved playing-card illustration, bold ink linework, fine crosshatching, rich warm colors. No real-world brand logos. Use playing-card suits, crowns, putters, golf balls, flags and greens as motifs.
 
@@ -56,29 +64,29 @@ Reply "Ready" if you understand.
 ```
 Common challenges. Rarity look: Simple and clean. Badge: one bold symbol, 2–3 colors plus gold, a plain brushed-silver rim. Banner: one clear scene in daylight, not busy.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Built for This (Common), file names: `badge-built-for-this.png` and `banner-built-for-this.png`
    - Earned by: Win a solo ranked match (1 v 1 or 1v1v1).
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, red-and-black performance quarter-zip with hearts on the sleeves, black tapered pants, focused and intense
+   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
    - Badge: The King of Hearts slumped in a tiled locker-room corner, cheek resting on one hand, hugging a giant golden golf-ball trophy.
    - Banner: Right after the title: the King of Hearts sitting in the corner of a tiled locker room, exhausted but satisfied, cheek on his hand, a giant golden golf-ball trophy on a gold putter-head base in his lap, tape on his fingers, a "K.O.G. CHAMPIONS" cap pulled low, his Heartbreak Golf warm-up jacket, confetti on the floor. No real people, teams or logos.
 
 2. Pickup Game (Common), file names: `badge-pickup-game.png` and `banner-pickup-game.png`
    - Earned by: Win a ranked duos match with a partner who isn’t on your friends list.
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sage palm-print camp shirt, sunglasses on his crown, iced coffee, relaxed beach-golf vibe
+   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
    - Badge: Two hands shaking over a golf ball, a crown above them.
    - Banner: A busy practice green where two Kings who just met bump fists, the others watching from the clubhouse.
 
 3. Stranger Danger (Common), file names: `badge-stranger-danger.png` and `banner-stranger-danger.png`
    - Earned by: Play ranked matches against 5 different opponents.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: A crowned "Hello, my name is" sticker with a question mark.
    - Banner: The King of Diamonds squinting suspiciously at a stranger across the green, both holding putters.
 
 4. New Faces (Common), file names: `badge-new-faces.png` and `banner-new-faces.png`
    - Earned by: Play ranked matches against 10 different opponents.
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sage palm-print camp shirt, sunglasses on his crown, iced coffee, relaxed beach-golf vibe
+   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
    - Badge: A row of tiny crowned faces like a team photo.
    - Banner: A clubhouse wall of Polaroid photos of the King of Clubs with his new rivals.
 
@@ -89,29 +97,29 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 ```
 Common challenges. Rarity look: Simple and clean. Badge: one bold symbol, 2–3 colors plus gold, a plain brushed-silver rim. Banner: one clear scene in daylight, not busy.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Away Game (Common), file names: `badge-away-game.png` and `banner-away-game.png`
    - Earned by: Win a ranked match 50+ miles from your Home Court (the course you pick when you sign up).
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sage palm-print camp shirt, sunglasses on his crown, iced coffee, relaxed beach-golf vibe
+   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
    - Badge: A green highway sign with a golf flag and a crown on it.
    - Banner: The King of Clubs pulling into a new course in a convertible, golf bag in the back seat.
 
 2. Fellow Traveler (Common), file names: `badge-fellow-traveler.png` and `banner-fellow-traveler.png`
    - Earned by: Win a ranked match 100+ miles from your Home Court.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: A suitcase covered in suit-symbol travel stickers.
    - Banner: The Kings at a roadside diner booth with their golf bags, a road map spread across the table.
 
 3. Ivy League (Common), file names: `badge-northeast.png` and `banner-northeast.png`
    - Earned by: Win a ranked match in the Northeast (New England, New York, New Jersey or Pennsylvania).
-   - Main King: King of Spades (Royal Spade): classic country-club style, cream argyle sweater vest over a navy polo, pleated khakis, saddle shoes, calm old-money confidence
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
    - Badge: A crown over an autumn maple leaf.
    - Banner: Fall foliage around a stone-walled New England green, the King of Spades in a cable-knit sweater.
 
 4. Southern Hospitality (Common), file names: `badge-southeast.png` and `banner-southeast.png`
    - Earned by: Win a ranked match in the Southeast (Virginia down to Florida and west to Louisiana).
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, red-and-black performance quarter-zip with hearts on the sleeves, black tapered pants, focused and intense
+   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
    - Badge: A crowned glass of sweet tea with a lemon slice.
    - Banner: Live oaks draped in Spanish moss over a Southern green, the Kings relaxing on a wraparound porch.
 
@@ -122,29 +130,29 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 ```
 Common challenges. Rarity look: Simple and clean. Badge: one bold symbol, 2–3 colors plus gold, a plain brushed-silver rim. Banner: one clear scene in daylight, not busy.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Heartland (Common), file names: `badge-midwest.png` and `banner-midwest.png`
    - Earned by: Win a ranked match in the Midwest (Ohio to the Dakotas, down to Missouri and Kansas).
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sage palm-print camp shirt, sunglasses on his crown, iced coffee, relaxed beach-golf vibe
+   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
    - Badge: A crowned red barn with a golf flag beside it.
    - Banner: Endless cornfields around a small-town green with a red barn and water tower, the King of Clubs in flannel.
 
 2. Desert Heat (Common), file names: `badge-southwest.png` and `banner-southwest.png`
    - Earned by: Win a ranked match in the Southwest (Texas, Oklahoma, New Mexico or Arizona).
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: A cactus wearing a crown.
    - Banner: A desert course with saguaros and red-rock mesas, the King of Diamonds in a wide-brim hat.
 
 3. Altitude Adjustment (Common), file names: `badge-mountain-west.png` and `banner-mountain-west.png`
    - Earned by: Win a ranked match in the Mountain West (Colorado, Utah, Nevada, Idaho, Montana or Wyoming).
-   - Main King: King of Spades (Royal Spade): classic country-club style, cream argyle sweater vest over a navy polo, pleated khakis, saddle shoes, calm old-money confidence
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
    - Badge: A snowy mountain peak with a golf flag on the summit.
    - Banner: A green tucked between snow-capped peaks, the Kings in vests catching their breath in the thin air.
 
 4. Pacific Time (Common), file names: `badge-west-coast-region.png` and `banner-west-coast-region.png`
    - Earned by: Win a ranked match on the West Coast (California, Oregon, Washington, Alaska or Hawaii).
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sage palm-print camp shirt, sunglasses on his crown, iced coffee, relaxed beach-golf vibe
+   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
    - Badge: A crowned wave curling around a golf ball.
    - Banner: A cliffside green over the Pacific with crashing waves, the King of Clubs at sunset.
 
@@ -155,23 +163,23 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 ```
 Common challenges. Rarity look: Simple and clean. Badge: one bold symbol, 2–3 colors plus gold, a plain brushed-silver rim. Banner: one clear scene in daylight, not busy.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Birdwatcher (Common), file names: `badge-birdie-100.png` and `banner-birdie-100.png`
    - Earned by: Sink 100 birdie balls on the first putt across your ranked matches.
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sage palm-print camp shirt, sunglasses on his crown, iced coffee, relaxed beach-golf vibe
+   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
    - Badge: Binoculars with a little bird perched on top.
    - Banner: The King of Clubs birdwatching from a lawn chair on the green, birds everywhere.
 
 2. Par for the Course (Common), file names: `badge-par-100.png` and `banner-par-100.png`
    - Earned by: Sink 100 par balls on the first putt across your ranked matches.
-   - Main King: King of Spades (Royal Spade): classic country-club style, cream argyle sweater vest over a navy polo, pleated khakis, saddle shoes, calm old-money confidence
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
    - Badge: A golf ball stamped with a bold golden E.
    - Banner: A calm sunny green with a perfectly straight putt line, the King of Spades sipping tea.
 
 3. Tap-In Machine (Common), file names: `badge-short-250.png` and `banner-short-250.png`
    - Earned by: Sink 250 Short putts (3–5 ft) on the first putt across your ranked matches.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: A robot arm tapping a golf ball into a cup.
    - Banner: A factory line of golf balls dropping into cups, the King of Diamonds supervising with a clipboard.
 
@@ -186,17 +194,17 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 ```
 Rare challenges. Rarity look: More detail. Badge: polished sapphire-blue enamel rim with small gold accents and a bit of shine. Banner: richer lighting (golden hour or night), more props and depth.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Scavenger (Rare), file names: `badge-scavenger.png` and `banner-scavenger.png`
    - Earned by: Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sage palm-print camp shirt, sunglasses on his crown, iced coffee, relaxed beach-golf vibe
+   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
    - Badge: A crowned vulture perched on a golf ball, looking very pleased with itself.
    - Banner: The King of Clubs lounging in a lawn chair with an iced coffee while his teammate sinks putt after putt behind him.
 
 2. Social Butterfly (Rare), file names: `badge-social-butterfly.png` and `banner-social-butterfly.png`
    - Earned by: Play ranked matches against 25 different opponents.
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, red-and-black performance quarter-zip with hearts on the sleeves, black tapered pants, focused and intense
+   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
    - Badge: A crowned butterfly whose wings are the four suits.
    - Banner: The King of Hearts at a buzzing tournament mixer on the green, shaking hands with a crowd of golfers.
 
@@ -211,17 +219,17 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Him. (Very Rare), file names: `badge-him.png` and `banner-him.png`
    - Earned by: Win a ranked match by 7 or more strokes.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: A single bold gold period under a crown. Him.
    - Banner: All black except a gold spotlight on the King alone, crowd silhouettes bowing.
 
 2. Underdog (Very Rare), file names: `badge-underdog.png` and `banner-underdog.png`
    - Earned by: Beat a ranked opponent rated 500–999 Elo higher than you.
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sage palm-print camp shirt, sunglasses on his crown, iced coffee, relaxed beach-golf vibe
+   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
    - Badge: A scrappy bulldog in a crown standing on a golf ball.
    - Banner: A small dog squaring up to four giant Kings on a green at sunset.
 
@@ -232,17 +240,17 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Deadly Sniper (Very Rare), file names: `badge-sniper.png` and `banner-sniper.png`
    - Earned by: Make 5 or more Long putts in the same ranked match.
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sage palm-print camp shirt, sunglasses on his crown, iced coffee, relaxed beach-golf vibe
+   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
    - Badge: A crowned skull over two crossed putters.
    - Banner: A camouflaged King on a ridge above a long green, a red laser line running to the cup.
 
 2. Comeback King (Very Rare), file names: `badge-comeback.png` and `banner-comeback.png`
    - Earned by: Win a ranked match after being 5 or more strokes behind at the end of any round.
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, red-and-black performance quarter-zip with hearts on the sleeves, black tapered pants, focused and intense
+   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
    - Badge: A phoenix rising with a crown on its head.
    - Banner: Storm clouds breaking into sunlight over the green as the King rises from the bunker.
 
@@ -253,17 +261,17 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Platinum Plated (Very Rare), file names: `badge-platinum.png` and `banner-platinum.png`
    - Earned by: Reach Platinum.
-   - Main King: King of Spades (Royal Spade): classic country-club style, cream argyle sweater vest over a navy polo, pleated khakis, saddle shoes, calm old-money confidence
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
    - Badge: A platinum record with a golf ball for its label.
    - Banner: Platinum records lining a studio wall, the King wearing headphones.
 
 2. Diamond Hands (Very Rare), file names: `badge-diamond-hands.png` and `banner-diamond-hands.png`
    - Earned by: Reach Diamond.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: Two hands holding a glowing diamond.
    - Banner: A glittering diamond mine, the Kings carrying lanterns.
 
@@ -274,17 +282,17 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Dynasty (Very Rare), file names: `badge-dynasty.png` and `banner-dynasty.png`
    - Earned by: Win 10 ranked matches in a row.
-   - Main King: King of Spades (Royal Spade): classic country-club style, cream argyle sweater vest over a navy polo, pleated khakis, saddle shoes, calm old-money confidence
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
    - Badge: A royal crest with ten stars around it.
    - Banner: A long hall of portraits of the same King, ten in a row.
 
 2. Royal Court (Very Rare), file names: `badge-royal-court.png` and `banner-royal-court.png`
    - Earned by: Play ranked matches against 50 different opponents.
-   - Main King: King of Spades (Royal Spade): classic country-club style, cream argyle sweater vest over a navy polo, pleated khakis, saddle shoes, calm old-money confidence
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
    - Badge: A grand throne with a crowd of tiny crowns gathered at its feet.
    - Banner: A great hall packed with challengers lining up to face the King of Spades on his throne beside a putting green.
 
@@ -295,17 +303,17 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Foreign Soil (Very Rare), file names: `badge-foreign-soil.png` and `banner-foreign-soil.png`
    - Earned by: Win a ranked match 1,000+ miles from your Home Court.
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, red-and-black performance quarter-zip with hearts on the sleeves, black tapered pants, focused and intense
+   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
    - Badge: A globe wrapped in a golf-flag ribbon with a crown on top.
    - Banner: A jet landing at sunset beside a dramatic far-off course, the King of Hearts stepping off with his putter.
 
 2. Coast to Coast (Very Rare), file names: `badge-coast-to-coast.png` and `banner-coast-to-coast.png`
    - Earned by: Win a ranked match in all six regions: Northeast, Southeast, Midwest, Southwest, Mountain West and West Coast.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: A map of the U.S. made of six puzzle pieces, each stamped with a suit and a crown.
    - Banner: A road-trip montage of the four Kings across the country, from an Atlantic lighthouse to the Pacific cliffs.
 
@@ -316,17 +324,17 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
 
-For each one, make the badge, then the banner (one image per reply, wait for "next").
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Bird Sanctuary (Very Rare), file names: `badge-birdie-1000.png` and `banner-birdie-1000.png`
    - Earned by: Sink 1,000 birdie balls on the first putt across your ranked matches.
-   - Main King: King of Spades (Royal Spade): classic country-club style, cream argyle sweater vest over a navy polo, pleated khakis, saddle shoes, calm old-money confidence
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
    - Badge: A golden birdcage with a crown on top and a golf ball inside.
    - Banner: A grand glass aviary turned putting green, birds of every color, the King of Spades in the middle.
 
 2. Eagle Scout (Very Rare), file names: `badge-eagle-10.png` and `banner-eagle-10.png`
    - Earned by: Make 10 eagle putts across your ranked matches.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: A scout merit patch with an eagle and a crown.
    - Banner: A campfire on the green at night, the Kings in scout sashes covered in eagle patches.
 
@@ -343,11 +351,11 @@ One challenge per message. Ask ChatGPT to pitch the concept first, then make the
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
 
-Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far.
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
 1. King of the Skies (Impossible), file names: `badge-king-of-skies.png` and `banner-king-of-skies.png`
    - Earned by: Sink all three eagle balls on the first putt in one ranked match.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: A golden eagle wearing the King’s crown, three golf balls set like jewels beneath it.
    - Banner: Above the clouds: the four Kings on a green floating in the sky, eagles circling a sunburst.
 
@@ -358,11 +366,11 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
 
-Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far.
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
 1. Dead Center (Impossible), file names: `badge-dead-center.png` and `banner-dead-center.png`
    - Earned by: One-putt all 9 balls in the Medium-putt round (Round 4) of a ranked match.
-   - Main King: King of Spades (Royal Spade): classic country-club style, cream argyle sweater vest over a navy polo, pleated khakis, saddle shoes, calm old-money confidence
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
    - Badge: A bullseye with a golf ball dead center and a crown on top.
    - Banner: A green with target rings mowed into it, the suited Kings standing with arms crossed.
 
@@ -373,11 +381,11 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
 
-Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far.
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
 1. Long Live the King (Impossible), file names: `badge-long-live.png` and `banner-long-live.png`
    - Earned by: One-putt all 9 balls in the Long-putt round (Round 6) of a ranked match.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: A golden crown floating above a putter, glowing like a holy relic.
    - Banner: A royal procession on a cathedral-lit green, crowds cheering as the King walks to the cup.
 
@@ -388,11 +396,11 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
 
-Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far.
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
 1. Royal Flush (Impossible), file names: `badge-royal-flush.png` and `banner-royal-flush.png`
    - Earned by: One-putt every ball in a regular round: all three sets, Short, Medium and Long.
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, red-and-black performance quarter-zip with hearts on the sleeves, black tapered pants, focused and intense
+   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
    - Badge: Five cards fanned out, 10 to Ace of spades, with a golf ball for the Ace.
    - Banner: A high-roller table in green felt with a royal flush laid out and the four Kings in tuxedos.
 
@@ -403,11 +411,11 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
 
-Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far.
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
 1. Untouchable (Impossible), file names: `badge-untouchable.png` and `banner-untouchable.png`
    - Earned by: Finish a ranked match at −12 or better.
-   - Main King: King of Spades (Royal Spade): classic country-club style, cream argyle sweater vest over a navy polo, pleated khakis, saddle shoes, calm old-money confidence
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
    - Badge: A crown inside a shatterproof glass case.
    - Banner: A marble throne room with velvet ropes around the green and the King seated on his throne.
 
@@ -418,11 +426,11 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
 
-Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far.
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
 1. Giant Slayer (Impossible), file names: `badge-giant-slayer.png` and `banner-giant-slayer.png`
    - Earned by: Beat a ranked opponent rated 1,000+ Elo higher than you.
-   - Main King: King of Spades (Royal Spade): classic country-club style, cream argyle sweater vest over a navy polo, pleated khakis, saddle shoes, calm old-money confidence
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
    - Badge: A slingshot loaded with a golf ball.
    - Banner: A toppled giant King statue lying on a green, the challenger standing on top of it.
 
@@ -433,11 +441,11 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
 
-Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far.
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
 1. Ride or Die (Impossible), file names: `badge-ride-or-die.png` and `banner-ride-or-die.png`
    - Earned by: Win 20 ranked duos matches with the same partner.
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, red-and-black performance quarter-zip with hearts on the sleeves, black tapered pants, focused and intense
+   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
    - Badge: Two crowns welded into one by a single golden chain link, with a heart and a spade on either side.
    - Banner: Two Kings riding side by side on vintage motorcycles down a long fairway road into a blazing sunset, a trail of trophies behind them.
 
@@ -448,11 +456,11 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
 
-Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far.
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
 1. Putt Master (Impossible), file names: `badge-putt-master.png` and `banner-putt-master.png`
    - Earned by: Reach Putt Master, the very top rank.
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, red-and-black performance quarter-zip with hearts on the sleeves, black tapered pants, focused and intense
+   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
    - Badge: The magenta Putt Master crest shooting out rays of light.
    - Banner: A green floating among the stars, the King seated on a throne made of putters.
 
@@ -463,11 +471,11 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
 
-Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far.
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
 1. Crown Jewel (Impossible), file names: `badge-crown-jewel.png` and `banner-crown-jewel.png`
    - Earned by: Earn the magenta win % golf ball by winning 65% or more of your ranked matches.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, oversized black polo with red cracked diamonds, gold chain, baggy cream pants, high-tops and a skateboard, cocky smirk
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: The glowing magenta win % golf ball resting on a velvet pillow under a crown.
    - Banner: A royal vault full of jewels, the magenta golf ball under a single spotlight.
 
