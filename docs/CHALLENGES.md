@@ -5,11 +5,11 @@ Almost all of them come from **ranked**, where both players confirm the score. O
 
 Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impossible** (red).
 
-**44 of 82 challenges have their art.** 38 still need a badge and banner.
+**52 of 82 challenges have their art.** 30 still need a badge and banner.
 
 ---
 
-## Already in the app (44)
+## Already in the app (52)
 
 
 ### Compass Putt
@@ -23,6 +23,10 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 ### Lag 21
 
 - **Blackjack** · Common: Win a game of Lag 21 against at least one other player.
+
+### Firsts
+
+- **Built for This** · Common: Win a solo ranked match (1 v 1 or 1v1v1).
 
 ### Eagles
 
@@ -65,6 +69,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **Two Is Better** · Common: Win a ranked duos match.
 - **Dynamic Duo** · Rare: Win 5 ranked duos matches with the same partner.
 - **Full House** · Common: Win a 3-player (1v1v1) ranked match.
+- **Pickup Game** · Common: Win a ranked duos match with a partner who isn’t on your friends list.
 - **Shoulder the Burden** · Rare: Win a ranked duos match where your own balls score 4 or more strokes better than your partner’s.
 - **I’ll Lead the Way** · Rare: Win a ranked duos match where your team is the KOG for 5 or more rounds.
 - **Follow Me to Victory** · Rare: Win a ranked duos match with a partner who is playing their very first ranked match.
@@ -84,12 +89,18 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 ### Career
 
 - **Four of a Kind** · Rare: Win ranked matches at 4 different golf courses.
+- **Stranger Danger** · Common: Play ranked matches against 5 different opponents.
+- **New Faces** · Common: Play ranked matches against 10 different opponents.
 - **Iron Man** · Rare: Play 100 ranked matches.
 - **Dawn Patrol** · Common: Finish a ranked match before 8 AM.
 
 ### Road Trips
 
+- **Away Game** · Common: Win a ranked match 50+ miles from your Home Court (the course you pick when you sign up).
+- **Fellow Traveler** · Common: Win a ranked match 100+ miles from your Home Court.
 - **A Long Way from Home** · Rare: Win a ranked match 500+ miles from your Home Court.
+- **Ivy League** · Common: Win a ranked match in the Northeast (New England, New York, New Jersey or Pennsylvania).
+- **Southern Hospitality** · Common: Win a ranked match in the Southeast (Virginia down to Florida and west to Louisiana).
 
 ### Milestones
 
@@ -100,18 +111,9 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 
 ---
 
-## Still missing (38)
+## Still missing (30)
 
 These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
-
-### Firsts
-
-#### Built for This · Common
-- **How to complete (Ranked):** Win a solo ranked match (1 v 1 or 1v1v1).
-- **Badge:** The King of Hearts slumped in a tiled locker-room corner, cheek resting on one hand, hugging a giant golden golf-ball trophy.
-- **Banner:** Right after the title: the King of Hearts sitting in the corner of a tiled locker room, exhausted but satisfied, cheek on his hand, a giant golden golf-ball trophy on a gold putter-head base in his lap, tape on his fingers, a "K.O.G. CHAMPIONS" cap pulled low, his Heartbreak Golf warm-up jacket, confetti on the floor. No real people, teams or logos.
-- **Files:** `badge-built-for-this.png`, `banner-built-for-this.png`
-
 
 ### Eagles
 
@@ -196,12 +198,6 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 ### Duos & Groups
 
-#### Pickup Game · Common
-- **How to complete (Ranked):** Win a ranked duos match with a partner who isn’t on your friends list.
-- **Badge:** Two hands shaking over a golf ball, a crown above them.
-- **Banner:** A busy practice green where two Kings who just met bump fists, the others watching from the clubhouse.
-- **Files:** `badge-pickup-game.png`, `banner-pickup-game.png`
-
 #### Ride or Die · Impossible
 - **How to complete (Ranked):** Win 20 ranked duos matches with the same partner.
 - **Badge:** Two crowns welded into one by a single golden chain link, with a heart and a spade on either side.
@@ -247,18 +243,6 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 ### Career
 
-#### Stranger Danger · Common
-- **How to complete (Ranked):** Play ranked matches against 5 different opponents.
-- **Badge:** A crowned "Hello, my name is" sticker with a question mark.
-- **Banner:** The King of Diamonds squinting suspiciously at a stranger across the green, both holding putters.
-- **Files:** `badge-stranger-danger.png`, `banner-stranger-danger.png`
-
-#### New Faces · Common
-- **How to complete (Ranked):** Play ranked matches against 10 different opponents.
-- **Badge:** A row of tiny crowned faces like a team photo.
-- **Banner:** A clubhouse wall of Polaroid photos of the King of Clubs with his new rivals.
-- **Files:** `badge-new-faces.png`, `banner-new-faces.png`
-
 #### Social Butterfly · Rare
 - **How to complete (Ranked):** Play ranked matches against 25 different opponents.
 - **Badge:** A crowned butterfly whose wings are the four suits.
@@ -280,35 +264,11 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 ### Road Trips
 
-#### Away Game · Common
-- **How to complete (Ranked):** Win a ranked match 50+ miles from your Home Court (the course you pick when you sign up).
-- **Badge:** A green highway sign with a golf flag and a crown on it.
-- **Banner:** The King of Clubs pulling into a new course in a convertible, golf bag in the back seat.
-- **Files:** `badge-away-game.png`, `banner-away-game.png`
-
-#### Fellow Traveler · Common
-- **How to complete (Ranked):** Win a ranked match 100+ miles from your Home Court.
-- **Badge:** A suitcase covered in suit-symbol travel stickers.
-- **Banner:** The Kings at a roadside diner booth with their golf bags, a road map spread across the table.
-- **Files:** `badge-fellow-traveler.png`, `banner-fellow-traveler.png`
-
 #### Foreign Soil · Very Rare
 - **How to complete (Ranked):** Win a ranked match 1,000+ miles from your Home Court.
 - **Badge:** A globe wrapped in a golf-flag ribbon with a crown on top.
 - **Banner:** A jet landing at sunset beside a dramatic far-off course, the King of Hearts stepping off with his putter.
 - **Files:** `badge-foreign-soil.png`, `banner-foreign-soil.png`
-
-#### Ivy League · Common
-- **How to complete (Ranked):** Win a ranked match in the Northeast (New England, New York, New Jersey or Pennsylvania).
-- **Badge:** A crown over an autumn maple leaf.
-- **Banner:** Fall foliage around a stone-walled New England green, the King of Spades in a cable-knit sweater.
-- **Files:** `badge-northeast.png`, `banner-northeast.png`
-
-#### Southern Hospitality · Common
-- **How to complete (Ranked):** Win a ranked match in the Southeast (Virginia down to Florida and west to Louisiana).
-- **Badge:** A crowned glass of sweet tea with a lemon slice.
-- **Banner:** Live oaks draped in Spanish moss over a Southern green, the Kings relaxing on a wraparound porch.
-- **Files:** `badge-southeast.png`, `banner-southeast.png`
 
 #### Heartland · Common
 - **How to complete (Ranked):** Win a ranked match in the Midwest (Ohio to the Dakotas, down to Missouri and Kansas).
