@@ -1902,6 +1902,7 @@ function viewChallenges() {
   const open = ui.chOpen ? CH.CHALLENGES.find((x) => x.id === ui.chOpen) : null;
   const sheet = open ? `<div class="ch-pop" data-action="ch-close">
     <section class="ch-sheet" role="dialog" aria-label="${esc(open.name)}" data-action="ch-stay">
+      <div class="ch-grab" aria-hidden="true"></div>
       ${challengeTile(open, isDone(open), 'big')}
       <div class="ch-title"><h2>${esc(open.name)}</h2>${rarityInk(open.rarity)}</div>
       <div class="ch-mode">${open.mode}${isDone(open) ? ' · <b class="ch-earned">Earned</b>' : ' · Locked'}</div>
@@ -3016,6 +3017,41 @@ document.addEventListener('change', async (e) => {
     }
   }
 });
+// Swipe a challenge's panel down to close it (as well as the Close button).
+let sheetY = null;
+let sheetDy = 0;
+document.addEventListener('touchstart', (e) => {
+  const sheet = e.target.closest('.ch-sheet');
+  sheetY = sheet && sheet.scrollTop <= 0 ? e.touches[0].clientY : null;
+  sheetDy = 0;
+}, { passive: true });
+document.addEventListener('touchmove', (e) => {
+  if (sheetY === null) return;
+  const sheet = document.querySelector('.ch-sheet');
+  sheetDy = e.touches[0].clientY - sheetY;
+  if (!sheet || sheetDy <= 0) return;
+  e.preventDefault(); // drag the panel instead of scrolling the page
+  sheet.style.transition = 'none';
+  sheet.style.transform = `translateY(${sheetDy}px)`;
+  const pop = sheet.parentElement;
+  if (pop) pop.style.background = `rgba(0, 0, 0, ${Math.max(0, 0.6 - sheetDy / 600)})`;
+}, { passive: false });
+document.addEventListener('touchend', () => {
+  if (sheetY === null) return;
+  sheetY = null;
+  const sheet = document.querySelector('.ch-sheet');
+  if (!sheet) return;
+  if (sheetDy > 90) {
+    sheet.style.transition = 'transform 0.2s ease-in';
+    sheet.style.transform = 'translateY(110%)';
+    setTimeout(() => { ui.chOpen = null; render(); }, 180);
+  } else {
+    sheet.style.transition = 'transform 0.2s ease-out';
+    sheet.style.transform = '';
+    if (sheet.parentElement) sheet.parentElement.style.background = '';
+  }
+});
+
 // Swipe the How it works slides left and right.
 let swipeX = null;
 document.addEventListener('touchstart', (e) => {

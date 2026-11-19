@@ -1475,3 +1475,7 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .ch-name.ink-glow-very-rare { text-shadow: 0 0 2px #000, 0 0 3px #000, 0 0 8px #9775fa, 0 0 16px #9775fa, 0 0 26px rgba(151, 117, 250, 0.85); }
 .ch-name.ink-glow-impossible { text-shadow: 0 0 2px #000, 0 0 3px #000, 0 0 8px #ff2a2a, 0 0 16px #ff2a2a, 0 0 28px rgba(255, 42, 42, 0.9); }
 .ch-art.locked .ch-name { color: #d7dbdf; }
+
+/* Challenge panel: a grab bar hints that it can be swiped down to close */
+.ch-grab { justify-self: center; width: 44px; height: 5px; margin: -6px 0 2px; border-radius: 3px; background: rgba(255, 255, 255, 0.35); }
+.ch-sheet { overscroll-behavior: contain; }

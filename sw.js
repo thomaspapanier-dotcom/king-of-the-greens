@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v104';
+const VERSION = 'kog-v105';
 const SHELL = [
   './',
   './index.html',
