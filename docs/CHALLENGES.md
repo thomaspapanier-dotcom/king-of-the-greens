@@ -250,6 +250,21 @@ The Badge and Banner lines describe the final art and can be handed to an image 
 - **Badge:** Crowned footprints across a green leading to the cup.
 - **Banner:** The King of Diamonds pointing the way to the flag while a rookie King follows in his footsteps.
 
+### Goose & Maverick · Very Rare
+- **How to complete (Ranked):** Win 10 ranked duos matches with the same partner.
+- **Badge:** Two crowned aviator helmets side by side with pilot wings beneath them.
+- **Banner:** The King of Diamonds and the King of Clubs in aviator jackets and sunglasses, high-fiving on a green as two jets streak overhead at sunset.
+
+### Ride or Die · Impossible
+- **How to complete (Ranked):** Win 20 ranked duos matches with the same partner.
+- **Badge:** Two crowns welded into one by a single golden chain link, with a heart and a spade on either side.
+- **Banner:** Two Kings riding side by side on vintage motorcycles down a long fairway road into a blazing sunset, a trail of trophies behind them.
+
+### Scavenger · Rare
+- **How to complete (Ranked):** Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.
+- **Badge:** A crowned vulture perched on a golf ball, looking very pleased with itself.
+- **Banner:** The King of Clubs lounging in a lawn chair with an iced coffee while his teammate sinks putt after putt behind him.
+
 
 ## The Climb
 
@@ -308,6 +323,26 @@ The Badge and Banner lines describe the final art and can be handed to an image 
 - **How to complete (Ranked):** Win ranked matches at 4 different golf courses.
 - **Badge:** Four golf flags fanned out like four aces.
 - **Banner:** A road map with four pins on it and the King’s convertible parked beside the green.
+
+### Stranger Danger · Common
+- **How to complete (Ranked):** Play ranked matches against 5 different opponents.
+- **Badge:** A crowned "Hello, my name is" sticker with a question mark.
+- **Banner:** The King of Diamonds squinting suspiciously at a stranger across the green, both holding putters.
+
+### New Faces · Common
+- **How to complete (Ranked):** Play ranked matches against 10 different opponents.
+- **Badge:** A row of tiny crowned faces like a team photo.
+- **Banner:** A clubhouse wall of Polaroid photos of the King of Clubs with his new rivals.
+
+### Social Butterfly · Rare
+- **How to complete (Ranked):** Play ranked matches against 25 different opponents.
+- **Badge:** A crowned butterfly whose wings are the four suits.
+- **Banner:** The King of Hearts at a buzzing tournament mixer on the green, shaking hands with a crowd of golfers.
+
+### Royal Court · Very Rare
+- **How to complete (Ranked):** Play ranked matches against 50 different opponents.
+- **Badge:** A grand throne with a crowd of tiny crowns gathered at its feet.
+- **Banner:** A great hall packed with challengers lining up to face the King of Spades on his throne beside a putting green.
 
 ### Iron Man · Rare
 - **How to complete (Ranked):** Play 100 ranked matches.
