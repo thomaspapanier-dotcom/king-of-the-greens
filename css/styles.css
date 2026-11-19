@@ -1466,3 +1466,12 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .ch-chev .ico { width: 16px; height: 16px; }
 .ch-toggle.shut .ch-chev { transform: rotate(0deg); }
 .ch-grid[hidden] { display: none; }
+
+/* Challenge name across the banner: white letters with a dark shadow, plus a neon glow in the rarity color */
+.ch-name { position: absolute; z-index: 2; left: 132px; right: 44px; top: 50%; transform: translateY(-50%);
+  font: 900 21px/1.08 Georgia, "Times New Roman", serif; color: #fff; letter-spacing: 0.01em; text-wrap: balance;
+  text-shadow: 0 0 2px #000, 0 0 3px #000, 0 2px 6px rgba(0, 0, 0, 0.9), 0 0 14px rgba(0, 0, 0, 0.7); }
+.ch-name.ink-glow-rare { text-shadow: 0 0 2px #000, 0 0 3px #000, 0 0 8px #339af0, 0 0 16px #339af0, 0 0 26px rgba(51, 154, 240, 0.8); }
+.ch-name.ink-glow-very-rare { text-shadow: 0 0 2px #000, 0 0 3px #000, 0 0 8px #9775fa, 0 0 16px #9775fa, 0 0 26px rgba(151, 117, 250, 0.85); }
+.ch-name.ink-glow-impossible { text-shadow: 0 0 2px #000, 0 0 3px #000, 0 0 8px #ff2a2a, 0 0 16px #ff2a2a, 0 0 28px rgba(255, 42, 42, 0.9); }
+.ch-art.locked .ch-name { color: #d7dbdf; }

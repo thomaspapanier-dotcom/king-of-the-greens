@@ -1862,18 +1862,20 @@ function viewWinBalls() {
 const SUIT_CHAR = { spades: '♠', hearts: '♥', diamonds: '♦', clubs: '♣' };
 function challengeTile(ch, on, cls = '') {
   const lock = on ? '' : `<span class="ch-lock">${ICON.lock}</span>`;
+  // The challenge's name across its banner (left off the big full-banner view in the details).
+  const title = cls.includes('big') ? '' : `<span class="ch-name ink-glow-${ch.rarity}">${esc(ch.name)}</span>`;
   if (CH.ART.has(ch.id)) {
     return `<span class="ch-art rar-${ch.rarity} ${on ? 'on' : 'locked'} ${cls}">
     <img class="ch-bg" src="assets/challenges/banner-${ch.id}.webp" alt="" loading="lazy" draggable="false">
     <img class="ch-bn" src="assets/challenges/banner-${ch.id}.webp" alt="" loading="lazy" draggable="false">
     <img class="ch-bd" src="assets/challenges/badge-${ch.id}.webp" alt="" loading="lazy" draggable="false">
-    ${lock}
+    ${title}${lock}
   </span>`;
   }
   // Placeholder until this challenge's badge and banner are made.
   return `<span class="ch-art ph rar-${ch.rarity} suit-${ch.suit} ${on ? 'on' : 'locked'} ${cls}">
     <span class="ch-ph-bd">${SUIT_CHAR[ch.suit]}</span>
-    ${on ? '<span class="ch-ph-note">Art coming</span>' : lock}
+    ${title}${on ? '<span class="ch-ph-note">Art coming</span>' : lock}
   </span>`;
 }
 const rarityInk = (r) => `<span class="ch-ink ink-${r}" style="color:${CH.RARITY[r].color}">${CH.RARITY[r].label}</span>`;
