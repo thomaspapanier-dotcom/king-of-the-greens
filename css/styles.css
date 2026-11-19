@@ -1447,3 +1447,6 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 @keyframes peek-in { from { opacity: 0; transform: scale(0.96); } }
 .profile-box.pb-example { box-sizing: border-box; height: 140px; min-height: 0; }
 .pb-plate { min-height: 136px; }
+
+/* Ranked isn't open yet: plain black rim like the other boxes (the gold glow comes back at launch) */
+.choice.art-ranked { border: 2px solid #111; box-shadow: var(--shadow); animation: none; }
