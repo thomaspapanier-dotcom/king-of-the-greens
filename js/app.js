@@ -464,12 +464,13 @@ function viewHome() {
       <div class="play-choices">
         <button class="choice primary art-choice art-ranked" data-action="nav" data-view="ranked-modes" data-confetti="kings">
           <span class="choice-ico">${ICON.crown}</span>
-          <span class="choice-title">KOG Ranked <span class="soon-tag">(coming soon)</span></span>
+          <span class="choice-title">K.O.G. Ranked <span class="soon-tag">(coming soon)</span></span>
           <span class="choice-sub">Climb from the depths of Copper V to Putt Master</span>
         </button>
-        <button class="choice art-choice art-casual" data-action="nav" data-view="casual-modes">
+        <button class="choice art-choice art-casual try-me" data-action="nav" data-view="casual-modes">
+          <span class="try-pill" aria-hidden="true">▶ Play now · Beta</span>
           <span class="choice-ico">${ICON.flag}</span>
-          <span class="choice-title">KOG Casual</span>
+          <span class="choice-title">K.O.G. Casual</span>
           <span class="choice-sub">Just for fun on the practice green, solo or with friends</span>
         </button>
         <button class="choice wide-choice rules-choice" data-action="nav" data-view="rules">
@@ -593,7 +594,7 @@ function viewModes(kind) {
   const duos = ranked ? 'disabled aria-disabled="true"' : 'data-action="new-game" data-mode="coop"';
   const lock = ranked ? `<span class="mode-lock" aria-hidden="true">${ICON.lock}</span>` : '';
   const soon = ranked ? ' <span class="mode-soon">(coming soon)</span>' : '';
-  return `${topbar(ranked ? 'KOG Ranked' : 'KOG Casual')}
+  return `${topbar(ranked ? 'K.O.G. Ranked' : 'K.O.G. Casual')}
   <main class="page">
     ${ranked ? `<p class="muted small">Ranked matches open once accounts are switched on. Until then, see how it works below.</p>` : ''}
     <div class="play-choices modes">
@@ -1938,6 +1939,21 @@ async function refreshProfile() {
 /** Home: [badge] [rank] [gamertag] [win % crown] on a banner: a box that opens the signed-in player's profile. */
 function profileBox() {
   const pf = A.accountsAvailable() && A.currentUser() ? ui.profile : null;
+  if (!pf) {
+    // No accounts yet: show what a real nameplate looks like. A challenge banner across the box,
+    // its badge on the left, then rank, gamertag and win % crown.
+    const gold2 = RK.RANKS.find((r) => r.name === 'Gold II');
+    return `<div class="profile-box pb-example" role="img" aria-label="Example nameplate: TJ2Cozy, Gold II, 59% wins">
+      <img class="pb-bn" src="assets/challenges/banner-west.webp" alt="" draggable="false">
+      <span class="pb-plate">
+        <img class="pb-badge" src="assets/challenges/badge-west.webp" alt="" draggable="false">
+        ${rankBadge(gold2, 34)}
+        <b class="pb-tag">TJ2Cozy</b>
+        ${WR.winCrown(WR.levelFor(59, 100), 34)}
+      </span>
+    </div>
+    <p class="pb-note">(Clickable gamertag that leads to player profile coming soon)</p>`;
+  }
   let inner;
   let sub;
   if (pf) {
@@ -2130,16 +2146,6 @@ function viewRules() {
       </tbody>
     </table>
     <p>Whoever misses holes out their own ball. In the opening toss all four putt: the closest player’s team is the KOG, and the furthest player’s team putts first. The app shows whose ball is whose, and each player’s stats count only the balls they putted.</p>
-
-    <h2>9 · Compass Putt</h2>
-    <p>A putting session in under 20 minutes. Put 4 tees around one hole, north, east, south and west, at ${dn('S')}, ${dn('M')} or ${dn('L')} distance (or any mix). Putt 3 balls from each tee. Every ball is a birdie ball: −1 if it drops, E in two, +1 in three. The putts count toward your stats.</p>
-    <p><b>Head-to-head (2–4 players):</b> a toss decides who putts first at the first tee, and the order rotates every tee so everyone leads equally. Each player putts all 3 balls before the next. Lowest total wins; a tie goes to the same toss tie-breaker as the main game.</p>
-
-    <h2>10 · ${L.GAME_NAME}</h2>
-    <p>Lag putting, cornhole-style, for 1 v 1 or 2 v 2. Pick a hole and a spot 25–35 ft away. Each side putts 4 balls per frame, taking turns (teammates alternate). Knocking the other side’s ball away is allowed.</p>
-    ${lagFigure()}
-    <p>Only the difference scores each frame: if you have 5 points and they have 3, you score 2. Whoever scored putts first next frame. First to ${L.TARGET} wins.</p>
-    ${compassFigure('M', 0)}
   </main>`;
 }
 

@@ -1393,3 +1393,30 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .ch-art { height: 104px; }
 .ch-art.big { height: 136px; }
 .ch-art .ch-bn { width: 66%; object-position: center 25%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%); mask-image: linear-gradient(90deg, transparent, #000 18%); }
+
+/* Challenges: taller strips with a little more space between them; the banner runs
+   continuously behind the badge (no blur), zoomed to show as much as fits */
+.ch-grid { gap: 14px; }
+.ch-art { height: 126px; }
+.ch-art.big { height: 150px; }
+.ch-art .ch-bg { display: none; }
+.ch-art .ch-bn { inset: 0; width: 100%; height: 100%; object-position: center 30%; -webkit-mask-image: none; mask-image: none; }
+.ch-art .ch-bd { height: 76%; left: 12px; }
+
+/* Home: example nameplate (banner + badge + rank + gamertag + win % crown) */
+.profile-box.pb-example { position: relative; display: block; min-height: 84px; padding: 0; overflow: hidden; border: 2px solid #7c3aed; }
+.pb-example .pb-bn { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.pb-example::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0, 0, 0, 0.15) 0 20%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.25)); pointer-events: none; }
+.pb-plate { position: relative; z-index: 1; display: flex; align-items: center; gap: 8px; min-height: 84px; padding: 6px 12px 6px 8px; }
+.pb-badge { width: 70px; height: 70px; flex: none; object-fit: contain; filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.6)); }
+.pb-plate .rank-badge, .pb-plate .win-crown { flex: none; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6)); }
+.pb-tag { min-width: 0; font-size: 22px; font-weight: 900; color: #fff; text-shadow: 0 2px 4px #000, 0 0 10px rgba(0, 0, 0, 0.8); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pb-note { margin: -8px 4px 14px; font-size: 12px; color: #c9d3cc; text-align: center; text-shadow: 0 1px 2px #000; }
+
+/* Home: nudge new players toward K.O.G. Casual (the part you can play today) */
+.choice.try-me { overflow: visible; animation: try-glow 2.2s ease-in-out infinite; }
+.try-pill { position: absolute; top: -10px; right: 8px; z-index: 3; padding: 4px 9px; border-radius: 99px; background: #2fbf4a; color: #062b10; font-size: 11px; font-weight: 900; letter-spacing: 0.03em; white-space: nowrap; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); animation: try-bob 1.6s ease-in-out infinite; }
+@keyframes try-glow { 50% { box-shadow: 0 0 0 2px #2fbf4a, 0 0 18px rgba(47, 191, 74, 0.75); } }
+@keyframes try-bob { 50% { transform: translateY(-3px); } }
+@media (prefers-reduced-motion: reduce) { .choice.try-me, .try-pill { animation: none; } }
+.ch-art .ch-bn { object-position: center 10%; }
