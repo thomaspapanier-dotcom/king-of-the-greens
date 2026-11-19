@@ -1458,3 +1458,11 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .ch-art.big:not(.ph) { height: auto; aspect-ratio: 3 / 2; }
 .ch-art.big:not(.ph) .ch-bn { object-position: center; }
 .ch-art.big:not(.ph) .ch-bd { height: 36%; left: 10px; top: auto; bottom: 10px; transform: none; }
+
+/* Challenges: tap a section title to fold it up or open it again */
+.ch-toggle { width: 100%; padding: 4px 2px; border: 0; background: none; color: inherit; text-align: left; cursor: pointer; }
+.ch-head-right { display: inline-flex; align-items: center; gap: 8px; flex: none; }
+.ch-chev { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); transition: transform 0.2s ease; transform: rotate(90deg); }
+.ch-chev .ico { width: 16px; height: 16px; }
+.ch-toggle.shut .ch-chev { transform: rotate(0deg); }
+.ch-grid[hidden] { display: none; }

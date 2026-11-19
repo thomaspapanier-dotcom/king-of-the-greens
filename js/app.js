@@ -1878,6 +1878,9 @@ function challengeTile(ch, on, cls = '') {
 }
 const rarityInk = (r) => `<span class="ch-ink ink-${r}" style="color:${CH.RARITY[r].color}">${CH.RARITY[r].label}</span>`;
 
+// Which challenge sections are folded up (remembered on this phone).
+const chCollapsed = () => { try { return JSON.parse(getPref('kog.chCollapsed', '[]')); } catch { return []; } };
+
 function viewChallenges() {
   // The neon sign splits and slides away once each time the menu is opened, then the list appears.
   const intro = !ui.chIntroDone;
@@ -1887,8 +1890,12 @@ function viewChallenges() {
   const total = CH.CHALLENGES.length;
   const sections = CH.SECTIONS.map((sec) => {
     const list = CH.CHALLENGES.filter((ch) => ch.section === sec);
-    return `<div class="section-head ch-head"><h2>${sec} Challenges</h2><span class="muted small">${list[0].mode === 'Ranked' ? 'Ranked · ' : ''}${list.length}</span></div>
-    <div class="ch-grid">${list.map((ch) => `<button class="ch-tile" data-action="ch-open" data-v="${ch.id}" aria-label="${isDone(ch) ? esc(ch.name) : 'Locked challenge'}">${challengeTile(ch, isDone(ch))}</button>`).join('')}</div>`;
+    const shut = chCollapsed().includes(sec);
+    return `<button class="section-head ch-head ch-toggle ${shut ? 'shut' : ''}" data-action="ch-section" data-v="${esc(sec)}" aria-expanded="${!shut}">
+      <h2>${sec} Challenges</h2>
+      <span class="ch-head-right"><span class="muted small">${list[0].mode === 'Ranked' ? 'Ranked · ' : ''}${list.length}</span><span class="ch-chev" aria-hidden="true">${ICON.chevron}</span></span>
+    </button>
+    <div class="ch-grid" ${shut ? 'hidden' : ''}>${list.map((ch) => `<button class="ch-tile" data-action="ch-open" data-v="${ch.id}" aria-label="${isDone(ch) ? esc(ch.name) : 'Locked challenge'}">${challengeTile(ch, isDone(ch))}</button>`).join('')}</div>`;
   }).join('');
   const open = ui.chOpen ? CH.CHALLENGES.find((x) => x.id === ui.chOpen) : null;
   const sheet = open ? `<div class="ch-pop" data-action="ch-close">
@@ -2740,6 +2747,12 @@ const actions = {
   },
   'order-close': () => {
     ui.orderPopup = null;
+    render();
+  },
+  'ch-section': (d) => {
+    const list = chCollapsed();
+    setPref('kog.chCollapsed', JSON.stringify(list.includes(d.v) ? list.filter((x) => x !== d.v) : [...list, d.v]));
+    ui.chIntroDone = true;
     render();
   },
   'ch-open': (d) => {
