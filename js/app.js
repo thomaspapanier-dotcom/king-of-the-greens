@@ -68,6 +68,7 @@ const fmtDate = (iso) => new Date(iso).toLocaleDateString(undefined, { month: 's
 const clone = (o) => JSON.parse(JSON.stringify(o));
 
 const ICON = {
+  lock: '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="11" rx="2.5" fill="currentColor"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="12" cy="15.5" r="1.6" fill="#000" opacity=".45"/></svg>',
   crown: '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M2.5 7.2l5.2 4.2L12 4l4.3 7.4 5.2-4.2-2.1 10.6H4.6zM4.8 19.4h14.4V21H4.8z"/></svg>',
   back: '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>',
   card: '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M4 4h16v16H4zM4 9.5h16M4 14.5h16M9.5 4v16"/></svg>',
@@ -582,26 +583,25 @@ const CHILL_DUOS_ART = '<span class="mode-art casual-duos" aria-hidden="true"></
 /** Ranked or Casual → pick Head-to-Head / 1v1v1 or Duos. */
 function viewModes(kind) {
   const ranked = kind === 'ranked';
-  const h2h = ranked
-    ? 'data-action="nav" data-view="ranked" data-back="ranked-modes"'
-    : 'data-action="new-game" data-mode="group"';
-  const duos = ranked
-    ? 'data-action="nav" data-view="ranked" data-back="ranked-modes"'
-    : 'data-action="new-game" data-mode="coop"';
+  // Ranked matches aren't open yet: the two mode boxes are locked (greyed out, not tappable).
+  const h2h = ranked ? 'disabled aria-disabled="true"' : 'data-action="new-game" data-mode="group"';
+  const duos = ranked ? 'disabled aria-disabled="true"' : 'data-action="new-game" data-mode="coop"';
+  const lock = ranked ? `<span class="mode-lock" aria-hidden="true">${ICON.lock}</span>` : '';
+  const soon = ranked ? ' <span class="mode-soon">(coming soon)</span>' : '';
   return `${topbar(ranked ? 'KOG Ranked' : 'KOG Casual')}
   <main class="page">
-    ${ranked ? `<p class="muted small">Ranked matches open once accounts are switched on. Until then, tap a mode to see how ranks and points will work.</p>` : ''}
+    ${ranked ? `<p class="muted small">Ranked matches open once accounts are switched on. Until then, see how it works below.</p>` : ''}
     <div class="play-choices modes">
-      <button class="choice primary art-mode" ${h2h}>
+      <button class="choice primary art-mode${ranked ? ' locked' : ''}" ${h2h}>${lock}
         ${ranked ? CROWNING_ART : CHILL_H2H_ART}
         <span class="choice-ico">${ICON.person}</span>
-        <span class="choice-title">Head-to-Head / 1v1v1</span>
+        <span class="choice-title">Head-to-Head / 1v1v1${soon}</span>
         <span class="choice-sub">${ranked ? '2 or 3 players, everyone for themselves' : '1–3 players, everyone putts their own balls. Solo practice too.'}</span>
       </button>
-      <button class="choice art-mode" ${duos}>
+      <button class="choice art-mode${ranked ? ' locked' : ''}" ${duos}>${lock}
         ${ranked ? FACEOFF_ART : CHILL_DUOS_ART}
         <span class="choice-ico">${ICON.people}</span>
-        <span class="choice-title">Duos · 2 vs 2</span>
+        <span class="choice-title">Duos · 2 vs 2${soon}</span>
         <span class="choice-sub">${ranked ? 'Team up with any rank. Each of you gains or loses your own points.' : 'A foursome in two teams. Teammates split the balls, so it runs about twice as fast.'}</span>
       </button>
     </div>
