@@ -5,7 +5,7 @@ Almost all of them come from **ranked**, where both players confirm the score. O
 
 Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impossible** (red).
 
-**52 of 82 challenges have their art.** 30 still need a badge and banner.
+**52 of 83 challenges have their art.** 31 still need a badge and banner.
 
 ---
 
@@ -111,7 +111,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 
 ---
 
-## Still missing (30)
+## Still missing (31)
 
 These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
@@ -209,6 +209,12 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 - **Badge:** A crowned vulture perched on a golf ball, looking very pleased with itself.
 - **Banner:** The King of Clubs lounging in a lawn chair with an iced coffee while his teammate sinks putt after putt behind him.
 - **Files:** `badge-scavenger.png`, `banner-scavenger.png`
+
+#### You Hit It, I’ll End It · Rare
+- **How to complete (Ranked):** Win a ranked duos match where the Eagle round (the last round) decides it: you and your teammate’s Eagle-round scores together take the lead and seal the win.
+- **Badge:** Two crowned hands, one red-sleeved and one with a diamond-print cuff, each holding a crowned ping-pong ball over a red party cup filled with golf balls.
+- **Banner:** A beer pong showdown on the practice green at golden hour: the King of Hearts and King of Diamonds with 4 cups on their end and both balls, the King of Diamonds cocked back to shoot across at the King of Spades and King of Clubs, who are down to 2 cups.
+- **Files:** `badge-hit-it-end-it.png`, `banner-hit-it-end-it.png`
 
 
 ### The Climb

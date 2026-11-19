@@ -3,11 +3,11 @@
 Each challenge gets a **badge** (square) and a **banner** (wide). Send these to ChatGPT in order:
 the setup message first, then one batch at a time. Easy ones go fast; the higher the rarity, the more time ChatGPT should take.
 
-**Still to make:** 7 Common, 2 Rare, 13 Very Rare, 8 Impossible (30 challenges, 60 images). 52 of 82 challenges already have their art and aren’t listed here.
+**Still to make:** 7 Common, 3 Rare, 13 Very Rare, 8 Impossible (31 challenges, 62 images). 52 of 83 challenges already have their art and aren’t listed here.
 
 **Already in the app (52):** The North Remembers · West Coast, Best Coast · East Coast, Beast Coast · The Deep South · Never Lost · Blackjack · Built for This · The Bird with Big Wings · Albatross · Flawless Shawty · Triple Threat · Even Steven · Under the Radar · Seeing Red · Lights Out · “I Might Be Him” · Himothy · From Way Downtown · Sharpshooter · Not So Fast · Wire to Wire · Regicide · Ice Cold · Smooth Operator · Back from the Dead · Two Is Better · Dynamic Duo · Full House · Pickup Game · Shoulder the Burden · I’ll Lead the Way · Follow Me to Victory · Goose & Maverick · Fresh Blood · Silver Lining · Heart of Gold · Hat Trick · Heater · Four of a Kind · Stranger Danger · New Faces · Iron Man · Dawn Patrol · Away Game · Fellow Traveler · A Long Way from Home · Ivy League · Southern Hospitality · Flock Together · Steady Eddie · Middle Child · Long Distance Relationship
 
-**Still missing (30):** everything below, easiest first.
+**Still missing (31):** everything below, easiest first.
 
 **Halfway point: switch up the fits.** Most of the art so far has the Kings in the same four shirts. Paste this into your ChatGPT chat once, before the next batch:
 
@@ -121,7 +121,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ---
 
-## Rare (2 challenges)
+## Rare (3 challenges)
 
 ### Step 4: Rare batch 1
 
@@ -136,7 +136,13 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
    - Badge: A crowned vulture perched on a golf ball, looking very pleased with itself.
    - Banner: The King of Clubs lounging in a lawn chair with an iced coffee while his teammate sinks putt after putt behind him.
 
-2. Social Butterfly (Rare), file names: `badge-social-butterfly.png` and `banner-social-butterfly.png`
+2. You Hit It, I’ll End It (Rare), file names: `badge-hit-it-end-it.png` and `banner-hit-it-end-it.png`
+   - Earned by: Win a ranked duos match where the Eagle round (the last round) decides it: you and your teammate’s Eagle-round scores together take the lead and seal the win.
+   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
+   - Badge: Two crowned hands, one red-sleeved and one with a diamond-print cuff, each holding a crowned ping-pong ball over a red party cup filled with golf balls.
+   - Banner: A beer pong showdown on the practice green at golden hour: the King of Hearts and King of Diamonds with 4 cups on their end and both balls, the King of Diamonds cocked back to shoot across at the King of Spades and King of Clubs, who are down to 2 cups.
+
+3. Social Butterfly (Rare), file names: `badge-social-butterfly.png` and `banner-social-butterfly.png`
    - Earned by: Play ranked matches against 25 different opponents.
    - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
    - Badge: A crowned butterfly whose wings are the four suits.

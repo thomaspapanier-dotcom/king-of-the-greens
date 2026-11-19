@@ -220,6 +220,11 @@ export const CHALLENGES = [
     'A crowned vulture perched on a golf ball, looking very pleased with itself.',
     'The King of Clubs lounging in a lawn chair with an iced coffee while his teammate sinks putt after putt behind him.'),
 
+  c('hit-it-end-it', 'Duos & Groups', 'Ranked', 'rare', 'hearts', 'You Hit It, I’ll End It',
+    'Win a ranked duos match where the Eagle round (the last round) decides it: you and your teammate’s Eagle-round scores together take the lead and seal the win.',
+    'Two crowned hands, one red-sleeved and one with a diamond-print cuff, each holding a crowned ping-pong ball over a red party cup filled with golf balls.',
+    'A beer pong showdown on the practice green at golden hour: the King of Hearts and King of Diamonds with 4 cups on their end and both balls, the King of Diamonds cocked back to shoot across at the King of Spades and King of Clubs, who are down to 2 cups.'),
+
   // ---------- The climb ----------
   c('fresh-blood', 'The Climb', 'Ranked', 'common', 'spades', 'Fresh Blood',
     'Finish your 10 placement matches and get your first rank.',
