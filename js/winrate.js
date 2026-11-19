@@ -29,70 +29,110 @@ export function levelFor(wins, games) {
 }
 
 // ---------- win % crown ----------
-// The crown after a gamertag, in the level's color. Each level up adds detail, so the
-// top win % wears the most royal crown: 3 plain points (unrated, blue) … 5 points with
-// pearls, band jewels, a center gem, arches, an orb and cross, then sparkles and a glow.
-const PEARL = '#fffaf0';
-const BIG_GEM = { blue: '#ffffff', teal: '#ffffff', green: '#e3262b', lime: '#e3262b', yellow: '#e3262b', amber: '#e3262b', orange: '#dff4ff', red: '#dff4ff', magenta: '#dff4ff' };
+// The crown at the end of a nameplate, in the level's color. One family of crowns that
+// gets more royal each level:
+//   Unrated  plain 3-point crown          Blue   + pearl finials
+//   Teal     5 points                     Green  + jewels in the band
+//   Lime     + a gem on the front         Yellow + pearl trim and more jewels
+//   Amber    + a big cut diamond up front Orange + red velvet cap and a glow
+//   Red      + arches and an orb          Magenta + cross, sparkles, brightest glow
+const GEMS = ['#e3262b', '#1e6fe0', '#18a558']; // ruby, sapphire, emerald
+const VELVET = { orange: ['#7d0f2c', '#2e0410'], red: ['#3b1d6e', '#170a33'], magenta: ['#2b1460', '#0e0626'] };
 
 /** SVG of the win % crown for a level. `size` in px (or an em string). */
 export function winCrown(level, size = '0.85em', title = '') {
   const i = Math.max(0, LEVELS.findIndex((l) => l.key === level.key)); // 0 unrated … 9 magenta
   const id = `wc-${level.key}`;
-  const five = i >= 3;
-  // Points: [x, y] tips with valleys in between.
-  const tips = five ? [[5, 13], [12.5, 10], [20, 6.5], [27.5, 10], [35, 13]] : [[5, 12], [20, 8], [35, 12]];
-  let d = 'M5 27';
-  tips.forEach(([x, y], k) => {
-    d += ` L${x} ${y}`;
-    if (k < tips.length - 1) d += ` L${(x + tips[k + 1][0]) / 2} ${five ? 19 : 20}`;
-  });
-  d += ' L35 27 Z';
   const metal = `url(#${id}m)`;
-  const ink = i === 0 ? '#5f666c' : level.dark;
-  const parts = [];
-  // Glow behind the crown for the top levels.
-  if (i >= 7) parts.push(`<circle cx="20" cy="20" r="${i === 9 ? 19 : 16}" fill="url(#${id}g)"/>`);
-  // Arches over the top (orange and up): two curved bands meeting above the center point.
-  if (i >= 7) parts.push(`<path d="M7 16 Q10 4 20 4 Q30 4 33 16" fill="none" stroke="${metal}" stroke-width="2.4"/><path d="M7 16 Q10 4 20 4 Q30 4 33 16" fill="none" stroke="${ink}" stroke-width=".6" opacity=".6"/>`);
-  if (i >= 7) parts.push(`<path d="M13 17 Q14 6 20 5" fill="none" stroke="${metal}" stroke-width="1.6"/><path d="M27 17 Q26 6 20 5" fill="none" stroke="${metal}" stroke-width="1.6"/>`);
-  parts.push(`<path d="${d}" fill="${metal}" stroke="${ink}" stroke-width="1.3" stroke-linejoin="round"/>`);
-  // Inner shading line so the points read as raised metal.
-  if (i >= 1) parts.push(`<path d="${d}" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width=".7" transform="translate(0 1.2) scale(1 .97)" stroke-linejoin="round"/>`);
-  // Pearls on the tips.
-  if (i >= 1) tips.forEach(([x, y]) => parts.push(`<circle cx="${x}" cy="${y - 0.6}" r="${i >= 5 ? 2.1 : 1.8}" fill="${i >= 5 ? PEARL : metal}" stroke="${ink}" stroke-width=".7"/>`));
-  // The band.
-  parts.push(`<rect x="4" y="26" width="32" height="7" rx="2" fill="${metal}" stroke="${ink}" stroke-width="1.2"/>`);
-  if (i >= 2) parts.push(`<path d="M5.5 28 H34.5" stroke="#fff" stroke-opacity=".45" stroke-width=".8"/>`);
-  // Band jewels (green and up), more of them higher up.
-  if (i >= 3) {
-    const xs = i >= 6 ? [8.5, 14, 20, 26, 31.5] : [11, 20, 29];
-    xs.forEach((x, k) => {
-      const c = k % 2 ? '#e3262b' : '#2f9bff';
-      parts.push(i >= 6 && x === 20
-        ? `<path d="M20 26.6 L22.3 29.5 L20 32.4 L17.7 29.5 Z" fill="${BIG_GEM[level.key] || '#fff'}" stroke="${ink}" stroke-width=".6"/>`
-        : `<circle cx="${x}" cy="29.5" r="1.45" fill="${c}" stroke="${ink}" stroke-width=".5"/>`);
+  const ink = i === 0 ? '#4d5459' : level.dark;
+  const royal = i >= 8; // arches + orb, so the center point sits lower
+  // Crown body: points with curved (scooped) sides, sitting on a curved band.
+  const body = i < 2
+    ? 'M6 27 L6 13 Q15 24 24 7.5 Q33 24 42 13 L42 27 Q24 31 6 27 Z'
+    : `M6 27 L6 14 Q10.5 22 15 10.5 Q19.5 21 24 ${royal ? 9.5 : 6.5} Q28.5 21 33 10.5 Q37.5 22 42 14 L42 27 Q24 31 6 27 Z`;
+  const tips = i < 2 ? [[6, 13], [24, 7.5], [42, 13]] : [[6, 14], [15, 10.5], [24, royal ? 9.5 : 6.5], [33, 10.5], [42, 14]];
+  const band = 'M5.5 26.5 Q24 31 42.5 26.5 L41.5 34 Q24 38.6 6.5 34 Z';
+  const out = [];
+
+  if (i >= 7) out.push(`<ellipse cx="24" cy="21" rx="${i === 9 ? 24 : 21}" ry="${i === 9 ? 20 : 17}" fill="url(#${id}g)"/>`);
+  // Velvet cap behind the points.
+  if (i >= 7) {
+    const [v1, v2] = VELVET[level.key] || VELVET.orange;
+    out.push(`<path d="M8 25 C8 ${royal ? -4 : -3} 40 ${royal ? -4 : -3} 40 25 Z" fill="url(#${id}v)" stroke="${ink}" stroke-width=".8"/>`);
+    out.push(`<path d="M14 12 Q17 7 22 6" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1.6" stroke-linecap="round"/>`);
+    out.push(`<defs><radialGradient id="${id}v" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="${v1}"/><stop offset="1" stop-color="${v2}"/></radialGradient></defs>`);
+  }
+  // Arches over the cap, meeting under the orb.
+  if (royal) {
+    out.push(`<path d="M9 17 Q11 6 24 5.5 Q37 6 39 17" fill="none" stroke="${ink}" stroke-width="3.2" stroke-linecap="round"/>`);
+    out.push(`<path d="M9 17 Q11 6 24 5.5 Q37 6 39 17" fill="none" stroke="${metal}" stroke-width="2" stroke-linecap="round"/>`);
+    out.push(`<path d="M17 16 Q18 7.5 24 6 Q30 7.5 31 16" fill="none" stroke="${metal}" stroke-width="1.4" opacity=".9"/>`);
+  }
+  // Body and its shine.
+  out.push(`<path d="${body}" fill="${metal}" stroke="${ink}" stroke-width="1.1" stroke-linejoin="round"/>`);
+  out.push(`<path d="${body}" fill="url(#${id}s)"/>`);
+  // Pearl finials on every tip (blue and up); the front tip gets a cut diamond from amber up.
+  if (i >= 1) {
+    tips.forEach(([x, y], k) => {
+      const front = k === Math.floor(tips.length / 2);
+      if (front && i >= 6 && !royal) {
+        out.push(`<path d="M24 ${y - 5} L27 ${y - 1.3} L24 ${y + 2} L21 ${y - 1.3} Z" fill="${i >= 7 ? '#e8f6ff' : GEMS[0]}" stroke="${ink}" stroke-width=".7"/><path d="M24 ${y - 5} L25.1 ${y - 1.3} L24 ${y + 2}" fill="#fff" opacity=".5"/>`);
+      } else {
+        out.push(`<circle cx="${x}" cy="${y - 1.6}" r="2.25" fill="url(#${id}p)" stroke="${ink}" stroke-width=".6"/>`);
+      }
     });
   }
-  // A big center gem on the crown face (yellow and up).
-  if (i >= 5) parts.push(`<path d="M20 15 L23.4 19.6 L20 24.2 L16.6 19.6 Z" fill="${BIG_GEM[level.key]}" stroke="${ink}" stroke-width=".8"/><path d="M20 15 L21.4 19.6 L20 24.2" fill="#fff" opacity=".45"/>`);
-  else if (i >= 3) parts.push(`<circle cx="20" cy="20.5" r="2" fill="#e3262b" stroke="${ink}" stroke-width=".6"/>`);
-  // Orb and cross on top (red and up).
-  if (i >= 8) parts.push(`<circle cx="20" cy="3.4" r="2" fill="${metal}" stroke="${ink}" stroke-width=".7"/>`);
-  if (i >= 9) parts.push(`<path d="M20 -1.8 V1.6 M18.3 -0.2 H21.7" stroke="${ink}" stroke-width="1.6" stroke-linecap="round"/><path d="M20 -1.6 V1.4 M18.5 -0.2 H21.5" stroke="${level.light}" stroke-width=".8" stroke-linecap="round"/>`);
-  // Sparkles (magenta only).
+  // A gem on the front of the crown (lime and up).
+  if (i >= 4) {
+    const big = i >= 6;
+    out.push(big
+      ? `<path d="M24 15.5 L27.6 19.6 L24 23.7 L20.4 19.6 Z" fill="${i >= 7 ? '#e8f6ff' : GEMS[0]}" stroke="${ink}" stroke-width=".8"/><path d="M20.4 19.6 H27.6 M24 15.5 L22.6 19.6 L24 23.7 L25.4 19.6 Z" fill="none" stroke="${ink}" stroke-width=".35" opacity=".6"/><path d="M24 15.8 L26.4 18.9 L24 19.3 Z" fill="#fff" opacity=".7"/>`
+      : `<ellipse cx="24" cy="19.8" rx="2.4" ry="3" fill="${GEMS[0]}" stroke="${ink}" stroke-width=".7"/><ellipse cx="23.3" cy="18.7" rx=".8" ry="1" fill="#fff" opacity=".7"/>`);
+  }
+  // The band.
+  out.push(`<path d="${band}" fill="${metal}" stroke="${ink}" stroke-width="1.1" stroke-linejoin="round"/>`);
+  out.push(`<path d="M7 28.4 Q24 32.9 41 28.4" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width=".9"/>`);
+  // Pearl trim along the band (yellow and up).
+  if (i >= 5) {
+    for (let k = 0; k <= 12; k++) {
+      const t = k / 12;
+      const x = 7.5 + t * 33;
+      const y = 27.6 + 4 * t * (1 - t) * 1.0 + 0.1;
+      out.push(`<circle cx="${x.toFixed(1)}" cy="${(y + 0.4).toFixed(1)}" r=".75" fill="#fffaf0" opacity=".95"/>`);
+    }
+  }
+  // Jewels set in the band (green and up), five of them from yellow up.
+  if (i >= 3) {
+    const xs = i >= 5 ? [11, 17.5, 24, 30.5, 37] : [14, 24, 34];
+    xs.forEach((x, k) => {
+      const t = (x - 6.5) / 35;
+      const y = 31.2 + 4.3 * t * (1 - t);
+      const c = GEMS[k % GEMS.length];
+      out.push(x === 24 && i >= 6
+        ? `<path d="M24 ${(y - 2.4).toFixed(1)} L26.2 ${y.toFixed(1)} L24 ${(y + 2.4).toFixed(1)} L21.8 ${y.toFixed(1)} Z" fill="${GEMS[1]}" stroke="${ink}" stroke-width=".5"/>`
+        : `<ellipse cx="${x}" cy="${y.toFixed(1)}" rx="1.7" ry="1.9" fill="${c}" stroke="${ink}" stroke-width=".5"/><circle cx="${x - 0.5}" cy="${(y - 0.6).toFixed(1)}" r=".5" fill="#fff" opacity=".8"/>`);
+    });
+  }
+  // Orb on top (red and up) and a cross (magenta).
+  if (royal) {
+    if (i >= 9) out.push(`<path d="M24 -3.2 V2 M21.6 -1 H26.4" stroke="${ink}" stroke-width="2.4" stroke-linecap="round"/><path d="M24 -3 V1.8 M21.8 -1 H26.2" stroke="${metal}" stroke-width="1.2" stroke-linecap="round"/>`);
+    out.push(`<circle cx="24" cy="4" r="2.8" fill="url(#${id}p)" stroke="${ink}" stroke-width=".8"/>`);
+  }
+  // Sparkles (magenta).
   if (i >= 9) {
-    const star = (x, y, r) => `<path d="M${x} ${y - r} Q${x} ${y} ${x + r} ${y} Q${x} ${y} ${x} ${y + r} Q${x} ${y} ${x - r} ${y} Q${x} ${y} ${x} ${y - r} Z" fill="#fff"/>`;
-    parts.push(star(3.5, 7, 2.6) + star(37, 9, 2.2) + star(36.5, 34.5, 1.8));
+    const star = (x, y, r) => `<path d="M${x} ${y - r} Q${x + r * 0.18} ${y - r * 0.18} ${x + r} ${y} Q${x + r * 0.18} ${y + r * 0.18} ${x} ${y + r} Q${x - r * 0.18} ${y + r * 0.18} ${x - r} ${y} Q${x - r * 0.18} ${y - r * 0.18} ${x} ${y - r} Z" fill="#fff"/>`;
+    out.push(star(4, 6, 3) + star(44.5, 8.5, 2.4) + star(45, 33, 2));
   }
   const label = title || (level.min === null ? 'Win % crown: unrated' : `Win % crown: ${level.min}%+ ranked wins`);
-  return `<svg class="win-crown" width="${size}" height="${size}" viewBox="0 -3 40 40" role="img" aria-label="${label}">
+  return `<svg class="win-crown" width="${size}" height="${size}" viewBox="0 -4 48 44" role="img" aria-label="${label}">
     <defs>
-      <linearGradient id="${id}m" x1="0" y1="0" x2=".3" y2="1"><stop offset="0" stop-color="${level.light}"/><stop offset=".45" stop-color="${level.color}"/><stop offset="1" stop-color="${level.dark}"/></linearGradient>
-      ${i >= 7 ? `<radialGradient id="${id}g"><stop offset=".35" stop-color="${level.color}" stop-opacity=".55"/><stop offset="1" stop-color="${level.color}" stop-opacity="0"/></radialGradient>` : ''}
+      <linearGradient id="${id}m" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${level.light}"/><stop offset=".38" stop-color="${level.color}"/><stop offset=".72" stop-color="${level.dark}"/><stop offset="1" stop-color="${level.color}"/></linearGradient>
+      <linearGradient id="${id}s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".0"/><stop offset=".2" stop-color="#fff" stop-opacity=".35"/><stop offset=".32" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient>
+      <radialGradient id="${id}p" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="${i >= 5 ? '#f4eee0' : level.light}"/><stop offset="1" stop-color="${i >= 5 ? '#b9ad94' : level.color}"/></radialGradient>
+      ${i >= 7 ? `<radialGradient id="${id}g"><stop offset=".3" stop-color="${level.color}" stop-opacity=".6"/><stop offset="1" stop-color="${level.color}" stop-opacity="0"/></radialGradient>` : ''}
     </defs>
-    <ellipse cx="20" cy="35.5" rx="13" ry="1.8" fill="#000" opacity=".25"/>
-    ${parts.join('\n    ')}
+    <ellipse cx="24" cy="37.5" rx="15" ry="1.8" fill="#000" opacity=".28"/>
+    ${out.join('\n    ')}
   </svg>`;
 }
 // Older screens call it winBall; it's a crown now.
