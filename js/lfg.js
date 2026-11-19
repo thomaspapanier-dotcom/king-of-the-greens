@@ -3,31 +3,32 @@
 import * as RK from './ranked.js';
 import * as WR from './winrate.js';
 import { rankBadge } from './badges.js';
+import { badgeHtml, bannerClass } from './flair.js';
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 export const rankByName = (name) => RK.RANKS.find((r) => r.name === name);
 
 // ---------- example players ----------
-const P = (tag, rank, pct) => ({ tag, rank: rankByName(rank), pct });
-export const ME = { tag: 'thetommyjohn', rank: RK.rankFor(1447), pct: 52, me: true }; // same example as the Current rank panel
+const P = (tag, rank, pct, badge, banner) => ({ tag, rank: rankByName(rank), pct, badge, banner });
+export const ME = { tag: 'thetommyjohn', rank: RK.rankFor(1447), pct: 52, me: true, badge: 'kog', banner: 'felt' }; // same example as the Current rank panel
 const PEOPLE = {
-  pap: P('Pap_Daddy_Kush', 'Silver II', 54),
-  chex: P('xXChexterXx', 'Gold IV', 57),
-  fupa: P('littleFUPA', 'Platinum III', 56),
-  joey: P('JoeyStazz92', 'Diamond IV', 60),
-  mike: P('SweetieMike', 'Bronze I', 51),
-  quin: P('Quin_Girthmaster69', 'Gold II', 55),
-  moose: P('Moosehead67', 'Silver IV', 49),
-  jimm: P('JimmBurg', 'Platinum V', 58),
-  sam: P('GrantedSam', 'Silver I', 52),
-  mac: P('McCarthy3o6', 'Gold III', 56),
-  alva: P('Alvatron88', 'Diamond II', 63),
+  pap: P('Pap_Daddy_Kush', 'Silver II', 54, 'diamond', 'onyx'),
+  chex: P('xXChexterXx', 'Gold IV', 57, 'ace', 'midnight'),
+  fupa: P('littleFUPA', 'Platinum III', 56, 'heart', 'royal'),
+  joey: P('JoeyStazz92', 'Diamond IV', 60, 'diamond', 'gold'),
+  mike: P('SweetieMike', 'Bronze I', 51, 'flag', 'fairway'),
+  quin: P('Quin_Girthmaster69', 'Gold II', 55, 'club', 'sunset'),
+  moose: P('Moosehead67', 'Silver IV', 49, 'putters', 'ivory'),
+  jimm: P('JimmBurg', 'Platinum V', 58, 'spade', 'midnight'),
+  sam: P('GrantedSam', 'Silver I', 52, 'flag', 'felt'),
+  mac: P('McCarthy3o6', 'Gold III', 56, 'heart', 'ivory'),
+  alva: P('Alvatron88', 'Diamond II', 63, 'spade', 'gold'),
 };
 
-/** [rank badge] gamertag [win % ball] 54% — the nameplate used on every ranked card. */
+/** [badge] [rank] gamertag [win % crown] on the player's banner: the nameplate on every ranked card. */
 export function plate(p, { badge = 20, ball = 15, check = false } = {}) {
   const level = WR.levelFor(p.pct, 100);
-  return `<span class="lf-plate${p.me ? ' me' : ''}">${rankBadge(p.rank, badge)}<b>${esc(p.tag)}</b>${WR.winBall(level, ball)}${check ? '<span class="check" title="Verified">✓</span>' : ''}</span>`;
+  return `<span class="lf-plate np ${bannerClass(p.banner)}${p.me ? ' me' : ''}">${badgeHtml(p.badge, badge)}${rankBadge(p.rank, badge)}<b>${esc(p.tag)}</b>${WR.winCrown(level, ball + 2)}${check ? '<span class="check" title="Verified">✓</span>' : ''}</span>`;
 }
 
 // ---------- courses near the user (example distances) ----------
@@ -250,17 +251,18 @@ const tap = '<span class="mk-tap" aria-hidden="true"></span>';
 const mkRow = (p, right = '', cls = '') => `<div class="mk-row ${cls}">${plate(p, { badge: 18, ball: 13 })}<span class="mk-right">${right}</span></div>`;
 const KING = (suit) => `<img class="mk-king" src="assets/duos/king-${suit}.webp" alt="">`;
 
-/** A nameplate with tiny arrows labelling the rank badge, the KOG username and the win % ball. */
+/** A nameplate with tiny arrows labelling its parts: badge, rank, KOG username, win % crown, and the banner behind. */
 function annotatedPlate(p) {
   const level = WR.levelFor(p.pct, 100);
+  const part = (html, label, up) => `<span class="an-w">${html}<span class="an-tag ${up ? 'up' : 'down'}">${up ? `${label}<i>↓</i>` : `<i>↑</i>${label}`}</span></span>`;
   return `<div class="mk-anno">
-    <span class="an-lbl" style="grid-area:r1">Rank</span><span class="an-arr" style="grid-area:a1">↓</span>
-    <span class="an-item" style="grid-area:i1">${rankBadge(p.rank, 28)}</span>
-    <b class="an-name" style="grid-area:i2">${esc(p.tag)}</b>
-    <span class="an-arr" style="grid-area:a2">↑</span><span class="an-lbl" style="grid-area:r2">KOG username</span>
-    <span class="an-lbl" style="grid-area:r3">Win %</span><span class="an-arr" style="grid-area:a3">↓</span>
-    <span class="an-item" style="grid-area:i3">${WR.winBall(level, 20)}</span>
-    <span class="check an-check" style="grid-area:i4" title="Verified">✓</span>
+    <span class="np ${bannerClass(p.banner)} an-strip">
+      ${part(badgeHtml(p.badge, 22), 'Badge', true)}
+      ${part(rankBadge(p.rank, 20), 'Rank', false)}
+      ${part(`<b>${esc(p.tag)}</b>`, 'KOG username', true)}
+      ${part(WR.winCrown(level, 22), 'Win %', false)}
+    </span>
+    <div class="an-bracket"><span>Banner (the background)</span></div>
   </div>`;
 }
 

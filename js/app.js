@@ -12,6 +12,7 @@ import { figures, mountIllustrations, nextRoundFigure, tossFigure, tiebreakFigur
 import { playHawk, unlockAudio } from './sound.js';
 import { kingRain, preloadKings } from './confetti.js';
 import * as LF from './lfg.js';
+import { badgeHtml, bannerClass } from './flair.js';
 
 // Per-device preferences (theme, sound).
 function getPref(key, fallback) {
@@ -1776,12 +1777,12 @@ function viewRanked() {
   </main>`;
 }
 
-// ---------- nameplate: (rank badge) gamertag (win % ball) ----------
-/** A signed-in player's nameplate. Rank badge resets each season; the ball never does. */
+// ---------- nameplate: [badge] [rank] gamertag [win % crown], all on a banner ----------
+/** A signed-in player's nameplate. The rank resets each season; the crown never does. */
 function nameplate(pf, cls = '', { badge = cls === 'big' ? 30 : 18, ball = '0.85em' } = {}) {
   const rank = pf.ranked_rank_index != null ? RK.RANKS[pf.ranked_rank_index] : null;
   const level = WR.levelFor(pf.ranked_wins || 0, pf.ranked_games || 0);
-  return `<span class="nameplate ${cls}">${rankBadge(rank, badge)}<b>${esc(pf.gamertag)}</b>${WR.winBall(level, ball)}${pf.id_verified ? '<span class="check" title="Verified">✓</span>' : ''}</span>`;
+  return `<span class="nameplate np ${bannerClass(pf.banner)} ${cls}">${badgeHtml(pf.badge, Math.round(badge * 1.02))}${rankBadge(rank, badge)}<b>${esc(pf.gamertag)}</b>${WR.winCrown(level, ball)}${pf.id_verified ? '<span class="check" title="Verified">✓</span>' : ''}</span>`;
 }
 
 /** Games played against other people (any mode) and how many this person won. */
@@ -1814,10 +1815,10 @@ function winSection(overall, ranked) {
     : ranked.games < WR.MIN_RANKED_GAMES
       ? `${ranked.games} of ${WR.MIN_RANKED_GAMES} ranked matches to earn a color.`
       : `${ranked.wins} wins in ${ranked.games} ranked matches. Never resets.`;
-  return `<div class="section-head"><h2>Win %</h2><button class="link" data-action="nav" data-view="winballs">How the golf balls are earned</button></div>
+  return `<div class="section-head"><h2>Win %</h2><button class="link" data-action="nav" data-view="winballs">How the win % crowns are earned</button></div>
   <div class="win-grid">
     <div class="pct-tile win-tile">
-      ${WR.winBall(level, 46)}
+      ${WR.winCrown(level, 46)}
       <div class="pct-label">Ranked</div>
       <div class="pct-val">${pct(ranked.wins, ranked.games)}</div>
       <div class="pct-sub">${rankedNote}</div>
@@ -1825,26 +1826,26 @@ function winSection(overall, ranked) {
     <div class="pct-tile">
       <div class="pct-label">Overall</div>
       <div class="pct-val">${pct(overall.wins, overall.games)}</div>
-      <div class="pct-sub">${overall.games ? `${overall.wins} of ${overall.games} games against others` : 'No games against others yet'} · no ball</div>
+      <div class="pct-sub">${overall.games ? `${overall.wins} of ${overall.games} games against others` : 'No games against others yet'} · no crown</div>
     </div>
   </div>`;
 }
 
 function viewWinBalls() {
   const rows = WR.LEVELS.map((l) => `<li>
-      ${WR.winBall(l, 40)}
+      ${WR.winCrown(l, 44)}
       <span class="board-name">${l.name}</span>
       <span class="wb-min">${l.min === null ? `first ${WR.MIN_RANKED_GAMES} matches` : `${l.min}%+`}</span>
     </li>`).join('');
-  const example = { gamertag: 'thetommyjohn', ranked_rank_index: RK.RANKS.find((r) => r.name === 'Gold II').index, ranked_wins: 61, ranked_games: 100 };
+  const example = { gamertag: 'thetommyjohn', ranked_rank_index: RK.RANKS.find((r) => r.name === 'Gold II').index, ranked_wins: 61, ranked_games: 100, badge: 'kog', banner: 'felt' };
   return `${topbar('Win % Breakdown', 'ranked')}
   <main class="page">
-    <p>The golf ball after your gamertag shows your <b>ranked win %</b> across every season. Ranked badges reset every 4 months; the ball never does. It’s a flex that sticks.</p>
-    <section class="card np-example"><div class="eyebrow">How it looks</div>${nameplate(example, 'big', { badge: 45, ball: '1.28em' })}<p class="muted small">Gold II badge, gamertag, and an orange ball for winning 61% of ranked matches.</p></section>
+    <p>The crown at the end of your nameplate shows your <b>ranked win %</b> across every season. The higher your win %, the more royal the crown. Ranks reset every 4 months; the crown never does. It’s a flex that sticks.</p>
+    <section class="card np-example"><div class="eyebrow">How it looks</div>${nameplate(example, 'big', { badge: 34, ball: '1.2em' })}<p class="muted small">Badge, Gold II rank, gamertag and an orange crown for winning 61% of ranked matches, all on a banner.</p></section>
     <ol class="board plain wb-table">${rows}</ol>
     <ul class="rk-rules">
       <li>Only <b>ranked</b> matches count. Your overall win % shows on your profile but doesn’t earn a color.</li>
-      <li>You need ${WR.MIN_RANKED_GAMES} ranked matches before the ball takes a color.</li>
+      <li>You need ${WR.MIN_RANKED_GAMES} ranked matches before the crown takes a color.</li>
       <li>It follows your win % up <i>and</i> down, so keep winning to keep your color.</li>
     </ul>
   </main>`;
@@ -1864,18 +1865,18 @@ async function refreshProfile() {
   render();
 }
 
-/** Home: [rank] [gamertag] [win % ball] box that opens the signed-in player's profile. */
+/** Home: [badge] [rank] [gamertag] [win % crown] on a banner: a box that opens the signed-in player's profile. */
 function profileBox() {
   const pf = A.accountsAvailable() && A.currentUser() ? ui.profile : null;
   let inner;
   let sub;
   if (pf) {
-    inner = `${pf.avatar_url ? `<img class="pb-avatar" src="${esc(pf.avatar_url)}" alt="">` : ''}${nameplate(pf, 'big', { badge: 34, ball: '0.95em' })}`;
+    inner = `${pf.avatar_url ? `<img class="pb-avatar" src="${esc(pf.avatar_url)}" alt="">` : ''}${nameplate(pf, 'big', { badge: 30, ball: '1.05em' })}`;
     sub = 'Your profile and stats';
   } else {
     // Signed out (or accounts not switched on yet): show the empty slots so it's clear what goes here.
     const label = !A.accountsAvailable() ? 'Your gamertag' : A.currentUser() ? 'Pick your gamertag' : 'Sign in';
-    inner = `<span class="nameplate big">${rankBadge(null, 34)}<b>${label}</b>${WR.winBall(WR.LEVELS[0], '0.95em')}</span>`;
+    inner = `<span class="nameplate np ${bannerClass()} big">${badgeHtml('kog', 32)}${rankBadge(null, 30)}<b>${label}</b>${WR.winCrown(WR.LEVELS[0], '1.05em')}</span>`;
     sub = A.accountsAvailable() ? 'Your profile and stats' : 'Accounts turn on with the KOG server';
   }
   return `<div class="profile-box">

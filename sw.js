@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v77';
+const VERSION = 'kog-v78';
 const SHELL = [
   './',
   './index.html',
@@ -36,6 +36,7 @@ const SHELL = [
   './assets/duos/king-clubs.webp',
   './js/confetti.js',
   './js/lfg.js',
+  './js/flair.js',
   './js/sync.js',
   './js/auth.js',
   './js/config.js',
