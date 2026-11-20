@@ -212,11 +212,11 @@ IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold
 
 Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
-1. Ride or Die (Impossible), file names: `badge-ride-or-die.png` and `banner-ride-or-die.png`
+1. We’re Gonna Win Forever (Impossible), file names: `badge-win-forever.png` and `banner-win-forever.png`
    - Earned by: Win 20 ranked duos matches with the same partner.
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
-   - Badge: Two crowns welded into one by a single golden chain link, with a heart and a spade on either side.
-   - Banner: Two Kings riding side by side on vintage motorcycles down a long fairway road into a blazing sunset, a trail of trophies behind them.
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
+   - Badge: A golden crown hanging on a basketball rim while a golf ball slams through the net, a small infinity sign (∞) woven into the net.
+   - Banner: A legendary fast-break moment in a packed basketball arena at night, played by the two black Kings in black KOG jerseys with their suit emblems (no team names, no real logos). The King of Clubs is in the FOREGROUND, closest to the camera, turned away from the basket and walking toward us, arms spread wide like wings and palms open, calm and already celebrating. Behind him the King of Spades is high in the air at the rim, ball cocked back in one hand for a thunderous dunk. Down below, the two red Kings (Hearts and Diamonds) in red jerseys look up, beaten, too late to stop it. Camera flashes pop in the crowd. LAYOUT: shift the whole play to the right. Keep the LEFT THIRD of the banner as empty arena crowd and court (a round badge covers that spot), put the hoop just left of center, the dunking King of Spades in the center, and the celebrating King of Clubs in the right third. Keep both black Kings’ crowns and faces in the upper middle of the frame.
 
 ```
 

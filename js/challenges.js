@@ -211,10 +211,10 @@ export const CHALLENGES = [
     'Win 10 ranked duos matches with the same partner.',
     'Two crowned aviator helmets side by side with pilot wings beneath them.',
     'The King of Diamonds and the King of Clubs in aviator jackets and sunglasses, high-fiving on a green as two jets streak overhead at sunset.'),
-  c('ride-or-die', 'Duos & Groups', 'Ranked', 'impossible', 'hearts', 'Ride or Die',
+  c('win-forever', 'Duos & Groups', 'Ranked', 'impossible', 'spades', 'We’re Gonna Win Forever',
     'Win 20 ranked duos matches with the same partner.',
-    'Two crowns welded into one by a single golden chain link, with a heart and a spade on either side.',
-    'Two Kings riding side by side on vintage motorcycles down a long fairway road into a blazing sunset, a trail of trophies behind them.'),
+    'A golden crown hanging on a basketball rim while a golf ball slams through the net, a small infinity sign (∞) woven into the net.',
+    'A legendary fast-break moment in a packed basketball arena at night, played by the two black Kings in black KOG jerseys with their suit emblems (no team names, no real logos). The King of Clubs is in the FOREGROUND, closest to the camera, turned away from the basket and walking toward us, arms spread wide like wings and palms open, calm and already celebrating. Behind him the King of Spades is high in the air at the rim, ball cocked back in one hand for a thunderous dunk. Down below, the two red Kings (Hearts and Diamonds) in red jerseys look up, beaten, too late to stop it. Camera flashes pop in the crowd. LAYOUT: shift the whole play to the right. Keep the LEFT THIRD of the banner as empty arena crowd and court (a round badge covers that spot), put the hoop just left of center, the dunking King of Spades in the center, and the celebrating King of Clubs in the right third. Keep both black Kings’ crowns and faces in the upper middle of the frame.'),
   c('scavenger', 'Duos & Groups', 'Ranked', 'rare', 'clubs', 'Scavenger',
     'Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.',
     'A scruffy vulture wearing a tiny crown, perched on a golf ball with a chicken drumstick in its beak, looking very pleased with itself.',
@@ -411,7 +411,7 @@ export const ART = new Set(['north', 'west', 'east', 'south', 'compass-rose', 'b
 export const SECTIONS = [...new Set(CHALLENGES.map((x) => x.section))];
 
 // Who can earn it: most count in solo or duos ranked matches; these only count in one.
-const DUO_ONLY = new Set(['two-better', 'dynamic-duo', 'pickup-game', 'shoulder-burden', 'lead-the-way', 'follow-me', 'goose-maverick', 'ride-or-die', 'scavenger', 'hit-it-end-it']);
+const DUO_ONLY = new Set(['two-better', 'dynamic-duo', 'pickup-game', 'shoulder-burden', 'lead-the-way', 'follow-me', 'goose-maverick', 'win-forever', 'scavenger', 'hit-it-end-it']);
 const SOLO_ONLY = new Set(['built-for-this', 'full-house']);
 /** 'duo', 'solo' or 'any' */
 export const playOf = (ch) => (DUO_ONLY.has(ch.id) ? 'duo' : SOLO_ONLY.has(ch.id) || ch.mode !== 'Ranked' ? 'solo' : 'any'); // Compass Putt and Lag 21 aren't duos games
