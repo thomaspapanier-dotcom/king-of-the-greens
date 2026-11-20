@@ -2,6 +2,7 @@
 // Example numbers until ranked play is live.
 import * as KG from './kingdoms.js';
 import * as MAP from './usmap.js';
+import { CASTLES, CASTLE_DEFS } from './realmcastles.js';
 import { ME, PEOPLE, plate, rankByName } from './lfg.js';
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -89,10 +90,9 @@ const LIFT = 26;
 const VB = [-24, -36, 1023, 576]; // viewBox
 const darken = (hex, f) => '#' + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * f).toString(16).padStart(2, '0')).join('');
 // Where each Realm's landmark stands (a Kingdom near the middle of the Realm).
-const ANCHOR = { ivy: 'NY', magnolia: 'TN', plains: 'IA', desert: 'TX', peaks: 'UT', pacific: 'OR' };
-// Realms whose landmark art is in assets/realms/<id>.webp; the rest show a crowned pin.
-const REALM_ART = new Set([]);
-const PIN = '<ellipse class="lb-pin-shadow" cx="0" cy="0" rx="13" ry="4.5"/><path class="lb-pin" d="M0 0C-4-10-16-18-16-30A16 16 0 1 1 16-30C16-18 4-10 0 0Z"/><polygon class="lb-pin-crown" points="-9,-25 -9,-36 -4.5,-30.5 0,-39 4.5,-30.5 9,-36 9,-25"/>';
+const ANCHOR = { ivy: 'NY', magnolia: 'TN', plains: 'IA', desert: 'TX', peaks: 'UT', pacific: 'CA' };
+// How big a Realm's castle stands: smaller on the whole map, bigger (but not huge) when zoomed in.
+const castleK = (on, s) => (on ? 1.35 / Math.sqrt(s) : 1.35);
 
 function mapHtml(st) {
   // Zoom so the open Realm fills the map: s is how much bigger it draws.
@@ -140,27 +140,28 @@ function mapHtml(st) {
       const fs = (40 / s).toFixed(1);
       // labels are stretched back up so they read upright on the tilted board
       const up = `transform="translate(0 ${(y * (1 - 1 / TILT)).toFixed(1)}) scale(1 ${(1 / TILT).toFixed(3)})"`;
-      const label = on && !(SMALL.has(code) && s < 2.5) && !home ? `<text class="lb-abbr" x="${x}" y="${(y + (code === ANCHOR[r.id] ? 46 : 14) / s).toFixed(1)}" font-size="${fs}" ${up}>${code}</text>` : '';
+      // (the Kingdom under the castle gets its label on the castle's base instead)
+      const label = on && !(SMALL.has(code) && s < 2.5) && !home && code !== ANCHOR[r.id] ? `<text class="lb-abbr" x="${x}" y="${(y + 14 / s).toFixed(1)}" font-size="${fs}" ${up}>${code}</text>` : '';
       const k = on ? 2.6 / s : 1.3;
       const star = home ? `<g class="lb-star" transform="translate(${x} ${y}) scale(${k.toFixed(3)} ${(k / TILT).toFixed(3)})"><polygon points="${STAR}"/>${on ? '<text class="lb-you" x="-20" y="5">Your Kingdom</text>' : ''}</g>` : '';
       return `<g class="lb-st${code === st.kingdom ? ' pick' : ''}" data-action="lb-map" data-v="${code}" style="${nudge(code)}"><title>${esc(KG.kingdomName(code))}</title><use class="top" href="#lbp-${code}"/>${label}${star}</g>`;
     }).join('');
     return `<g class="${cls}" style="--c:${COLOR[r.id]};--rx:${rx.toFixed(1)}px;--ry:${ry.toFixed(1)}px;--lift:${on ? LIFT : 0}px"><g fill="${side}" stroke="${side}">${sides}</g>${tops}</g>`;
   }).join('');
-  // Landmarks stand upright on top of the tilted board.
+  // Each Realm's castle stands upright on top of the tilted board.
   const marks = order.map((r) => {
     const on = r.id === st.realm;
     const [x, y] = MAP.LABEL[ANCHOR[r.id]];
     const [rx, ry] = on ? pull(r) : [0, 0];
-    const k = on ? 1.8 / Math.sqrt(s) : 1.25;
-    const art = REALM_ART.has(r.id)
-      ? `<image href="assets/realms/${r.id}.webp" x="-40" y="-74" width="80" height="80"/>`
-      : PIN;
-    return `<g class="lb-mark${st.realm && !on ? ' dim' : ''}" data-action="lb-map" data-v="realm:${r.id}" style="--c:${COLOR[r.id]}" transform="translate(${(x + rx).toFixed(1)} ${((y + ry - (on ? LIFT : 0)) * TILT).toFixed(1)}) scale(${k.toFixed(3)})"><title>${esc(r.name)}</title>${art}</g>`;
+    const k = castleK(on, s);
+    const code = ANCHOR[r.id];
+    // In an open Realm the castle stands for the Kingdom under it: a plaque on its base, and tapping it picks that Kingdom.
+    const plaque = on ? `<text class="lb-abbr lb-plaque${st.kingdom === code ? ' pick' : ''}" x="0" y="10" font-size="${(36 / s / k).toFixed(1)}">${code}</text>` : '';
+    return `<g class="lb-mark${st.realm && !on ? ' dim' : ''}" data-action="lb-map" data-v="${on ? code : `realm:${r.id}`}" style="--c:${COLOR[r.id]}" transform="translate(${(x + rx).toFixed(1)} ${((y + ry - (on ? LIFT : 0)) * TILT).toFixed(1)}) scale(${k.toFixed(3)})"><title>${esc(on ? KG.kingdomName(code) : r.name)}</title>${CASTLES[r.id]}${plaque}</g>`;
   }).join('');
   const defs = Object.keys(MAP.PATHS).map((c) => `<path id="lbp-${c}" d="${MAP.PATHS[c]}" vector-effect="non-scaling-stroke"/>`).join('');
   return `<svg class="lb-svg" viewBox="${VB.join(' ')}" role="img" aria-label="Map of the six Realms. Tap a Realm to see its Kingdoms.">
-    <defs>${defs}<radialGradient id="lb-sea" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#2b86b5"/><stop offset="1" stop-color="#0c3550"/></radialGradient></defs>
+    <defs>${defs}${CASTLE_DEFS}<radialGradient id="lb-sea" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#2b86b5"/><stop offset="1" stop-color="#0c3550"/></radialGradient></defs>
     <rect x="${VB[0]}" y="${VB[1]}" width="${VB[2]}" height="${VB[3]}" fill="url(#lb-sea)" data-action="lb-map" data-v="country"/>
     <g class="lb-zoom${open && st.anim === open.id ? ' anim' : ''}"${zoom}>
       <g transform="scale(1 ${TILT})">${realms}</g>
