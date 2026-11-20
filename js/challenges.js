@@ -9,6 +9,7 @@ export const RARITY = {
   common: { label: 'Common', color: '#cfd6dd' },
   rare: { label: 'Rare', color: '#4dabf7' },
   'very-rare': { label: 'Very Rare', color: '#b197fc' },
+  legendary: { label: 'Legendary', color: '#f5c542' },
   impossible: { label: 'Impossible', color: '#ff4d4d' },
 };
 
@@ -54,10 +55,10 @@ export const CHALLENGES = [
     'Make an eagle putt (sink an eagle ball on the first putt) in a ranked match.',
     'A bald eagle in a tiny crown, wings spread, clutching a golf ball.',
     'The suited Kings standing in a golden wheat field while a huge eagle soars overhead.'),
-  c('albatross', 'Eagles', 'Ranked', 'very-rare', 'clubs', 'Albatross',
-    'Make 2 eagle putts in the same ranked match. (Two eagles make an albatross, golf’s rarest bird.)',
-    'An albatross gliding with two golf balls in its feet.',
-    'Ocean cliffs at sunset with two great seabirds over a seaside green, the Kings watching from the clifftop.'),
+  c('birds-of-prey', 'Eagles', 'Ranked', 'legendary', 'clubs', 'Birds of Prey',
+    'Make 2 eagle putts in the same ranked match.',
+    'Two golden eagles locked talon to talon in a mid-air spiral around a single golf ball, wings sweeping out to the rim, each wearing a tiny crown; feathers in hammered gold and bronze, a faint golden glow behind them.',
+    'Two enormous golden eagles diving side by side out of a storm-lit sunset sky toward a cliffside putting green above a crashing sea, each one clutching a golf ball in its talons, wind ripping through the flag. On the green, the King of Clubs has just holed his second eagle putt and points both arms at the sky, while the King of Spades and the King of Hearts stare up in disbelief and the King of Diamonds films it on his phone. Golden rim light, spray off the cliffs, scattered feathers drifting down. LAYOUT: keep the LEFT THIRD calmer (a round badge covers that spot), put the main action in the center and right, with the Kings’ crowns and faces in the upper middle of the frame.'),
   c('king-of-skies', 'Eagles', 'Ranked', 'impossible', 'diamonds', 'King of the Skies',
     'Sink all three eagle balls on the first putt in one ranked match.',
     'A golden eagle wearing the King’s crown, three golf balls set like jewels beneath it.',
@@ -211,7 +212,7 @@ export const CHALLENGES = [
     'Win 10 ranked duos matches with the same partner.',
     'Two crowned aviator helmets side by side with pilot wings beneath them.',
     'The King of Diamonds and the King of Clubs in aviator jackets and sunglasses, high-fiving on a green as two jets streak overhead at sunset.'),
-  c('win-forever', 'Duos & Groups', 'Ranked', 'impossible', 'spades', 'We’re Gonna Win Forever',
+  c('win-forever', 'Duos & Groups', 'Ranked', 'legendary', 'spades', 'We’re Gonna Win Forever',
     'Win 20 ranked duos matches with the same partner.',
     'A golden crown hanging on a basketball rim while a golf ball slams through the net, a small infinity sign (∞) woven into the net.',
     'A legendary fast-break moment in a packed basketball arena at night, played by the two black Kings in black KOG jerseys with their suit emblems (no team names, no real logos). The King of Clubs is in the FOREGROUND, closest to the camera, turned away from the basket and walking toward us, arms spread wide like wings and palms open, calm and already celebrating. Behind him the King of Spades is high in the air at the rim, ball cocked back in one hand for a thunderous dunk. Down below, the two red Kings (Hearts and Diamonds) in red jerseys look up, beaten, too late to stop it. Camera flashes pop in the crowd. LAYOUT: shift the whole play to the right. Keep the LEFT THIRD of the banner as empty arena crowd and court (a round badge covers that spot), put the hoop just left of center, the dunking King of Spades in the center, and the celebrating King of Clubs in the right third. Keep both black Kings’ crowns and faces in the upper middle of the frame.'),
@@ -246,7 +247,7 @@ export const CHALLENGES = [
     'Reach Diamond.',
     'Two hands holding a glowing diamond.',
     'A glittering diamond mine, the Kings carrying lanterns.'),
-  c('putt-master', 'The Climb', 'Ranked', 'impossible', 'hearts', 'Putt Master',
+  c('putt-master', 'The Climb', 'Ranked', 'legendary', 'hearts', 'Putt Master',
     'Reach Putt Master, the very top rank.',
     'The magenta Putt Master crest shooting out rays of light.',
     'A green floating among the stars, the King seated on a throne made of putters.'),
@@ -286,7 +287,7 @@ export const CHALLENGES = [
     'Play ranked matches against 50 different opponents.',
     'A grand throne with a crowd of tiny crowns gathered at its feet.',
     'A great hall packed with challengers lining up to face the King of Spades on his throne beside a putting green.'),
-  c('triple-digits', 'Career', 'Ranked', 'impossible', 'diamonds', 'Triple Digits',
+  c('triple-digits', 'Career', 'Ranked', 'legendary', 'diamonds', 'Triple Digits',
     'Play ranked matches against 100 different opponents.',
     'A crowned hand holding up a torn sheet of paper with “100” scrawled on it in thick black marker, inside a burst of old-fashioned camera flash.',
     'A legendary vintage locker-room press photo, in grainy black and white like an old newspaper shot: right after the match, the King of Diamonds sits in a crowded clubhouse locker room in a sleeveless vintage KOG jersey, sweaty and grinning with quiet pride, holding up a plain sheet of paper with “100” hand-scrawled in thick black marker. A teammate’s hand pokes in from behind him with one finger pointed up, and reporters crowd the edges with old flashbulb cameras. The ONLY color in the whole image is the King’s gold crown. The “100” on the paper is the only writing allowed. LAYOUT: keep the LEFT THIRD as dim locker-room background (a round badge covers that spot); put the King in the center and the “100” sign in the right third, with his crown, face and the sign in the upper middle of the frame.'),
@@ -343,7 +344,7 @@ export const CHALLENGES = [
     'Win a ranked match in the Realm of the Pacific Tide (the West Coast: Alaska, California, Hawaii, Oregon or Washington).',
     'A crowned wave curling around a golf ball.',
     'A cliffside green over the Pacific with crashing waves, the King of Clubs at sunset.'),
-  c('coast-to-coast', 'Road Trips', 'Ranked', 'very-rare', 'diamonds', 'Coast to Coast',
+  c('coast-to-coast', 'Road Trips', 'Ranked', 'legendary', 'diamonds', 'Coast to Coast',
     'Win a ranked match in all six Realms.',
     'A map of the U.S. made of six puzzle pieces, each stamped with a suit and a crown.',
     'A road-trip montage of the four Kings across the country, from an Atlantic lighthouse to the Pacific cliffs.'),
@@ -365,6 +366,10 @@ export const CHALLENGES = [
     'Win ranked matches in 15 different Kingdoms.',
     'A crowned war banner pinned with fifteen golden stars.',
     'The King of Hearts planting his banner on a hilltop green, a map of conquered Kingdoms unrolled behind him.'),
+  c('high-king', 'Kingdoms & Realms', 'Ranked', 'legendary', 'clubs', 'High King',
+    'Win a ranked match in 35 different Kingdoms.',
+    'A towering golden crown built from 35 smaller crowns stacked into a spire, set over a shield with a putter and a scepter crossed behind it; engraved laurels around the rim.',
+    'A grand open-air coronation on a hilltop putting green at sunrise: the King of Clubs, newly crowned High King, rides up a path lined with 35 Kingdom banners in every color, a sea of cheering subjects on both sides, the other three Kings kneeling by the green with their putters raised in salute, distant castles on the horizon catching the first light. LAYOUT: keep the LEFT THIRD calmer (a round badge covers that spot), put the main action in the center and right, with the Kings’ crowns and faces in the upper middle of the frame.'),
   c('fifty-crowns', 'Kingdoms & Realms', 'Ranked', 'impossible', 'diamonds', 'Fifty Crowns',
     'Win a ranked match in all 50 Kingdoms.',
     'Fifty tiny crowns arranged in a ring around a golden map of the United States.',
@@ -410,7 +415,7 @@ export const CHALLENGES = [
 ];
 
 // Challenges whose badge and banner art is in assets/challenges (badge-<id>.webp, banner-<id>.webp).
-export const ART = new Set(['north', 'west', 'east', 'south', 'compass-rose', 'blackjack', 'built-for-this', 'big-wings', 'albatross', 'flawless-shawty', 'dead-center', 'triple-threat', 'even-steven', 'under-radar', 'seeing-red', 'lights-out', 'might-be-him', 'himothy', 'him', 'underdog', 'downtown', 'sharpshooter', 'sniper', 'not-so-fast', 'wire-to-wire', 'regicide', 'comeback', 'ice-cold', 'smooth', 'back-from-dead', 'two-better', 'dynamic-duo', 'full-house', 'pickup-game', 'shoulder-burden', 'lead-the-way', 'follow-me', 'goose-maverick', 'scavenger', 'hit-it-end-it', 'fresh-blood', 'silver-lining', 'heart-of-gold', 'platinum', 'diamond-hands', 'hat-trick', 'heater', 'dynasty', 'four-of-a-kind', 'stranger-danger', 'new-faces', 'social-butterfly', 'royal-court', 'iron-man', 'dawn-patrol', 'away-game', 'fellow-traveler', 'long-way-home', 'foreign-soil', 'northeast', 'southeast', 'midwest', 'southwest', 'mountain-west', 'west-coast-region', 'defend-throne', 'kingdom-hopper', 'birdie-100', 'birdie-500', 'par-100', 'par-500', 'short-250', 'medium-250', 'long-100']);
+export const ART = new Set(['north', 'west', 'east', 'south', 'compass-rose', 'blackjack', 'built-for-this', 'big-wings', 'king-of-skies', 'flawless-shawty', 'dead-center', 'triple-threat', 'even-steven', 'under-radar', 'seeing-red', 'lights-out', 'might-be-him', 'himothy', 'him', 'underdog', 'downtown', 'sharpshooter', 'sniper', 'not-so-fast', 'wire-to-wire', 'regicide', 'comeback', 'ice-cold', 'smooth', 'back-from-dead', 'two-better', 'dynamic-duo', 'full-house', 'pickup-game', 'shoulder-burden', 'lead-the-way', 'follow-me', 'goose-maverick', 'scavenger', 'hit-it-end-it', 'fresh-blood', 'silver-lining', 'heart-of-gold', 'platinum', 'diamond-hands', 'hat-trick', 'heater', 'dynasty', 'four-of-a-kind', 'stranger-danger', 'new-faces', 'social-butterfly', 'royal-court', 'iron-man', 'dawn-patrol', 'away-game', 'fellow-traveler', 'long-way-home', 'foreign-soil', 'northeast', 'southeast', 'midwest', 'southwest', 'mountain-west', 'west-coast-region', 'coast-to-coast', 'defend-throne', 'kingdom-hopper', 'realm-raider', 'conqueror', 'birdie-100', 'birdie-500', 'birdie-1000', 'par-100', 'par-500', 'short-250', 'medium-250', 'long-100', 'eagle-10']);
 
 export const SECTIONS = [...new Set(CHALLENGES.map((x) => x.section))];
 

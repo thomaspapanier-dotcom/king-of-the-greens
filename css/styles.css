@@ -1296,6 +1296,7 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .ch-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 4px 0 8px; }
 .ch-dot { color: var(--muted); }
 .ch-ink { font-family: Georgia, "Times New Roman", serif; font-style: italic; font-weight: 900; font-size: 14px; letter-spacing: 0.02em; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6); }
+.ch-ink.ink-legendary { text-shadow: 0 0 8px rgba(245, 197, 66, 0.7), 0 1px 0 #000; }
 .ch-ink.ink-impossible { text-shadow: 0 0 8px rgba(255, 50, 50, 0.7), 0 1px 0 #000; }
 .ch-progress { font-size: 14px; margin-bottom: 6px; }
 .ch-progress b { color: #f5d76e; font-size: 18px; }
@@ -1364,6 +1365,7 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .rar-common { --rar: #cfd6dd; }
 .rar-rare { --rar: #4dabf7; }
 .rar-very-rare { --rar: #b197fc; }
+.rar-legendary { --rar: #f5c542; }
 .rar-impossible { --rar: #ff4d4d; }
 .ch-art.big .ch-ph-bd { font-size: 54px; }
 
@@ -1473,6 +1475,7 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
   text-shadow: 0 0 2px #000, 0 0 3px #000, 0 2px 6px rgba(0, 0, 0, 0.9), 0 0 14px rgba(0, 0, 0, 0.7); }
 .ch-name.ink-glow-rare { text-shadow: 0 0 2px #000, 0 0 3px #000, 0 0 8px #339af0, 0 0 16px #339af0, 0 0 26px rgba(51, 154, 240, 0.8); }
 .ch-name.ink-glow-very-rare { text-shadow: 0 0 2px #000, 0 0 3px #000, 0 0 8px #9775fa, 0 0 16px #9775fa, 0 0 26px rgba(151, 117, 250, 0.85); }
+.ch-name.ink-glow-legendary { text-shadow: 0 0 2px #000, 0 0 3px #000, 0 0 8px #f0b429, 0 0 16px #f0b429, 0 0 26px rgba(240, 180, 41, 0.85); }
 .ch-name.ink-glow-impossible { text-shadow: 0 0 2px #000, 0 0 3px #000, 0 0 8px #ff2a2a, 0 0 16px #ff2a2a, 0 0 28px rgba(255, 42, 42, 0.9); }
 .ch-art.locked .ch-name { color: #d7dbdf; }
 

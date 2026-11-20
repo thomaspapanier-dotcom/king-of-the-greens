@@ -3,13 +3,13 @@
 Every challenge earns a **badge** and a **banner**. Players can wear them together or mix and match.
 Almost all of them come from **ranked**, where both players confirm the score. Only a few come from Compass Putt and Lag 21.
 
-Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impossible** (red).
+Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Legendary** (gold), **Impossible** (red).
 
-**74 of 89 challenges have their art.** 15 still need a badge and banner.
+**79 of 90 challenges have their art.** 11 still need a badge and banner.
 
 ---
 
-## Already in the app (74)
+## Already in the app (79)
 
 
 ### Compass Putt
@@ -31,7 +31,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 ### Eagles
 
 - **The Bird with Big Wings** · Rare: Make an eagle putt (sink an eagle ball on the first putt) in a ranked match.
-- **Albatross** · Very Rare: Make 2 eagle putts in the same ranked match. (Two eagles make an albatross, golf’s rarest bird.)
+- **King of the Skies** · Impossible: Sink all three eagle balls on the first putt in one ranked match.
 
 ### Money Rounds
 
@@ -121,35 +121,40 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **Desert Heat** · Common: Win a ranked match in the Realm of the Desert Sun (the Southwest: Arizona, New Mexico, Oklahoma or Texas).
 - **Altitude Adjustment** · Common: Win a ranked match in the Realm of the High Peaks (the Mountain West: Colorado, Idaho, Montana, Nevada, Utah or Wyoming).
 - **Pacific Time** · Common: Win a ranked match in the Realm of the Pacific Tide (the West Coast: Alaska, California, Hawaii, Oregon or Washington).
+- **Coast to Coast** · Legendary: Win a ranked match in all six Realms.
 
 ### Kingdoms & Realms
 
 - **Defend the Throne** · Rare: Win 25 ranked matches inside your own Kingdom.
 - **Kingdom Hopper** · Rare: Win ranked matches in 5 different Kingdoms.
+- **Realm Raider** · Very Rare: Win 10 ranked matches outside your home Realm.
+- **The Conqueror** · Very Rare: Win ranked matches in 15 different Kingdoms.
 
 ### Milestones
 
 - **Birdwatcher** · Common: Sink 100 birdie balls on the first putt across your ranked matches.
 - **Flock Together** · Rare: Sink 500 birdie balls on the first putt across your ranked matches.
+- **Bird Sanctuary** · Very Rare: Sink 1,000 birdie balls on the first putt across your ranked matches.
 - **Par for the Course** · Common: Sink 100 par balls on the first putt across your ranked matches.
 - **Steady Eddie** · Rare: Sink 500 par balls on the first putt across your ranked matches.
 - **Tap-In Machine** · Common: Sink 250 Short putts (3–5 ft) on the first putt across your ranked matches.
 - **Middle Child** · Rare: Sink 250 Medium putts (6–9 ft) on the first putt across your ranked matches.
 - **Long Distance Relationship** · Rare: Sink 100 Long putts (10–15 ft) on the first putt across your ranked matches.
+- **Eagle Scout** · Very Rare: Make 10 eagle putts across your ranked matches.
 
 ---
 
-## Still missing (15)
+## Still missing (11)
 
 These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 ### Eagles
 
-#### King of the Skies · Impossible
-- **How to complete (Ranked):** Sink all three eagle balls on the first putt in one ranked match.
-- **Badge:** A golden eagle wearing the King’s crown, three golf balls set like jewels beneath it.
-- **Banner:** Above the clouds: the four Kings on a green floating in the sky, eagles circling a sunburst.
-- **Files:** `badge-king-of-skies.png`, `banner-king-of-skies.png`
+#### Birds of Prey · Legendary
+- **How to complete (Ranked):** Make 2 eagle putts in the same ranked match.
+- **Badge:** Two golden eagles locked talon to talon in a mid-air spiral around a single golf ball, wings sweeping out to the rim, each wearing a tiny crown; feathers in hammered gold and bronze, a faint golden glow behind them.
+- **Banner:** Two enormous golden eagles diving side by side out of a storm-lit sunset sky toward a cliffside putting green above a crashing sea, each one clutching a golf ball in its talons, wind ripping through the flag. On the green, the King of Clubs has just holed his second eagle putt and points both arms at the sky, while the King of Spades and the King of Hearts stare up in disbelief and the King of Diamonds films it on his phone. Golden rim light, spray off the cliffs, scattered feathers drifting down. LAYOUT: keep the LEFT THIRD calmer (a round badge covers that spot), put the main action in the center and right, with the Kings’ crowns and faces in the upper middle of the frame.
+- **Files:** `badge-birds-of-prey.png`, `banner-birds-of-prey.png`
 
 
 ### Money Rounds
@@ -187,7 +192,7 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 ### Duos & Groups
 
-#### We’re Gonna Win Forever · Impossible
+#### We’re Gonna Win Forever · Legendary
 - **How to complete (Ranked):** Win 20 ranked duos matches with the same partner.
 - **Badge:** A golden crown hanging on a basketball rim while a golf ball slams through the net, a small infinity sign (∞) woven into the net.
 - **Banner:** A legendary fast-break moment in a packed basketball arena at night, played by the two black Kings in black KOG jerseys with their suit emblems (no team names, no real logos). The King of Clubs is in the FOREGROUND, closest to the camera, turned away from the basket and walking toward us, arms spread wide like wings and palms open, calm and already celebrating. Behind him the King of Spades is high in the air at the rim, ball cocked back in one hand for a thunderous dunk. Down below, the two red Kings (Hearts and Diamonds) in red jerseys look up, beaten, too late to stop it. Camera flashes pop in the crowd. LAYOUT: shift the whole play to the right. Keep the LEFT THIRD of the banner as empty arena crowd and court (a round badge covers that spot), put the hoop just left of center, the dunking King of Spades in the center, and the celebrating King of Clubs in the right third. Keep both black Kings’ crowns and faces in the upper middle of the frame.
@@ -196,7 +201,7 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 ### The Climb
 
-#### Putt Master · Impossible
+#### Putt Master · Legendary
 - **How to complete (Ranked):** Reach Putt Master, the very top rank.
 - **Badge:** The magenta Putt Master crest shooting out rays of light.
 - **Banner:** A green floating among the stars, the King seated on a throne made of putters.
@@ -205,7 +210,7 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 ### Career
 
-#### Triple Digits · Impossible
+#### Triple Digits · Legendary
 - **How to complete (Ranked):** Play ranked matches against 100 different opponents.
 - **Badge:** A crowned hand holding up a torn sheet of paper with “100” scrawled on it in thick black marker, inside a burst of old-fashioned camera flash.
 - **Banner:** A legendary vintage locker-room press photo, in grainy black and white like an old newspaper shot: right after the match, the King of Diamonds sits in a crowded clubhouse locker room in a sleeveless vintage KOG jersey, sweaty and grinning with quiet pride, holding up a plain sheet of paper with “100” hand-scrawled in thick black marker. A teammate’s hand pokes in from behind him with one finger pointed up, and reporters crowd the edges with old flashbulb cameras. The ONLY color in the whole image is the King’s gold crown. The “100” on the paper is the only writing allowed. LAYOUT: keep the LEFT THIRD as dim locker-room background (a round badge covers that spot); put the King in the center and the “100” sign in the right third, with his crown, face and the sign in the upper middle of the frame.
@@ -218,47 +223,17 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 - **Files:** `badge-crown-jewel.png`, `banner-crown-jewel.png`
 
 
-### Road Trips
-
-#### Coast to Coast · Very Rare
-- **How to complete (Ranked):** Win a ranked match in all six Realms.
-- **Badge:** A map of the U.S. made of six puzzle pieces, each stamped with a suit and a crown.
-- **Banner:** A road-trip montage of the four Kings across the country, from an Atlantic lighthouse to the Pacific cliffs.
-- **Files:** `badge-coast-to-coast.png`, `banner-coast-to-coast.png`
-
-
 ### Kingdoms & Realms
 
-#### Realm Raider · Very Rare
-- **How to complete (Ranked):** Win 10 ranked matches outside your home Realm.
-- **Badge:** A crowned pirate flag with a golf ball and crossed putters.
-- **Banner:** The King of Diamonds sailing a pirate ship into a rival Realm’s harbor, a putting green on the shore.
-- **Files:** `badge-realm-raider.png`, `banner-realm-raider.png`
-
-#### The Conqueror · Very Rare
-- **How to complete (Ranked):** Win ranked matches in 15 different Kingdoms.
-- **Badge:** A crowned war banner pinned with fifteen golden stars.
-- **Banner:** The King of Hearts planting his banner on a hilltop green, a map of conquered Kingdoms unrolled behind him.
-- **Files:** `badge-conqueror.png`, `banner-conqueror.png`
+#### High King · Legendary
+- **How to complete (Ranked):** Win a ranked match in 35 different Kingdoms.
+- **Badge:** A towering golden crown built from 35 smaller crowns stacked into a spire, set over a shield with a putter and a scepter crossed behind it; engraved laurels around the rim.
+- **Banner:** A grand open-air coronation on a hilltop putting green at sunrise: the King of Clubs, newly crowned High King, rides up a path lined with 35 Kingdom banners in every color, a sea of cheering subjects on both sides, the other three Kings kneeling by the green with their putters raised in salute, distant castles on the horizon catching the first light. LAYOUT: keep the LEFT THIRD calmer (a round badge covers that spot), put the main action in the center and right, with the Kings’ crowns and faces in the upper middle of the frame.
+- **Files:** `badge-high-king.png`, `banner-high-king.png`
 
 #### Fifty Crowns · Impossible
 - **How to complete (Ranked):** Win a ranked match in all 50 Kingdoms.
 - **Badge:** Fifty tiny crowns arranged in a ring around a golden map of the United States.
 - **Banner:** All four Kings seated at a round table shaped like the map of the country, fifty crowns glowing on it.
 - **Files:** `badge-fifty-crowns.png`, `banner-fifty-crowns.png`
-
-
-### Milestones
-
-#### Bird Sanctuary · Very Rare
-- **How to complete (Ranked):** Sink 1,000 birdie balls on the first putt across your ranked matches.
-- **Badge:** A golden birdcage with a crown on top and a golf ball inside.
-- **Banner:** A grand glass aviary turned putting green, birds of every color, the King of Spades in the middle.
-- **Files:** `badge-birdie-1000.png`, `banner-birdie-1000.png`
-
-#### Eagle Scout · Very Rare
-- **How to complete (Ranked):** Make 10 eagle putts across your ranked matches.
-- **Badge:** A scout merit patch with an eagle and a crown.
-- **Banner:** A campfire on the green at night, the Kings in scout sashes covered in eagle patches.
-- **Files:** `badge-eagle-10.png`, `banner-eagle-10.png`
 
