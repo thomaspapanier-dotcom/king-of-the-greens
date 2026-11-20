@@ -14,7 +14,7 @@ import { kingRain, preloadKings } from './confetti.js';
 import * as LF from './lfg.js';
 import { badgeHtml, bannerClass } from './flair.js';
 import * as CH from './challenges.js';
-import { leaderboardsHtml } from './leaderboards.js';
+import { leaderboardsHtml, lbMapTap } from './leaderboards.js';
 
 // Per-device preferences (theme, sound).
 function getPref(key, fallback) {
@@ -1863,7 +1863,7 @@ function viewWinBalls() {
 
 // ---------- leaderboards ----------
 function viewLeaderboards() {
-  const st = ui.lb || (ui.lb = { tab: 'players', scope: 'kingdom', kscope: 'all' });
+  const st = ui.lb || (ui.lb = { tab: 'players', realm: null, kingdom: null });
   return `${topbar('Leaderboards')}
   <main class="page lb-page">
     ${leaderboardsHtml(st)}
@@ -2824,8 +2824,8 @@ const actions = {
     ui.lb.tab = d.v;
     render();
   },
-  'lb-scope': (d) => {
-    ui.lb[d.k] = d.v;
+  'lb-map': (d) => {
+    lbMapTap(ui.lb, d.v);
     render();
   },
   'name-style': (d) => {
