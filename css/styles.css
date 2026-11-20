@@ -1582,3 +1582,15 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .lb-mark { filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.45)); }
 .lb-map { background: #0c3550; }
 .lb-plaque.pick { fill: #f5d76e; }
+
+/* Leaderboards World view: a globe you spin with your thumb */
+.lb-globe-wrap { position: relative; background: radial-gradient(ellipse at 50% 45%, #10283a, #061018 75%); }
+.lb-globe { display: block; width: 100%; aspect-ratio: 1 / 0.95; touch-action: none; cursor: grab; -webkit-tap-highlight-color: transparent; }
+.lb-globe:active { cursor: grabbing; }
+.lb-globe-tip { position: absolute; left: 8px; right: 8px; bottom: 6px; margin: 0; text-align: center; font-size: 12.5px; font-weight: 700; color: #dbe9f2; text-shadow: 0 1px 3px #000; pointer-events: none; }
+.lb-map.enter .lb-svg { animation: lb-enter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes lb-enter { from { opacity: 0; transform: scale(0.55); } }
+.lb-chips { flex-wrap: nowrap; gap: 6px; }
+.lb-chips .chip { flex: 1; justify-content: center; min-width: 0; padding: 6px 4px; font-size: 13px; white-space: nowrap; }
+.lb-tabs .seg-opt { font-size: 14px; }
+.lb-table li.soon { grid-template-columns: 26px 1fr; opacity: 0.6; }

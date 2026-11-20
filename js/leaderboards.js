@@ -1,8 +1,10 @@
-// Leaderboards: players, Kingdoms and Realms, filtered by tapping around a map of the country.
+// Leaderboards: players, Kingdoms, Realms and Empires. Start on a globe of the world, tap an Empire
+// (a country) to zoom into its 3D map, then tap around its Realms and Kingdoms to filter the boards.
 // Example numbers until ranked play is live.
 import * as KG from './kingdoms.js';
 import * as MAP from './usmap.js';
 import { CASTLES, CASTLE_DEFS } from './realmcastles.js';
+import { mountGlobe } from './globe.js';
 import { ME, PEOPLE, plate, rankByName } from './lfg.js';
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -12,7 +14,7 @@ const elo = (p) => p.rank.min + 20 + (p.pct - 50) * 3;
 // Each Realm's color on the map.
 const COLOR = { ivy: '#2fae7a', magnolia: '#e0528a', plains: '#e6b12e', desert: '#ec7a32', peaks: '#8b7cf6', pacific: '#3a9be0' };
 
-// A few more example players around the country, so every Realm has someone on its board.
+// A few more example players around the Empire, so every Realm has someone on its board.
 const X = (tag, sub, rank, pct, art, kingdom) => ({ tag, sub, rank: rankByName(rank), pct, art, kingdom });
 const ELSEWHERE = [
   X('Jordan K.', '', 'Platinum II', 61, 'sniper', 'CA'),
@@ -42,9 +44,19 @@ const REALM_ROWS = KG.REALMS.map((r) => {
   return { ...r, players, matches: ks.reduce((n, k) => n + k.matches, 0), avg: Math.round(ks.reduce((n, k) => n + k.avg * k.players, 0) / players), top: [...ks].sort((a, b) => b.avg - a.avg)[0] };
 });
 
-/** Tapping the map: a Realm breaks off; tap one of its Kingdoms to pick it (again to let go). Blank = whole country. */
+/**
+ * Tapping around: 'world' shows the globe; 'my-empire' / 'empire' the whole American Empire map;
+ * a Realm breaks off; tap one of its Kingdoms to pick it (again to let go).
+ */
 export function lbMapTap(st, v) {
-  if (!v || v === 'country') {
+  const wasWorld = st.world;
+  st.world = false;
+  if (v === 'world') {
+    st.world = true;
+    st.realm = null;
+    st.kingdom = null;
+    st.zoomOut = !wasWorld; // pull back out from the Empire to the globe
+  } else if (!v || v === 'empire' || v === 'my-empire') {
     st.realm = null;
     st.kingdom = null;
   } else if (v === 'my-realm') {
@@ -66,6 +78,27 @@ export function lbMapTap(st, v) {
     }
   }
   st.anim = st.realm; // play the break-off once
+  if (wasWorld && !st.world) st.enter = true; // the Empire map grows in as the globe zooms
+}
+
+/** Called after the screen is drawn: start the globe if it's showing. */
+export function mountLeaderboards(root, st, rerender) {
+  const canvas = root.querySelector('.lb-globe');
+  if (!canvas) return;
+  const tip = root.querySelector('.lb-globe-tip');
+  const zoomOut = st.zoomOut;
+  st.zoomOut = false;
+  mountGlobe(canvas, st, {
+    zoomOut,
+    onInfo: (text) => { if (tip) tip.textContent = text; },
+    onEmpire: () => {
+      st.world = false;
+      st.realm = null;
+      st.kingdom = null;
+      st.enter = true;
+      rerender();
+    },
+  });
 }
 
 // ---------- the map ----------
@@ -162,7 +195,7 @@ function mapHtml(st) {
   const defs = Object.keys(MAP.PATHS).map((c) => `<path id="lbp-${c}" d="${MAP.PATHS[c]}" vector-effect="non-scaling-stroke"/>`).join('');
   return `<svg class="lb-svg" viewBox="${VB.join(' ')}" role="img" aria-label="Map of the six Realms. Tap a Realm to see its Kingdoms.">
     <defs>${defs}${CASTLE_DEFS}<radialGradient id="lb-sea" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#2b86b5"/><stop offset="1" stop-color="#0c3550"/></radialGradient></defs>
-    <rect x="${VB[0]}" y="${VB[1]}" width="${VB[2]}" height="${VB[3]}" fill="url(#lb-sea)" data-action="lb-map" data-v="country"/>
+    <rect x="${VB[0]}" y="${VB[1]}" width="${VB[2]}" height="${VB[3]}" fill="url(#lb-sea)" data-action="lb-map" data-v="empire"/>
     <g class="lb-zoom${open && st.anim === open.id ? ' anim' : ''}"${zoom}>
       <g transform="scale(1 ${TILT})">${realms}</g>
       ${marks}
@@ -175,23 +208,31 @@ export function leaderboardsHtml(st) {
   const realm = st.realm ? KG.realmById(st.realm) : null;
   const kingdom = st.kingdom || null;
   const homeRealm = KG.realmOf(HOME);
+  const world = st.world;
+  const empire = KG.EMPIRES.US;
+  const enter = st.enter;
   st.anim = null; // the next redraw shouldn't replay the break-off
+  st.enter = false;
 
   // What's picked on the map
-  const head = kingdom
+  const head = world
+    ? '<b>The World</b><span>Spin the globe · tap an Empire to zoom in</span>'
+    : kingdom
     ? `<b>${esc(KG.kingdomName(kingdom))}</b><span>${esc(realm.name)}${kingdom === HOME ? ' · <em>Your Kingdom</em>' : ''}</span>`
     : realm
       ? `<b style="color:${COLOR[realm.id]}">${esc(realm.name)}</b><span>${realm.region} · ${realm.states.length} Kingdoms${realm.id === homeRealm.id ? ' · <em>Your Realm</em>' : ''} · tap a Kingdom</span>`
-      : '<b>United States</b><span>Six Realms, 50 Kingdoms · tap a Realm</span>';
+      : `<b>${empire.name}</b><span>${empire.country} · six Realms, 50 Kingdoms · <em>Your Empire</em> · tap a Realm</span>`;
   const quick = (v, label, on) => `<button class="chip ${on ? 'on' : ''}" data-action="lb-map" data-v="${v}">${label}</button>`;
   const mapCard = `<section class="card lb-mapcard">
       <div class="lb-maphead">${head}</div>
-      <div class="lb-map">${mapHtml(st)}</div>
-      <div class="chips lb-chips">${quick('my-kingdom', 'My Kingdom', kingdom === HOME)}${quick('my-realm', 'My Realm', realm?.id === homeRealm.id && !kingdom)}${quick('country', 'Country', !realm)}</div>
+      ${world
+    ? '<div class="lb-map lb-globe-wrap"><canvas class="lb-globe" aria-label="Globe of the world. Drag to spin it; tap the American Empire to zoom in."></canvas><p class="lb-globe-tip">Drag to spin the globe. Tap the American Empire.</p></div>'
+    : `<div class="lb-map${enter ? ' enter' : ''}">${mapHtml(st)}</div>`}
+      <div class="chips lb-chips">${quick('my-kingdom', 'My Kingdom', !world && kingdom === HOME)}${quick('my-realm', 'My Realm', !world && realm?.id === homeRealm.id && !kingdom)}${quick('my-empire', 'My Empire', !world && !realm)}${quick('world', 'World', world)}</div>
     </section>`;
 
   const seg = (v, label) => `<button class="seg-opt" data-action="lb-tab" data-v="${v}" aria-pressed="${tab === v}">${label}</button>`;
-  const where = kingdom ? KG.kingdomName(kingdom) : realm ? realm.name : 'the country';
+  const where = kingdom ? KG.kingdomName(kingdom) : realm ? realm.name : world ? 'the world' : `the ${empire.name}`;
   let body = '';
   if (tab === 'players') {
     const list = PLAYERS
@@ -211,6 +252,18 @@ export function leaderboardsHtml(st) {
         <span class="lb-num"><b>${k.avg}</b><small>avg Elo</small></span>
         <span class="lb-num"><b>${k.players}</b><small>players</small></span>
       </li>`).join('')}</ol>`;
+  } else if (tab === 'empires') {
+    // Only the American Empire is live; the next ones are on the way.
+    const soon = ['United Kingdom', 'Ireland', 'Canada', 'Australia', 'Japan'];
+    const total = REALM_ROWS.reduce((n, r) => n + r.players, 0);
+    const avg = Math.round(REALM_ROWS.reduce((n, r) => n + r.avg * r.players, 0) / total);
+    body = `<ol class="lb-table">
+      <li class="me" data-action="lb-map" data-v="my-empire"><span class="lb-pos">1</span>
+        <span class="lb-name"><b>${empire.name}</b><small>${empire.country} · 6 Realms · 50 Kingdoms</small></span>
+        <span class="lb-num"><b>${avg}</b><small>avg Elo</small></span>
+        <span class="lb-num"><b>${total.toLocaleString()}</b><small>players</small></span></li>
+      ${soon.map((c) => `<li class="soon"><span class="lb-pos">·</span><span class="lb-name"><b>${c}</b><small>Empire coming soon</small></span></li>`).join('')}
+    </ol>`;
   } else {
     const list = [...REALM_ROWS].sort((a, b) => b.avg - a.avg);
     body = `<ol class="lb-table realms">${list.map((r, i) => `<li class="${r.id === (realm || homeRealm).id ? 'me' : ''}" data-action="lb-map" data-v="realm:${r.id}" style="--c:${COLOR[r.id]}">
@@ -221,7 +274,7 @@ export function leaderboardsHtml(st) {
       </li>`).join('')}</ol>`;
   }
   return `${mapCard}
-    <div class="seg-wide lb-tabs" role="group" aria-label="Leaderboard">${seg('players', 'Players')}${seg('kingdoms', 'Kingdoms')}${seg('realms', 'Realms')}</div>
+    <div class="seg-wide lb-tabs" role="group" aria-label="Leaderboard">${seg('players', 'Players')}${seg('kingdoms', 'Kingdoms')}${seg('realms', 'Realms')}${seg('empires', 'Empires')}</div>
     ${body}
-    <p class="muted small lf-example">Your Kingdom is the state you sign up in; Kingdoms band together into six Realms. Example players and numbers until ranked play goes live.</p>`;
+    <p class="muted small lf-example">Your Kingdom is the state you sign up in. Kingdoms band together into Realms, and the Realms of a country make up its Empire. Example players and numbers until ranked play goes live.</p>`;
 }

@@ -1,6 +1,6 @@
-// Kingdoms and Realms. Every player belongs to a Kingdom (the U.S. state they sign up in),
-// and the Kingdoms are grouped into six Realms. Leaderboards and challenges compare them.
-// Going global later: each country can become its own set of Kingdoms and Realms.
+// Kingdoms, Realms and Empires. Every player belongs to a Kingdom (the state they sign up in),
+// Kingdoms are grouped into Realms, and the Realms of a country make up its Empire.
+// Leaderboards and challenges compare them. The American Empire is the first; more countries join later.
 
 export const STATES = {
   AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California', CO: 'Colorado', CT: 'Connecticut',
@@ -21,6 +21,9 @@ export const REALMS = [
   { id: 'peaks', name: 'Realm of the High Peaks', region: 'Mountain West', suit: 'spades', states: ['CO', 'ID', 'MT', 'NV', 'UT', 'WY'] },
   { id: 'pacific', name: 'Realm of the Pacific Tide', region: 'West Coast', suit: 'clubs', states: ['AK', 'CA', 'HI', 'OR', 'WA'] },
 ];
+
+// The Empires (countries). Each has its own Kingdoms and Realms.
+export const EMPIRES = { US: { code: 'US', name: 'American Empire', country: 'United States' } };
 
 export const kingdomName = (code) => `${STATES[code]} Kingdom`;
 export const realmOf = (code) => REALMS.find((r) => r.states.includes(code));

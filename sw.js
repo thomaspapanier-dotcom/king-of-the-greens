@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v118';
+const VERSION = 'kog-v119';
 const SHELL = [
   './',
   './index.html',
@@ -199,6 +199,10 @@ const SHELL = [
   './js/leaderboards.js',
   './js/usmap.js',
   './js/realmcastles.js',
+  './js/globe.js',
+  './js/vendor/d3-array.min.js',
+  './js/vendor/d3-geo.min.js',
+  './assets/world-110m.json',
   './js/sync.js',
   './js/auth.js',
   './js/config.js',

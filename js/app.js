@@ -14,7 +14,7 @@ import { kingRain, preloadKings } from './confetti.js';
 import * as LF from './lfg.js';
 import { badgeHtml, bannerClass } from './flair.js';
 import * as CH from './challenges.js';
-import { leaderboardsHtml, lbMapTap } from './leaderboards.js';
+import { leaderboardsHtml, lbMapTap, mountLeaderboards } from './leaderboards.js';
 
 // Per-device preferences (theme, sound).
 function getPref(key, fallback) {
@@ -1863,7 +1863,7 @@ function viewWinBalls() {
 
 // ---------- leaderboards ----------
 function viewLeaderboards() {
-  const st = ui.lb || (ui.lb = { tab: 'players', realm: null, kingdom: null });
+  const st = ui.lb || (ui.lb = { tab: 'players', world: true, realm: null, kingdom: null });
   return `${topbar('Leaderboards')}
   <main class="page lb-page">
     ${leaderboardsHtml(st)}
@@ -2374,6 +2374,7 @@ function render() {
       : ui.kogPopup ? kogPopupHtml(ui.kogPopup) : ui.orderPopup ? orderPopupHtml(ui.orderPopup) : ui.ranksChart ? ranksChartHtml() : '') +
     (ui.dialog ? dialogHtml(ui.dialog) : '');
   if (ui.view === 'rules' || ui.view === 'game') mountIllustrations($app);
+  if (ui.view === 'leaderboards' && ui.lb) mountLeaderboards($app, ui.lb, render);
 }
 
 // ---------- actions ----------
