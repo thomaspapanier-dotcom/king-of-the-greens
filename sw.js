@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v116';
+const VERSION = 'kog-v117';
 const SHELL = [
   './',
   './index.html',
@@ -135,10 +135,14 @@ const SHELL = [
   './assets/challenges/banner-heart-of-gold.webp',
   './assets/challenges/badge-platinum.webp',
   './assets/challenges/banner-platinum.webp',
+  './assets/challenges/badge-diamond-hands.webp',
+  './assets/challenges/banner-diamond-hands.webp',
   './assets/challenges/badge-hat-trick.webp',
   './assets/challenges/banner-hat-trick.webp',
   './assets/challenges/badge-heater.webp',
   './assets/challenges/banner-heater.webp',
+  './assets/challenges/badge-dynasty.webp',
+  './assets/challenges/banner-dynasty.webp',
   './assets/challenges/badge-four-of-a-kind.webp',
   './assets/challenges/banner-four-of-a-kind.webp',
   './assets/challenges/badge-stranger-danger.webp',
@@ -147,6 +151,8 @@ const SHELL = [
   './assets/challenges/banner-new-faces.webp',
   './assets/challenges/badge-social-butterfly.webp',
   './assets/challenges/banner-social-butterfly.webp',
+  './assets/challenges/badge-royal-court.webp',
+  './assets/challenges/banner-royal-court.webp',
   './assets/challenges/badge-iron-man.webp',
   './assets/challenges/banner-iron-man.webp',
   './assets/challenges/badge-dawn-patrol.webp',
@@ -157,6 +163,8 @@ const SHELL = [
   './assets/challenges/banner-fellow-traveler.webp',
   './assets/challenges/badge-long-way-home.webp',
   './assets/challenges/banner-long-way-home.webp',
+  './assets/challenges/badge-foreign-soil.webp',
+  './assets/challenges/banner-foreign-soil.webp',
   './assets/challenges/badge-northeast.webp',
   './assets/challenges/banner-northeast.webp',
   './assets/challenges/badge-southeast.webp',

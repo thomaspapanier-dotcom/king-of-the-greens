@@ -81,45 +81,91 @@ const STAR = (() => {
   return p.join(' ');
 })();
 
+// The map is drawn like a board tilted away from you: squashed top to bottom (TILT), each state a raised
+// slab with darker sides (DEPTH). The open Realm lifts up off the board (LIFT) and zooms in.
+const TILT = 0.8;
+const DEPTH = 18;
+const LIFT = 26;
+const VB = [-24, -36, 1023, 576]; // viewBox
+const darken = (hex, f) => '#' + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * f).toString(16).padStart(2, '0')).join('');
+// Where each Realm's landmark stands (a Kingdom near the middle of the Realm).
+const ANCHOR = { ivy: 'NY', magnolia: 'TN', plains: 'IA', desert: 'TX', peaks: 'UT', pacific: 'OR' };
+// Realms whose landmark art is in assets/realms/<id>.webp; the rest show a crowned pin.
+const REALM_ART = new Set([]);
+const PIN = '<ellipse class="lb-pin-shadow" cx="0" cy="0" rx="13" ry="4.5"/><path class="lb-pin" d="M0 0C-4-10-16-18-16-30A16 16 0 1 1 16-30C16-18 4-10 0 0Z"/><polygon class="lb-pin-crown" points="-9,-25 -9,-36 -4.5,-30.5 0,-39 4.5,-30.5 9,-36 9,-25"/>';
+
 function mapHtml(st) {
   // Zoom so the open Realm fills the map: s is how much bigger it draws.
   let zoom = '';
   let s = 1;
   const open = st.realm ? KG.realmById(st.realm) : null;
-  if (open) {
-    const [cx, cy] = avgPt(open.states);
+  const pull = (r) => {
+    // which way a Realm breaks away from the middle of the country
+    const [cx, cy] = avgPt(r.states);
     const len = Math.hypot(cx - CENTER[0], cy - CENTER[1]) || 1;
-    const ox = ((cx - CENTER[0]) / len) * 24;
-    const oy = ((cy - CENTER[1]) / len) * 24;
+    return [((cx - CENTER[0]) / len) * 24, ((cy - CENTER[1]) / len) * 24];
+  };
+  if (open) {
+    const [ox, oy] = pull(open);
     const b = open.states.reduce((a, c) => { const q = MAP.BOX[c]; return [Math.min(a[0], q[0]), Math.min(a[1], q[1]), Math.max(a[2], q[2]), Math.max(a[3], q[3])]; }, [1e9, 1e9, -1e9, -1e9]);
     const w = (b[2] - b[0]) * 1.14 + 50;
-    const h = (b[3] - b[1]) * 1.14 + 50;
-    s = Math.min(1023 / w, 664 / h, 3.2);
+    const h = ((b[3] - b[1]) * 1.14 + DEPTH + LIFT + 60) * TILT;
+    s = Math.min(VB[2] / w, VB[3] / h, 3.2);
     const mx = (b[0] + b[2]) / 2 + ox;
-    const my = (b[1] + b[3]) / 2 + oy;
-    zoom = ` style="transform:translate(487.5px,308px) scale(${s.toFixed(3)}) translate(${(-mx).toFixed(1)}px,${(-my).toFixed(1)}px)"`;
+    const my = ((b[1] + b[3]) / 2 + oy - LIFT / 2 - 18) * TILT;
+    zoom = ` style="transform:translate(${VB[0] + VB[2] / 2}px,${VB[1] + VB[3] / 2}px) scale(${s.toFixed(3)}) translate(${(-mx).toFixed(1)}px,${(-my).toFixed(1)}px)"`;
   }
-  const order = [...KG.REALMS].sort((a, b) => (a.id === st.realm) - (b.id === st.realm)); // the open Realm draws on top
+  // Draw from the back (north) to the front (south) so nearer slabs cover the sides of farther ones;
+  // the open Realm goes last, on top.
+  const order = [...KG.REALMS].sort((a, b) => (a.id === st.realm) - (b.id === st.realm) || avgPt(a.states)[1] - avgPt(b.states)[1]);
   const realms = order.map((r) => {
     const on = r.id === st.realm;
     const [cx, cy] = avgPt(r.states);
-    const vx = cx - CENTER[0];
-    const vy = cy - CENTER[1];
-    const len = Math.hypot(vx, vy) || 1;
+    const [rx, ry] = pull(r);
     const cls = `lb-realm${on ? ' on' : ''}${st.realm && !on ? ' dim' : ''}${on && st.anim === r.id ? ' anim' : ''}`;
-    const states = r.states.map((code) => {
+    const side = darken(COLOR[r.id], 0.5);
+    const depth = DEPTH + (on ? LIFT : 0);
+    const nudge = (code) => {
+      const [x, y] = MAP.LABEL[code];
+      return `--dx:${((x - cx) * 0.07).toFixed(1)}px;--dy:${((y - cy) * 0.07).toFixed(1)}px`;
+    };
+    const sides = r.states.map((code) => {
+      let u = '';
+      for (let d = depth; d > 0; d -= 3) u += `<use href="#lbp-${code}" y="${d}"/>`;
+      return `<g class="lb-side" style="${nudge(code)}">${u}</g>`;
+    }).join('');
+    const tops = r.states.map((code) => {
       const [x, y] = MAP.LABEL[code];
       const home = code === HOME;
       const fs = (40 / s).toFixed(1);
-      const label = on && !(SMALL.has(code) && s < 2.5) && !home ? `<text class="lb-abbr" x="${x}" y="${(y + 14 / s).toFixed(1)}" font-size="${fs}">${code}</text>` : '';
-      const star = home ? `<g class="lb-star" transform="translate(${x} ${y}) scale(${(on ? 2.6 / s : 1).toFixed(3)})"><polygon points="${STAR}"/>${on ? '<text class="lb-you" x="-20" y="5">Your Kingdom</text>' : ''}</g>` : '';
-      return `<g class="lb-st${code === st.kingdom ? ' pick' : ''}" data-action="lb-map" data-v="${code}" style="--dx:${((x - cx) * 0.07).toFixed(1)}px;--dy:${((y - cy) * 0.07).toFixed(1)}px"><title>${esc(KG.kingdomName(code))}</title><path d="${MAP.PATHS[code]}"/>${label}${star}</g>`;
+      // labels are stretched back up so they read upright on the tilted board
+      const up = `transform="translate(0 ${(y * (1 - 1 / TILT)).toFixed(1)}) scale(1 ${(1 / TILT).toFixed(3)})"`;
+      const label = on && !(SMALL.has(code) && s < 2.5) && !home ? `<text class="lb-abbr" x="${x}" y="${(y + (code === ANCHOR[r.id] ? 46 : 14) / s).toFixed(1)}" font-size="${fs}" ${up}>${code}</text>` : '';
+      const k = on ? 2.6 / s : 1.3;
+      const star = home ? `<g class="lb-star" transform="translate(${x} ${y}) scale(${k.toFixed(3)} ${(k / TILT).toFixed(3)})"><polygon points="${STAR}"/>${on ? '<text class="lb-you" x="-20" y="5">Your Kingdom</text>' : ''}</g>` : '';
+      return `<g class="lb-st${code === st.kingdom ? ' pick' : ''}" data-action="lb-map" data-v="${code}" style="${nudge(code)}"><title>${esc(KG.kingdomName(code))}</title><use class="top" href="#lbp-${code}"/>${label}${star}</g>`;
     }).join('');
-    return `<g class="${cls}" style="--c:${COLOR[r.id]};--rx:${((vx / len) * 24).toFixed(1)}px;--ry:${((vy / len) * 24).toFixed(1)}px">${states}</g>`;
+    return `<g class="${cls}" style="--c:${COLOR[r.id]};--rx:${rx.toFixed(1)}px;--ry:${ry.toFixed(1)}px;--lift:${on ? LIFT : 0}px"><g fill="${side}" stroke="${side}">${sides}</g>${tops}</g>`;
   }).join('');
-  return `<svg class="lb-svg" viewBox="-24 -24 1023 664" role="img" aria-label="Map of the six Realms. Tap a Realm to see its Kingdoms.">
-    <rect x="-24" y="-24" width="1023" height="664" fill="transparent" data-action="lb-map" data-v="country"/>
-    <g class="lb-zoom${open && st.anim === open.id ? ' anim' : ''}"${zoom}>${realms}</g>
+  // Landmarks stand upright on top of the tilted board.
+  const marks = order.map((r) => {
+    const on = r.id === st.realm;
+    const [x, y] = MAP.LABEL[ANCHOR[r.id]];
+    const [rx, ry] = on ? pull(r) : [0, 0];
+    const k = on ? 1.8 / Math.sqrt(s) : 1.25;
+    const art = REALM_ART.has(r.id)
+      ? `<image href="assets/realms/${r.id}.webp" x="-40" y="-74" width="80" height="80"/>`
+      : PIN;
+    return `<g class="lb-mark${st.realm && !on ? ' dim' : ''}" data-action="lb-map" data-v="realm:${r.id}" style="--c:${COLOR[r.id]}" transform="translate(${(x + rx).toFixed(1)} ${((y + ry - (on ? LIFT : 0)) * TILT).toFixed(1)}) scale(${k.toFixed(3)})"><title>${esc(r.name)}</title>${art}</g>`;
+  }).join('');
+  const defs = Object.keys(MAP.PATHS).map((c) => `<path id="lbp-${c}" d="${MAP.PATHS[c]}" vector-effect="non-scaling-stroke"/>`).join('');
+  return `<svg class="lb-svg" viewBox="${VB.join(' ')}" role="img" aria-label="Map of the six Realms. Tap a Realm to see its Kingdoms.">
+    <defs>${defs}<radialGradient id="lb-sea" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#2b86b5"/><stop offset="1" stop-color="#0c3550"/></radialGradient></defs>
+    <rect x="${VB[0]}" y="${VB[1]}" width="${VB[2]}" height="${VB[3]}" fill="url(#lb-sea)" data-action="lb-map" data-v="country"/>
+    <g class="lb-zoom${open && st.anim === open.id ? ' anim' : ''}"${zoom}>
+      <g transform="scale(1 ${TILT})">${realms}</g>
+      ${marks}
+    </g>
   </svg>`;
 }
 

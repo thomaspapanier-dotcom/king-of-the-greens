@@ -3,11 +3,11 @@
 Each challenge gets a **badge** (square) and a **banner** (wide). Send these to ChatGPT in order:
 the setup message first, then one batch at a time. Easy ones go fast; the higher the rarity, the more time ChatGPT should take.
 
-**Still to make:** 0 Common, 0 Rare, 9 Very Rare, 9 Impossible (18 challenges, 36 images). 70 of 88 challenges already have their art and aren’t listed here.
+**Still to make:** 0 Common, 0 Rare, 5 Very Rare, 9 Impossible (14 challenges, 28 images). 74 of 88 challenges already have their art and aren’t listed here.
 
-**Already in the app (70):** The North Remembers · West Coast, Best Coast · East Coast, Beast Coast · The Deep South · Never Lost · Blackjack · Built for This · The Bird with Big Wings · Albatross · Flawless Shawty · Dead Center · Triple Threat · Even Steven · Under the Radar · Seeing Red · Lights Out · “I Might Be Him” · Himothy · Him. · Underdog · From Way Downtown · Sharpshooter · Deadly Sniper · Not So Fast · Wire to Wire · Regicide · Comeback King · Ice Cold · Smooth Operator · Back from the Dead · Two Is Better · Dynamic Duo · Full House · Pickup Game · Shoulder the Burden · I’ll Lead the Way · Follow Me to Victory · Goose & Maverick · Scavenger · You Hit It, I’ll End It · Fresh Blood · Silver Lining · Heart of Gold · Platinum Plated · Hat Trick · Heater · Four of a Kind · Stranger Danger · New Faces · Social Butterfly · Iron Man · Dawn Patrol · Away Game · Fellow Traveler · A Long Way from Home · Ivy League · Southern Hospitality · Heartland · Desert Heat · Altitude Adjustment · Pacific Time · Defend the Throne · Kingdom Hopper · Birdwatcher · Flock Together · Par for the Course · Steady Eddie · Tap-In Machine · Middle Child · Long Distance Relationship
+**Already in the app (74):** The North Remembers · West Coast, Best Coast · East Coast, Beast Coast · The Deep South · Never Lost · Blackjack · Built for This · The Bird with Big Wings · Albatross · Flawless Shawty · Dead Center · Triple Threat · Even Steven · Under the Radar · Seeing Red · Lights Out · “I Might Be Him” · Himothy · Him. · Underdog · From Way Downtown · Sharpshooter · Deadly Sniper · Not So Fast · Wire to Wire · Regicide · Comeback King · Ice Cold · Smooth Operator · Back from the Dead · Two Is Better · Dynamic Duo · Full House · Pickup Game · Shoulder the Burden · I’ll Lead the Way · Follow Me to Victory · Goose & Maverick · Scavenger · You Hit It, I’ll End It · Fresh Blood · Silver Lining · Heart of Gold · Platinum Plated · Diamond Hands · Hat Trick · Heater · Dynasty · Four of a Kind · Stranger Danger · New Faces · Social Butterfly · Royal Court · Iron Man · Dawn Patrol · Away Game · Fellow Traveler · A Long Way from Home · Foreign Soil · Ivy League · Southern Hospitality · Heartland · Desert Heat · Altitude Adjustment · Pacific Time · Defend the Throne · Kingdom Hopper · Birdwatcher · Flock Together · Par for the Course · Steady Eddie · Tap-In Machine · Middle Child · Long Distance Relationship
 
-**Still missing (18):** everything below, easiest first.
+**Still missing (14):** everything below, easiest first.
 
 **Halfway point: switch up the fits.** Most of the art so far has the Kings in the same four shirts. Paste this into your ChatGPT chat once, before the next batch:
 
@@ -65,51 +65,9 @@ Reply "Ready" if you understand.
 
 ---
 
-## Very Rare (9 challenges)
+## Very Rare (5 challenges)
 
 ### Step 2: Very Rare batch 1
-
-```
-Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
-
-For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
-
-1. Diamond Hands (Very Rare), file names: `badge-diamond-hands.png` and `banner-diamond-hands.png`
-   - Earned by: Reach Diamond.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
-   - Badge: Two hands holding a glowing diamond.
-   - Banner: A glittering diamond mine, the Kings carrying lanterns.
-
-2. Dynasty (Very Rare), file names: `badge-dynasty.png` and `banner-dynasty.png`
-   - Earned by: Win 10 ranked matches in a row.
-   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
-   - Badge: A royal crest with ten stars around it.
-   - Banner: A long hall of portraits of the same King, ten in a row.
-
-```
-
-### Step 3: Very Rare batch 2
-
-```
-Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
-
-For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
-
-1. Royal Court (Very Rare), file names: `badge-royal-court.png` and `banner-royal-court.png`
-   - Earned by: Play ranked matches against 50 different opponents.
-   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
-   - Badge: A grand throne with a crowd of tiny crowns gathered at its feet.
-   - Banner: A great hall packed with challengers lining up to face the King of Spades on his throne beside a putting green.
-
-2. Foreign Soil (Very Rare), file names: `badge-foreign-soil.png` and `banner-foreign-soil.png`
-   - Earned by: Win a ranked match 1,000+ miles from your Home Court.
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
-   - Badge: A globe wrapped in a golf-flag ribbon with a crown on top.
-   - Banner: A jet landing at sunset beside a dramatic far-off course, the King of Hearts stepping off with his putter.
-
-```
-
-### Step 4: Very Rare batch 3
 
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
@@ -130,7 +88,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ```
 
-### Step 5: Very Rare batch 4
+### Step 3: Very Rare batch 2
 
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
@@ -151,7 +109,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ```
 
-### Step 6: Very Rare batch 5
+### Step 4: Very Rare batch 3
 
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
@@ -172,7 +130,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 One challenge per message. Ask ChatGPT to pitch the concept first, then make the badge, then the banner. These should feel worth grinding for.
 
-### Step 7: Impossible batch 1
+### Step 5: Impossible batch 1
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -187,7 +145,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 8: Impossible batch 2
+### Step 6: Impossible batch 2
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -202,7 +160,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 9: Impossible batch 3
+### Step 7: Impossible batch 3
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -217,7 +175,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 10: Impossible batch 4
+### Step 8: Impossible batch 4
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -232,7 +190,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 11: Impossible batch 5
+### Step 9: Impossible batch 5
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -247,7 +205,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 12: Impossible batch 6
+### Step 10: Impossible batch 6
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -262,7 +220,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 13: Impossible batch 7
+### Step 11: Impossible batch 7
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -277,7 +235,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 14: Impossible batch 8
+### Step 12: Impossible batch 8
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -292,7 +250,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 15: Impossible batch 9
+### Step 13: Impossible batch 9
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.

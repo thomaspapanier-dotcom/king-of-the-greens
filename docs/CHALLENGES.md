@@ -5,11 +5,11 @@ Almost all of them come from **ranked**, where both players confirm the score. O
 
 Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impossible** (red).
 
-**70 of 88 challenges have their art.** 18 still need a badge and banner.
+**74 of 88 challenges have their art.** 14 still need a badge and banner.
 
 ---
 
-## Already in the app (70)
+## Already in the app (74)
 
 
 ### Compass Putt
@@ -91,11 +91,13 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **Silver Lining** · Common: Reach Silver.
 - **Heart of Gold** · Rare: Reach Gold.
 - **Platinum Plated** · Very Rare: Reach Platinum.
+- **Diamond Hands** · Very Rare: Reach Diamond.
 
 ### Streaks
 
 - **Hat Trick** · Common: Win 3 ranked matches in a row.
 - **Heater** · Rare: Win 5 ranked matches in a row.
+- **Dynasty** · Very Rare: Win 10 ranked matches in a row.
 
 ### Career
 
@@ -103,6 +105,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **Stranger Danger** · Common: Play ranked matches against 5 different opponents.
 - **New Faces** · Common: Play ranked matches against 10 different opponents.
 - **Social Butterfly** · Rare: Play ranked matches against 25 different opponents.
+- **Royal Court** · Very Rare: Play ranked matches against 50 different opponents.
 - **Iron Man** · Rare: Play 100 ranked matches.
 - **Dawn Patrol** · Common: Finish a ranked match before 8 AM.
 
@@ -111,6 +114,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **Away Game** · Common: Win a ranked match 50+ miles from your Home Court (the course you pick when you sign up).
 - **Fellow Traveler** · Common: Win a ranked match 100+ miles from your Home Court.
 - **A Long Way from Home** · Rare: Win a ranked match 500+ miles from your Home Court.
+- **Foreign Soil** · Very Rare: Win a ranked match 1,000+ miles from your Home Court.
 - **Ivy League** · Common: Win a ranked match in the Realm of the Ivy Crown (the Northeast: Connecticut, Delaware, Maine, Maryland, Massachusetts, New Hampshire, New Jersey, New York, Pennsylvania, Rhode Island or Vermont).
 - **Southern Hospitality** · Common: Win a ranked match in the Realm of the Magnolia Throne (the Southeast: Alabama, Arkansas, Florida, Georgia, Kentucky, Louisiana, Mississippi, North Carolina, South Carolina, Tennessee, Virginia or West Virginia).
 - **Heartland** · Common: Win a ranked match in the Realm of the Golden Plains (the Midwest: Illinois, Indiana, Iowa, Kansas, Michigan, Minnesota, Missouri, Nebraska, North Dakota, Ohio, South Dakota or Wisconsin).
@@ -135,7 +139,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 
 ---
 
-## Still missing (18)
+## Still missing (14)
 
 These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
@@ -192,12 +196,6 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 ### The Climb
 
-#### Diamond Hands · Very Rare
-- **How to complete (Ranked):** Reach Diamond.
-- **Badge:** Two hands holding a glowing diamond.
-- **Banner:** A glittering diamond mine, the Kings carrying lanterns.
-- **Files:** `badge-diamond-hands.png`, `banner-diamond-hands.png`
-
 #### Putt Master · Impossible
 - **How to complete (Ranked):** Reach Putt Master, the very top rank.
 - **Badge:** The magenta Putt Master crest shooting out rays of light.
@@ -205,22 +203,7 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 - **Files:** `badge-putt-master.png`, `banner-putt-master.png`
 
 
-### Streaks
-
-#### Dynasty · Very Rare
-- **How to complete (Ranked):** Win 10 ranked matches in a row.
-- **Badge:** A royal crest with ten stars around it.
-- **Banner:** A long hall of portraits of the same King, ten in a row.
-- **Files:** `badge-dynasty.png`, `banner-dynasty.png`
-
-
 ### Career
-
-#### Royal Court · Very Rare
-- **How to complete (Ranked):** Play ranked matches against 50 different opponents.
-- **Badge:** A grand throne with a crowd of tiny crowns gathered at its feet.
-- **Banner:** A great hall packed with challengers lining up to face the King of Spades on his throne beside a putting green.
-- **Files:** `badge-royal-court.png`, `banner-royal-court.png`
 
 #### Crown Jewel · Impossible
 - **How to complete (Ranked):** Earn the magenta win % golf ball by winning 65% or more of your ranked matches.
@@ -230,12 +213,6 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 
 ### Road Trips
-
-#### Foreign Soil · Very Rare
-- **How to complete (Ranked):** Win a ranked match 1,000+ miles from your Home Court.
-- **Badge:** A globe wrapped in a golf-flag ribbon with a crown on top.
-- **Banner:** A jet landing at sunset beside a dramatic far-off course, the King of Hearts stepping off with his putter.
-- **Files:** `badge-foreign-soil.png`, `banner-foreign-soil.png`
 
 #### Coast to Coast · Very Rare
 - **How to complete (Ranked):** Win a ranked match in all six Realms.
