@@ -5,11 +5,11 @@ Almost all of them come from **ranked**, where both players confirm the score. O
 
 Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impossible** (red).
 
-**62 of 88 challenges have their art.** 26 still need a badge and banner.
+**70 of 88 challenges have their art.** 18 still need a badge and banner.
 
 ---
 
-## Already in the app (62)
+## Already in the app (70)
 
 
 ### Compass Putt
@@ -36,6 +36,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 ### Money Rounds
 
 - **Flawless Shawty** · Very Rare: One-putt all 9 balls in the Short-putt round (Round 2) of a ranked match.
+- **Dead Center** · Very Rare: Sink 7 of the 9 balls on the first putt in the Medium-putt round (Round 4) of a ranked match.
 - **Triple Threat** · Very Rare: One-putt all 3 balls of a Long set (both birdie balls and the par ball, from 10–15 ft).
 
 ### Scoring
@@ -49,17 +50,24 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 
 - **“I Might Be Him”** · Common: Win a ranked match by 3 or more strokes.
 - **Himothy** · Rare: Win a ranked match by 5 or more strokes.
+- **Him.** · Very Rare: Win a ranked match by 7 or more strokes.
+
+### Upsets
+
+- **Underdog** · Very Rare: Beat a ranked opponent rated 500–999 Elo higher than you.
 
 ### Long Range
 
 - **From Way Downtown** · Common: Make 2 Long putts (in on the first putt from the Long marker) in the same ranked match.
 - **Sharpshooter** · Rare: Make 3 Long putts in the same ranked match.
+- **Deadly Sniper** · Very Rare: Make 5 or more Long putts in the same ranked match.
 
 ### Clutch
 
 - **Not So Fast** · Rare: Win a ranked match by taking the lead in the Eagle round (the last round).
 - **Wire to Wire** · Rare: Be the KOG (the leader) after every round of a ranked match, and win.
 - **Regicide** · Rare: Win a ranked match after taking the crown from a KOG who had held it for 3 or more rounds in a row.
+- **Comeback King** · Very Rare: Win a ranked match after being 5 or more strokes behind at the end of any round.
 - **Ice Cold** · Rare: Win a ranked match in a sudden-death putt-off.
 - **Smooth Operator** · Very Rare: Finish a ranked match without a single 3-putt.
 - **Back from the Dead** · Rare: Lose a ranked match, then beat the same opponent in your very next match.
@@ -82,6 +90,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **Fresh Blood** · Common: Finish your 10 placement matches and get your first rank.
 - **Silver Lining** · Common: Reach Silver.
 - **Heart of Gold** · Rare: Reach Gold.
+- **Platinum Plated** · Very Rare: Reach Platinum.
 
 ### Streaks
 
@@ -109,6 +118,11 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **Altitude Adjustment** · Common: Win a ranked match in the Realm of the High Peaks (the Mountain West: Colorado, Idaho, Montana, Nevada, Utah or Wyoming).
 - **Pacific Time** · Common: Win a ranked match in the Realm of the Pacific Tide (the West Coast: Alaska, California, Hawaii, Oregon or Washington).
 
+### Kingdoms & Realms
+
+- **Defend the Throne** · Rare: Win 25 ranked matches inside your own Kingdom.
+- **Kingdom Hopper** · Rare: Win ranked matches in 5 different Kingdoms.
+
 ### Milestones
 
 - **Birdwatcher** · Common: Sink 100 birdie balls on the first putt across your ranked matches.
@@ -121,7 +135,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 
 ---
 
-## Still missing (26)
+## Still missing (18)
 
 These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
@@ -135,12 +149,6 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 
 ### Money Rounds
-
-#### Dead Center · Very Rare
-- **How to complete (Ranked):** Sink 7 of the 9 balls on the first putt in the Medium-putt round (Round 4) of a ranked match.
-- **Badge:** A bullseye with a golf ball dead center and a crown on top.
-- **Banner:** A green with target rings mowed into it, the suited Kings standing with arms crossed.
-- **Files:** `badge-dead-center.png`, `banner-dead-center.png`
 
 #### Long Live the King · Impossible
 - **How to complete (Ranked):** Sink 6 of the 9 balls on the first putt in the Long-putt round (Round 6) of a ranked match.
@@ -164,46 +172,13 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 - **Files:** `badge-untouchable.png`, `banner-untouchable.png`
 
 
-### Beatdowns
-
-#### Him. · Very Rare
-- **How to complete (Ranked):** Win a ranked match by 7 or more strokes.
-- **Badge:** A single bold gold period under a crown. Him.
-- **Banner:** All black except a gold spotlight on the King alone, crowd silhouettes bowing.
-- **Files:** `badge-him.png`, `banner-him.png`
-
-
 ### Upsets
-
-#### Underdog · Very Rare
-- **How to complete (Ranked):** Beat a ranked opponent rated 500–999 Elo higher than you.
-- **Badge:** A scrappy bulldog in a crown standing on a golf ball.
-- **Banner:** A small dog squaring up to four giant Kings on a green at sunset.
-- **Files:** `badge-underdog.png`, `banner-underdog.png`
 
 #### Giant Slayer · Impossible
 - **How to complete (Ranked):** Beat a ranked opponent rated 1,000+ Elo higher than you.
 - **Badge:** A slingshot loaded with a golf ball.
 - **Banner:** A toppled giant King statue lying on a green, the challenger standing on top of it.
 - **Files:** `badge-giant-slayer.png`, `banner-giant-slayer.png`
-
-
-### Long Range
-
-#### Deadly Sniper · Very Rare
-- **How to complete (Ranked):** Make 5 or more Long putts in the same ranked match.
-- **Badge:** A crowned skull over two crossed putters.
-- **Banner:** A camouflaged King on a ridge above a long green, a red laser line running to the cup.
-- **Files:** `badge-sniper.png`, `banner-sniper.png`
-
-
-### Clutch
-
-#### Comeback King · Very Rare
-- **How to complete (Ranked):** Win a ranked match after being 5 or more strokes behind at the end of any round.
-- **Badge:** A phoenix rising with a crown on its head.
-- **Banner:** Storm clouds breaking into sunlight over the green as the King rises from the bunker.
-- **Files:** `badge-comeback.png`, `banner-comeback.png`
 
 
 ### Duos & Groups
@@ -216,12 +191,6 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 
 ### The Climb
-
-#### Platinum Plated · Very Rare
-- **How to complete (Ranked):** Reach Platinum.
-- **Badge:** A platinum record with a golf ball for its label.
-- **Banner:** Platinum records lining a studio wall, the King wearing headphones.
-- **Files:** `badge-platinum.png`, `banner-platinum.png`
 
 #### Diamond Hands · Very Rare
 - **How to complete (Ranked):** Reach Diamond.
@@ -276,18 +245,6 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 
 ### Kingdoms & Realms
-
-#### Defend the Throne · Rare
-- **How to complete (Ranked):** Win 25 ranked matches inside your own Kingdom.
-- **Badge:** A crowned shield planted in a putting green, a putter crossed behind it like a sword.
-- **Banner:** The King of Spades standing guard at the gate of his castle-clubhouse, a line of challengers waiting outside.
-- **Files:** `badge-defend-throne.png`, `banner-defend-throne.png`
-
-#### Kingdom Hopper · Rare
-- **How to complete (Ranked):** Win ranked matches in 5 different Kingdoms.
-- **Badge:** A passport stamped with five crowned seals.
-- **Banner:** The King of Clubs on a road trip, hopping out of his convertible at a border sign that welcomes him to a new Kingdom.
-- **Files:** `badge-kingdom-hopper.png`, `banner-kingdom-hopper.png`
 
 #### Realm Raider · Very Rare
 - **How to complete (Ranked):** Win 10 ranked matches outside your home Realm.

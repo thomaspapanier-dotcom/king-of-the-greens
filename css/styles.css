@@ -1533,3 +1533,8 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .lb-name small, .lb-num small { font-size: 11px; color: var(--muted); }
 .lb-num { display: grid; justify-items: end; }
 .lb-num b { font-size: 15px; }
+
+/* Challenges: show by Type / Rarity / Solos / Duos */
+.ch-views { margin-top: 14px; }
+.ch-views .seg-opt { min-height: 40px; font-size: 14px; }
+.ch-view-note { margin: 8px 2px 0; }

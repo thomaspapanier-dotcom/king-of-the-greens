@@ -1893,7 +1893,24 @@ function challengeTile(ch, on, cls = '') {
 const rarityInk = (r) => `<span class="ch-ink ink-${r}" style="color:${CH.RARITY[r].color}">${CH.RARITY[r].label}</span>`;
 
 // Which challenge sections are folded up (remembered on this phone).
-const chCollapsed = () => { try { return JSON.parse(getPref('kog.chCollapsed', '[]')); } catch { return []; } };
+// Sections start closed; this remembers which ones you've opened (keyed by view, e.g. "rarity:rare").
+const chOpened = () => { try { return JSON.parse(getPref('kog.chOpened', '[]')); } catch { return []; } };
+const CH_VIEWS = [['type', 'Type'], ['rarity', 'Rarity'], ['solo', 'Solos'], ['duo', 'Duos']];
+/** The groups for a view: [{ key, title, list, sub }]. Type, Solos and Duos group by type, A to Z. */
+function chGroups(view) {
+  const byName = (a, b) => a.name.localeCompare(b.name);
+  if (view === 'rarity') {
+    return Object.entries(CH.RARITY).map(([r, info]) => {
+      const list = CH.CHALLENGES.filter((ch) => ch.rarity === r).sort(byName);
+      return { key: `rarity:${r}`, title: `<span style="color:${info.color}">${info.label}</span> Challenges`, list, sub: `${list.length}` };
+    });
+  }
+  const fits = (ch) => view === 'type' || CH.playOf(ch) === 'any' || CH.playOf(ch) === view;
+  return [...CH.SECTIONS].sort((a, b) => a.localeCompare(b)).map((sec) => {
+    const list = CH.CHALLENGES.filter((ch) => ch.section === sec && fits(ch));
+    return { key: `${view}:${sec}`, title: `${esc(sec)} Challenges`, list, sub: `${list[0]?.mode === 'Ranked' ? 'Ranked · ' : ''}${list.length}` };
+  }).filter((g) => g.list.length);
+}
 
 function viewChallenges() {
   // The neon sign splits and slides away once each time the menu is opened, then the list appears.
@@ -1902,12 +1919,17 @@ function viewChallenges() {
   const preview = Boolean(ui.chPreview);
   const isDone = () => preview; // real progress arrives with accounts and ranked play
   const total = CH.CHALLENGES.length;
-  const sections = CH.SECTIONS.map((sec) => {
-    const list = CH.CHALLENGES.filter((ch) => ch.section === sec);
-    const shut = chCollapsed().includes(sec);
-    return `<button class="section-head ch-head ch-toggle ${shut ? 'shut' : ''}" data-action="ch-section" data-v="${esc(sec)}" aria-expanded="${!shut}">
-      <h2>${sec} Challenges</h2>
-      <span class="ch-head-right"><span class="muted small">${list[0].mode === 'Ranked' ? 'Ranked · ' : ''}${list.length}</span><span class="ch-chev" aria-hidden="true">${ICON.chevron}</span></span>
+  const view = getPref('kog.chView', 'type');
+  const opened = chOpened();
+  const viewNote = {
+    solo: 'Challenges you can earn playing on your own: solo ranked matches (1 v 1 or 1v1v1), Compass Putt and Lag 21.',
+    duo: 'Challenges you can earn in ranked duos (2 v 2), including the ones only duos can get.',
+  }[view];
+  const sections = chGroups(view).map(({ key, title, list, sub }) => {
+    const shut = !opened.includes(key);
+    return `<button class="section-head ch-head ch-toggle ${shut ? 'shut' : ''}" data-action="ch-section" data-v="${esc(key)}" aria-expanded="${!shut}">
+      <h2>${title}</h2>
+      <span class="ch-head-right"><span class="muted small">${sub}</span><span class="ch-chev" aria-hidden="true">${ICON.chevron}</span></span>
     </button>
     <div class="ch-grid" ${shut ? 'hidden' : ''}>${list.map((ch) => `<button class="ch-tile" data-action="ch-open" data-v="${ch.id}" aria-label="${isDone(ch) ? esc(ch.name) : 'Locked challenge'}">${challengeTile(ch, isDone(ch))}</button>`).join('')}</div>`;
   }).join('');
@@ -1939,6 +1961,8 @@ function viewChallenges() {
       <div class="ch-progress"><b>${preview ? total : 0}</b> of ${total} unlocked</div>
       <label class="switch-row compact"><input type="checkbox" data-ch-preview="1" ${preview ? 'checked' : ''}><span><b>Preview them unlocked</b><span class="muted small">Light everything up to see the art. Real progress comes with accounts.</span></span></label>
     </section>
+    <div class="seg-wide ch-views" role="group" aria-label="Show challenges by">${CH_VIEWS.map(([v, label]) => `<button class="seg-opt" data-action="ch-view" data-v="${v}" aria-pressed="${view === v}">${label}</button>`).join('')}</div>
+    ${viewNote ? `<p class="muted small ch-view-note">${viewNote}</p>` : ''}
     ${sections}
     </div>
   </main>
@@ -2806,9 +2830,14 @@ const actions = {
     setPref('kog.name.style', d.v);
     render();
   },
+  'ch-view': (d) => {
+    setPref('kog.chView', d.v);
+    ui.chIntroDone = true;
+    render();
+  },
   'ch-section': (d) => {
-    const list = chCollapsed();
-    setPref('kog.chCollapsed', JSON.stringify(list.includes(d.v) ? list.filter((x) => x !== d.v) : [...list, d.v]));
+    const list = chOpened();
+    setPref('kog.chOpened', JSON.stringify(list.includes(d.v) ? list.filter((x) => x !== d.v) : [...list, d.v]));
     ui.chIntroDone = true;
     render();
   },
