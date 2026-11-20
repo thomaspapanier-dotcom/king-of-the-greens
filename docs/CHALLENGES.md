@@ -5,7 +5,7 @@ Almost all of them come from **ranked**, where both players confirm the score. O
 
 Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impossible** (red).
 
-**74 of 88 challenges have their art.** 14 still need a badge and banner.
+**74 of 89 challenges have their art.** 15 still need a badge and banner.
 
 ---
 
@@ -139,7 +139,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 
 ---
 
-## Still missing (14)
+## Still missing (15)
 
 These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
@@ -204,6 +204,12 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 
 ### Career
+
+#### Triple Digits · Impossible
+- **How to complete (Ranked):** Play ranked matches against 100 different opponents.
+- **Badge:** A crowned hand holding up a torn sheet of paper with “100” scrawled on it in thick black marker, inside a burst of old-fashioned camera flash.
+- **Banner:** A legendary vintage locker-room press photo, in grainy black and white like an old newspaper shot: right after the match, the King of Diamonds sits in a crowded clubhouse locker room in a sleeveless vintage KOG jersey, sweaty and grinning with quiet pride, holding up a plain sheet of paper with “100” hand-scrawled in thick black marker. A teammate’s hand pokes in from behind him with one finger pointed up, and reporters crowd the edges with old flashbulb cameras. The ONLY color in the whole image is the King’s gold crown. The “100” on the paper is the only writing allowed. LAYOUT: keep the LEFT THIRD as dim locker-room background (a round badge covers that spot); put the King in the center and the “100” sign in the right third, with his crown, face and the sign in the upper middle of the frame.
+- **Files:** `badge-triple-digits.png`, `banner-triple-digits.png`
 
 #### Crown Jewel · Impossible
 - **How to complete (Ranked):** Earn the magenta win % golf ball by winning 65% or more of your ranked matches.

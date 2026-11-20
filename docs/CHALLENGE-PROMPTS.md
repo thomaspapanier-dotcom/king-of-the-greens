@@ -3,11 +3,11 @@
 Each challenge gets a **badge** (square) and a **banner** (wide). Send these to ChatGPT in order:
 the setup message first, then one batch at a time. Easy ones go fast; the higher the rarity, the more time ChatGPT should take.
 
-**Still to make:** 0 Common, 0 Rare, 5 Very Rare, 9 Impossible (14 challenges, 28 images). 74 of 88 challenges already have their art and aren’t listed here.
+**Still to make:** 0 Common, 0 Rare, 5 Very Rare, 10 Impossible (15 challenges, 30 images). 74 of 89 challenges already have their art and aren’t listed here.
 
 **Already in the app (74):** The North Remembers · West Coast, Best Coast · East Coast, Beast Coast · The Deep South · Never Lost · Blackjack · Built for This · The Bird with Big Wings · Albatross · Flawless Shawty · Dead Center · Triple Threat · Even Steven · Under the Radar · Seeing Red · Lights Out · “I Might Be Him” · Himothy · Him. · Underdog · From Way Downtown · Sharpshooter · Deadly Sniper · Not So Fast · Wire to Wire · Regicide · Comeback King · Ice Cold · Smooth Operator · Back from the Dead · Two Is Better · Dynamic Duo · Full House · Pickup Game · Shoulder the Burden · I’ll Lead the Way · Follow Me to Victory · Goose & Maverick · Scavenger · You Hit It, I’ll End It · Fresh Blood · Silver Lining · Heart of Gold · Platinum Plated · Diamond Hands · Hat Trick · Heater · Dynasty · Four of a Kind · Stranger Danger · New Faces · Social Butterfly · Royal Court · Iron Man · Dawn Patrol · Away Game · Fellow Traveler · A Long Way from Home · Foreign Soil · Ivy League · Southern Hospitality · Heartland · Desert Heat · Altitude Adjustment · Pacific Time · Defend the Throne · Kingdom Hopper · Birdwatcher · Flock Together · Par for the Course · Steady Eddie · Tap-In Machine · Middle Child · Long Distance Relationship
 
-**Still missing (14):** everything below, easiest first.
+**Still missing (15):** everything below, easiest first.
 
 **Halfway point: switch up the fits.** Most of the art so far has the Kings in the same four shirts. Paste this into your ChatGPT chat once, before the next batch:
 
@@ -126,7 +126,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ---
 
-## Impossible (9 challenges)
+## Impossible (10 challenges)
 
 One challenge per message. Ask ChatGPT to pitch the concept first, then make the badge, then the banner. These should feel worth grinding for.
 
@@ -242,6 +242,21 @@ IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold
 
 Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
 
+1. Triple Digits (Impossible), file names: `badge-triple-digits.png` and `banner-triple-digits.png`
+   - Earned by: Play ranked matches against 100 different opponents.
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
+   - Badge: A crowned hand holding up a torn sheet of paper with “100” scrawled on it in thick black marker, inside a burst of old-fashioned camera flash.
+   - Banner: A legendary vintage locker-room press photo, in grainy black and white like an old newspaper shot: right after the match, the King of Diamonds sits in a crowded clubhouse locker room in a sleeveless vintage KOG jersey, sweaty and grinning with quiet pride, holding up a plain sheet of paper with “100” hand-scrawled in thick black marker. A teammate’s hand pokes in from behind him with one finger pointed up, and reporters crowd the edges with old flashbulb cameras. The ONLY color in the whole image is the King’s gold crown. The “100” on the paper is the only writing allowed. LAYOUT: keep the LEFT THIRD as dim locker-room background (a round badge covers that spot); put the King in the center and the “100” sign in the right third, with his crown, face and the sign in the upper middle of the frame.
+
+```
+
+### Step 13: Impossible batch 9
+
+```
+IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
+
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
+
 1. Crown Jewel (Impossible), file names: `badge-crown-jewel.png` and `banner-crown-jewel.png`
    - Earned by: Earn the magenta win % golf ball by winning 65% or more of your ranked matches.
    - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
@@ -250,7 +265,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 13: Impossible batch 9
+### Step 14: Impossible batch 10
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
