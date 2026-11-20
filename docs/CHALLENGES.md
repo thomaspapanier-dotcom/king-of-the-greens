@@ -5,11 +5,11 @@ Almost all of them come from **ranked**, where both players confirm the score. O
 
 Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impossible** (red).
 
-**53 of 83 challenges have their art.** 30 still need a badge and banner.
+**62 of 88 challenges have their art.** 26 still need a badge and banner.
 
 ---
 
-## Already in the app (53)
+## Already in the app (62)
 
 
 ### Compass Putt
@@ -74,6 +74,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **I’ll Lead the Way** · Rare: Win a ranked duos match where your team is the KOG for 5 or more rounds.
 - **Follow Me to Victory** · Rare: Win a ranked duos match with a partner who is playing their very first ranked match.
 - **Goose & Maverick** · Very Rare: Win 10 ranked duos matches with the same partner.
+- **Scavenger** · Rare: Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.
 - **You Hit It, I’ll End It** · Rare: Win a ranked duos match where the Eagle round (the last round) decides it: you and your teammate’s Eagle-round scores together take the lead and seal the win.
 
 ### The Climb
@@ -92,6 +93,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **Four of a Kind** · Rare: Win ranked matches at 4 different golf courses.
 - **Stranger Danger** · Common: Play ranked matches against 5 different opponents.
 - **New Faces** · Common: Play ranked matches against 10 different opponents.
+- **Social Butterfly** · Rare: Play ranked matches against 25 different opponents.
 - **Iron Man** · Rare: Play 100 ranked matches.
 - **Dawn Patrol** · Common: Finish a ranked match before 8 AM.
 
@@ -100,19 +102,26 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Impo
 - **Away Game** · Common: Win a ranked match 50+ miles from your Home Court (the course you pick when you sign up).
 - **Fellow Traveler** · Common: Win a ranked match 100+ miles from your Home Court.
 - **A Long Way from Home** · Rare: Win a ranked match 500+ miles from your Home Court.
-- **Ivy League** · Common: Win a ranked match in the Northeast (New England, New York, New Jersey or Pennsylvania).
-- **Southern Hospitality** · Common: Win a ranked match in the Southeast (Virginia down to Florida and west to Louisiana).
+- **Ivy League** · Common: Win a ranked match in the Realm of the Ivy Crown (the Northeast: Connecticut, Delaware, Maine, Maryland, Massachusetts, New Hampshire, New Jersey, New York, Pennsylvania, Rhode Island or Vermont).
+- **Southern Hospitality** · Common: Win a ranked match in the Realm of the Magnolia Throne (the Southeast: Alabama, Arkansas, Florida, Georgia, Kentucky, Louisiana, Mississippi, North Carolina, South Carolina, Tennessee, Virginia or West Virginia).
+- **Heartland** · Common: Win a ranked match in the Realm of the Golden Plains (the Midwest: Illinois, Indiana, Iowa, Kansas, Michigan, Minnesota, Missouri, Nebraska, North Dakota, Ohio, South Dakota or Wisconsin).
+- **Desert Heat** · Common: Win a ranked match in the Realm of the Desert Sun (the Southwest: Arizona, New Mexico, Oklahoma or Texas).
+- **Altitude Adjustment** · Common: Win a ranked match in the Realm of the High Peaks (the Mountain West: Colorado, Idaho, Montana, Nevada, Utah or Wyoming).
+- **Pacific Time** · Common: Win a ranked match in the Realm of the Pacific Tide (the West Coast: Alaska, California, Hawaii, Oregon or Washington).
 
 ### Milestones
 
+- **Birdwatcher** · Common: Sink 100 birdie balls on the first putt across your ranked matches.
 - **Flock Together** · Rare: Sink 500 birdie balls on the first putt across your ranked matches.
+- **Par for the Course** · Common: Sink 100 par balls on the first putt across your ranked matches.
 - **Steady Eddie** · Rare: Sink 500 par balls on the first putt across your ranked matches.
+- **Tap-In Machine** · Common: Sink 250 Short putts (3–5 ft) on the first putt across your ranked matches.
 - **Middle Child** · Rare: Sink 250 Medium putts (6–9 ft) on the first putt across your ranked matches.
 - **Long Distance Relationship** · Rare: Sink 100 Long putts (10–15 ft) on the first putt across your ranked matches.
 
 ---
 
-## Still missing (30)
+## Still missing (26)
 
 These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
@@ -205,12 +214,6 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 - **Banner:** Two Kings riding side by side on vintage motorcycles down a long fairway road into a blazing sunset, a trail of trophies behind them.
 - **Files:** `badge-ride-or-die.png`, `banner-ride-or-die.png`
 
-#### Scavenger · Rare
-- **How to complete (Ranked):** Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.
-- **Badge:** A scruffy vulture wearing a tiny crown, perched on a golf ball with a chicken drumstick in its beak, looking very pleased with itself.
-- **Banner:** Two teammates at a picnic on the green after the win: the King of Spades feasting at a fancy table piled with food, tossing scraps over his shoulder without looking, while the King of Clubs sits happily on the grass with a circle of crowned vultures, grinning and sharing the scraps with them.
-- **Files:** `badge-scavenger.png`, `banner-scavenger.png`
-
 
 ### The Climb
 
@@ -244,12 +247,6 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 
 ### Career
 
-#### Social Butterfly · Rare
-- **How to complete (Ranked):** Play ranked matches against 25 different opponents.
-- **Badge:** A crowned butterfly whose wings are the four suits.
-- **Banner:** The King of Hearts at a buzzing tournament mixer on the green, shaking hands with a crowd of golfers.
-- **Files:** `badge-social-butterfly.png`, `banner-social-butterfly.png`
-
 #### Royal Court · Very Rare
 - **How to complete (Ranked):** Play ranked matches against 50 different opponents.
 - **Badge:** A grand throne with a crowd of tiny crowns gathered at its feet.
@@ -271,62 +268,53 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 - **Banner:** A jet landing at sunset beside a dramatic far-off course, the King of Hearts stepping off with his putter.
 - **Files:** `badge-foreign-soil.png`, `banner-foreign-soil.png`
 
-#### Heartland · Common
-- **How to complete (Ranked):** Win a ranked match in the Midwest (Ohio to the Dakotas, down to Missouri and Kansas).
-- **Badge:** A crowned red barn with a golf flag beside it.
-- **Banner:** Endless cornfields around a small-town green with a red barn and water tower, the King of Clubs in flannel.
-- **Files:** `badge-midwest.png`, `banner-midwest.png`
-
-#### Desert Heat · Common
-- **How to complete (Ranked):** Win a ranked match in the Southwest (Texas, Oklahoma, New Mexico or Arizona).
-- **Badge:** A cactus wearing a crown.
-- **Banner:** A desert course with saguaros and red-rock mesas, the King of Diamonds in a wide-brim hat.
-- **Files:** `badge-southwest.png`, `banner-southwest.png`
-
-#### Altitude Adjustment · Common
-- **How to complete (Ranked):** Win a ranked match in the Mountain West (Colorado, Utah, Nevada, Idaho, Montana or Wyoming).
-- **Badge:** A snowy mountain peak with a golf flag on the summit.
-- **Banner:** A green tucked between snow-capped peaks, the Kings in vests catching their breath in the thin air.
-- **Files:** `badge-mountain-west.png`, `banner-mountain-west.png`
-
-#### Pacific Time · Common
-- **How to complete (Ranked):** Win a ranked match on the West Coast (California, Oregon, Washington, Alaska or Hawaii).
-- **Badge:** A crowned wave curling around a golf ball.
-- **Banner:** A cliffside green over the Pacific with crashing waves, the King of Clubs at sunset.
-- **Files:** `badge-west-coast-region.png`, `banner-west-coast-region.png`
-
 #### Coast to Coast · Very Rare
-- **How to complete (Ranked):** Win a ranked match in all six regions: Northeast, Southeast, Midwest, Southwest, Mountain West and West Coast.
+- **How to complete (Ranked):** Win a ranked match in all six Realms.
 - **Badge:** A map of the U.S. made of six puzzle pieces, each stamped with a suit and a crown.
 - **Banner:** A road-trip montage of the four Kings across the country, from an Atlantic lighthouse to the Pacific cliffs.
 - **Files:** `badge-coast-to-coast.png`, `banner-coast-to-coast.png`
 
 
-### Milestones
+### Kingdoms & Realms
 
-#### Birdwatcher · Common
-- **How to complete (Ranked):** Sink 100 birdie balls on the first putt across your ranked matches.
-- **Badge:** Binoculars with a little bird perched on top.
-- **Banner:** The King of Clubs birdwatching from a lawn chair on the green, birds everywhere.
-- **Files:** `badge-birdie-100.png`, `banner-birdie-100.png`
+#### Defend the Throne · Rare
+- **How to complete (Ranked):** Win 25 ranked matches inside your own Kingdom.
+- **Badge:** A crowned shield planted in a putting green, a putter crossed behind it like a sword.
+- **Banner:** The King of Spades standing guard at the gate of his castle-clubhouse, a line of challengers waiting outside.
+- **Files:** `badge-defend-throne.png`, `banner-defend-throne.png`
+
+#### Kingdom Hopper · Rare
+- **How to complete (Ranked):** Win ranked matches in 5 different Kingdoms.
+- **Badge:** A passport stamped with five crowned seals.
+- **Banner:** The King of Clubs on a road trip, hopping out of his convertible at a border sign that welcomes him to a new Kingdom.
+- **Files:** `badge-kingdom-hopper.png`, `banner-kingdom-hopper.png`
+
+#### Realm Raider · Very Rare
+- **How to complete (Ranked):** Win 10 ranked matches outside your home Realm.
+- **Badge:** A crowned pirate flag with a golf ball and crossed putters.
+- **Banner:** The King of Diamonds sailing a pirate ship into a rival Realm’s harbor, a putting green on the shore.
+- **Files:** `badge-realm-raider.png`, `banner-realm-raider.png`
+
+#### The Conqueror · Very Rare
+- **How to complete (Ranked):** Win ranked matches in 15 different Kingdoms.
+- **Badge:** A crowned war banner pinned with fifteen golden stars.
+- **Banner:** The King of Hearts planting his banner on a hilltop green, a map of conquered Kingdoms unrolled behind him.
+- **Files:** `badge-conqueror.png`, `banner-conqueror.png`
+
+#### Fifty Crowns · Impossible
+- **How to complete (Ranked):** Win a ranked match in all 50 Kingdoms.
+- **Badge:** Fifty tiny crowns arranged in a ring around a golden map of the United States.
+- **Banner:** All four Kings seated at a round table shaped like the map of the country, fifty crowns glowing on it.
+- **Files:** `badge-fifty-crowns.png`, `banner-fifty-crowns.png`
+
+
+### Milestones
 
 #### Bird Sanctuary · Very Rare
 - **How to complete (Ranked):** Sink 1,000 birdie balls on the first putt across your ranked matches.
 - **Badge:** A golden birdcage with a crown on top and a golf ball inside.
 - **Banner:** A grand glass aviary turned putting green, birds of every color, the King of Spades in the middle.
 - **Files:** `badge-birdie-1000.png`, `banner-birdie-1000.png`
-
-#### Par for the Course · Common
-- **How to complete (Ranked):** Sink 100 par balls on the first putt across your ranked matches.
-- **Badge:** A golf ball stamped with a bold golden E.
-- **Banner:** A calm sunny green with a perfectly straight putt line, the King of Spades sipping tea.
-- **Files:** `badge-par-100.png`, `banner-par-100.png`
-
-#### Tap-In Machine · Common
-- **How to complete (Ranked):** Sink 250 Short putts (3–5 ft) on the first putt across your ranked matches.
-- **Badge:** A robot arm tapping a golf ball into a cup.
-- **Banner:** A factory line of golf balls dropping into cups, the King of Diamonds supervising with a clipboard.
-- **Files:** `badge-short-250.png`, `banner-short-250.png`
 
 #### Eagle Scout · Very Rare
 - **How to complete (Ranked):** Make 10 eagle putts across your ranked matches.

@@ -3,11 +3,11 @@
 Each challenge gets a **badge** (square) and a **banner** (wide). Send these to ChatGPT in order:
 the setup message first, then one batch at a time. Easy ones go fast; the higher the rarity, the more time ChatGPT should take.
 
-**Still to make:** 7 Common, 2 Rare, 13 Very Rare, 8 Impossible (30 challenges, 60 images). 53 of 83 challenges already have their art and aren’t listed here.
+**Still to make:** 0 Common, 2 Rare, 15 Very Rare, 9 Impossible (26 challenges, 52 images). 62 of 88 challenges already have their art and aren’t listed here.
 
-**Already in the app (53):** The North Remembers · West Coast, Best Coast · East Coast, Beast Coast · The Deep South · Never Lost · Blackjack · Built for This · The Bird with Big Wings · Albatross · Flawless Shawty · Triple Threat · Even Steven · Under the Radar · Seeing Red · Lights Out · “I Might Be Him” · Himothy · From Way Downtown · Sharpshooter · Not So Fast · Wire to Wire · Regicide · Ice Cold · Smooth Operator · Back from the Dead · Two Is Better · Dynamic Duo · Full House · Pickup Game · Shoulder the Burden · I’ll Lead the Way · Follow Me to Victory · Goose & Maverick · You Hit It, I’ll End It · Fresh Blood · Silver Lining · Heart of Gold · Hat Trick · Heater · Four of a Kind · Stranger Danger · New Faces · Iron Man · Dawn Patrol · Away Game · Fellow Traveler · A Long Way from Home · Ivy League · Southern Hospitality · Flock Together · Steady Eddie · Middle Child · Long Distance Relationship
+**Already in the app (62):** The North Remembers · West Coast, Best Coast · East Coast, Beast Coast · The Deep South · Never Lost · Blackjack · Built for This · The Bird with Big Wings · Albatross · Flawless Shawty · Triple Threat · Even Steven · Under the Radar · Seeing Red · Lights Out · “I Might Be Him” · Himothy · From Way Downtown · Sharpshooter · Not So Fast · Wire to Wire · Regicide · Ice Cold · Smooth Operator · Back from the Dead · Two Is Better · Dynamic Duo · Full House · Pickup Game · Shoulder the Burden · I’ll Lead the Way · Follow Me to Victory · Goose & Maverick · Scavenger · You Hit It, I’ll End It · Fresh Blood · Silver Lining · Heart of Gold · Hat Trick · Heater · Four of a Kind · Stranger Danger · New Faces · Social Butterfly · Iron Man · Dawn Patrol · Away Game · Fellow Traveler · A Long Way from Home · Ivy League · Southern Hospitality · Heartland · Desert Heat · Altitude Adjustment · Pacific Time · Birdwatcher · Flock Together · Par for the Course · Steady Eddie · Tap-In Machine · Middle Child · Long Distance Relationship
 
-**Still missing (30):** everything below, easiest first.
+**Still missing (26):** everything below, easiest first.
 
 **Halfway point: switch up the fits.** Most of the art so far has the Kings in the same four shirts. Paste this into your ChatGPT chat once, before the next batch:
 
@@ -57,98 +57,38 @@ Reply "Ready" if you understand.
 
 ---
 
-## Common (7 challenges)
-
-### Step 2: Common batch 1
-
-```
-Common challenges. Rarity look: Simple and clean. Badge: one bold symbol, 2–3 colors plus gold, a plain brushed-silver rim. Banner: one clear scene in daylight, not busy.
-
-For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
-
-1. Heartland (Common), file names: `badge-midwest.png` and `banner-midwest.png`
-   - Earned by: Win a ranked match in the Midwest (Ohio to the Dakotas, down to Missouri and Kansas).
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
-   - Badge: A crowned red barn with a golf flag beside it.
-   - Banner: Endless cornfields around a small-town green with a red barn and water tower, the King of Clubs in flannel.
-
-2. Desert Heat (Common), file names: `badge-southwest.png` and `banner-southwest.png`
-   - Earned by: Win a ranked match in the Southwest (Texas, Oklahoma, New Mexico or Arizona).
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
-   - Badge: A cactus wearing a crown.
-   - Banner: A desert course with saguaros and red-rock mesas, the King of Diamonds in a wide-brim hat.
-
-3. Altitude Adjustment (Common), file names: `badge-mountain-west.png` and `banner-mountain-west.png`
-   - Earned by: Win a ranked match in the Mountain West (Colorado, Utah, Nevada, Idaho, Montana or Wyoming).
-   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
-   - Badge: A snowy mountain peak with a golf flag on the summit.
-   - Banner: A green tucked between snow-capped peaks, the Kings in vests catching their breath in the thin air.
-
-4. Pacific Time (Common), file names: `badge-west-coast-region.png` and `banner-west-coast-region.png`
-   - Earned by: Win a ranked match on the West Coast (California, Oregon, Washington, Alaska or Hawaii).
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
-   - Badge: A crowned wave curling around a golf ball.
-   - Banner: A cliffside green over the Pacific with crashing waves, the King of Clubs at sunset.
-
-```
-
-### Step 3: Common batch 2
-
-```
-Common challenges. Rarity look: Simple and clean. Badge: one bold symbol, 2–3 colors plus gold, a plain brushed-silver rim. Banner: one clear scene in daylight, not busy.
-
-For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
-
-1. Birdwatcher (Common), file names: `badge-birdie-100.png` and `banner-birdie-100.png`
-   - Earned by: Sink 100 birdie balls on the first putt across your ranked matches.
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
-   - Badge: Binoculars with a little bird perched on top.
-   - Banner: The King of Clubs birdwatching from a lawn chair on the green, birds everywhere.
-
-2. Par for the Course (Common), file names: `badge-par-100.png` and `banner-par-100.png`
-   - Earned by: Sink 100 par balls on the first putt across your ranked matches.
-   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
-   - Badge: A golf ball stamped with a bold golden E.
-   - Banner: A calm sunny green with a perfectly straight putt line, the King of Spades sipping tea.
-
-3. Tap-In Machine (Common), file names: `badge-short-250.png` and `banner-short-250.png`
-   - Earned by: Sink 250 Short putts (3–5 ft) on the first putt across your ranked matches.
-   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
-   - Badge: A robot arm tapping a golf ball into a cup.
-   - Banner: A factory line of golf balls dropping into cups, the King of Diamonds supervising with a clipboard.
-
-```
+## Common (0 challenges)
 
 ---
 
 ## Rare (2 challenges)
 
-### Step 4: Rare batch 1
+### Step 2: Rare batch 1
 
 ```
 Rare challenges. Rarity look: More detail. Badge: polished sapphire-blue enamel rim with small gold accents and a bit of shine. Banner: richer lighting (golden hour or night), more props and depth.
 
 For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
-1. Scavenger (Rare), file names: `badge-scavenger.png` and `banner-scavenger.png`
-   - Earned by: Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.
-   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
-   - Badge: A scruffy vulture wearing a tiny crown, perched on a golf ball with a chicken drumstick in its beak, looking very pleased with itself.
-   - Banner: Two teammates at a picnic on the green after the win: the King of Spades feasting at a fancy table piled with food, tossing scraps over his shoulder without looking, while the King of Clubs sits happily on the grass with a circle of crowned vultures, grinning and sharing the scraps with them.
+1. Defend the Throne (Rare), file names: `badge-defend-throne.png` and `banner-defend-throne.png`
+   - Earned by: Win 25 ranked matches inside your own Kingdom.
+   - Main King: King of Spades (Royal Spade): classic country-club style, calm old-money confidence; pick a fresh preppy outfit (knit, blazer, tweed, rugby) with spade details
+   - Badge: A crowned shield planted in a putting green, a putter crossed behind it like a sword.
+   - Banner: The King of Spades standing guard at the gate of his castle-clubhouse, a line of challengers waiting outside.
 
-2. Social Butterfly (Rare), file names: `badge-social-butterfly.png` and `banner-social-butterfly.png`
-   - Earned by: Play ranked matches against 25 different opponents.
-   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
-   - Badge: A crowned butterfly whose wings are the four suits.
-   - Banner: The King of Hearts at a buzzing tournament mixer on the green, shaking hands with a crowd of golfers.
+2. Kingdom Hopper (Rare), file names: `badge-kingdom-hopper.png` and `banner-kingdom-hopper.png`
+   - Earned by: Win ranked matches in 5 different Kingdoms.
+   - Main King: King of Clubs (Clubs2Cozy): laid-back coastal, sunglasses on his crown, iced coffee; pick a fresh relaxed outfit (linen, knit polo, cardigan) with club or palm prints
+   - Badge: A passport stamped with five crowned seals.
+   - Banner: The King of Clubs on a road trip, hopping out of his convertible at a border sign that welcomes him to a new Kingdom.
 
 ```
 
 ---
 
-## Very Rare (13 challenges)
+## Very Rare (15 challenges)
 
-### Step 5: Very Rare batch 1
+### Step 3: Very Rare batch 1
 
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
@@ -169,7 +109,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ```
 
-### Step 6: Very Rare batch 2
+### Step 4: Very Rare batch 2
 
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
@@ -190,7 +130,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ```
 
-### Step 7: Very Rare batch 3
+### Step 5: Very Rare batch 3
 
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
@@ -211,7 +151,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ```
 
-### Step 8: Very Rare batch 4
+### Step 6: Very Rare batch 4
 
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
@@ -232,7 +172,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ```
 
-### Step 9: Very Rare batch 5
+### Step 7: Very Rare batch 5
 
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
@@ -253,7 +193,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ```
 
-### Step 10: Very Rare batch 6
+### Step 8: Very Rare batch 6
 
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
@@ -261,10 +201,31 @@ Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set wit
 For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
 
 1. Coast to Coast (Very Rare), file names: `badge-coast-to-coast.png` and `banner-coast-to-coast.png`
-   - Earned by: Win a ranked match in all six regions: Northeast, Southeast, Midwest, Southwest, Mountain West and West Coast.
+   - Earned by: Win a ranked match in all six Realms.
    - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: A map of the U.S. made of six puzzle pieces, each stamped with a suit and a crown.
    - Banner: A road-trip montage of the four Kings across the country, from an Atlantic lighthouse to the Pacific cliffs.
+
+2. Realm Raider (Very Rare), file names: `badge-realm-raider.png` and `banner-realm-raider.png`
+   - Earned by: Win 10 ranked matches outside your home Realm.
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
+   - Badge: A crowned pirate flag with a golf ball and crossed putters.
+   - Banner: The King of Diamonds sailing a pirate ship into a rival Realm’s harbor, a putting green on the shore.
+
+```
+
+### Step 9: Very Rare batch 7
+
+```
+Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
+
+For each one, make the badge, then the banner (one image per reply, wait for "next"). Give the Kings fresh, suit-themed outfits, not the same four shirts as before.
+
+1. The Conqueror (Very Rare), file names: `badge-conqueror.png` and `banner-conqueror.png`
+   - Earned by: Win ranked matches in 15 different Kingdoms.
+   - Main King: King of Hearts (Heartbreak Golf Co.): sleek tour athlete, focused and intense; pick a fresh performance outfit in red, black and white with heart details
+   - Badge: A crowned war banner pinned with fifteen golden stars.
+   - Banner: The King of Hearts planting his banner on a hilltop green, a map of conquered Kingdoms unrolled behind him.
 
 2. Bird Sanctuary (Very Rare), file names: `badge-birdie-1000.png` and `banner-birdie-1000.png`
    - Earned by: Sink 1,000 birdie balls on the first putt across your ranked matches.
@@ -274,7 +235,7 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ```
 
-### Step 11: Very Rare batch 7
+### Step 10: Very Rare batch 8
 
 ```
 Very Rare challenges. Rarity look: Intricate. Badge: amethyst-purple rim set with small gemstones and a soft purple glow, layered details. Banner: dramatic cinematic lighting, two or more Kings, lots of hidden details.
@@ -291,11 +252,11 @@ For each one, make the badge, then the banner (one image per reply, wait for "ne
 
 ---
 
-## Impossible (8 challenges)
+## Impossible (9 challenges)
 
 One challenge per message. Ask ChatGPT to pitch the concept first, then make the badge, then the banner. These should feel worth grinding for.
 
-### Step 12: Impossible batch 1
+### Step 11: Impossible batch 1
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -310,7 +271,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 13: Impossible batch 2
+### Step 12: Impossible batch 2
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -325,7 +286,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 14: Impossible batch 3
+### Step 13: Impossible batch 3
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -340,7 +301,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 15: Impossible batch 4
+### Step 14: Impossible batch 4
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -355,7 +316,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 16: Impossible batch 5
+### Step 15: Impossible batch 5
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -370,7 +331,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 17: Impossible batch 6
+### Step 16: Impossible batch 6
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -385,7 +346,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 18: Impossible batch 7
+### Step 17: Impossible batch 7
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -400,7 +361,7 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
 
 ```
 
-### Step 19: Impossible batch 8
+### Step 18: Impossible batch 8
 
 ```
 IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
@@ -412,6 +373,21 @@ Before drawing anything, pitch me your concept for the badge and the banner in a
    - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
    - Badge: The glowing magenta win % golf ball resting on a velvet pillow under a crown.
    - Banner: A royal vault full of jewels, the magenta golf ball under a single spotlight.
+
+```
+
+### Step 19: Impossible batch 9
+
+```
+IMPOSSIBLE challenge. Rarity look: A masterpiece. Badge: crimson-and-molten-gold rim with fine filigree, embedded jewels, glowing particles and an aura, like a legendary trophy. Banner: an epic, one-of-a-kind world with breathtaking lighting and extreme detail. It must look completely different from every other badge and banner.
+
+Before drawing anything, pitch me your concept for the badge and the banner in a few sentences and wait for my OK. Then make the badge, wait for "next", then the banner. Take your time; push the detail, materials and lighting as far as you can, and make it unlike any badge or banner so far. Dress the Kings in brand-new, suit-themed outfits fit for a legendary moment.
+
+1. Fifty Crowns (Impossible), file names: `badge-fifty-crowns.png` and `banner-fifty-crowns.png`
+   - Earned by: Win a ranked match in all 50 Kingdoms.
+   - Main King: King of Diamonds (Dirty Diamond Ltd.): golf streetwear, gold chain, cocky smirk; pick a fresh streetwear fit (hoodie, varsity or bomber jacket, oversized tee) with diamond prints
+   - Badge: Fifty tiny crowns arranged in a ring around a golden map of the United States.
+   - Banner: All four Kings seated at a round table shaped like the map of the country, fifty crowns glowing on it.
 
 ```
 

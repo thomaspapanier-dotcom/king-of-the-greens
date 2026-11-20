@@ -14,6 +14,7 @@ import { kingRain, preloadKings } from './confetti.js';
 import * as LF from './lfg.js';
 import { badgeHtml, bannerClass } from './flair.js';
 import * as CH from './challenges.js';
+import { leaderboardsHtml } from './leaderboards.js';
 
 // Per-device preferences (theme, sound).
 function getPref(key, fallback) {
@@ -495,7 +496,7 @@ function viewHome() {
         </button>
       </div>
       ${SYNC ? '<button class="btn" data-action="open-join">Join a game</button>' : ''}
-      <button class="btn" data-action="nav" data-view="players">Players &amp; stats</button>
+      <button class="btn lb-btn" data-action="nav" data-view="leaderboards"><b>Leaderboards</b><span>See how you fare against the competition.</span></button>
       <button class="btn" data-action="nav" data-view="history">Past games</button>
       <button class="btn ghost" data-action="nav" data-view="ranked">Ranked · preview</button>
       <button class="btn ghost" data-action="nav" data-view="settings">Settings</button>
@@ -1844,17 +1845,27 @@ function viewWinBalls() {
       <span class="board-name">${l.name}</span>
       <span class="wb-min">${l.min === null ? `first ${WR.MIN_RANKED_GAMES} matches` : `${l.min}%+`}</span>
     </li>`).join('');
-  const example = { gamertag: 'thetommyjohn', ranked_rank_index: RK.RANKS.find((r) => r.name === 'Gold II').index, ranked_wins: 61, ranked_games: 100, badge: 'kog', banner: 'felt' };
+  const example = { gamertag: 'Tommy P.', ranked_rank_index: RK.RANKS.find((r) => r.name === 'Gold II').index, ranked_wins: 61, ranked_games: 100, badge: 'kog', banner: 'felt' };
   return `${topbar('Win % Breakdown', 'ranked')}
   <main class="page">
     <p>The golf ball at the end of your nameplate shows your <b>ranked win %</b> across every season. Ranks reset every 4 months; the ball never does. It’s a flex that sticks.</p>
-    <section class="card np-example"><div class="eyebrow">How it looks</div>${nameplate(example, 'big', { badge: 34, ball: '1.2em' })}<p class="muted small">Badge, Gold II rank, gamertag and an orange ball for winning 61% of ranked matches, all on a banner.</p></section>
+    <section class="card np-example"><div class="eyebrow">How it looks</div>${nameplate(example, 'big', { badge: 34, ball: '1.2em' })}<p class="muted small">Badge, Gold II rank, name and an orange ball for winning 61% of ranked matches, all on a banner.</p></section>
     <ol class="board plain wb-table">${rows}</ol>
     <ul class="rk-rules">
       <li>Only <b>ranked</b> matches count. Your overall win % shows on your profile but doesn’t earn a color.</li>
       <li>You need ${WR.MIN_RANKED_GAMES} ranked matches before the ball takes a color.</li>
       <li>It follows your win % up <i>and</i> down, so keep winning to keep your color.</li>
     </ul>
+  </main>`;
+}
+
+// ---------- leaderboards ----------
+function viewLeaderboards() {
+  const st = ui.lb || (ui.lb = { tab: 'players', scope: 'kingdom', kscope: 'all' });
+  return `${topbar('Leaderboards')}
+  <main class="page lb-page">
+    ${leaderboardsHtml(st)}
+    <button class="btn wide" data-action="nav" data-view="players" data-back="leaderboards">Players &amp; stats on this phone</button>
   </main>`;
 }
 
@@ -1949,22 +1960,39 @@ async function refreshProfile() {
 }
 
 /** Home: [badge] [rank] [gamertag] [win % crown] on a banner: a box that opens the signed-in player's profile. */
+// ---------- player card name ----------
+// Players go by their real name, shown one of three ways (picked in Settings):
+//   Name & Initial: Tommy P.   Full Name: Tommy Papanier   Nickname: TJ2Cozy, with "Tommy" small underneath.
+const NAME_EXAMPLE = { first: 'Tommy', last: 'Papanier', nick: 'TJ2Cozy', style: 'nick' };
+function myName() {
+  const v = (k) => getPref(`kog.name.${k}`, '').trim();
+  const mine = { first: v('first'), last: v('last'), nick: v('nick'), style: getPref('kog.name.style', '') };
+  return mine.first ? { ...mine, style: mine.style || 'initial' } : NAME_EXAMPLE;
+}
+/** { main, sub } for a name: `sub` is the small first name under a nickname. */
+function displayName(n) {
+  if (n.style === 'nick' && n.nick) return { main: n.nick, sub: n.first };
+  if (n.style === 'full' && n.last) return { main: `${n.first} ${n.last}`, sub: '' };
+  return { main: n.last ? `${n.first} ${n.last[0].toUpperCase()}.` : n.first, sub: '' };
+}
+
 function profileBox() {
   const pf = A.accountsAvailable() && A.currentUser() ? ui.profile : null;
   if (!pf) {
-    // No accounts yet: show what a real nameplate looks like. A challenge banner across the box,
-    // its badge on the left, then rank, gamertag and win % crown.
+    // No accounts yet: a sample player card with your name (from Settings) or the TJ2Cozy example.
+    // A challenge banner across the box, its badge on the left, then rank, name and win % ball.
     const gold2 = RK.RANKS.find((r) => r.name === 'Gold II');
-    return `<div class="profile-box pb-example" role="img" aria-label="Example nameplate: TJ2Cozy, Gold II, 59% wins. Press and hold to see the whole banner." data-peek="assets/challenges/banner-west.webp">
+    const dn = displayName(myName());
+    return `<div class="profile-box pb-example" role="img" aria-label="Player card: ${esc(dn.main)}, Gold II, 59% wins. Press and hold to see the whole banner." data-peek="assets/challenges/banner-west.webp">
       <img class="pb-bn" src="assets/challenges/banner-west.webp" alt="" draggable="false">
       <span class="pb-plate">
         <img class="pb-badge" src="assets/challenges/badge-west.webp" alt="" draggable="false">
         ${rankBadge(gold2, 40)}
-        <b class="pb-tag">TJ2Cozy</b>
+        <span class="pb-name"><b class="pb-tag">${esc(dn.main)}</b>${dn.sub ? `<small class="pb-sub">${esc(dn.sub)}</small>` : ''}</span>
         ${WR.winBall(WR.levelFor(59, 100), 34)}
       </span>
     </div>
-    <p class="pb-note">(Clickable gamertag that leads to player profile coming soon)</p>`;
+    <p class="pb-note">(Your player profile is coming soon · choose how your name shows in <button class="link" data-action="nav" data-view="settings">Settings</button>)</p>`;
   }
   let inner;
   let sub;
@@ -2161,9 +2189,22 @@ function viewRules() {
   </main>`;
 }
 
+function nameSettings() {
+  const n = myName() === NAME_EXAMPLE ? { first: '', last: '', nick: '', style: getPref('kog.name.style', '') || 'initial' } : myName();
+  const field = (k, label, ph) => `<label class="field"><span>${label}</span><input data-name-field="${k}" value="${esc(n[k] || '')}" placeholder="${ph}" maxlength="24" autocomplete="off"></label>`;
+  const opt = (v, label, eg) => `<button class="seg-opt" data-action="name-style" data-v="${v}" aria-pressed="${n.style === v}">${label}<small>${eg}</small></button>`;
+  return `<div class="section-head"><h2>Your name on your player card</h2></div>
+    <section class="card name-card">
+      <div class="name-fields">${field('first', 'First name', 'Tommy')}${field('last', 'Last name', 'Papanier')}${field('nick', 'Nickname (optional)', 'TJ2Cozy')}</div>
+      <div class="field"><span>Show it as</span><div class="seg-wide name-styles">${opt('initial', 'Name &amp; Initial', 'Tommy P.')}${opt('full', 'Full Name', 'Tommy Papanier')}${opt('nick', 'Nickname', 'TJ2Cozy (Tommy)')}</div></div>
+      <p class="muted small">Your real name shows on your player card, so everyone on the green knows who they’re playing. Pick Nickname to show it big with your first name underneath.</p>
+    </section>`;
+}
+
 function viewSettings() {
   return `${topbar('Settings')}
   <main class="page">
+    ${nameSettings()}
     <div class="section-head"><h2>Account</h2></div>
     <button class="btn wide" data-action="nav" data-view="account">${A.currentUser() ? (ui.profile ? `@${esc(ui.profile.gamertag)}` : 'Finish setting up your account') : 'Sign in'}</button>
     <div class="section-head"><h2>Sound</h2></div>
@@ -2293,7 +2334,7 @@ function render() {
     history: viewHistory, rules: viewRules, join: viewJoin, whoami: viewWhoami, share: viewShare, settings: viewSettings,
     'quick-setup': viewQuickSetup, quick: viewQuick, 'lag-setup': viewLagSetup, lag: viewLag, ranked: viewRanked, account: viewAccount, winballs: viewWinBalls,
     'ranked-modes': () => viewModes('ranked'), 'casual-modes': () => viewModes('casual'),
-    'ranked-how': viewRankedHow, lfg: viewLfg, challenges: viewChallenges,
+    'ranked-how': viewRankedHow, lfg: viewLfg, challenges: viewChallenges, leaderboards: viewLeaderboards,
   };
   // Keep a half-typed code if the screen redraws (e.g. a sync update).
   const codeInput = document.getElementById('join-code');
@@ -2753,6 +2794,18 @@ const actions = {
     ui.orderPopup = null;
     render();
   },
+  'lb-tab': (d) => {
+    ui.lb.tab = d.v;
+    render();
+  },
+  'lb-scope': (d) => {
+    ui.lb[d.k] = d.v;
+    render();
+  },
+  'name-style': (d) => {
+    setPref('kog.name.style', d.v);
+    render();
+  },
   'ch-section': (d) => {
     const list = chCollapsed();
     setPref('kog.chCollapsed', JSON.stringify(list.includes(d.v) ? list.filter((x) => x !== d.v) : [...list, d.v]));
@@ -2898,7 +2951,7 @@ const actions = {
     }),
 };
 
-// Press and hold a banner (your gamertag, or an earned challenge) to see the whole picture
+// Press and hold a banner (your player card) to see the whole picture
 // full screen; it closes when you let go.
 let peekTimer = null;
 let peekOpen = false;
@@ -2959,6 +3012,11 @@ async function photoToDataUrl(file, size = 160) {
 
 document.addEventListener('change', async (e) => {
   const t = e.target;
+  if (t.dataset.nameField) {
+    setPref(`kog.name.${t.dataset.nameField}`, t.value.trim());
+    render();
+    return;
+  }
   if (t.dataset.chPreview) {
     ui.chPreview = t.checked;
     ui.chIntroDone = true; // don't replay the neon intro on a redraw

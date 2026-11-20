@@ -9,26 +9,41 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 export const rankByName = (name) => RK.RANKS.find((r) => r.name === name);
 
 // ---------- example players ----------
-const P = (tag, rank, pct, badge, banner) => ({ tag, rank: rankByName(rank), pct, badge, banner });
-export const ME = { tag: 'thetommyjohn', rank: RK.rankFor(1447), pct: 52, me: true, badge: 'kog', banner: 'felt' }; // same example as the Current rank panel
-const PEOPLE = {
-  pap: P('Pap_Daddy_Kush', 'Silver II', 54, 'diamond', 'onyx'),
-  chex: P('xXChexterXx', 'Gold IV', 57, 'ace', 'midnight'),
-  fupa: P('littleFUPA', 'Platinum III', 56, 'heart', 'royal'),
-  joey: P('JoeyStazz92', 'Diamond IV', 60, 'diamond', 'gold'),
-  mike: P('SweetieMike', 'Bronze I', 51, 'flag', 'fairway'),
-  quin: P('Quin_Girthmaster69', 'Gold II', 55, 'club', 'sunset'),
-  moose: P('Moosehead67', 'Silver IV', 49, 'putters', 'ivory'),
-  jimm: P('JimmBurg', 'Platinum V', 58, 'spade', 'midnight'),
-  sam: P('GrantedSam', 'Silver I', 52, 'flag', 'felt'),
-  mac: P('McCarthy3o6', 'Gold III', 56, 'heart', 'ivory'),
-  alva: P('Alvatron88', 'Diamond II', 63, 'spade', 'gold'),
+// Players show their real name, picked one of three ways: name & initial (Tommy P.), full name
+// (Tommy Papanier) or a nickname with their first name small underneath (TJ2Cozy / Tommy).
+// `tag` is how the name reads in sentences; `sub` is the small first name under a nickname.
+// `art` is the challenge whose badge and banner they're wearing.
+const P = (tag, sub, rank, pct, art, kingdom) => ({ tag, sub, rank: rankByName(rank), pct, art, kingdom });
+export const ME = { tag: 'TJ2Cozy', sub: 'Tommy', rank: RK.rankFor(1447), pct: 52, me: true, art: 'west', kingdom: 'FL' }; // same example as the Current rank panel
+export const PEOPLE = {
+  pap: P('Marcus D.', '', 'Silver II', 54, 'east', 'FL'),
+  chex: P('Derek Holloway', '', 'Gold IV', 57, 'north', 'FL'),
+  fupa: P('Big Putts', 'Ryan', 'Platinum III', 56, 'heater', 'GA'),
+  joey: P('Nick R.', '', 'Diamond IV', 60, 'regicide', 'TN'),
+  mike: P('Carlos Vega', '', 'Bronze I', 51, 'dawn-patrol', 'FL'),
+  quin: P('Slick Rick', 'Rick', 'Gold II', 55, 'blackjack', 'SC'),
+  moose: P('Dave M.', '', 'Silver IV', 49, 'pickup-game', 'FL'),
+  jimm: P('Andre Thompson', '', 'Platinum V', 58, 'ice-cold', 'FL'),
+  sam: P('Lefty', 'Sam', 'Silver I', 52, 'fresh-blood', 'FL'),
+  mac: P('Owen McAllister', '', 'Gold III', 56, 'wire-to-wire', 'NY'),
+  alva: P('Alex V.', '', 'Diamond II', 63, 'goose-maverick', 'TX'),
 };
 
-/** [badge] [rank] gamertag [win % crown] on the player's banner: the nameplate on every ranked card. */
+/** The name on a player card: a nickname gets the first name in small type underneath. */
+export const nameHtml = (p) => (p.sub
+  ? `<span class="np-name"><b>${esc(p.tag)}</b><small>${esc(p.sub)}</small></span>`
+  : `<b>${esc(p.tag)}</b>`);
+const badgeImg = (p, size) => (p.art
+  ? `<img class="np-art-badge" src="assets/challenges/badge-${p.art}.webp" width="${size}" height="${size}" alt="" draggable="false">`
+  : badgeHtml(p.badge, size));
+const bannerCls = (p) => (p.art ? 'has-art' : bannerClass(p.banner));
+// The image goes inline (not through a CSS variable) so its path resolves from the page, not from css/.
+const bannerStyle = (p) => (p.art ? ` style="background-image:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.2) 70%),url('assets/challenges/banner-${p.art}.webp')"` : '');
+
+/** [badge] [rank] name [win % ball] on the player's banner: the player card on every ranked screen. */
 export function plate(p, { badge = 20, ball = 15, check = false } = {}) {
   const level = WR.levelFor(p.pct, 100);
-  return `<span class="lf-plate np ${bannerClass(p.banner)}${p.me ? ' me' : ''}">${badgeHtml(p.badge, badge)}${rankBadge(p.rank, badge)}<b>${esc(p.tag)}</b>${WR.winCrown(level, ball + 2)}${check ? '<span class="check" title="Verified">✓</span>' : ''}</span>`;
+  return `<span class="lf-plate np ${bannerCls(p)}${p.me ? ' me' : ''}"${bannerStyle(p)}>${badgeImg(p, badge)}${rankBadge(p.rank, badge)}${nameHtml(p)}${WR.winBall(level, ball + 2)}${check ? '<span class="check" title="Verified">✓</span>' : ''}</span>`;
 }
 
 // ---------- courses near the user (example distances) ----------
@@ -65,8 +80,8 @@ function postCard(post, { button = true } = {}) {
   const who = post.who.map((k) => PEOPLE[k]);
   const c = course(post.course);
   const head = isDuo(post)
-    ? `<div class="lf-who">${who.map((p) => plate(p)).join('<span class="lf-amp">&amp;</span>')}</div><div class="lf-says">are looking for a <b>ranked duos</b> match</div>`
-    : `<div class="lf-who">${plate(who[0])}</div><div class="lf-says">is looking for a match</div>`;
+    ? `<div class="lf-who">${who.map((p) => plate(p, { badge: 36, ball: 20 })).join('')}</div><div class="lf-says">are looking for a <b>ranked duos</b> match</div>`
+    : `<div class="lf-who">${plate(who[0], { badge: 36, ball: 20 })}</div><div class="lf-says">is looking for a match</div>`;
   return `<article class="lf-post ${isDuo(post) ? 'duo' : 'solo'}">
     <span class="lf-mode">${isDuo(post) ? 'Duos · 2 v 2' : 'Head-to-Head'}</span>
     ${head}
@@ -251,16 +266,16 @@ const tap = '<span class="mk-tap" aria-hidden="true"></span>';
 const mkRow = (p, right = '', cls = '') => `<div class="mk-row ${cls}">${plate(p, { badge: 18, ball: 13 })}<span class="mk-right">${right}</span></div>`;
 const KING = (suit) => `<img class="mk-king" src="assets/duos/king-${suit}.webp" alt="">`;
 
-/** A nameplate with tiny arrows labelling its parts: badge, rank, KOG username, win % crown, and the banner behind. */
+/** A player card with tiny arrows labelling its parts: badge, rank, name, win % ball, and the banner behind. */
 function annotatedPlate(p) {
   const level = WR.levelFor(p.pct, 100);
   const part = (html, label, up) => `<span class="an-w">${html}<span class="an-tag ${up ? 'up' : 'down'}">${up ? `${label}<i>↓</i>` : `<i>↑</i>${label}`}</span></span>`;
   return `<div class="mk-anno">
-    <span class="np ${bannerClass(p.banner)} an-strip">
-      ${part(badgeHtml(p.badge, 22), 'Badge', true)}
+    <span class="np ${bannerCls(p)} an-strip"${bannerStyle(p)}>
+      ${part(badgeImg(p, 26), 'Badge', true)}
       ${part(rankBadge(p.rank, 20), 'Rank', false)}
-      ${part(`<b>${esc(p.tag)}</b>`, 'KOG username', true)}
-      ${part(WR.winCrown(level, 22), 'Win %', false)}
+      ${part(nameHtml(p), 'Name', true)}
+      ${part(WR.winBall(level, 20), 'Win %', false)}
     </span>
     <div class="an-bracket"><span>Banner (the background)</span></div>
   </div>`;
@@ -278,7 +293,7 @@ function slides1v1() {
         <div class="mk-card"><div class="mk-label">Phone number</div><div class="mk-input">(352) ••• ••47</div>
           <div class="mk-label">Enter the 6-digit code</div><div class="mk-code">${'482916'.split('').map((d) => `<span>${d}</span>`).join('')}</div></div>
         <div class="mk-banner ok">✓ Phone-verified · Ranked unlocked</div>
-        <div class="mk-card"><div class="mk-label">Your nameplate</div>${annotatedPlate(ME)}</div>`,
+        <div class="mk-card"><div class="mk-label">Your player card</div>${annotatedPlate(ME)}</div>`,
     },
     {
       title: 'Start a ranked match', text: `On the practice green, open <b>KOG Ranked → Head-to-Head</b> and invite ${friend.tag}.`,
