@@ -481,6 +481,9 @@ function viewHome() {
         <button class="choice wide-choice challenges-choice" data-action="nav" data-view="challenges" aria-label="Challenges">
           <img class="challenges-art" src="assets/neon-suits.webp" alt="" draggable="false">
         </button>
+        <button class="choice wide-choice lb-choice" data-action="nav" data-view="leaderboards">
+          <span class="lb-title">Leaderboards</span><span class="lb-sub">See how you fare against the competition.</span>
+        </button>
         <hr class="alt-rule" aria-hidden="true">
         <div class="alt-head"><h2>Alternate games</h2></div>
         <button class="choice wide-choice quick-choice locked" disabled aria-disabled="true">
@@ -496,7 +499,6 @@ function viewHome() {
         </button>
       </div>
       ${SYNC ? '<button class="btn" data-action="open-join">Join a game</button>' : ''}
-      <button class="btn lb-btn" data-action="nav" data-view="leaderboards"><b>Leaderboards</b><span>See how you fare against the competition.</span></button>
       <button class="btn" data-action="nav" data-view="history">Past games</button>
       <button class="btn ghost" data-action="nav" data-view="ranked">Ranked · preview</button>
       <button class="btn ghost" data-action="nav" data-view="settings">Settings</button>
