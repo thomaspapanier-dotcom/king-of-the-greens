@@ -81,8 +81,28 @@ export function lbMapTap(st, v) {
   if (wasWorld && !st.world) st.enter = true; // the Empire map grows in as the globe zooms
 }
 
-/** Called after the screen is drawn: start the globe if it's showing. */
+// The painted Realm map of the American Empire (assets/realm-map.webp). Tapping it opens the Realm
+// under your finger: this 80 x 45 grid (run-length coded) says which Realm each patch of the
+// painting belongs to (b Pacific, p High Peaks, y Golden Plains, o Desert Sun, m Magnolia, g Ivy; . sea).
+const PAINT_GRID = [80, 45];
+const PAINT_REALM = { b: 'pacific', p: 'peaks', y: 'plains', o: 'desert', m: 'magnolia', g: 'ivy' };
+const PAINT_MASK = '252.3b74.2b1.9b51.2g15.12b9p4y4.1y2.2y29.3g14.11b10p16y25.4g14.10b12p17y2.1y13.1g2.1g2.7g11.11b12p24y6.1g1.5g1.8g10.11b13p26y4.1g1.2g1.10g11.10b15p8y1.16y2.1y9g2.3g13.10b15p8y1.11y1.4y2.1y9g2.3g12.11b15p8y1.17y1.2y14g11.11b2p1.5p1.1p1.4p19y1.6y1.2y14g10.11b1.9p2.3p15y1.5y1.7y14g11.11b3p1.7p2.2p29y13g11.12b2p1.3p1.3p3.2p29y11g13.11b3p3.7p1.3p28y11g12.12b11p1.5p26y6m6g13.12b18p23y10m4g14.12b17p21y14m1g14.15b15p19y17m14.10b2.3b10o4p2o16y19m15.3b1.10b22o8y21m14.4b1.9b25o1y26m15.4b3.6b25o26m17.8b2.1b26o25m20.9b26o24m23.6b27o23m27.3b27o22m31.27o21m23.5b6.25o21m23.5b9.2o2.18o21m21.8b13.17o21m22.7b6.1o7.16o8m5.9m20.8b9.2b4.3o1.10o3.6m9.6m19.5b2.2b8.1b1.1b4.1o3.7o20.6m20.2b5.2b5.6b7.6o22.6m18.1b15.2b1.2b8.4o24.5m34.2b12.3o25.4m77.3m77.3m254.'.replace(/(\d+)(.)/g, (_, n, c) => c.repeat(+n));
+const PAINT_HOME = [79, 80]; // where Florida (your Kingdom) is on the painting, in %
+
+/** Called after the screen is drawn: start the globe, or listen for taps on the painted map. */
 export function mountLeaderboards(root, st, rerender) {
+  const paint = root.querySelector('.lb-paint');
+  if (paint) {
+    paint.addEventListener('click', (e) => {
+      const box = paint.getBoundingClientRect();
+      const gx = Math.floor(((e.clientX - box.left) / box.width) * PAINT_GRID[0]);
+      const gy = Math.floor(((e.clientY - box.top) / box.height) * PAINT_GRID[1]);
+      const realm = PAINT_REALM[PAINT_MASK[gy * PAINT_GRID[0] + gx]];
+      if (!realm) return;
+      lbMapTap(st, `realm:${realm}`);
+      rerender();
+    });
+  }
   const canvas = root.querySelector('.lb-globe');
   if (!canvas) return;
   const tip = root.querySelector('.lb-globe-tip');
@@ -227,7 +247,12 @@ export function leaderboardsHtml(st) {
       <div class="lb-maphead">${head}</div>
       ${world
     ? '<div class="lb-map lb-globe-wrap"><canvas class="lb-globe" aria-label="Globe of the world. Drag to spin it; tap the American Empire to zoom in."></canvas><p class="lb-globe-tip">Drag to spin the globe. Tap the American Empire.</p></div>'
-    : `<div class="lb-map${enter ? ' enter' : ''}">${mapHtml(st)}</div>`}
+    : !realm
+      ? `<div class="lb-map lb-paint${enter ? ' enter' : ''}" role="img" aria-label="Painted map of the six Realms of the American Empire. Tap a Realm to open it.">
+          <img src="assets/realm-map.webp" alt="" draggable="false">
+          <span class="lb-paint-home" style="left:${PAINT_HOME[0]}%;top:${PAINT_HOME[1]}%" title="Your Kingdom: Florida"><i>★</i><b>Your Kingdom</b></span>
+        </div>`
+      : `<div class="lb-map${enter ? ' enter' : ''}">${mapHtml(st)}</div>`}
       <div class="chips lb-chips">${quick('my-kingdom', 'My Kingdom', !world && kingdom === HOME)}${quick('my-realm', 'My Realm', !world && realm?.id === homeRealm.id && !kingdom)}${quick('my-empire', 'My Empire', !world && !realm)}${quick('world', 'World', world)}</div>
     </section>`;
 
