@@ -22,11 +22,15 @@ KEEP.mkdir(parents=True, exist_ok=True)
 TONES = ('brown', 'black')
 NAME = re.compile(r'(queen-)?(king-(?:spades|hearts|clubs|diamonds)|(?:spades|hearts|clubs|diamonds)|badge-[a-z0-9-]+?|banner-[a-z0-9-]+?)(?:-(brown|black))?')
 
-added = []
+# A file in "Generated" wins over one with the same name in the main folder (e.g. the picked Queen cards).
+found = {}
 for folder in (SRC, SRC / 'Generated'):
-    if not folder.exists():
-        continue
-    for f in sorted(folder.glob('*.png')):
+    if folder.exists():
+        for f in sorted(folder.glob('*.png')):
+            found[f.name] = f
+added = []
+if True:
+    for f in found.values():
         m = NAME.fullmatch(f.stem)
         if not m:
             continue
@@ -48,9 +52,10 @@ for folder in (SRC, SRC / 'Generated'):
         if not base.exists():
             print(f'skip {f.name}: no original {base.name} in the app')
             continue
-        if out.exists() and out.stat().st_mtime >= f.stat().st_mtime:
-            continue
-        shutil.copy(f, KEEP / f.name)
+        kept = KEEP / f.name
+        if out.exists() and kept.exists() and kept.read_bytes() == f.read_bytes():
+            continue  # already in, and unchanged
+        shutil.copy(f, kept)
         im = Image.open(f)
         if is_card:
             im.convert('RGB').resize(Image.open(base).size, Image.LANCZOS).save(out, 'WEBP', quality=84, method=6)

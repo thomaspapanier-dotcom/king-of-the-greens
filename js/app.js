@@ -458,6 +458,7 @@ function viewHome() {
         <li><span class="irl-ico">${IRL_PHONE}</span><b>The app keeps score</b><span>One phone tracks every putt, the rounds and who’s King</span></li>
       </ol>
     </section>
+    ${rulerPicker()}
     ${profileBox()}
     ${resume}
     ${quickResumeCard()}
@@ -1951,11 +1952,21 @@ function viewChallenges() {
       <button class="btn primary wide" data-action="ch-close">Close</button>
     </section>
   </div>` : '';
+  // Tap a card: see it big, and switch every card's look (King v1 / v2 / v3).
+  const cardSheet = ui.cardOpen ? `<div class="ch-pop" data-action="ch-close">
+    <section class="ch-sheet card-sheet" role="dialog" aria-label="${rulerWord()} of ${ui.cardOpen}" data-action="ch-stay">
+      <div class="ch-grab" aria-hidden="true"></div>
+      <img class="card-big" src="${TN.art(`assets/cards/king-${ui.cardOpen}.webp`)}" alt="${rulerWord()} of ${ui.cardOpen}" draggable="false">
+      <div class="card-looks" role="group" aria-label="Look">${TN.TONES.map(([v]) => `<button class="card-look" data-action="king-tone" data-v="${v}" aria-pressed="${TN.currentTone() === v}"><img src="${TN.art(`assets/cards/king-${ui.cardOpen}.webp`, v)}" alt="" draggable="false"><span>${TN.lookName(v)}</span></button>`).join('')}</div>
+      <p class="muted small">Picking a look changes all four ${rulerWord()}s, and their badges and banners as that art comes in.</p>
+      <button class="btn primary wide" data-action="ch-close">Close</button>
+    </section>
+  </div>` : '';
   return `${topbar('Challenges')}
   <main class="page challenges-page">
     <section class="ch-stage ${intro ? 'intro' : 'done'}" aria-label="The four Kings">
       ${intro ? '<div class="ch-neon" aria-hidden="true"><img class="nl" src="assets/neon-left.webp" alt="" draggable="false"><img class="nr" src="assets/neon-right.webp" alt="" draggable="false"></div>' : ''}
-      <div class="ch-cards">${['spades', 'hearts', 'clubs', 'diamonds'].map((k) => `<img src="${TN.art(`assets/cards/king-${k}.webp`)}" alt="King of ${k[0].toUpperCase() + k.slice(1)}" draggable="false">`).join('')}</div>
+      <div class="ch-cards">${['spades', 'hearts', 'clubs', 'diamonds'].map((k) => `<button class="ch-card" data-action="card-open" data-v="${k}" aria-label="See the ${rulerWord()} of ${k[0].toUpperCase() + k.slice(1)}"><img src="${TN.art(`assets/cards/king-${k}.webp`)}" alt="" draggable="false"></button>`).join('')}</div>
     </section>
     <div class="ch-body ${intro ? 'intro' : ''}">
     <section class="card ch-intro">
@@ -1969,7 +1980,7 @@ function viewChallenges() {
     ${sections}
     </div>
   </main>
-  ${sheet}`;
+  ${sheet}${cardSheet}`;
 }
 
 // ---------- accounts ----------
@@ -2001,6 +2012,17 @@ function displayName(n) {
   if (n.style === 'nick' && n.nick) return { main: n.nick, sub: n.first };
   if (n.style === 'full' && n.last) return { main: `${n.first} ${n.last}`, sub: '' };
   return { main: n.last ? `${n.first} ${n.last[0].toUpperCase()}.` : n.first, sub: '' };
+}
+
+/** "King" or "Queen", whichever you picked on Home. */
+const rulerWord = () => (TN.currentRuler() === 'queen' ? 'Queen' : 'King');
+/** Home: rule as a King or a Queen. Changes the four cards on Challenges (and the challenge art, once the Queen art is made). */
+function rulerPicker() {
+  const r = TN.currentRuler();
+  const opt = (v, label, img) => `<button class="ruler-opt" data-action="ruler" data-v="${v}" aria-pressed="${r === v}"><img src="${TN.art(img, TN.currentTone(), v)}" alt="" draggable="false"><span>${label}</span></button>`;
+  return `<section class="ruler-pick" aria-label="King or Queen">
+    <div class="ruler-opts">${opt('king', 'King', 'assets/cards/king-hearts.webp')}${opt('queen', 'Queen', 'assets/cards/king-hearts.webp')}</div>
+  </section>`;
 }
 
 function profileBox() {
@@ -2230,11 +2252,11 @@ function nameSettings() {
 
 function kingLookSettings() {
   const t = TN.currentTone();
-  const opt = ([v, label]) => `<button class="seg-opt look-opt" data-action="king-tone" data-v="${v}" aria-pressed="${t === v}"><img src="${TN.art('assets/cards/king-spades.webp', v)}" alt="" draggable="false"><span>${label}</span></button>`;
-  return `<div class="section-head"><h2>How your Kings look</h2></div>
+  const opt = ([v]) => `<button class="seg-opt look-opt" data-action="king-tone" data-v="${v}" aria-pressed="${t === v}"><img src="${TN.art('assets/cards/king-spades.webp', v)}" alt="" draggable="false"><span>${TN.lookName(v)}</span></button>`;
+  return `<div class="section-head"><h2>How your ${rulerWord()}s look</h2></div>
     <section class="card look-card">
       <div class="seg-wide look-opts" role="group" aria-label="How your Kings look">${TN.TONES.map(opt).join('')}</div>
-      <p class="muted small">Pick the skin tone for the Kings on the cards, badges and banners. Only their skin changes; everything else in the art stays the same. ${t === 'white' ? '' : `The ${t === 'brown' ? 'Brown' : 'Black'} art is still being made, so pictures that aren’t ready yet show the original for now.`}</p>
+      <p class="muted small">Pick a look for the ${rulerWord()}s on the cards, badges and banners. Only their skin changes; everything else in the art stays the same. ${t === 'white' ? '' : `The ${TN.lookName(t)} art is still being made, so pictures that aren’t ready yet show ${rulerWord()} v1 for now.`}</p>
     </section>`;
 }
 
@@ -2846,6 +2868,16 @@ const actions = {
   },
   'king-tone': (d) => {
     setPref('kog.tone', d.v);
+    ui.chIntroDone = true;
+    render();
+  },
+  'card-open': (d) => {
+    ui.cardOpen = d.v;
+    ui.chIntroDone = true;
+    render();
+  },
+  ruler: (d) => {
+    setPref('kog.ruler', d.v);
     render();
   },
   'name-style': (d) => {
@@ -2871,6 +2903,7 @@ const actions = {
   'ch-close': () => {
     ui.chOpen = null;
     ui.playerOpen = null;
+    ui.cardOpen = null;
     render();
   },
   'player-open': (d) => {
@@ -3159,7 +3192,7 @@ document.addEventListener('touchend', () => {
   if (sheetDy > 90) {
     sheet.style.transition = 'transform 0.2s ease-in';
     sheet.style.transform = 'translateY(110%)';
-    setTimeout(() => { ui.chOpen = null; ui.playerOpen = null; render(); }, 180);
+    setTimeout(() => { ui.chOpen = null; ui.playerOpen = null; ui.cardOpen = null; render(); }, 180);
   } else {
     sheet.style.transition = 'transform 0.2s ease-out';
     sheet.style.transform = '';

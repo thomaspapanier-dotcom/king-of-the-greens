@@ -3,7 +3,8 @@
 // swapped in; anything not made yet falls back (Queen → King in that skin → the original).
 // TONED and QUEENED are kept up to date by tools/add_tone_art.py.
 
-export const TONES = [['white', 'White'], ['brown', 'Brown'], ['black', 'Black']];
+// The three looks, shown as "King v1 / v2 / v3" (or "Queen v1 …"). Kept as white/brown/black in file names.
+export const TONES = [['white', 'v1'], ['brown', 'v2'], ['black', 'v3']];
 // King art in Brown / Black, keyed like 'cards/king-spades' or 'challenges/banner-north'.
 export const TONED = {
   brown: new Set(['cards/king-clubs', 'cards/king-diamonds', 'cards/king-hearts', 'cards/king-spades']),
@@ -11,7 +12,7 @@ export const TONED = {
 };
 // Queen art, keyed by the King picture it replaces ('challenges/banner-north' → challenges/queen-banner-north[-tone]).
 export const QUEENED = {
-  white: new Set([]),
+  white: new Set(['cards/king-clubs', 'cards/king-diamonds', 'cards/king-hearts', 'cards/king-spades']),
   brown: new Set([]),
   black: new Set([]),
 };
@@ -23,16 +24,21 @@ export const currentTone = () => tone;
 /** King or Queen. Chosen once, when a player verifies their account (coming with accounts). */
 export const setRuler = (r) => { ruler = r === 'queen' ? 'queen' : 'king'; };
 export const currentRuler = () => ruler;
+/** "King v2", "Queen v1": the name of a look for the current ruler. */
+export const lookName = (t = tone, r = ruler) => `${r === 'queen' ? 'Queen' : 'King'} ${(TONES.find(([v]) => v === t) || TONES[0])[1]}`;
 /** How many pictures have a version in this look (for Settings). */
 export const tonedCount = (t) => (TONED[t] ? TONED[t].size : 0);
 
 /** The picture to show for an art path like 'assets/cards/king-spades.webp', in the chosen look. */
 export function art(path, t = tone, r = ruler) {
   const key = path.replace(/^assets\//, '').replace(/\.webp$/, '');
-  if (r === 'queen' && QUEENED[t] && QUEENED[t].has(key)) {
+  const queen = (look) => {
     const q = path.replace('assets/challenges/', 'assets/challenges/queen-').replace('assets/cards/king-', 'assets/cards/queen-');
-    return t === 'white' ? q : q.replace(/\.webp$/, `-${t}.webp`);
-  }
+    return look === 'white' ? q : q.replace(/\.webp$/, `-${look}.webp`);
+  };
+  if (r === 'queen' && QUEENED[t] && QUEENED[t].has(key)) return queen(t);
+  // A Queen card that isn't made in this look yet shows the v1 Queen, never a King.
+  if (r === 'queen' && key.startsWith('cards/') && QUEENED.white.has(key)) return queen('white');
   if (t === 'white' || !TONED[t]) return path;
   return TONED[t].has(key) ? path.replace(/\.webp$/, `-${t}.webp`) : path;
 }
