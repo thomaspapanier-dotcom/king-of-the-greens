@@ -1341,13 +1341,14 @@ function viewQuickSetup() {
     <div class="section-head"><h2>Who’s putting?</h2><span class="muted">${players}/${Q.MAX_PLAYERS}</span></div>
     ${db.players.length ? `<div class="chips">${chips}</div>` : '<p class="muted">Add your name.</p>'}
     ${addPlayerForm(full)}
-    <p class="muted small">${players > 1 ? 'Head-to-head: a toss decides who putts first, and the order rotates every tee so everyone leads equally.' : 'Pick one player to practice solo, or 2–4 to go head-to-head.'}</p>
+    <p class="muted small">${players > 1 ? 'Head-to-head: flip a tee to decide who putts first, and the order rotates every tee so everyone leads equally.' : 'Pick one player to practice solo, or 2–4 to go head-to-head.'}</p>
   </main>
   <footer class="dock">
     <button class="btn primary big" data-action="quick-start" ${ready ? '' : 'disabled'}>${!n ? 'Pick a distance' : !players ? 'Pick who’s putting' : players > 1 ? 'Start head-to-head' : 'Start Compass'}</button>
   </footer>`;
 }
 
+/** Compass Putt's start: flip a tee. Whoever it points at putts first; with 3–4 players, flip again between the rest. */
 function viewQuickToss(q) {
   const rank = ui.qtoss || [];
   const done = rank.length === q.players.length;
@@ -1360,16 +1361,21 @@ function viewQuickToss(q) {
       </button>`;
     })
     .join('');
-  return `${topbar('Compass toss', 'home')}
+  const many = q.players.length > 2;
+  const next = done ? ''
+    : `<p class="prompt">${rank.length === 0 ? 'Who is the tee pointing at?' : `Flip again between the rest. Who putts ${ordinal(rank.length + 1)}?`}</p>`;
+  return `${topbar('Flip a tee', 'home')}
   <main class="page">
     <section class="card">
       <ol class="steps">
-        <li>Someone tosses a ball onto the green.</li>
-        <li>Everyone putts from that spot to the hole furthest from it.</li>
-        <li>Tap players from <b>closest</b> to <b>furthest</b>. Closest putts first at the first tee.</li>
+        <li>Someone flips a tee onto the green.</li>
+        <li>Whoever the pointy end points at putts first at the first tee.</li>
+        ${many ? '<li>Flip again between the rest to see who goes next.</li>' : ''}
       </ol>
     </section>
+    ${next}
     <div class="rank-list">${list}</div>
+    <p class="muted small center">Pointing between two? Flip it again.</p>
     <p class="muted small center">After that, the order rotates every tee so everyone leads equally.</p>
   </main>
   <footer class="dock row">
@@ -2775,6 +2781,9 @@ const actions = {
   },
   'qtoss-pick': (d) => {
     if (!ui.qtoss.includes(d.pid)) ui.qtoss.push(d.pid);
+    // Once one player is left, they go last: no flip needed.
+    const left = activeQuick().players.filter((p) => !ui.qtoss.includes(p.id));
+    if (left.length === 1) ui.qtoss.push(left[0].id);
     render();
   },
   'qtoss-reset': () => {

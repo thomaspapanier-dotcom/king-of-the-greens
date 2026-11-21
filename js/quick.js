@@ -2,7 +2,7 @@
 // chosen distance(s); 3 balls from each tee, and every ball is a birdie ball:
 // in on the 1st putt = −1, 2nd = E, 3rd = +1 …
 //
-// Solo or head-to-head (2–4 players). Head-to-head: a toss decides who putts first
+// Solo or head-to-head (2–4 players). Head-to-head: a tee flip decides who putts first
 // at the first tee, the order rotates every tee so everyone leads equally, each
 // player putts all 3 balls before the next, lowest total wins, and a tie goes to
 // the same toss tie-breaker as the main game.
@@ -47,7 +47,7 @@ export function createQuick({ id, players, dists, date = new Date().toISOString(
   };
 }
 
-/** Toss: `ranking` is closest → furthest. Closest putts first at the first tee. */
+/** Opening order from the tee flip: `ranking` is first to putt → last (older sessions: closest → furthest). */
 export function applyQuickToss(q, ranking) {
   const ids = q.players.map((p) => p.id);
   if (ranking.length !== ids.length || !ids.every((id) => ranking.includes(id))) throw new Error('Rank every player once');
