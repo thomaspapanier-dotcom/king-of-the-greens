@@ -1908,14 +1908,14 @@ function viewOnboard() {
       <p class="ob-sub">Make your account. It only takes a few seconds.</p>
       <form class="ob-join" data-form="ob-join" novalidate>
       <div class="name-fields ob-fields">
-        <label class="field"><span>First name</span><input data-ob-field="first" value="${v('first')}" placeholder="Tommy" maxlength="24" autocomplete="given-name"></label>
-        <label class="field"><span>Last name</span><input data-ob-field="last" value="${v('last')}" placeholder="Papanier" maxlength="24" autocomplete="family-name"></label>
-        <label class="field"><span>Nickname (optional)</span><input data-ob-field="nick" value="${v('nick')}" placeholder="TJ2Cozy" maxlength="24" autocomplete="off"></label>
+        <label class="field"><span>First name</span><input name="first" data-ob-field="first" value="${v('first')}" placeholder="Tommy" maxlength="24" autocomplete="given-name"></label>
+        <label class="field"><span>Last name</span><input name="last" data-ob-field="last" value="${v('last')}" placeholder="Papanier" maxlength="24" autocomplete="family-name"></label>
+        <label class="field"><span>Nickname (optional)</span><input name="nick" data-ob-field="nick" value="${v('nick')}" placeholder="TJ2Cozy" maxlength="24" autocomplete="off"></label>
       </div>
-      <p class="ob-err"${ob.err ? '' : ' hidden'}>Add your first name to continue.</p>
+      <p class="ob-err"${ob.err ? '' : ' hidden'}>Add your first name to continue, or tap Create account again to skip it for now (you can add it in Settings).</p>
       <button class="btn primary wide" type="submit">Create account</button>
       </form>
-      <p class="muted small ob-note">Beta: your account is saved on this phone for now.</p>`;
+      <p class="muted small ob-note">Beta: your account is saved on this phone for now. · build 137</p>`;
   } else if (ob.step === 'verify') {
     body = `${back('join')}<h1>Verify your account?</h1>
       <p class="ob-sub">A quick text to your phone confirms you’re a real player, one account per person.</p>
@@ -2977,11 +2977,14 @@ const actions = {
     render();
     window.scrollTo(0, 0);
   },
-  'ob-join': () => {
-    const form = ui.ob.form || {};
-    const val = (k) => ((document.querySelector(`[data-ob-field="${k}"]`)?.value || form[k] || '')).trim();
-    if (!val('first')) {
-      ui.ob.err = true;
+  'ob-join': (d, formEl) => {
+    const typed = ui.ob.form || {};
+    const el = formEl && formEl.elements ? formEl : document.querySelector('form.ob-join');
+    const fromForm = (k) => (el && el.elements && el.elements[k] ? el.elements[k].value : '');
+    const fromBoxes = (k) => [...document.querySelectorAll(`[data-ob-field="${k}"]`)].map((i) => i.value).find((x) => x && x.trim()) || '';
+    const val = (k) => String(fromForm(k) || fromBoxes(k) || typed[k] || '').trim();
+    if (!val('first') && !ui.ob.err) {
+      ui.ob.err = true; // a second tap carries on, so nobody gets stuck here
       document.querySelector('.ob-err')?.removeAttribute('hidden');
       return;
     }
@@ -3392,7 +3395,7 @@ function onBind(e) {
 }
 document.addEventListener('input', onBind);
 // Setup: keep what you type, even if the screen redraws
-document.addEventListener('input', (e) => {
+const keepObField = (e) => {
   const k = e.target.dataset && e.target.dataset.obField;
   if (!k || !ui.ob) return;
   (ui.ob.form || (ui.ob.form = {}))[k] = e.target.value;
@@ -3400,7 +3403,8 @@ document.addEventListener('input', (e) => {
     ui.ob.err = false;
     document.querySelector('.ob-err')?.setAttribute('hidden', '');
   }
-});
+};
+for (const ev of ['input', 'change', 'keyup', 'blur']) document.addEventListener(ev, keepObField, true);
 document.addEventListener('change', onBind);
 document.addEventListener('keydown', (e) => {
   if (ui.kogPopup && !ui.dialog && e.key === 'Escape') return actions['kog-close']();
@@ -3439,7 +3443,7 @@ document.addEventListener('submit', (e) => {
   const acctForm = e.target.dataset.form;
   if (acctForm === 'ob-join') {
     e.preventDefault();
-    actions['ob-join']();
+    actions['ob-join']({}, e.target);
     return;
   }
   if (['phone', 'phone-code', 'email', 'gamertag'].includes(acctForm)) {
