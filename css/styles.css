@@ -540,7 +540,7 @@ input {
   content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background:
     linear-gradient(color-mix(in srgb, var(--bg) var(--bg-wash, 62%), transparent), color-mix(in srgb, var(--bg) var(--bg-wash, 62%), transparent)),
-    var(--app-bg, url("../assets/cards/king-spades.webp")) center 35% / cover no-repeat;
+    var(--app-bg, url("../assets/app-background.webp")) center 40% / cover no-repeat;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg-wash: 74%; } }
 :root[data-theme="dark"] { --bg-wash: 74%; }
@@ -1088,8 +1088,8 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 
 .mk-phone { position: relative; width: min(270px, 78vw); aspect-ratio: 9 / 19; border-radius: 42px; padding: 10px; background: linear-gradient(145deg, #3a3a3f, #111114); box-shadow: 0 0 0 2px #55555c, 0 18px 40px rgba(0, 0, 0, 0.6); }
 .mk-screen { position: absolute; inset: 10px; border-radius: 33px; overflow: hidden; padding: 40px 10px 18px; display: flex; flex-direction: column; gap: 8px; font-size: 12px;
-  background: linear-gradient(rgba(8, 18, 12, 0.78), rgba(8, 18, 12, 0.9)), var(--app-bg, url("../assets/cards/king-spades.webp")) center 35% / cover; }
-.mk-phone.lock .mk-screen { background: linear-gradient(rgba(4, 10, 7, 0.35), rgba(4, 10, 7, 0.65)), var(--app-bg, url("../assets/cards/king-spades.webp")) center 35% / cover; }
+  background: linear-gradient(rgba(8, 18, 12, 0.78), rgba(8, 18, 12, 0.9)), var(--app-bg, url("../assets/app-background.webp")) center 40% / cover; }
+.mk-phone.lock .mk-screen { background: linear-gradient(rgba(4, 10, 7, 0.35), rgba(4, 10, 7, 0.65)), var(--app-bg, url("../assets/app-background.webp")) center 40% / cover; }
 .mk-island { position: absolute; top: 19px; left: 50%; transform: translateX(-50%); width: 74px; height: 20px; border-radius: 12px; background: #000; z-index: 3; }
 .mk-status { position: absolute; top: 20px; left: 30px; right: 28px; display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; z-index: 2; }
 .mk-icons { letter-spacing: 1px; font-size: 9px; }

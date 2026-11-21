@@ -1866,12 +1866,13 @@ function viewWinBalls() {
 // Beta: nothing is locked in. Settings → "Start setup over" runs it again.
 const SUIT_NAME = { spades: 'Spades', hearts: 'Hearts', clubs: 'Clubs', diamonds: 'Diamonds' };
 const cardFor = (ruler, deck, suit) => TN.art(`assets/cards/king-${suit}.webp`, deck, ruler);
-/** Your card (Ruler + deck + House): the app's background and the opening screen. */
+/** Your card (Ruler + deck + House), shown in Settings. */
 const myCard = () => cardFor(TN.currentRuler(), TN.currentTone(), getPref('kog.house', 'spades'));
+/** Everyone shares one background: a ranked duos match, Kings and Queens on both teams, a few more watching. */
+const APP_BG = 'assets/app-background.webp';
 function applyBackground() {
-  const path = myCard();
-  setPref('kog.card', path); // the opening screen reads this before the app loads
-  document.documentElement.style.setProperty('--app-bg', `url("${new URL(path, location.href).href}")`);
+  setPref('kog.card', APP_BG); // the opening screen reads this before the app loads
+  document.documentElement.style.setProperty('--app-bg', `url("${new URL(APP_BG, location.href).href}")`);
 }
 
 const LIPS = `<svg class="lips" viewBox="0 0 60 34" aria-hidden="true"><path d="M2 16C8 8 16 3 24 6c3 1 5 3 6 4 1-1 3-3 6-4 8-3 16 2 22 10-12-1-20 0-28 1C22 16 14 15 2 16Z"/><path d="M3 18c11 0 19 1 27 1s16-1 27-1c-5 9-15 14-27 14S8 27 3 18Z"/><path class="crease" d="M12 22l2 5M20 23l1 6M28 24v6M36 23l-1 6M44 22l-2 5M16 11l1 3M42 11l-1 3"/></svg>`;
@@ -1887,7 +1888,7 @@ function showIntro() {
   const el = document.createElement('div');
   el.className = `splash${queen ? ' queen' : ''}`;
   el.id = 'splash';
-  el.innerHTML = `<img src="${myCard()}" alt="">${titleHtml('splash-title', true)}`;
+  el.innerHTML = `<img src="${APP_BG}" alt="">${titleHtml('splash-title', true)}`;
   document.body.appendChild(el);
   const done = () => el.remove();
   el.addEventListener('click', () => { el.classList.add('out'); setTimeout(done, 400); }, { once: true });
@@ -1938,7 +1939,7 @@ function viewOnboard() {
   } else {
     const pick = (s) => `<button class="ob-house" data-action="ob-house" data-v="${s}"><img src="${cardFor(ruler, ob.deck, s)}" alt="" draggable="false"><b>${SUIT_NAME[s]}</b></button>`;
     body = `${back('deck')}<h1>Choose a House</h1>
-      <p class="ob-sub">Every House plays the same. Your House is for challenges, and its card becomes your app’s background.</p>
+      <p class="ob-sub">Every House plays the same. Your House is just for challenges.</p>
       <div class="ob-houses">${['spades', 'hearts', 'clubs', 'diamonds'].map(pick).join('')}</div>`;
   }
   const confirm = ob.confirm ? `<div class="ch-pop" data-action="ob-confirm" data-v="no">

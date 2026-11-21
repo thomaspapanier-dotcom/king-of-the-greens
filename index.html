@@ -17,8 +17,8 @@
 </head>
 <body>
 <div class="splash" id="splash" aria-hidden="true"><img alt=""><h1 class="splash-title">King of the Greens</h1></div>
-<script>/* your card on the opening screen (set in the app); the King of Spades before you've joined */
-(function () { var c; try { c = localStorage.getItem('kog.card'); } catch (e) {} document.querySelector('#splash img').src = c || 'assets/cards/king-spades.webp'; })();</script>
+<script>/* the shared background on the opening screen */
+(function () { var c; try { c = localStorage.getItem('kog.card'); } catch (e) {} document.querySelector('#splash img').src = 'assets/app-background.webp'; })();</script>
 <div id="app"></div>
 <noscript>King of the Greens needs JavaScript turned on.</noscript>
 <script type="module" src="js/app.js"></script>

@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v137';
+const VERSION = 'kog-v138';
 const SHELL = [
   './',
   './index.html',
@@ -256,6 +256,7 @@ const SHELL = [
   './assets/challenges/badge-master-gardener.webp',
   './assets/challenges/banner-master-gardener.webp',
   './js/tones.js',
+  './assets/app-background.webp',
   './assets/cards/king-clubs-black.webp',
   './assets/cards/king-clubs-brown.webp',
   './assets/cards/king-diamonds-black.webp',
