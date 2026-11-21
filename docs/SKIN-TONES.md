@@ -7,31 +7,60 @@ The art is the same in every version. Only the Kings' skin changes; their white 
 
 ## Step 1: the four King cards (8 images)
 
-Use your existing ChatGPT chat. Attach one King card (from the KOG Images folder, or `assets/cards/king-spades.webp` and so on), send the prompt, then do the same for the other tone. One image per reply.
+Do these one at a time in your ChatGPT chat. For each one: **attach the card file listed** (from the KOG Images folder) **in the same message** as the prompt, so ChatGPT knows exactly which card to recreate. Then save the result with the file name shown.
 
-**Brown** (a warm medium brown):
-```
-Recreate this exact playing card. Keep everything identical: the composition, pose, outfit, colors, background, card border, corner letters and suit symbols, linework and crosshatching. Change only the King's skin tone to a warm medium brown, natural and consistent on his face, ears, neck, hands and arms. Keep his hair, mustache and beard white and curled exactly as they are, and keep his face, expression and crown the same. Don't change anything else.
-```
+### King of Spades
 
-**Black** (a deep, dark brown):
+**1. Brown**: attach `King of Spades Royal Spade.png`, save as `king-spades-brown.png`
 ```
-Recreate this exact playing card. Keep everything identical: the composition, pose, outfit, colors, background, card border, corner letters and suit symbols, linework and crosshatching. Change only the King's skin tone to a deep, dark brown, natural and consistent on his face, ears, neck, hands and arms. Keep his hair, mustache and beard white and curled exactly as they are, and keep his face, expression and crown the same. Don't change anything else.
+Recreate the attached King of Spades playing card exactly. Keep everything identical: the composition, his pose, his argyle sweater vest, the white clubhouse and the hydrangeas behind him, the colors, the card border, the corner letters and suit symbols, and the linework and crosshatching. Change only his skin tone to a warm medium brown, natural and consistent on his face, ears, neck, hands and arms. Keep his hair, mustache and beard white and curled exactly as they are, and keep his face, expression and crown the same. Don't change anything else.
 ```
 
-Save them in the KOG Images folder as:
+**2. Black**: attach `King of Spades Royal Spade.png`, save as `king-spades-black.png`
+```
+Recreate the attached King of Spades playing card exactly. Keep everything identical: the composition, his pose, his argyle sweater vest, the white clubhouse and the hydrangeas behind him, the colors, the card border, the corner letters and suit symbols, and the linework and crosshatching. Change only his skin tone to a deep, dark brown, natural and consistent on his face, ears, neck, hands and arms. Keep his hair, mustache and beard white and curled exactly as they are, and keep his face, expression and crown the same. Don't change anything else.
+```
 
-| King | Brown | Black |
-|---|---|---|
-| Spades | `king-spades-brown.png` | `king-spades-black.png` |
-| Hearts | `king-hearts-brown.png` | `king-hearts-black.png` |
-| Clubs | `king-clubs-brown.png` | `king-clubs-black.png` |
-| Diamonds | `king-diamonds-brown.png` | `king-diamonds-black.png` |
+### King of Hearts
 
-Tell me when they're in the folder and I'll add them (`python tools/add_tone_art.py`).
+**3. Brown**: attach `King of Hearts Heartbreak Golf.png`, save as `king-hearts-brown.png`
+```
+Recreate the attached King of Hearts playing card exactly. Keep everything identical: the composition, his pose, his red-and-black Heartbreak Golf top and the flags behind him, the colors, the card border, the corner letters and suit symbols, and the linework and crosshatching. Change only his skin tone to a warm medium brown, natural and consistent on his face, ears, neck, hands and arms. Keep his hair, mustache and beard white and curled exactly as they are, and keep his face, expression and crown the same. Don't change anything else.
+```
 
-**If one comes out wrong:** reply with what to fix, for example "keep everything, but put back the palm trees", instead of starting over. If ChatGPT changes the background or pose, say "only the skin should change; match the original exactly".
+**4. Black**: attach `King of Hearts Heartbreak Golf.png`, save as `king-hearts-black.png`
+```
+Recreate the attached King of Hearts playing card exactly. Keep everything identical: the composition, his pose, his red-and-black Heartbreak Golf top and the flags behind him, the colors, the card border, the corner letters and suit symbols, and the linework and crosshatching. Change only his skin tone to a deep, dark brown, natural and consistent on his face, ears, neck, hands and arms. Keep his hair, mustache and beard white and curled exactly as they are, and keep his face, expression and crown the same. Don't change anything else.
+```
+
+### King of Clubs
+
+**5. Brown**: attach `King of Clubs Clubs2Cozy - Plumb Bob.png`, save as `king-clubs-brown.png`
+```
+Recreate the attached King of Clubs playing card exactly. Keep everything identical: the composition, his crouched plumb-bob pose, his palm-print shirt, his iced coffee and the beach sunset behind him, the colors, the card border, the corner letters and suit symbols, and the linework and crosshatching. Change only his skin tone to a warm medium brown, natural and consistent on his face, ears, neck, hands and arms. Keep his hair, mustache and beard white and curled exactly as they are, and keep his face, expression and crown the same. Don't change anything else.
+```
+
+**6. Black**: attach `King of Clubs Clubs2Cozy - Plumb Bob.png`, save as `king-clubs-black.png`
+```
+Recreate the attached King of Clubs playing card exactly. Keep everything identical: the composition, his crouched plumb-bob pose, his palm-print shirt, his iced coffee and the beach sunset behind him, the colors, the card border, the corner letters and suit symbols, and the linework and crosshatching. Change only his skin tone to a deep, dark brown, natural and consistent on his face, ears, neck, hands and arms. Keep his hair, mustache and beard white and curled exactly as they are, and keep his face, expression and crown the same. Don't change anything else.
+```
+
+### King of Diamonds
+
+**7. Brown**: attach `King of Diamonds Dirty Diamond.png`, save as `king-diamonds-brown.png`
+```
+Recreate the attached King of Diamonds playing card exactly. Keep everything identical: the composition, his pose, his diamond-print shirt, gold chain, skateboard and the course behind him, the colors, the card border, the corner letters and suit symbols, and the linework and crosshatching. Change only his skin tone to a warm medium brown, natural and consistent on his face, ears, neck, hands and arms. Keep his hair, mustache and beard white and curled exactly as they are, and keep his face, expression and crown the same. Don't change anything else.
+```
+
+**8. Black**: attach `King of Diamonds Dirty Diamond.png`, save as `king-diamonds-black.png`
+```
+Recreate the attached King of Diamonds playing card exactly. Keep everything identical: the composition, his pose, his diamond-print shirt, gold chain, skateboard and the course behind him, the colors, the card border, the corner letters and suit symbols, and the linework and crosshatching. Change only his skin tone to a deep, dark brown, natural and consistent on his face, ears, neck, hands and arms. Keep his hair, mustache and beard white and curled exactly as they are, and keep his face, expression and crown the same. Don't change anything else.
+```
+
+**If one comes out wrong:** reply with what to fix, for example "keep everything, but put back the palm trees", instead of starting over. If ChatGPT changes the background or pose, say "only the skin should change; match the attached card exactly".
+
+When all 8 are in the KOG Images folder, tell me and I'll add them (`python tools/add_tone_art.py`).
 
 ## Step 2 (later): the badges and banners
 
-Same idea, a batch at a time. Attach the badge or banner and use the same prompts, with "this exact playing card" changed to "this exact image" and "the King's" changed to "every King's". Save them with the tone at the end of the usual name, for example `badge-north-brown.png`, `banner-north-black.png`.
+Same idea, a batch at a time. Attach the badge or banner and use the same prompt, with "the attached King of … playing card" changed to "the attached image" and "his skin tone" changed to "every King's skin tone". Save them with the tone at the end of the usual name, for example `badge-north-brown.png`, `banner-north-black.png`.
