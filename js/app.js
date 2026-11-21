@@ -1902,16 +1902,19 @@ function viewOnboard() {
   const dots = ['join', 'verify', 'ruler', 'deck', 'house'].map((s) => `<i class="${s === ob.step ? 'on' : ''}"></i>`).join('');
   let body = '';
   if (ob.step === 'join') {
-    const v = (k) => esc(getPref(`kog.name.${k}`, ''));
+    const typed = ob.form || (ob.form = { first: getPref('kog.name.first', ''), last: getPref('kog.name.last', ''), nick: getPref('kog.name.nick', '') });
+    const v = (k) => esc(typed[k] || '');
     body = `<h1>Welcome to King of the Greens</h1>
       <p class="ob-sub">Make your account. It only takes a few seconds.</p>
+      <form class="ob-join" data-form="ob-join" novalidate>
       <div class="name-fields ob-fields">
         <label class="field"><span>First name</span><input data-ob-field="first" value="${v('first')}" placeholder="Tommy" maxlength="24" autocomplete="given-name"></label>
         <label class="field"><span>Last name</span><input data-ob-field="last" value="${v('last')}" placeholder="Papanier" maxlength="24" autocomplete="family-name"></label>
         <label class="field"><span>Nickname (optional)</span><input data-ob-field="nick" value="${v('nick')}" placeholder="TJ2Cozy" maxlength="24" autocomplete="off"></label>
       </div>
-      <p class="ob-err" hidden>Add your first name to continue.</p>
-      <button class="btn primary wide" data-action="ob-join">Create account</button>
+      <p class="ob-err"${ob.err ? '' : ' hidden'}>Add your first name to continue.</p>
+      <button class="btn primary wide" type="submit">Create account</button>
+      </form>
       <p class="muted small ob-note">Beta: your account is saved on this phone for now.</p>`;
   } else if (ob.step === 'verify') {
     body = `${back('join')}<h1>Verify your account?</h1>
@@ -2975,15 +2978,19 @@ const actions = {
     window.scrollTo(0, 0);
   },
   'ob-join': () => {
-    const val = (k) => (document.querySelector(`[data-ob-field="${k}"]`)?.value || '').trim();
+    const form = ui.ob.form || {};
+    const val = (k) => ((document.querySelector(`[data-ob-field="${k}"]`)?.value || form[k] || '')).trim();
     if (!val('first')) {
+      ui.ob.err = true;
       document.querySelector('.ob-err')?.removeAttribute('hidden');
       return;
     }
     for (const k of ['first', 'last', 'nick']) setPref(`kog.name.${k}`, val(k));
     if (!getPref('kog.name.style', '')) setPref('kog.name.style', val('nick') ? 'nick' : 'initial');
+    ui.ob.err = false;
     ui.ob.step = 'verify';
     render();
+    window.scrollTo(0, 0);
   },
   'ob-ruler': (d) => {
     ui.ob.ruler = d.v;
@@ -3384,6 +3391,16 @@ function onBind(e) {
   if (b === 'live') render();
 }
 document.addEventListener('input', onBind);
+// Setup: keep what you type, even if the screen redraws
+document.addEventListener('input', (e) => {
+  const k = e.target.dataset && e.target.dataset.obField;
+  if (!k || !ui.ob) return;
+  (ui.ob.form || (ui.ob.form = {}))[k] = e.target.value;
+  if (k === 'first' && e.target.value.trim()) {
+    ui.ob.err = false;
+    document.querySelector('.ob-err')?.setAttribute('hidden', '');
+  }
+});
 document.addEventListener('change', onBind);
 document.addEventListener('keydown', (e) => {
   if (ui.kogPopup && !ui.dialog && e.key === 'Escape') return actions['kog-close']();
@@ -3420,6 +3437,11 @@ async function acctTask(fn) {
 
 document.addEventListener('submit', (e) => {
   const acctForm = e.target.dataset.form;
+  if (acctForm === 'ob-join') {
+    e.preventDefault();
+    actions['ob-join']();
+    return;
+  }
   if (['phone', 'phone-code', 'email', 'gamertag'].includes(acctForm)) {
     e.preventDefault();
     const v = (name) => String(new FormData(e.target).get(name) || '').trim();

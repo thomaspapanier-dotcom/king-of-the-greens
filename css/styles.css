@@ -1725,3 +1725,7 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 /* a soft shade behind the title so it reads over any card */
 .splash::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.6) 85%); pointer-events: none; }
 .splash-title { z-index: 1; }
+
+/* Setup: 16px text in the boxes so iPhones don't zoom in when you tap one */
+.ob-join { display: grid; gap: 12px; }
+.ob-fields input { font-size: 16px; }
