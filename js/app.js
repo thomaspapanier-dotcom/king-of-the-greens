@@ -446,7 +446,7 @@ function viewHome() {
   }
   return `<main class="page home">
     <div class="hero hero-open">
-      <h1 class="hero-title"><span>King</span> <span class="ht-of">of the</span> <span>Greens</span></h1>
+      <h1 class="hero-title">${TN.currentRuler() === 'queen' ? `<span class="q-king">King<svg class="q-strike" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path pathLength="100" d="M2 20C24 12 52 25 98 12"/></svg><span class="q-queen">Queen${LIPS}</span></span>` : '<span>King</span>'} <span class="ht-of">of the</span> <span>Greens</span></h1>
       <div class="hero-kog" aria-label="K.O.G.">K.O.G.</div>
       <p class="hero-irl">A real-life putting game for 1–4 players</p>
     </div>
@@ -458,7 +458,6 @@ function viewHome() {
         <li><span class="irl-ico">${IRL_PHONE}</span><b>The app keeps score</b><span>One phone tracks every putt, the rounds and who’s King</span></li>
       </ol>
     </section>
-    ${rulerPicker()}
     ${profileBox()}
     ${resume}
     ${quickResumeCard()}
@@ -1863,6 +1862,93 @@ function viewWinBalls() {
   </main>`;
 }
 
+// ---------- first open: account, Ruler, deck and House ----------
+// Beta: nothing is locked in. Settings → "Start setup over" runs it again.
+const SUIT_NAME = { spades: 'Spades', hearts: 'Hearts', clubs: 'Clubs', diamonds: 'Diamonds' };
+const cardFor = (ruler, deck, suit) => TN.art(`assets/cards/king-${suit}.webp`, deck, ruler);
+/** Your card (Ruler + deck + House): the app's background and the opening screen. */
+const myCard = () => cardFor(TN.currentRuler(), TN.currentTone(), getPref('kog.house', 'spades'));
+function applyBackground() {
+  const path = myCard();
+  setPref('kog.card', path); // the opening screen reads this before the app loads
+  document.documentElement.style.setProperty('--app-bg', `url("${new URL(path, location.href).href}")`);
+}
+
+const LIPS = `<svg class="lips" viewBox="0 0 60 34" aria-hidden="true"><path d="M2 16C8 8 16 3 24 6c3 1 5 3 6 4 1-1 3-3 6-4 8-3 16 2 22 10-12-1-20 0-28 1C22 16 14 15 2 16Z"/><path d="M3 18c11 0 19 1 27 1s16-1 27-1c-5 9-15 14-27 14S8 27 3 18Z"/><path class="crease" d="M12 22l2 5M20 23l1 6M28 24v6M36 23l-1 6M44 22l-2 5M16 11l1 3M42 11l-1 3"/></svg>`;
+/** "King of the Greens", or for Queens the same title with King crossed out in lipstick and "Queen" written above it. */
+function titleHtml(cls, animate) {
+  if (TN.currentRuler() !== 'queen') return `<h1 class="${cls}">King of the Greens</h1>`;
+  return `<h1 class="${cls} q-title${animate ? ' q-anim' : ''}" aria-label="Queen of the Greens"><span class="q-king">King<svg class="q-strike" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path pathLength="100" d="M2 20C24 12 52 25 98 12"/></svg><span class="q-queen">Queen${LIPS}</span></span> of the Greens</h1>`;
+}
+/** The opening screen: your card behind the title (tap to skip). */
+function showIntro() {
+  document.getElementById('splash')?.remove();
+  const queen = TN.currentRuler() === 'queen';
+  const el = document.createElement('div');
+  el.className = `splash${queen ? ' queen' : ''}`;
+  el.id = 'splash';
+  el.innerHTML = `<img src="${myCard()}" alt="">${titleHtml('splash-title', true)}`;
+  document.body.appendChild(el);
+  const done = () => el.remove();
+  el.addEventListener('click', () => { el.classList.add('out'); setTimeout(done, 400); }, { once: true });
+  setTimeout(done, queen ? 5600 : 4200);
+}
+
+function viewOnboard() {
+  const ob = ui.ob || (ui.ob = { step: 'join', ruler: null, deck: 'white' });
+  const ruler = ob.ruler || 'king';
+  const Ruler = ruler === 'queen' ? 'Queen' : 'King';
+  const back = (step) => `<button class="ob-back" data-action="ob" data-v="${step}">‹ Back</button>`;
+  const dots = ['join', 'verify', 'ruler', 'deck', 'house'].map((s) => `<i class="${s === ob.step ? 'on' : ''}"></i>`).join('');
+  let body = '';
+  if (ob.step === 'join') {
+    const v = (k) => esc(getPref(`kog.name.${k}`, ''));
+    body = `<h1>Welcome to King of the Greens</h1>
+      <p class="ob-sub">Make your account. It only takes a few seconds.</p>
+      <div class="name-fields ob-fields">
+        <label class="field"><span>First name</span><input data-ob-field="first" value="${v('first')}" placeholder="Tommy" maxlength="24" autocomplete="given-name"></label>
+        <label class="field"><span>Last name</span><input data-ob-field="last" value="${v('last')}" placeholder="Papanier" maxlength="24" autocomplete="family-name"></label>
+        <label class="field"><span>Nickname (optional)</span><input data-ob-field="nick" value="${v('nick')}" placeholder="TJ2Cozy" maxlength="24" autocomplete="off"></label>
+      </div>
+      <p class="ob-err" hidden>Add your first name to continue.</p>
+      <button class="btn primary wide" data-action="ob-join">Create account</button>
+      <p class="muted small ob-note">Beta: your account is saved on this phone for now.</p>`;
+  } else if (ob.step === 'verify') {
+    body = `${back('join')}<h1>Verify your account?</h1>
+      <p class="ob-sub">A quick text to your phone confirms you’re a real player, one account per person.</p>
+      <p class="ob-callout">*You need a verified account to play <b>ranked</b> matches.</p>
+      <button class="btn primary wide" data-action="ob" data-v="ruler" data-verify="now">Verify now</button>
+      <button class="btn wide" data-action="ob" data-v="ruler" data-verify="later">Skip, I’ll do it later</button>
+      ${ob.verifyNote ? '<p class="muted small ob-note">Beta: phone verification opens with ranked play. We’ll ask again then.</p>' : ''}`;
+  } else if (ob.step === 'ruler') {
+    const pick = (r, label) => `<button class="ob-ruler" data-action="ob-ruler" data-v="${r}"><img src="${cardFor(r, 'white', 'hearts')}" alt="" draggable="false"><b>${label}</b></button>`;
+    body = `${back('verify')}<h1>Choose your Ruler</h1>
+      <p class="ob-sub">Kings and Queens play exactly the same. The only difference is the art on the badges and banners you earn.</p>
+      <div class="ob-rulers">${pick('king', 'King')}${pick('queen', 'Queen')}</div>
+      <p class="ob-warn">⚠ You can’t undo this choice once you pick a Ruler.</p>`;
+  } else if (ob.step === 'deck') {
+    const pick = ([v, n]) => `<button class="ob-deck${ob.deck === v ? ' on' : ''}" data-action="ob-deck" data-v="${v}"><img src="${cardFor(ruler, v, 'hearts')}" alt="" draggable="false"><b>${Ruler} ${n}</b></button>`;
+    body = `${back('ruler')}<h1>Choose your deck</h1>
+      <p class="ob-sub">Three looks for your ${Ruler}s. It’s the same game whichever you pick.</p>
+      <div class="ob-decks">${TN.TONES.map(pick).join('')}</div>
+      <p class="muted small ob-note">*You can change your deck at any time.</p>`;
+  } else {
+    const pick = (s) => `<button class="ob-house" data-action="ob-house" data-v="${s}"><img src="${cardFor(ruler, ob.deck, s)}" alt="" draggable="false"><b>${SUIT_NAME[s]}</b></button>`;
+    body = `${back('deck')}<h1>Choose a House</h1>
+      <p class="ob-sub">Every House plays the same. Your House is for challenges, and its card becomes your app’s background.</p>
+      <div class="ob-houses">${['spades', 'hearts', 'clubs', 'diamonds'].map(pick).join('')}</div>`;
+  }
+  const confirm = ob.confirm ? `<div class="ch-pop" data-action="ob-confirm" data-v="no">
+    <section class="ch-sheet ob-confirm" role="alertdialog" aria-label="Are you sure?" data-action="ch-stay">
+      <img src="${cardFor(ruler, ob.deck, 'hearts')}" alt="" draggable="false">
+      <h2>Are you sure you want to be a ${Ruler}?</h2>
+      <p>You can change your ${Ruler} deck any time, but you can’t switch to ${ruler === 'queen' ? 'a King' : 'a Queen'}.</p>
+      <button class="btn primary wide" data-action="ob-confirm" data-v="yes">Yes, I’m a ${Ruler}</button>
+      <button class="btn wide" data-action="ob-confirm" data-v="no">Go back</button>
+    </section></div>` : '';
+  return `<main class="page ob-page"><div class="ob-dots" aria-hidden="true">${dots}</div><section class="card ob-card">${body}</section></main>${confirm}`;
+}
+
 // ---------- leaderboards ----------
 function viewLeaderboards() {
   const st = ui.lb || (ui.lb = { tab: 'players', world: true, empire: 'US', realm: null, kingdom: null });
@@ -2016,15 +2102,6 @@ function displayName(n) {
 
 /** "King" or "Queen", whichever you picked on Home. */
 const rulerWord = () => (TN.currentRuler() === 'queen' ? 'Queen' : 'King');
-/** Home: rule as a King or a Queen. Changes the four cards on Challenges (and the challenge art, once the Queen art is made). */
-function rulerPicker() {
-  const r = TN.currentRuler();
-  const opt = (v, label, img) => `<button class="ruler-opt" data-action="ruler" data-v="${v}" aria-pressed="${r === v}"><img src="${TN.art(img, TN.currentTone(), v)}" alt="" draggable="false"><span>${label}</span></button>`;
-  return `<section class="ruler-pick" aria-label="King or Queen">
-    <div class="ruler-opts">${opt('king', 'King', 'assets/cards/king-hearts.webp')}${opt('queen', 'Queen', 'assets/cards/king-hearts.webp')}</div>
-  </section>`;
-}
-
 function profileBox() {
   const pf = A.accountsAvailable() && A.currentUser() ? ui.profile : null;
   if (!pf) {
@@ -2265,6 +2342,12 @@ function viewSettings() {
   <main class="page">
     ${nameSettings()}
     ${kingLookSettings()}
+    <section class="card ruler-card">
+      <img src="${myCard()}" alt="" draggable="false">
+      <div><b>${rulerWord()} · House of ${SUIT_NAME[getPref('kog.house', 'spades')]}</b>
+      <span class="muted small">Your Ruler and House are set when you join. Beta: you can start the setup over to try the other choices.</span>
+      <button class="btn small-btn" data-action="ob-restart">Start setup over (beta)</button></div>
+    </section>
     <div class="section-head"><h2>Account</h2></div>
     <button class="btn wide" data-action="nav" data-view="account">${A.currentUser() ? (ui.profile ? `@${esc(ui.profile.gamertag)}` : 'Finish setting up your account') : 'Sign in'}</button>
     <div class="section-head"><h2>Sound</h2></div>
@@ -2390,13 +2473,15 @@ function ask(opts) {
 
 function render() {
   TN.setTone(getPref('kog.tone', 'white'));
-  TN.setRuler(getPref('kog.ruler', 'king')); // King or Queen: picked at sign-up once accounts are on
+  TN.setRuler(getPref('kog.ruler', 'king')); // King or Queen: picked when you first open the app
+  if (!getPref('kog.onboarded', '') && ui.view === 'home') ui.view = 'onboard';
+  applyBackground();
   const views = {
     home: viewHome, new: viewNew, game: viewGame, card: viewCard, players: viewPlayers, player: viewPlayer,
     history: viewHistory, rules: viewRules, join: viewJoin, whoami: viewWhoami, share: viewShare, settings: viewSettings,
     'quick-setup': viewQuickSetup, quick: viewQuick, 'lag-setup': viewLagSetup, lag: viewLag, ranked: viewRanked, account: viewAccount, winballs: viewWinBalls,
     'ranked-modes': () => viewModes('ranked'), 'casual-modes': () => viewModes('casual'),
-    'ranked-how': viewRankedHow, lfg: viewLfg, challenges: viewChallenges, leaderboards: viewLeaderboards,
+    'ranked-how': viewRankedHow, lfg: viewLfg, challenges: viewChallenges, leaderboards: viewLeaderboards, onboard: viewOnboard,
   };
   // Keep a half-typed code if the screen redraws (e.g. a sync update).
   const codeInput = document.getElementById('join-code');
@@ -2876,9 +2961,62 @@ const actions = {
     ui.chIntroDone = true;
     render();
   },
-  ruler: (d) => {
-    setPref('kog.ruler', d.v);
+  ob: (d, el) => {
+    if (el && el.dataset.verify) {
+      setPref('kog.verify', el.dataset.verify);
+      if (el.dataset.verify === 'now' && !ui.ob.verifyNote) {
+        ui.ob.verifyNote = true; // beta: show the note once, then carry on
+        render();
+        return;
+      }
+    }
+    ui.ob.step = d.v;
     render();
+    window.scrollTo(0, 0);
+  },
+  'ob-join': () => {
+    const val = (k) => (document.querySelector(`[data-ob-field="${k}"]`)?.value || '').trim();
+    if (!val('first')) {
+      document.querySelector('.ob-err')?.removeAttribute('hidden');
+      return;
+    }
+    for (const k of ['first', 'last', 'nick']) setPref(`kog.name.${k}`, val(k));
+    if (!getPref('kog.name.style', '')) setPref('kog.name.style', val('nick') ? 'nick' : 'initial');
+    ui.ob.step = 'verify';
+    render();
+  },
+  'ob-ruler': (d) => {
+    ui.ob.ruler = d.v;
+    ui.ob.step = 'deck';
+    render();
+  },
+  'ob-deck': (d) => {
+    ui.ob.deck = d.v;
+    ui.ob.confirm = true;
+    render();
+  },
+  'ob-confirm': (d) => {
+    ui.ob.confirm = false;
+    if (d.v === 'yes') ui.ob.step = 'house';
+    render();
+  },
+  'ob-house': (d) => {
+    setPref('kog.ruler', ui.ob.ruler);
+    setPref('kog.tone', ui.ob.deck);
+    setPref('kog.house', d.v);
+    setPref('kog.onboarded', '1');
+    ui.ob = null;
+    ui.view = 'home';
+    render();
+    window.scrollTo(0, 0);
+    showIntro();
+  },
+  'ob-restart': () => {
+    setPref('kog.onboarded', '');
+    ui.ob = { step: 'ruler', ruler: null, deck: getPref('kog.tone', 'white') };
+    ui.view = 'onboard';
+    render();
+    window.scrollTo(0, 0);
   },
   'name-style': (d) => {
     setPref('kog.name.style', d.v);
@@ -3358,9 +3496,14 @@ try {
   // Opening splash (markup in index.html, timing in CSS): tap to skip, and tidy it away when done.
   const splash = document.getElementById('splash');
   if (splash) {
+    const queen = getPref('kog.onboarded', '') && getPref('kog.ruler', 'king') === 'queen';
+    if (queen) {
+      splash.classList.add('queen');
+      splash.querySelector('.splash-title').outerHTML = titleHtml('splash-title', true);
+    }
     const done = () => splash.remove();
     splash.addEventListener('click', () => { splash.classList.add('out'); setTimeout(done, 400); }, { once: true });
-    setTimeout(done, 4200);
+    setTimeout(done, queen ? 5600 : 4200);
   }
 } catch {
   /* not available here */

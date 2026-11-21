@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v133';
+const VERSION = 'kog-v135';
 const SHELL = [
   './',
   './index.html',
@@ -24,8 +24,6 @@ const SHELL = [
   './assets/casual-h2h.webp',
   './assets/casual-duos.webp',
   './assets/quickplay-compass.webp',
-  './assets/app-bg.webp',
-  './assets/splash.webp',
   './assets/neon-suits.webp',
   './assets/suits-banner.svg',
   './assets/neon-left.webp',
@@ -266,9 +264,17 @@ const SHELL = [
   './assets/cards/king-hearts-brown.webp',
   './assets/cards/king-spades-black.webp',
   './assets/cards/king-spades-brown.webp',
+  './assets/cards/queen-clubs-black.webp',
+  './assets/cards/queen-clubs-brown.webp',
   './assets/cards/queen-clubs.webp',
+  './assets/cards/queen-diamonds-black.webp',
+  './assets/cards/queen-diamonds-brown.webp',
   './assets/cards/queen-diamonds.webp',
+  './assets/cards/queen-hearts-black.webp',
+  './assets/cards/queen-hearts-brown.webp',
   './assets/cards/queen-hearts.webp',
+  './assets/cards/queen-spades-black.webp',
+  './assets/cards/queen-spades-brown.webp',
   './assets/cards/queen-spades.webp',
   './js/kingdoms.js',
   './js/leaderboards.js',

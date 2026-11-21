@@ -13,8 +13,8 @@ export const TONED = {
 // Queen art, keyed by the King picture it replaces ('challenges/banner-north' → challenges/queen-banner-north[-tone]).
 export const QUEENED = {
   white: new Set(['cards/king-clubs', 'cards/king-diamonds', 'cards/king-hearts', 'cards/king-spades']),
-  brown: new Set([]),
-  black: new Set([]),
+  brown: new Set(['cards/king-clubs', 'cards/king-diamonds', 'cards/king-hearts', 'cards/king-spades']),
+  black: new Set(['cards/king-clubs', 'cards/king-diamonds', 'cards/king-hearts', 'cards/king-spades']),
 };
 
 let tone = 'white';
