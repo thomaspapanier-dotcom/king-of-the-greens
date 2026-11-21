@@ -1,9 +1,11 @@
 // Leaderboards: players, Kingdoms, Realms and Empires. Start on a globe of the world, tap an Empire
-// (a country) to zoom into its painted Realm map, then tap around its Realms and Kingdoms to filter the boards.
+// (a country) to zoom into its map (the American Empire's is painted; the others are drawn until their
+// paintings are ready), then tap around its Realms and Kingdoms to filter the boards.
 // Example numbers until ranked play is live.
 import * as KG from './kingdoms.js';
 import * as MAP from './usmap.js';
 import * as PM from './realmpaint.js';
+import { EMPIRE_MAPS } from './empiremaps.js';
 import { mountGlobe } from './globe.js';
 import { ME, PEOPLE, plate, rankByName, addPlayers } from './lfg.js';
 
@@ -11,8 +13,10 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 const HOME = 'FL'; // example player's Kingdom (the state they signed up in)
 const elo = (p) => p.rank.min + 20 + (p.pct - 50) * 3;
 
-// Each Realm's color on the map.
+// Each Realm's color on the map: the American Empire's match its painting; the others take the same palette in order.
 const COLOR = { ivy: '#2fae7a', magnolia: '#e0528a', plains: '#e6b12e', desert: '#ec7a32', peaks: '#8b7cf6', pacific: '#3a9be0' };
+const PALETTE = ['#2fae7a', '#e0528a', '#e6b12e', '#ec7a32', '#8b7cf6', '#3a9be0'];
+for (const e of Object.values(KG.EMPIRES)) e.realms.forEach((r, i) => { COLOR[r.id] = COLOR[r.id] || PALETTE[i % PALETTE.length]; });
 
 // A few more example players around the Empire, so every Realm has someone on its board.
 const X = (tag, sub, rank, pct, art, kingdom) => ({ id: `lb-${tag.toLowerCase().replace(/[^a-z]+/g, '-')}`, tag, sub, rank: rankByName(rank), pct, art, kingdom });
@@ -25,6 +29,18 @@ const ELSEWHERE = [
   X('Cactus Jack', 'Jack', 'Platinum IV', 59, 'southwest', 'AZ'),
   X('Luis Ortega', '', 'Gold III', 56, 'underdog', 'TX'),
   X('Kevin L.', '', 'Silver I', 50, 'par-100', 'OH'),
+  // and around the world
+  X('Ollie Bennett', '', 'Gold II', 57, 'fresh-blood', 'GB-surrey'),
+  X('Fraser M.', '', 'Platinum III', 60, 'royal-court', 'GB-fife'),
+  X('Dai Evans', '', 'Silver II', 53, 'heater', 'GB-glamorgan'),
+  X('Aoife Byrne', '', 'Gold IV', 56, 'hat-trick', 'IE-dublin'),
+  X('The Kerry Kid', 'Seán', 'Diamond IV', 62, 'sharpshooter', 'IE-kerry'),
+  X('Liam Tremblay', '', 'Gold I', 58, 'ice-cold', 'CA-ON'),
+  X('Moose', 'Mike', 'Platinum V', 59, 'dawn-patrol', 'CA-BC'),
+  X('Jack W.', '', 'Gold III', 55, 'southwest', 'AU-NSW'),
+  X('Matilda Reid', '', 'Platinum II', 61, 'west', 'AU-VIC'),
+  X('Kenji S.', '', 'Diamond III', 63, 'sniper', 'JP-13'),
+  X('Hana Takahashi', '', 'Gold V', 54, 'smooth', 'JP-27'),
 ];
 addPlayers(ELSEWHERE);
 const PLAYERS = [...new Set([ME, ...Object.values(PEOPLE), ...ELSEWHERE])]; // PEOPLE includes you as .me
@@ -35,41 +51,60 @@ function seeded(code) {
   for (const ch of code) h = (h * 31 + ch.charCodeAt(0)) % 9973;
   return h;
 }
-const KINGDOMS = Object.keys(KG.STATES).map((code) => {
+const KINGDOMS = KG.ALL_KINGDOMS.map((code) => {
   const h = seeded(code);
-  return { code, name: KG.kingdomName(code), realm: KG.realmOf(code), avg: 1380 + (h % 190), players: 40 + (h % 900), matches: 120 + ((h * 7) % 4200) };
+  const scale = KG.empireOf(code) === 'US' ? 1 : 0.35; // the newer Empires have fewer players so far
+  return { code, name: KG.kingdomName(code), realm: KG.realmOf(code), avg: 1380 + (h % 190), players: Math.round((40 + (h % 900)) * scale), matches: Math.round((120 + ((h * 7) % 4200)) * scale) };
 });
-const REALM_ROWS = KG.REALMS.map((r) => {
+const REALM_ROWS = KG.ALL_REALMS.map((r) => {
   const ks = KINGDOMS.filter((k) => k.realm.id === r.id);
   const players = ks.reduce((n, k) => n + k.players, 0);
   return { ...r, players, matches: ks.reduce((n, k) => n + k.matches, 0), avg: Math.round(ks.reduce((n, k) => n + k.avg * k.players, 0) / players), top: [...ks].sort((a, b) => b.avg - a.avg)[0] };
 });
+const EMPIRE_ROWS = Object.values(KG.EMPIRES).map((e) => {
+  const rs = REALM_ROWS.filter((r) => r.empire === e.code);
+  const players = rs.reduce((n, r) => n + r.players, 0);
+  return { ...e, players, avg: Math.round(rs.reduce((n, r) => n + r.avg * r.players, 0) / players), kingdoms: rs.reduce((n, r) => n + r.states.length, 0) };
+});
 
 /**
- * Tapping around: 'world' shows the globe; 'my-empire' / 'empire' the whole American Empire map;
- * a Realm breaks off; tap one of its Kingdoms to pick it (again to let go).
+ * Tapping around: 'world' shows the globe; 'empire:GB' an Empire's whole map; 'empire' the current Empire again;
+ * 'my-…' your own Kingdom, Realm or Empire; a Realm breaks off; tap one of its Kingdoms to pick it (again to let go).
  */
 export function lbMapTap(st, v) {
   const wasWorld = st.world;
   st.world = false;
+  st.empire = st.empire || 'US';
   if (v === 'world') {
     st.world = true;
     st.realm = null;
     st.kingdom = null;
-    st.zoomOut = !wasWorld; // pull back out from the Empire to the globe
-  } else if (!v || v === 'empire' || v === 'my-empire') {
+    st.zoomOut = !wasWorld && st.empire === 'US'; // pull back out from the American Empire to the globe
+  } else if (v && v.startsWith('empire:')) {
+    st.empire = v.slice(7);
+    st.realm = null;
+    st.kingdom = null;
+  } else if (!v || v === 'empire') {
+    st.realm = null;
+    st.kingdom = null;
+  } else if (v === 'my-empire') {
+    st.empire = KG.empireOf(HOME);
     st.realm = null;
     st.kingdom = null;
   } else if (v === 'my-realm') {
+    st.empire = KG.empireOf(HOME);
     st.realm = KG.realmOf(HOME).id;
     st.kingdom = null;
   } else if (v.startsWith('realm:')) {
     st.realm = v.slice(6);
+    st.empire = KG.realmById(st.realm).empire;
     st.kingdom = null;
   } else if (v === 'my-kingdom') {
+    st.empire = KG.empireOf(HOME);
     st.realm = KG.realmOf(HOME).id;
     st.kingdom = HOME;
   } else {
+    st.empire = KG.empireOf(v);
     const realm = KG.realmOf(v).id;
     if (st.realm !== realm) {
       st.realm = realm;
@@ -98,7 +133,7 @@ export function mountLeaderboards(root, st, rerender) {
       const gy = Math.floor(((e.clientY - box.top) / box.height) * PAINT_GRID[1]);
       const realm = PAINT_REALM[PAINT_MASK[gy * PAINT_GRID[0] + gx]];
       if (!realm) return;
-      lbMapTap(st, `realm:${realm}`);
+      lbMapTap(st, `realm:${realm}`);  // (the painting is the American Empire's)
       rerender();
     });
   }
@@ -110,7 +145,8 @@ export function mountLeaderboards(root, st, rerender) {
   mountGlobe(canvas, st, {
     zoomOut,
     onInfo: (text) => { if (tip) tip.textContent = text; },
-    onEmpire: () => {
+    onEmpire: (code) => {
+      st.empire = code || 'US';
       st.world = false;
       st.realm = null;
       st.kingdom = null;
@@ -147,16 +183,59 @@ function stateBox(code) {
 }
 const IDENT = `translate(${PW / 2}px,${PH / 2}px) scale(1) translate(${-PW / 2}px,${-PH / 2}px)`;
 /** Zoom that fits a box (painting pixels) on screen, with some room around it. */
-function zoomTo([x0, y0, x1, y1], pad, max) {
+function zoomTo([x0, y0, x1, y1], pad, max, W = PW, H = PH) {
   const w = (x1 - x0) * (1 + pad * 2);
   const h = (y1 - y0) * (1 + pad * 2);
-  const s = Math.min(PW / w, PH / h, max);
-  // keep the view inside the painting (no empty strip past its edge)
-  const hw = PW / s / 2;
-  const hh = PH / s / 2;
-  const cx = Math.min(Math.max((x0 + x1) / 2, hw), PW - hw);
-  const cy = Math.min(Math.max((y0 + y1) / 2, hh), PH - hh);
-  return { s, css: `translate(${PW / 2}px,${PH / 2}px) scale(${s.toFixed(3)}) translate(${(-cx).toFixed(1)}px,${(-cy).toFixed(1)}px)` };
+  const s = Math.min(W / w, H / h, max);
+  // keep the view inside the map (no empty strip past its edge)
+  const hw = W / s / 2;
+  const hh = H / s / 2;
+  const cx = Math.min(Math.max((x0 + x1) / 2, hw), W - hw);
+  const cy = Math.min(Math.max((y0 + y1) / 2, hh), H - hh);
+  return { s, css: `translate(${W / 2}px,${H / 2}px) scale(${s.toFixed(3)}) translate(${(-cx).toFixed(1)}px,${(-cy).toFixed(1)}px)` };
+}
+const identity = (W, H) => `translate(${W / 2}px,${H / 2}px) scale(1) translate(${-W / 2}px,${-H / 2}px)`;
+
+// ---------- the other Empires' maps (drawn from the Kingdom outlines until their paintings are ready) ----------
+function vmapHtml(st) {
+  const E = KG.EMPIRES[st.empire];
+  const M = EMPIRE_MAPS[st.empire];
+  const [W, H] = M.view;
+  const realm = st.realm ? KG.realmById(st.realm) : null;
+  const kingdom = st.kingdom;
+  const boxOf = (codes) => codes.reduce((a, c) => { const b = M.box[c]; return [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])]; }, [1e9, 1e9, -1e9, -1e9]);
+  const z = kingdom ? zoomTo(M.box[kingdom], 0.6, 8, W, H) : realm ? zoomTo(boxOf(realm.states), 0.06, 5, W, H) : { s: 1, css: identity(W, H) };
+  const from = st.zPrev || identity(W, H);
+  const anim = from !== z.css;
+  st.zPrev = z.css;
+  const s = z.s;
+  const shape = (c, cls = '') => `<path class="lb-vk${cls}" d="${M.paths[c]}" fill="${COLOR[KG.realmOf(c).id]}" data-action="lb-map" data-v="${c}"><title>${esc(KG.kingdomName(c))}</title></path>`;
+  const realms = E.realms.map((r) => {
+    const on = realm && r.id === realm.id;
+    return `<g class="lb-vrealm${on ? ' on' : ''}${realm && !on ? ' dim' : ''}"${on ? ` style="transform:translateY(${(-8 / s).toFixed(2)}px)" filter="url(#lbf-vlift)"` : ''}>${r.states.map((c) => shape(c)).join('')}</g>`;
+  });
+  // the open Realm draws last, on top
+  const order = realm ? [...realms.filter((_, i) => E.realms[i].id !== realm.id), realms[E.realms.findIndex((r) => r.id === realm.id)]] : realms;
+  const fs = (26 / s + 4).toFixed(1);
+  const labels = realm
+    ? realm.states.filter((c) => !kingdom || c === kingdom).map((c) => {
+      const [x0, , x1] = M.box[c];
+      const name = KG.kingdomPlain(c);
+      if (!kingdom && (x1 - x0) * s < name.length * 9) return ''; // too small to label at this zoom
+      const [x, y] = M.label[c];
+      return `<text class="lb-abbr lb-vname" x="${x}" y="${(y - 8 / s).toFixed(1)}" font-size="${kingdom ? (fs * 1.4).toFixed(1) : fs}">${esc(name)}</text>`;
+    }).join('')
+    : '';
+  const lifted = kingdom ? `<rect class="lb-shade2" width="${W}" height="${H}"/><g class="lb-klift${anim ? ' anim' : ''}" style="transform:translateY(${(-14 / s).toFixed(2)}px)" filter="url(#lbf-vlift)">${shape(kingdom, ' pick')}</g>` : '';
+  return `<svg class="lb-svg lb-vsvg" viewBox="0 0 ${W} ${H}" style="aspect-ratio:${W} / ${H}" role="img" aria-label="Map of the ${esc(E.name)}. Tap a Realm, then a Kingdom.">
+    <defs><filter id="lbf-vlift" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="${(9 / s).toFixed(2)}" stdDeviation="${(6 / s).toFixed(2)}" flood-color="#000" flood-opacity="0.65"/></filter></defs>
+    <rect width="${W}" height="${H}" fill="#0d2f42" data-action="lb-map" data-v="empire"/>
+    <g class="lb-zoom${anim ? ' anim' : ''}" style="transform:${z.css};--z0:${from}">
+      ${order.join('')}
+      ${lifted}
+      ${labels}
+    </g>
+  </svg>`;
 }
 /** Your Kingdom on the Empire painting, in % (for the star). */
 const HOME_PCT = (() => {
@@ -219,38 +298,44 @@ export function leaderboardsHtml(st) {
   const kingdom = st.kingdom || null;
   const homeRealm = KG.realmOf(HOME);
   const world = st.world;
-  const empire = KG.EMPIRES.US;
+  st.empire = st.empire || 'US';
+  const empire = KG.EMPIRES[st.empire];
+  const isHomeEmpire = st.empire === KG.empireOf(HOME);
+  const painted = st.empire === 'US'; // the Empires with a painting so far
   const enter = st.enter;
   st.enter = false;
 
   // What's picked on the map
   const head = world
-    ? '<b>The World</b><span>Spin the globe · tap an Empire to zoom in</span>'
+    ? '<b>The World</b><span>Six Empires · spin the globe and tap one to zoom in</span>'
     : kingdom
     ? `<b>${esc(KG.kingdomName(kingdom))}</b><span>${esc(realm.name)}${kingdom === HOME ? ' · <em>Your Kingdom</em>' : ''}</span>`
     : realm
       ? `<b style="color:${COLOR[realm.id]}">${esc(realm.name)}</b><span>${realm.region} · ${realm.states.length} Kingdoms${realm.id === homeRealm.id ? ' · <em>Your Realm</em>' : ''} · tap a Kingdom</span>`
-      : `<b>${empire.name}</b><span>${empire.country} · six Realms, 50 Kingdoms · <em>Your Empire</em> · tap a Realm</span>`;
+      : `<b>${empire.name}</b><span>${empire.country} · ${empire.realms.length} Realms, ${empire.realms.reduce((n, r) => n + r.states.length, 0)} Kingdoms${isHomeEmpire ? ' · <em>Your Empire</em>' : ''} · tap a Realm</span>`;
   const quick = (v, label, on) => `<button class="chip ${on ? 'on' : ''}" data-action="lb-map" data-v="${v}">${label}</button>`;
   const mapCard = `<section class="card lb-mapcard">
       <div class="lb-maphead">${head}</div>
       ${world
-    ? `${(st.zPrev = null) || ''}<div class="lb-map lb-globe-wrap"><canvas class="lb-globe" aria-label="Globe of the world. Drag to spin it; tap the American Empire to zoom in."></canvas><p class="lb-globe-tip">Drag to spin the globe. Tap the American Empire.</p></div>`
+    ? `${(st.zPrev = null) || ''}<div class="lb-map lb-globe-wrap"><canvas class="lb-globe" aria-label="Globe of the world. Drag to spin it; tap a gold Empire to zoom in."></canvas><p class="lb-globe-tip">Drag to spin the globe. Tap a gold Empire.</p></div>`
+    : !painted
+      ? `<div class="lb-map lb-vmap${enter ? ' enter' : ''}">${vmapHtml(st)}</div>`
     : !realm
       ? `${(st.zPrev = null) || ''}<div class="lb-map lb-paint${enter ? ' enter' : ''}" role="img" aria-label="Painted map of the six Realms of the American Empire. Tap a Realm to open it.">
           <img src="assets/realm-map.webp" alt="" draggable="false">
           <span class="lb-paint-home" style="left:${HOME_PCT[0].toFixed(1)}%;top:${HOME_PCT[1].toFixed(1)}%" title="Your Kingdom: Florida"><i>★</i><b>Your Kingdom</b></span>
         </div>`
       : `<div class="lb-map lb-pmap${enter ? ' enter' : ''}">${mapHtml(st)}</div>`}
-      <div class="chips lb-chips">${quick('my-kingdom', 'My Kingdom', !world && kingdom === HOME)}${quick('my-realm', 'My Realm', !world && realm?.id === homeRealm.id && !kingdom)}${quick('my-empire', 'My Empire', !world && !realm)}${quick('world', 'World', world)}</div>
+      <div class="chips lb-chips">${quick('my-kingdom', 'My Kingdom', !world && kingdom === HOME)}${quick('my-realm', 'My Realm', !world && realm?.id === homeRealm.id && !kingdom)}${quick('my-empire', 'My Empire', !world && !realm && isHomeEmpire)}${quick('world', 'World', world)}</div>
     </section>`;
 
   const seg = (v, label) => `<button class="seg-opt" data-action="lb-tab" data-v="${v}" aria-pressed="${tab === v}">${label}</button>`;
   const where = kingdom ? KG.kingdomName(kingdom) : realm ? realm.name : world ? 'the world' : `the ${empire.name}`;
   let body = '';
+  const inScope = (code) => (kingdom ? code === kingdom : realm ? KG.realmOf(code).id === realm.id : world ? true : KG.empireOf(code) === st.empire);
   if (tab === 'players') {
     const list = PLAYERS
-      .filter((p) => (kingdom ? p.kingdom === kingdom : realm ? KG.realmOf(p.kingdom).id === realm.id : true))
+      .filter((p) => inScope(p.kingdom))
       .sort((a, b) => elo(b) - elo(a));
     body = list.length
       ? `<ol class="lb-list">${list.map((p, i) => `<li class="${p.me ? 'me' : ''}">
@@ -259,30 +344,26 @@ export function leaderboardsHtml(st) {
       </li>`).join('')}</ol>`
       : `<p class="muted lb-empty">No example players in ${esc(where)} yet.</p>`;
   } else if (tab === 'kingdoms') {
-    const list = KINGDOMS.filter((k) => !realm || k.realm.id === realm.id).sort((a, b) => b.avg - a.avg);
-    body = `<ol class="lb-table">${list.map((k, i) => `<li class="${k.code === (kingdom || HOME) ? 'me' : ''}" data-action="lb-map" data-v="${k.code}">
+    const list = KINGDOMS.filter((k) => (realm ? k.realm.id === realm.id : world || KG.empireOf(k.code) === st.empire)).sort((a, b) => b.avg - a.avg).slice(0, world ? 50 : 99);
+    body = `${world ? '<p class="muted small lb-note">The top 50 Kingdoms in the world.</p>' : ''}<ol class="lb-table">${list.map((k, i) => `<li class="${k.code === (kingdom || HOME) ? 'me' : ''}" data-action="lb-map" data-v="${k.code}">
         <span class="lb-pos">${i + 1}</span>
-        <span class="lb-name"><b>${esc(k.name)}</b><small>${esc(k.realm.name)}</small></span>
+        <span class="lb-name"><b>${esc(k.name)}</b><small>${esc(k.realm.name)}${world ? ` · ${esc(KG.EMPIRES[k.realm.empire].name)}` : ''}</small></span>
         <span class="lb-num"><b>${k.avg}</b><small>avg Elo</small></span>
         <span class="lb-num"><b>${k.players}</b><small>players</small></span>
       </li>`).join('')}</ol>`;
   } else if (tab === 'empires') {
-    // Only the American Empire is live; the next ones are on the way.
-    const soon = ['United Kingdom', 'Ireland', 'Canada', 'Australia', 'Japan'];
-    const total = REALM_ROWS.reduce((n, r) => n + r.players, 0);
-    const avg = Math.round(REALM_ROWS.reduce((n, r) => n + r.avg * r.players, 0) / total);
-    body = `<ol class="lb-table">
-      <li class="me" data-action="lb-map" data-v="my-empire"><span class="lb-pos">1</span>
-        <span class="lb-name"><b>${empire.name}</b><small>${empire.country} · 6 Realms · 50 Kingdoms</small></span>
-        <span class="lb-num"><b>${avg}</b><small>avg Elo</small></span>
-        <span class="lb-num"><b>${total.toLocaleString()}</b><small>players</small></span></li>
-      ${soon.map((c) => `<li class="soon"><span class="lb-pos">·</span><span class="lb-name"><b>${c}</b><small>Empire coming soon</small></span></li>`).join('')}
-    </ol>`;
+    const list = [...EMPIRE_ROWS].sort((a, b) => b.avg - a.avg);
+    body = `<ol class="lb-table">${list.map((e, i) => `<li class="${!world && e.code === st.empire ? 'me' : ''}" data-action="lb-map" data-v="empire:${e.code}">
+        <span class="lb-pos">${i + 1}</span>
+        <span class="lb-name"><b>${esc(e.name)}</b><small>${esc(e.country)} · ${e.realms.length} Realms · ${e.kingdoms} Kingdoms${e.code === KG.empireOf(HOME) ? ' · <em>Your Empire</em>' : ''}</small></span>
+        <span class="lb-num"><b>${e.avg}</b><small>avg Elo</small></span>
+        <span class="lb-num"><b>${e.players.toLocaleString()}</b><small>players</small></span>
+      </li>`).join('')}</ol>`;
   } else {
-    const list = [...REALM_ROWS].sort((a, b) => b.avg - a.avg);
+    const list = REALM_ROWS.filter((r) => world || r.empire === st.empire).sort((a, b) => b.avg - a.avg);
     body = `<ol class="lb-table realms">${list.map((r, i) => `<li class="${r.id === (realm || homeRealm).id ? 'me' : ''}" data-action="lb-map" data-v="realm:${r.id}" style="--c:${COLOR[r.id]}">
         <span class="lb-pos">${i + 1}</span>
-        <span class="lb-name"><b><i class="lb-dot"></i>${esc(r.name)}</b><small>${r.region} · ${r.states.length} Kingdoms · top: ${esc(r.top.name)}</small></span>
+        <span class="lb-name"><b><i class="lb-dot"></i>${esc(r.name)}</b><small>${world ? `${esc(KG.EMPIRES[r.empire].name)} · ` : ''}${r.region} · ${r.states.length} Kingdoms · top: ${esc(r.top.name)}</small></span>
         <span class="lb-num"><b>${r.avg}</b><small>avg Elo</small></span>
         <span class="lb-num"><b>${r.players.toLocaleString()}</b><small>players</small></span>
       </li>`).join('')}</ol>`;

@@ -1864,7 +1864,7 @@ function viewWinBalls() {
 
 // ---------- leaderboards ----------
 function viewLeaderboards() {
-  const st = ui.lb || (ui.lb = { tab: 'players', world: true, realm: null, kingdom: null });
+  const st = ui.lb || (ui.lb = { tab: 'players', world: true, empire: 'US', realm: null, kingdom: null });
   return `${topbar('Leaderboards')}
   <main class="page lb-page">
     ${leaderboardsHtml(st)}

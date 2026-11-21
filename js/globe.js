@@ -3,9 +3,18 @@
 // both kept in the app (js/vendor, assets/world-110m.json) and loaded the first time the globe opens.
 
 // Empires that are live, keyed by their name in the outlines file. More countries join later.
-export const LIVE = { 'United States of America': { code: 'US', name: 'American Empire', center: [-98, 39] } };
+// `tag` nudges the name tag (in pixels) so neighbours like Great Britain and Ireland don't overlap.
+// The globe's outlines put Northern Ireland with the United Kingdom, so tapping it opens Great Britain's map.
+export const LIVE = {
+  'United States of America': { code: 'US', name: 'American Empire', center: [-98, 39] },
+  'United Kingdom': { code: 'GB', name: 'Empire of the Isles', center: [-2.5, 54.5], tag: [46, -16] },
+  Ireland: { code: 'IE', name: 'Irish Empire', center: [-8, 53.3], tag: [-54, 20] },
+  Canada: { code: 'CA', name: 'Canadian Empire', center: [-100, 58] },
+  Australia: { code: 'AU', name: 'Australian Empire', center: [134, -25] },
+  Japan: { code: 'JP', name: 'Cherry Blossom Empire', center: [138, 37] },
+};
 // Next up (shown a little brighter, "coming soon").
-const SOON = new Set(['United Kingdom', 'Ireland', 'Canada', 'Australia', 'Japan']);
+const SOON = new Set([]);
 
 let loading = null;
 let world = null;
@@ -118,11 +127,14 @@ export async function mountGlobe(canvas, st, { onEmpire, onInfo, zoomOut }) {
     // a crowned tag on each live Empire facing you
     tags = [];
     for (const [, e] of Object.entries(LIVE)) {
-      if (d3.geoDistance(e.center, [-rot[0], -rot[1]]) > Math.PI / 2 - 0.15) continue;
-      const [x, y] = proj(e.center);
+      if (d3.geoDistance(e.center, [-rot[0], -rot[1]]) > Math.PI / 2 - 0.55) continue; // only Empires turned well into view
+      const [px, py] = proj(e.center);
       ctx.font = '800 13px system-ui, sans-serif';
       const tw = ctx.measureText(e.name).width;
       const bw = tw + 30;
+      // keep the whole tag inside the frame
+      const x = Math.min(Math.max(px + (e.tag ? e.tag[0] : 0), bw / 2 + 4), W - bw / 2 - 4);
+      const y = Math.min(Math.max(py + (e.tag ? e.tag[1] : 0), 16), H - 16);
       ctx.fillStyle = 'rgba(12,24,17,0.86)';
       ctx.strokeStyle = '#f5d76e';
       ctx.lineWidth = 1.2;
@@ -236,7 +248,7 @@ export async function mountGlobe(canvas, st, { onEmpire, onInfo, zoomOut }) {
       onInfo(`Entering the ${live.name}…`);
       fly([-live.center[0], -live.center[1], 0], R * 3.2, 850, () => onEmpire(live.code));
     } else {
-      onInfo(`${f.properties.name}: ${SOON.has(f.properties.name) ? 'Empire coming soon.' : 'not an Empire yet.'} Only the American Empire is live for now.`);
+      onInfo(`${f.properties.name}: ${SOON.has(f.properties.name) ? 'Empire coming soon.' : 'not an Empire yet.'} Tap a gold Empire.`);
     }
   };
   canvas.addEventListener('pointerup', end);

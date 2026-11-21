@@ -1645,3 +1645,15 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .look-opts .look-opt { display: grid; justify-items: center; gap: 4px; min-height: 0; padding: 8px 4px; }
 .look-opt img { width: 54px; aspect-ratio: 2 / 3; border-radius: 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); }
 .look-opt[aria-pressed="false"] img { opacity: 0.7; }
+
+/* The other Empires' drawn maps (until their paintings are ready) */
+.lb-vmap { background: #0d2f42; display: grid; justify-items: center; }
+.lb-vsvg { width: 100%; height: auto; max-height: 460px; }
+.lb-vk { stroke: rgba(8, 16, 11, 0.85); stroke-width: 0.8; vector-effect: non-scaling-stroke; stroke-linejoin: round; cursor: pointer; }
+.lb-vrealm { transition: opacity 0.3s; }
+.lb-vrealm.dim { opacity: 0.3; }
+.lb-vrealm.on .lb-vk { stroke: #fff; stroke-width: 1.3; }
+.lb-vk.pick { stroke: #f5d76e; stroke-width: 2.5; }
+.lb-vname { font-weight: 800; }
+.lb-vmap.enter .lb-svg { animation: lb-enter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.lb-note { margin: 0 2px 8px; }
