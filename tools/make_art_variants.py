@@ -61,7 +61,19 @@ SKIN = {
 }
 VARIANTS = ['king-brown', 'king-black', 'queen-white', 'queen-brown', 'queen-black']
 # Badges that show a King (the rest are emblems and look the same for everyone).
-BADGES_WITH_KINGS = {'north', 'west', 'east', 'south', 'blackjack', 'built-for-this', 'king-of-skies', 'full-house', 'shoulder-burden'}
+BADGES_WITH_KINGS = {'north', 'west', 'east', 'south', 'blackjack', 'built-for-this', 'full-house', 'shoulder-burden'}
+# Who stands where in the original, left to right, where the model got the suits wrong on its own.
+LINEUPS = {
+    'two-better': ['spades', 'hearts', 'diamonds', 'clubs'],
+    'underdog': ['spades', 'hearts', 'clubs', 'diamonds'],
+    'spotless': ['spades', 'hearts'],
+    'master-gardener': ['clubs (in front)', 'hearts (in the background)'],
+    'stranger-danger': ['diamonds (on the left; the young man on the right wears no crown and is not a King)'],
+    'iso': ['hearts'],
+    'fresh-blood': ['spades'],
+}
+NO_CROWN = ('Only the figures wearing a crown are Kings. Everyone without a crown (other golfers, guests, caddies, crowds, '
+            'strangers) stays exactly as in image 1: same person, same clothes, never turned into a Queen. ')
 
 
 def challenges():
@@ -126,8 +138,18 @@ SUIT_COLORS = {'spades': 'black, charcoal and silver', 'hearts': 'red, cream and
                'clubs': 'forest green, cream and gold', 'diamonds': 'red, white and gold'}
 
 
+# Scenes where the outfit is the point (a team uniform), so the Queen keeps the King's look in a women's cut.
+OUTFIT_OVERRIDE = {
+    'fresh-blood': ('the Queen of Spades wears a fitted women\'s version of the exact cream-and-navy argyle sweater vest she is '
+                    'holding up (it is the team uniform, so hers matches it) over a white collared blouse, with a pleated '
+                    'cream skirt.'),
+}
+
+
 def queen_outfits(cid):
     """A different look for each Queen in this challenge, the same for every skin tone."""
+    if cid in OUTFIT_OVERRIDE:
+        return OUTFIT_OVERRIDE[cid]
     lines = []
     for suit in SUITS:
         rnd = random.Random(f'{cid}:{suit}')
@@ -149,7 +171,8 @@ def prompt_for(kind, variant, card_suit=None, cid=None):
     if who == 'king':
         return ('Image 1 is the artwork to recreate. Recreate image 1 exactly: the same composition, poses, outfits, '
                 'colors, background, lighting, linework and crosshatching. '
-                f'{shape} The only change: every King\'s skin becomes {SKIN[tone]}. Image 2 is the reference sheet: '
+                f'{shape} The only change: every King\'s skin becomes {SKIN[tone]}, including Kings that are small, '
+                'far away, high up or partly hidden. Image 2 is the reference sheet: '
                 'the King of Spades, King of Hearts, King of Clubs and King of Diamonds, left to right, in that skin tone. '
                 'Keep each King\'s white curled hair, mustache and beard, his face, expression and crown the same. '
                 'Change nothing else.')
@@ -157,7 +180,10 @@ def prompt_for(kind, variant, card_suit=None, cid=None):
             f'background, lighting, linework and crosshatching. {shape} The only change: replace every King with the '
             'Queen of the same suit. Image 2 is the reference sheet: the Queen of Spades, Queen of Hearts, Queen of '
             'Clubs and Queen of Diamonds, left to right. King of Spades becomes the Queen of Spades, King of Hearts the '
-            'Queen of Hearts, King of Clubs the Queen of Clubs, King of Diamonds the Queen of Diamonds. First work out '
+            'Queen of Hearts, King of Clubs the Queen of Clubs, King of Diamonds the Queen of Diamonds. ' + NO_CROWN
+            + (f'In image 1 the Kings are, from left to right: {", ".join("the King of " + s for s in LINEUPS[cid])}. '
+               f'So the Queens are, from left to right: {", ".join("the Queen of " + s for s in LINEUPS[cid])}. '
+               if cid in LINEUPS else '') + 'First work out '
             'each King\'s suit from the suit symbols (spade, heart, club, diamond) on his clothes and crown, and put that '
             'same suit\'s Queen exactly where he stands, even if the order differs from the sheet. Each Queen does '
             'exactly what that King was doing, in the same pose and place, holding the same things. Each Queen must have '
@@ -167,6 +193,40 @@ def prompt_for(kind, variant, card_suit=None, cid=None):
             'or scarf in the cold, keep it light in the heat), and if a King wears a royal robe or cape, the Queen keeps '
             'a matching robe or cape over her outfit. Each outfit is stylish, tasteful golf wear. '
             'If you can\'t tell a King\'s suit, use the Queen whose colors fit him best. Change nothing else.')
+
+
+# Who is in the Queen picture a re-skin starts from (their clothes must not change).
+RESKIN_WHO = {
+    'fresh-blood': 'the Queen of Spades, in a cream-and-navy argyle sweater vest and pleated cream skirt',
+    'iso': 'the Queen of Hearts, in a red jacket, white pleated skirt and red visor',
+    'master-gardener': 'in front, the Queen of Clubs in a green cardigan and cream skirt; in the background, the Queen of '
+                       'Hearts in red',
+    'stranger-danger': 'on the left, the Queen of Diamonds in red and white (the young man on the right is not a Queen)',
+    'two-better': 'from left to right: the Queen of Spades (black skirt, argyle vest), the Queen of Hearts (red shorts), '
+                  'the Queen of Diamonds (red-and-white checked skirt), the Queen of Clubs (green skirt)',
+    'heater': 'the Queen of Hearts, in red and white',
+    'sharpshooter': 'the Queen of Spades, lying on the grass in black',
+    'social-butterfly': 'the Queen of Hearts in a red blazer, shaking hands; everyone else is an ordinary guest, not a Queen',
+    'hit-it-end-it': 'at the table from left to right: the Queen of Diamonds (red-and-white checked skirt), the Queen of '
+                     'Hearts (red), the Queen of Clubs (green sweater, plaid trousers), the Queen of Spades (black); '
+                     'behind them, three more Queens in blazers watching',
+    'shoulder-burden': 'on top, the Queen of Clubs in green; carrying her, the Queen of Spades in a black-and-white '
+                       'striped top',
+}
+
+
+def reskin_prompt(kind, tone, cid):
+    """Same Queen picture, another skin: keeps outfits, suits and places identical across Queen v1/v2/v3."""
+    shape = ('Keep the transparent background, the round badge shape and its rim exactly.' if kind == 'badge'
+             else 'Keep the same wide framing and size.')
+    return ('Image 1 is the artwork to recreate. Make ONE single picture, never a grid or several panels. Recreate image 1 '
+            'exactly: the same composition, the same people in the same places, the same poses, crowns, outfits and '
+            f'outfit colors, background, lighting, linework and crosshatching. {shape} '
+            f'The Queens in image 1 are: {RESKIN_WHO[cid]}. '
+            f'The only change: every Queen\'s skin becomes {SKIN[tone]}, and her face and hair become those of the Queen '
+            'of the same suit on image 2. Image 2 shows the Queens of Spades, Hearts, Clubs and Diamonds side by side; '
+            'use it only for their faces, skin and hair. Do not copy its layout, and do not copy its clothes: every Queen '
+            'keeps the clothes and colors she wears in image 1. ' + NO_CROWN + 'Change nothing else.')
 
 
 def out_name(kind, cid, variant):
@@ -229,7 +289,7 @@ def multipart(fields, files):
 
 def edit(key, job, ref, args):
     size = {'banner': '1536x1024', 'badge': '1024x1024', 'card': '1024x1536'}[job['kind']]
-    fields = {'model': args.model, 'prompt': prompt_for(job['kind'], job['variant'], cid=job['id']), 'size': size,
+    fields = {'model': args.model, 'prompt': job.get('prompt') or prompt_for(job['kind'], job['variant'], cid=job['id']), 'size': size,
               'quality': args.quality, 'output_format': 'png', 'n': '1'}
     if job['kind'] == 'badge':
         fields['background'] = 'transparent'
@@ -272,11 +332,21 @@ def main():
     ap.add_argument('--model', default='gpt-image-2.6-sunburst')
     ap.add_argument('--quality', default='medium', choices=['low', 'medium', 'high', 'xhigh', 'max', 'auto'])
     ap.add_argument('--workers', type=int, default=3, help='how many at once')
+    ap.add_argument('--reskin', help='target=source pairs, comma-separated (e.g. queen-banner-iso-brown=queen-banner-iso): '
+                    'make the target from an existing Queen picture, changing only the Queens\' skin, face and hair')
     args = ap.parse_args()
 
     redo = {n if n.endswith('.png') else n + '.png' for n in (args.redo or '').split(',') if n}
     todo, waiting = [], 0
-    for j in jobs(args):
+    for pair in (args.reskin or '').split(','):
+        if not pair:
+            continue
+        target, source = (s.strip().removesuffix('.png') for s in pair.split('='))
+        m = re.match(r'queen-(banner|badge)-(.+?)(?:-(brown|black))?$', target)
+        kind, cid, tone = m.group(1), m.group(2), m.group(3) or 'white'
+        todo.append({'kind': kind, 'id': cid, 'variant': f'queen-{tone}', 'src': OUT / f'{source}.png',
+                     'name': f'{target}.png', 'ref': reference_sheet('queen', tone), 'prompt': reskin_prompt(kind, tone, cid)})
+    for j in ([] if args.reskin else jobs(args)):
         if redo and j['name'] not in redo:
             continue
         if not redo and (OUT / j['name']).exists():
