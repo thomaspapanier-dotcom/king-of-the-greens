@@ -118,6 +118,25 @@ test('toss: closest is KOG for R1, furthest putts first', () => {
   eq(g.stages[0].kingId, 'p2');
   eq(g.stages[0].order, ['p1', 'p3', 'p2']);
 });
+test('tee flip: two players, the tee picks the KOG and the other putts first', () => {
+  const g = R.createGame({ id: 'g', players: P(2) });
+  R.applyTeeFlip(g, 'p2');
+  eq([g.status, g.stages[0].kingId, g.stages[0].order], ['playing', 'p2', ['p1', 'p2']]);
+});
+test('tee flip: three players, a second flip picks who putts first', () => {
+  const g = R.createGame({ id: 'g', players: P(3) });
+  R.applyTeeFlip(g, 'p1', 'p3');
+  eq([g.stages[0].kingId, g.stages[0].order], ['p1', ['p3', 'p2', 'p1']]);
+  throws(() => R.applyTeeFlip(R.createGame({ id: 'g', players: P(3) }), 'p1'), 'needs who putts first');
+  throws(() => R.applyTeeFlip(R.createGame({ id: 'g', players: P(3) }), 'p1', 'p1'), 'KOG cannot putt first');
+  throws(() => R.applyTeeFlip(R.createGame({ id: 'g', players: P(2) }), 'zz'), 'not a player');
+});
+test('ops: tee flip syncs, and only once', () => {
+  const g = R.createGame({ id: 'g', players: P(2) });
+  eq(applyOp(g, { type: 'flip', king: 'p1' }), true);
+  eq(applyOp(g, { type: 'flip', king: 'p2' }), false);
+  eq(g.stages[0].kingId, 'p1');
+});
 test('toss must rank everyone once', () => {
   const g = R.createGame({ id: 'g', players: P(3) });
   throws(() => R.applyToss(g, ['p1', 'p2']), 'missing player');
@@ -247,6 +266,11 @@ test('stats follow a person across ids (alias from a joined game)', () => {
 // ---- Co-op (2 vs 2) ----
 const FOUR = [{ id: 'a', name: 'Ann' }, { id: 'b', name: 'Bo' }, { id: 'c', name: 'Cy' }, { id: 'd', name: 'Di' }];
 const coopGame = () => R.createGame({ id: 'g', teams: [[FOUR[0], FOUR[1]], [FOUR[2], FOUR[3]]] });
+test('tee flip: co-op, the tee points at a team; the other team putts first', () => {
+  const g = coopGame();
+  R.applyTeeFlip(g, 'team2');
+  eq([g.stages[0].kingId, g.stages[0].order], ['team2', ['team1', 'team2']]);
+});
 test('co-op: two teams play as two units named after their players', () => {
   const g = coopGame();
   eq(g.players, [{ id: 'team1', name: 'Ann & Bo' }, { id: 'team2', name: 'Cy & Di' }]);

@@ -426,7 +426,7 @@ function viewHome() {
   if (g) {
     const st = g.stages[R.currentStageIdx(g)];
     const where =
-      g.status === 'toss' ? 'Opening toss'
+      g.status === 'toss' ? 'Flip a tee'
       : g.status === 'done' ? 'Final results'
       : g.status === 'puttoff' ? 'Putt-off'
       : stageTitle(R.stageDef(st), g);
@@ -840,41 +840,50 @@ function viewShare() {
   <footer class="dock"><button class="btn primary big" data-action="nav" data-view="game">Back to the game</button></footer>`;
 }
 
+/** Opening tee flip: tap who the tee pointed at (the KOG for Round 1); with three players, flip again for who putts first. */
 function viewToss(g) {
-  const rank = ui.toss;
-  const done = rank.length === R.people(g).length;
-  const list = R.people(g)
+  const [king, first] = ui.toss;
+  const units = g.players; // players, or the two teams in co-op
+  const coop = R.isCoop(g);
+  const three = units.length > 2;
+  const firstId = three ? first : units.find((p) => p.id !== king)?.id;
+  const done = Boolean(king && firstId);
+  const list = units
     .map((p) => {
-      const i = rank.indexOf(p.id);
-      return `<button class="rank-btn ${i >= 0 ? 'on' : ''}" data-action="toss-pick" data-pid="${p.id}" ${i >= 0 ? 'disabled' : ''}>
-        <span class="rank-num">${i >= 0 ? i + 1 : ''}</span>
+      const isKing = p.id === king;
+      const isFirst = king && p.id === firstId;
+      const pickable = !king || (three && !first && !isKing);
+      return `<button class="rank-btn ${isKing || isFirst ? 'on' : ''}" data-action="toss-pick" data-pid="${p.id}" ${pickable ? '' : 'disabled'}>
         <span class="rank-name">${esc(p.name)}</span>
-        ${i === 0 ? `<span class="tag gold">${ICON.crown} KOG</span>` : ''}
-        ${done && i === rank.length - 1 ? '<span class="tag">Putts first</span>' : ''}
+        ${isKing ? `<span class="tag gold">${ICON.crown} KOG</span>` : ''}
+        ${isFirst ? '<span class="tag">Putts first</span>' : ''}
       </button>`;
     })
     .join('');
-  const next = done ? '' : `<p class="prompt">Who was ${rank.length === 0 ? '<b>closest</b> to the hole' : `${ordinal(rank.length + 1)} closest`}?</p>`;
-  return `${topbar('Opening toss', 'home', gameRight(g))}
+  const next = !king
+    ? `<p class="prompt">Who is the tee pointing at?</p>`
+    : three && !first
+      ? `<p class="prompt">Flip again between the other two. Who is it pointing at now?</p>`
+      : '';
+  const who = (id) => `<b>${esc(playerName(g, id))}</b>`;
+  return `${topbar('Flip a tee', 'home', gameRight(g))}
   <main class="page">
     <section class="card">
       <ol class="steps">
-        <li>Someone tosses a ball onto the practice green.</li>
-        <li>Everyone putts from that spot to the hole furthest from it.</li>
-        <li>Tap players from <b>closest</b> to the hole to <b>furthest</b>.</li>
+        <li>Someone flips a tee onto the green.</li>
+        <li>Whoever the pointy end points at is the <b>KOG</b> for Round 1 and sets the markers.</li>
+        <li>${three ? 'Flip again between the other two: whoever it points at putts first.' : `The other ${coop ? 'team' : 'player'} putts first.`}</li>
       </ol>
       ${g.sync ? '<p class="muted small">Only one phone needs to do this.</p>' : ''}
     </section>
     ${tossFigure()}
     ${next}
     <div class="rank-list">${list}</div>
-    <p class="muted small center">Tie for closest? Toss again.</p>
-    ${done ? `<section class="card callout">${ICON.crown}<div>${R.isCoop(g)
-      ? `<b>${esc(personName(g, rank[0]))}</b> was closest, so <b>${esc(playerName(g, R.unitOf(g, rank[0])))}</b> are the KOG for Round 1 and set the markers. <b>${esc(personName(g, rank[rank.length - 1]))}</b> was furthest, so <b>${esc(playerName(g, R.unitOf(g, rank[rank.length - 1])))}</b> putt first.`
-      : `<b>${esc(playerName(g, rank[0]))}</b> is the KOG for Round 1 and sets the markers. <b>${esc(playerName(g, rank[rank.length - 1]))}</b> was furthest away and putts first.`}</div></section>` : ''}
+    <p class="muted small center">Pointing between two? Flip it again.</p>
+    ${done ? `<section class="card callout">${ICON.crown}<div>${who(king)} ${coop ? 'are' : 'is'} the KOG for Round 1 and ${coop ? 'set' : 'sets'} the markers. ${who(firstId)} ${coop ? 'putt' : 'putts'} first.</div></section>` : ''}
   </main>
   <footer class="dock row">
-    <button class="btn" data-action="toss-reset" ${rank.length ? '' : 'disabled'}>Reset</button>
+    <button class="btn" data-action="toss-reset" ${king ? '' : 'disabled'}>Reset</button>
     <button class="btn primary" data-action="toss-confirm" ${done ? '' : 'disabled'}>Start Round 1</button>
   </footer>`;
 }
@@ -2281,13 +2290,16 @@ function viewRules() {
   return `${topbar('How to play')}
   <main class="page prose">
     <p class="irl-note"><b>Played in person.</b> Everyone putts on a real practice green with their own putter and balls. The app is just the scorecard.</p>
-    <h2>1 · Opening toss</h2>
-    <p>Each round is run by the <b>current King of the Greens (KOG)</b>, who sets the markers. Nobody is KOG yet, so a toss decides it: whoever ends up closest to the hole is KOG for Round 1.</p>
+    <h2>1 · Flip a tee</h2>
+    <p>Each round is run by the <b>current King of the Greens (KOG)</b>, who sets the markers. Nobody is KOG yet, so a tee decides it. Someone flips a tee onto the green: whoever the point lands facing is the KOG for Round 1 and sets the markers, and the other player (or the other duo) putts first.</p>
+    <p><b>Three players?</b> Flip again between the other two: whoever it points at putts first, and the third putts second. Pointing between two people? Flip it again.</p>
+    <p class="muted small">This only starts the game. Every round after that works as below.</p>
     <p class="muted small">Tap <b>Next</b> to step through it.</p>
     ${fig.toss}
 
     <h2>2 · The KOG sets the markers</h2>
     <p>Each round the current KOG places three markers, one per set: ${dn('S')} 3–5 ft, ${dn('M')} 6–9 ft and ${dn('L')} 10–15 ft. Lowest score each round becomes the next KOG. Any tie, and the current KOG sets again.</p>
+    <p class="marker-note"><span class="marker-x" aria-hidden="true"></span><span><b>Markers can be tees (recommended), ball markers, coins, etc.</b> In the pictures a marker is a small yellow <b>X</b>.</span></p>
     <p>The KOG can set the markers around <b>any hole</b> on the practice green, so pick one that reads tricky.</p>
     ${fig.anyHole}
     ${fig.markers}
@@ -2315,7 +2327,7 @@ function viewRules() {
     ${fig.eagle}
 
     <h2>6 · Putting order</h2>
-    <p><b>Round 1:</b> whoever was furthest from the hole in the opening toss goes first.</p>
+    <p><b>Round 1:</b> the tee flip decides it. The player (or duo) the tee didn’t point at goes first, and the KOG goes last.</p>
     <p><b>Every round after that, including the Eagle round:</b> the <b>leader</b> goes first, meaning the lowest running total, the most under par. For example, a player at −4 putts before −1, who putts before +2. In golf terms, the leader “has the honor.” Tied players keep the order from the round before.</p>
 
     <h2>7 · Winning</h2>
@@ -2334,7 +2346,7 @@ function viewRules() {
         <tr><th>🦅 Eagle round</th><td>4 balls instead of 3, two each, alternating</td></tr>
       </tbody>
     </table>
-    <p>Whoever misses holes out their own ball. In the opening toss all four putt: the closest player’s team is the KOG, and the furthest player’s team putts first. The app shows whose ball is whose, and each player’s stats count only the balls they putted.</p>
+    <p>Whoever misses holes out their own ball. To start, flip a tee between the two teams: the team it points at is the KOG, and the other team putts first. The app shows whose ball is whose, and each player’s stats count only the balls they putted.</p>
   </main>`;
 }
 
@@ -2460,7 +2472,9 @@ function orderPopupHtml(pop) {
       return `<li><span class="pos">${pos}</span><span><b>${name}</b> ${coop ? 'putt' : 'putts'} ${pos}${gaps ? ` <span class="muted">(${kogGap(t[pid] - t[st.kingId])})</span>` : ''}</span></li>`;
     })
     .join('');
-  const why = pop.stage === 0 ? 'Furthest from the opening toss putts first.' : 'The leader (lowest total) putts first.';
+  const why = pop.stage === 0
+    ? (g.toss && g.toss.ranking ? 'Furthest from the opening toss putts first.' : 'The tee flip decided who putts first.')
+    : 'The leader (lowest total) putts first.';
   return `<div class="modal-backdrop" data-action="order-close"></div>
   <div class="modal order-pop" role="dialog" aria-modal="true" aria-labelledby="order-title">
     <div class="eyebrow">${stageTitle(def, g)}${def.kind === 'special' ? ` · ${specialTitle(def)}` : ''}</div>
@@ -2656,7 +2670,7 @@ const actions = {
   },
   'copy-code': () => copyText(activeGame().sync.code, 'Code copied'),
   'toss-pick': (d) => {
-    if (!ui.toss.includes(d.pid)) ui.toss.push(d.pid);
+    if (!ui.toss.includes(d.pid) && ui.toss.length < 2) ui.toss.push(d.pid); // the KOG, then (three players) who putts first
     render();
   },
   'toss-reset': () => {
@@ -2665,7 +2679,7 @@ const actions = {
   },
   'toss-confirm': () => {
     ui.activePid = null;
-    dispatch({ type: 'toss', ranking: [...ui.toss] });
+    dispatch({ type: 'flip', king: ui.toss[0], first: ui.toss[1] || null });
     window.scrollTo(0, 0);
   },
   'select-player': (d) => {

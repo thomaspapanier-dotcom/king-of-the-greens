@@ -7,7 +7,12 @@ const entry = (g, op) => g.stages[op.stage]?.entries[op.pid]?.[op.k];
 const scoringOpen = (g, op) => g.status === 'playing' && R.currentStageIdx(g) === op.stage;
 
 const APPLY = {
-  // Opening toss: ranking is closest → furthest.
+  // Opening tee flip: who the tee pointed at (KOG for Round 1) and who putts first.
+  flip: (g, op) => {
+    if (g.status !== 'toss') return false;
+    R.applyTeeFlip(g, op.king, op.first);
+  },
+  // Opening toss from older versions of the app: ranking is closest → furthest.
   toss: (g, op) => {
     if (g.status !== 'toss') return false;
     R.applyToss(g, op.ranking);

@@ -13,11 +13,13 @@ const PLAYERS = [
 ];
 const BAND = { S: '#74c0fc', M: '#ffd43b', L: '#ff6b5b' };
 
-/** The marker: a gold square with an "M", so it never looks like a ball. */
+/** The marker: a small yellow X (a thin dark edge keeps it readable on the grass), so it never looks like a ball. */
 function markerShape(size = 13) {
-  const h = size / 2;
-  return `<rect x="${-h}" y="${-h}" width="${size}" height="${size}" rx="2.2" fill="#f4c430" stroke="#6b4e00" stroke-width="1.1"/>
-    <text class="marker-m" y="${size * 0.3}" text-anchor="middle" font-size="${size * 0.72}">M</text>`;
+  const h = size * 0.36;
+  const w = Math.max(2.2, size * 0.24);
+  const x = `M${-h} ${-h} L${h} ${h} M${h} ${-h} L${-h} ${h}`;
+  return `<path d="${x}" stroke="#6b4e00" stroke-width="${w + 1.6}" stroke-linecap="round" fill="none"/>
+    <path d="${x}" stroke="#f4c430" stroke-width="${w}" stroke-linecap="round" fill="none"/>`;
 }
 const tr = (x, y) => `transform: translate(${x}px, ${y}px)`;
 
@@ -258,6 +260,93 @@ const TOSS = {
     } else place(c, 110, 248);
     show(el('king-ring'), i >= 3);
     show(el('first-label'), i >= 3);
+  },
+};
+
+// ----- Opening tee flip -----
+const TEE_AT = [180, 140];
+const DUO = [
+  { k: 'ava', name: 'Ava', color: '#4dabf7', x: 115 },
+  { k: 'ben', name: 'Ben', color: '#f783ac', x: 245 },
+];
+// The tee comes to rest with its point aimed at Ava.
+const TEE_END = (Math.atan2(270 - TEE_AT[1], DUO[0].x - TEE_AT[0]) * 180) / Math.PI;
+
+/** A golf tee lying on the grass, point to the right. */
+function teeShape() {
+  return `<g transform="scale(1.45)">
+    <path d="M-8 -1.5 L8 -1 L13 0 L8 1 L-8 1.5 Z" fill="#fff8e7" stroke="#6b4e00" stroke-width=".7" stroke-linejoin="round"/>
+    <ellipse cx="-9.5" cy="0" rx="2.4" ry="4.4" fill="#fff8e7" stroke="#6b4e00" stroke-width=".7"/>
+  </g>`;
+}
+
+function teeSvg() {
+  const people = DUO.map(
+    (p) => `<g class="avatar" data-k="av-${p.k}" style="${tr(p.x, 270)}">
+      <circle r="13" fill="${p.color}" stroke="#fff" stroke-width="2"/>
+      <text y="4.5" text-anchor="middle" class="av-initial">${p.name[0]}</text>
+      <text y="25" text-anchor="middle" class="av-name">${p.name}</text>
+    </g>`,
+  ).join('');
+  const [ax, ay] = [DUO[0].x, 270];
+  return practiceGreen(
+    'tee',
+    `${HOLES.map((h) => hole(h.x, h.y)).join('')}
+     <line class="aim far fade" data-k="pointer" x1="${TEE_AT[0]}" y1="${TEE_AT[1]}" x2="${ax}" y2="${ay - 16}"/>
+     <ellipse class="toss-shadow" data-k="toss-shadow" rx="7" ry="2.5" fill="#000" opacity="0" style="${tr(...TEE_AT)}"/>
+     <g data-k="tee" style="transform: translate(${TEE_AT[0]}px, ${TEE_AT[1]}px) rotate(${TEE_END}deg)">${teeShape()}</g>
+     <circle class="king-ring fade" data-k="king-ring" cx="${ax}" cy="${ay}" r="17"/>
+     ${people}
+     ${crown(ax, 248, 'crown')}
+     ${pill('Putts first', DUO[1].x, 242, 'first-label')}`,
+  );
+}
+
+/** Flip the tee: it flies in from the players, spinning, and spins to a stop pointing at someone. */
+function flipTee(ctx, el, ms = 1900) {
+  const t0 = performance.now();
+  const from = [180, 300];
+  const spin = 3 * 360 + TEE_END;
+  const shadow = ctx.el('toss-shadow');
+  const frame = (now) => {
+    if (!ctx.alive()) return;
+    const t = Math.min(1, (now - t0) / ms);
+    const fly = Math.min(1, t / 0.45); // in the air for the first part, then spinning on the grass
+    const x = from[0] + (TEE_AT[0] - from[0]) * fly;
+    const gy = from[1] + (TEE_AT[1] - from[1]) * fly;
+    const lift = Math.sin(Math.PI * fly) * 80;
+    const rot = spin * (1 - Math.pow(1 - t, 3));
+    el.style.transform = `translate(${x}px, ${gy - lift}px) rotate(${rot}deg) scale(${1 + lift / 120})`;
+    if (shadow) {
+      shadow.style.transform = `translate(${x}px, ${gy}px)`;
+      shadow.style.opacity = String(fly < 1 ? 0.3 * (1 - lift / 110) : 0);
+    }
+    if (t < 1) requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+}
+
+const TEE = {
+  steps: [
+    { text: 'Someone flips a tee onto the green.', ms: 3600 },
+    { text: 'It points at Ava, so Ava is the KOG for Round 1 and sets the markers.', ms: 4200 },
+    { text: 'Ben, the other player (or the other duo), putts first. From Round 2 on, the leader putts first.', ms: 4600 },
+  ],
+  apply(i, ctx) {
+    const { el } = ctx;
+    const tee = el('tee');
+    show(tee, i >= 0);
+    if (i === 0 && ctx.anim) flipTee(ctx, tee);
+    else tee.style.transform = `translate(${TEE_AT[0]}px, ${TEE_AT[1]}px) rotate(${TEE_END}deg)`;
+    show(el('pointer'), i >= 1);
+    const c = el('crown');
+    show(c, i >= 1);
+    if (i === 1 && ctx.anim) {
+      placeNow(c, DUO[0].x, 205);
+      ctx.later(() => place(c, DUO[0].x, 248), 60);
+    } else place(c, DUO[0].x, 248);
+    show(el('king-ring'), i >= 1);
+    show(el('first-label'), i >= 2);
   },
 };
 
@@ -645,8 +734,9 @@ export function tiebreakFigure() {
   return sequenceFigure('tiebreak', 'Tie-breaker, step by step', tossSvg('tiebreak'), TIEBREAK.steps);
 }
 
+/** The opening tee flip, for How to play and the start of a new game. */
 export function tossFigure() {
-  return sequenceFigure('toss', 'Opening toss, step by step', tossSvg(), TOSS.steps);
+  return sequenceFigure('tee', 'Flip a tee, step by step', teeSvg(), TEE.steps);
 }
 
 /** The picture for the round coming up, shown under "Up next". */
@@ -658,7 +748,7 @@ export function nextRoundFigure(def) {
 
 export function figures() {
   return {
-    toss: sequenceFigure('toss', 'Opening toss, step by step', tossSvg(), TOSS.steps),
+    toss: tossFigure(),
     markers: ringsFigure('markers', 'Where the KOG can put the markers', ['S', 'M', 'L', 'round']),
     set: setFigure(),
     anyHole: anyHoleFigure(),
@@ -668,7 +758,7 @@ export function figures() {
   };
 }
 
-const SEQ_DEFS = { toss: TOSS, eagle: EAGLE, tiebreak: TIEBREAK };
+const SEQ_DEFS = { tee: TEE, toss: TOSS, eagle: EAGLE, tiebreak: TIEBREAK };
 const autoplayed = new Set();
 let listening = false;
 

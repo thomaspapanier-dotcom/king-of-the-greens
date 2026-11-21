@@ -230,7 +230,23 @@ export function ballOwner(game, stageIdx, teamId, k, j) {
 }
 
 /**
- * Opening toss. `ranking` lists everyone from closest to the hole to furthest.
+ * Opening tee flip: someone flips a tee and whoever it points at (a player, or a team in co-op) is
+ * the KOG for Round 1 and sets the markers. The other player or team putts first. With three
+ * players the other two flip again: the tee points at who putts first, and the third goes second.
+ */
+export function applyTeeFlip(game, kingId, firstId) {
+  const ids = game.players.map((p) => p.id);
+  if (!ids.includes(kingId)) throw new Error('The tee must point at a player');
+  const others = ids.filter((id) => id !== kingId);
+  if (others.length > 1 && !others.includes(firstId)) throw new Error('Pick who putts first');
+  const first = others.length > 1 ? firstId : others[0];
+  game.toss = { flip: { kingId, firstId: first || kingId } };
+  pushStage(game, 0, kingId, first ? [first, ...others.filter((id) => id !== first), kingId] : [kingId]);
+  game.status = 'playing';
+}
+
+/**
+ * Opening toss (games started before the tee flip). `ranking` lists everyone from closest to the hole to furthest.
  * Closest is KOG for Round 1; furthest putts first. In co-op everyone putts, the
  * closest player's team is KOG, and the furthest player's team putts first.
  */
