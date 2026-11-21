@@ -121,9 +121,9 @@ def prompt_for(kind, variant, card_suit=None):
             'Queen of the same suit. Image 2 is the reference sheet: the Queen of Spades, Queen of Hearts, Queen of '
             'Clubs and Queen of Diamonds, left to right. King of Spades becomes the Queen of Spades, King of Hearts the '
             'Queen of Hearts, King of Clubs the Queen of Clubs, King of Diamonds the Queen of Diamonds. Each Queen does '
-            'exactly what that King was doing, in the same pose and place, in her own style and outfit from the reference '
-            f'sheet, with {SKIN[tone]}. If you can\'t tell a King\'s suit, use the Queen whose colors fit him best. '
-            'Change nothing else.')
+            'exactly what that King was doing, in the same pose and place. Each Queen must look exactly like her card on '
+            'the reference sheet: the same face, skin, hair and style, wearing her own outfit from the sheet. '
+            'If you can\'t tell a King\'s suit, use the Queen whose colors fit him best. Change nothing else.')
 
 
 def out_name(kind, cid, variant):
@@ -141,7 +141,7 @@ def jobs(args):
     if not only or 'cards' in only:
         for suit in SUITS:
             for tone in ('brown', 'black'):
-                if f'queen-{tone}' in want:
+                if f'queen-{tone}' in want and not (IMAGES / f'queen-{suit}-{tone}.png').exists():  # made by hand in ChatGPT
                     out.append({'kind': 'card', 'id': f'queen-{suit}', 'variant': f'queen-{tone}', 'src': queen_card(suit),
                                 'name': f'queen-{suit}-{tone}.png', 'suit': suit})
     for ch in challenges():

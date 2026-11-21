@@ -63,6 +63,68 @@ If one comes out wrong, reply with what to change ("keep everything, but make he
 
 ---
 
+## Queen v2 and v3 cards (8 images)
+
+The Queens are drawn more realistically than the Kings, so their v2 and v3 cards change more than skin color: each one becomes a different woman, with her own face and hair, while keeping everything else about her card.
+
+- **v2: Latina, brown skin.** Latinas vary a lot in looks, so each Queen gets her own hair and natural features instead of one standard look.
+- **v3: Black women.** Each Queen gets a different hairstyle that Black women really wear, matched to her personality: **locs** (Spades), **box braids** (Hearts), a **natural afro** (Clubs) and a **glamorous wig** (Diamonds). Every prompt asks for natural, realistic features and nothing exaggerated.
+- **The same for every card:** the pose, outfit, crown, flower, scene, card border and the realistic art style.
+
+**How:** attach the Queen card listed (from the KOG Images folder; for Hearts and Diamonds use the crowned ones the app uses: `queen-hearts-crowned.png` and `queen-diamonds-blonde-crowned.png`) **in the same message** as its prompt. Save the result with the file name shown.
+
+**If a face looks off or stereotyped:** reply "make her features more natural and realistic, keep everything else". If the pose or background changes: "only her face, hair and skin should change; match the attached card exactly".
+
+It's worth showing these to a few Black and Latina golfers before they go in; they'll spot anything that feels off faster than anyone.
+
+### Queen of Spades
+
+**1. Queen v2**: attach `queen-spades.png`, save as `queen-spades-brown.png`
+```
+Recreate the attached Queen of Spades playing card exactly, in the same realistic illustrated style. Keep everything identical: the composition, her pose, her tailored black-and-silver blazer, pleated skirt and pearl earrings, her black tulip, her crown, her putter, the lit-up stone clubhouse at dusk behind her, the colors, the card border, the corner letters and suit symbols, and the linework. Change only who she is: she is now a Latina woman with warm medium-brown skin, with natural, realistic features (nothing exaggerated or caricatured), and her hair is sleek dark brown hair pulled into a polished low bun with a center part, with her crown sitting on it naturally. Keep her expression and personality: calm, sharp, club-president confidence. Don't change anything else.
+```
+
+**2. Queen v3**: attach `queen-spades.png`, save as `queen-spades-black.png`
+```
+Recreate the attached Queen of Spades playing card exactly, in the same realistic illustrated style. Keep everything identical: the composition, her pose, her tailored black-and-silver blazer, pleated skirt and pearl earrings, her black tulip, her crown, her putter, the lit-up stone clubhouse at dusk behind her, the colors, the card border, the corner letters and suit symbols, and the linework. Change only who she is: she is now a Black woman with deep brown skin, with natural, realistic features (nothing exaggerated or caricatured), and her hair is long locs (dreadlocks) wound into an elegant, polished low updo, a few silver cuffs in her locs, with her crown sitting on it naturally. Keep her expression and personality: calm, sharp, club-president confidence. Don't change anything else.
+```
+
+### Queen of Hearts
+
+**3. Queen v2**: attach `queen-hearts-crowned.png`, save as `queen-hearts-brown.png`
+```
+Recreate the attached Queen of Hearts playing card exactly, in the same realistic illustrated style. Keep everything identical: the composition, her pose, her red-white-and-black tour outfit, her visor with the red rose tucked in it, her crown, her putter, her crouched putt-reading pose, the tournament green and grandstands behind her, the colors, the card border, the corner letters and suit symbols, and the linework. Change only who she is: she is now a Latina woman with warm medium-brown skin, with natural, realistic features (nothing exaggerated or caricatured), and her hair is long, dark curly hair pulled into a high ponytail through the back of her visor, with her crown sitting on it naturally. Keep her expression and personality: fierce, focused, competitive. Don't change anything else.
+```
+
+**4. Queen v3**: attach `queen-hearts-crowned.png`, save as `queen-hearts-black.png`
+```
+Recreate the attached Queen of Hearts playing card exactly, in the same realistic illustrated style. Keep everything identical: the composition, her pose, her red-white-and-black tour outfit, her visor with the red rose tucked in it, her crown, her putter, her crouched putt-reading pose, the tournament green and grandstands behind her, the colors, the card border, the corner letters and suit symbols, and the linework. Change only who she is: she is now a Black woman with deep brown skin, with natural, realistic features (nothing exaggerated or caricatured), and her hair is long box braids gathered into a high ponytail through the back of her visor, with her crown sitting on it naturally. Keep her expression and personality: fierce, focused, competitive. Don't change anything else.
+```
+
+### Queen of Clubs
+
+**5. Queen v2**: attach `queen-clubs.png`, save as `queen-clubs-brown.png`
+```
+Recreate the attached Queen of Clubs playing card exactly, in the same realistic illustrated style. Keep everything identical: the composition, her pose, her 1960s outfit (cat-eye sunglasses, silk headscarf, cardigan over her shoulders, plaid capri pants, saddle shoes), the daisy in her headscarf, her crown, her lemonade and vintage pull cart, the sunny old country club and picket fence behind her, the colors, the card border, the corner letters and suit symbols, and the linework. Change only who she is: she is now a Latina woman with warm medium-brown skin, with natural, realistic features (nothing exaggerated or caricatured), and her hair is short, glossy dark curls styled in a 1960s look under her headscarf, with her crown sitting on it naturally. Keep her expression and personality: friendly, charming, laughing. Don't change anything else.
+```
+
+**6. Queen v3**: attach `queen-clubs.png`, save as `queen-clubs-black.png`
+```
+Recreate the attached Queen of Clubs playing card exactly, in the same realistic illustrated style. Keep everything identical: the composition, her pose, her 1960s outfit (cat-eye sunglasses, silk headscarf, cardigan over her shoulders, plaid capri pants, saddle shoes), the daisy in her headscarf, her crown, her lemonade and vintage pull cart, the sunny old country club and picket fence behind her, the colors, the card border, the corner letters and suit symbols, and the linework. Change only who she is: she is now a Black woman with deep brown skin, with natural, realistic features (nothing exaggerated or caricatured), and her hair is a full, rounded 1960s natural afro, with her silk headscarf tied around it as a headband, with her crown sitting on it naturally. Keep her expression and personality: friendly, charming, laughing. Don't change anything else.
+```
+
+### Queen of Diamonds
+
+**7. Queen v2**: attach `queen-diamonds-blonde-crowned.png`, save as `queen-diamonds-brown.png`
+```
+Recreate the attached Queen of Diamonds playing card exactly, in the same realistic illustrated style. Keep everything identical: the composition, her pose, her red-and-white diamond-print outfit and fur-trim vest, oversized sunglasses, gold hoop earrings, statement sneakers, her sunflower, her crown, her diamond-studded putter, the phone on its gimbal, the resort course and sunset behind her, the colors, the card border, the corner letters and suit symbols, and the linework. Change only who she is: she is now a Latina woman with warm medium-brown skin, with natural, realistic features (nothing exaggerated or caricatured), and her hair is long, voluminous dark brown hair in big waves with caramel highlights, with her crown sitting on it naturally. Keep her expression and personality: glamorous, bold, the star of the show. Don't change anything else.
+```
+
+**8. Queen v3**: attach `queen-diamonds-blonde-crowned.png`, save as `queen-diamonds-black.png`
+```
+Recreate the attached Queen of Diamonds playing card exactly, in the same realistic illustrated style. Keep everything identical: the composition, her pose, her red-and-white diamond-print outfit and fur-trim vest, oversized sunglasses, gold hoop earrings, statement sneakers, her sunflower, her crown, her diamond-studded putter, the phone on its gimbal, the resort course and sunset behind her, the colors, the card border, the corner letters and suit symbols, and the linework. Change only who she is: she is now a Black woman with deep brown skin, with natural, realistic features (nothing exaggerated or caricatured), and her hair is a long, glossy honey-blonde wig with big glamorous waves (a lace-front style), with her crown sitting on it naturally. Keep her expression and personality: glamorous, bold, the star of the show. Don't change anything else.
+```
+
 ## Later: Queen versions of the badges and banners
 
 Once the four Queens are final, every challenge gets a Queen badge and banner. Same challenge, same name, same scene and layout, with each King swapped for the Queen of the same suit (King of Spades → Queen of Spades, and so on). Attach the King version and send:
