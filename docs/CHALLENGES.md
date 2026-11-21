@@ -5,11 +5,11 @@ Almost all of them come from **ranked**, where both players confirm the score. O
 
 Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Legendary** (gold), **Impossible** (red).
 
-**79 of 90 challenges have their art.** 11 still need a badge and banner.
+**90 of 90 challenges have their art.** 0 still need a badge and banner.
 
 ---
 
-## Already in the app (79)
+## Already in the app (90)
 
 
 ### Compass Putt
@@ -31,12 +31,15 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 ### Eagles
 
 - **The Bird with Big Wings** · Rare: Make an eagle putt (sink an eagle ball on the first putt) in a ranked match.
+- **Birds of Prey** · Legendary: Make 2 eagle putts in the same ranked match.
 - **King of the Skies** · Impossible: Sink all three eagle balls on the first putt in one ranked match.
 
 ### Money Rounds
 
 - **Flawless Shawty** · Very Rare: One-putt all 9 balls in the Short-putt round (Round 2) of a ranked match.
 - **Dead Center** · Very Rare: Sink 7 of the 9 balls on the first putt in the Medium-putt round (Round 4) of a ranked match.
+- **Long Live the King** · Impossible: Sink 6 of the 9 balls on the first putt in the Long-putt round (Round 6) of a ranked match.
+- **Royal Flush** · Impossible: One-putt every ball in a regular round: all three sets, Short, Medium and Long.
 - **Triple Threat** · Very Rare: One-putt all 3 balls of a Long set (both birdie balls and the par ball, from 10–15 ft).
 
 ### Scoring
@@ -45,6 +48,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 - **Under the Radar** · Common: Finish a ranked match at −2 or better.
 - **Seeing Red** · Rare: Finish a ranked match at −4 or better.
 - **Lights Out** · Very Rare: Finish a ranked match at −8 or better.
+- **Untouchable** · Impossible: Finish a ranked match at −12 or better.
 
 ### Beatdowns
 
@@ -55,6 +59,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 ### Upsets
 
 - **Underdog** · Very Rare: Beat a ranked opponent rated 500–999 Elo higher than you.
+- **Giant Slayer** · Impossible: Beat a ranked opponent rated 1,000+ Elo higher than you.
 
 ### Long Range
 
@@ -82,6 +87,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 - **I’ll Lead the Way** · Rare: Win a ranked duos match where your team is the KOG for 5 or more rounds.
 - **Follow Me to Victory** · Rare: Win a ranked duos match with a partner who is playing their very first ranked match.
 - **Goose & Maverick** · Very Rare: Win 10 ranked duos matches with the same partner.
+- **We’re Gonna Win Forever** · Legendary: Win 20 ranked duos matches with the same partner.
 - **Scavenger** · Rare: Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.
 - **You Hit It, I’ll End It** · Rare: Win a ranked duos match where the Eagle round (the last round) decides it: you and your teammate’s Eagle-round scores together take the lead and seal the win.
 
@@ -92,6 +98,7 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 - **Heart of Gold** · Rare: Reach Gold.
 - **Platinum Plated** · Very Rare: Reach Platinum.
 - **Diamond Hands** · Very Rare: Reach Diamond.
+- **Putt Master** · Legendary: Reach Putt Master, the very top rank.
 
 ### Streaks
 
@@ -106,8 +113,10 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 - **New Faces** · Common: Play ranked matches against 10 different opponents.
 - **Social Butterfly** · Rare: Play ranked matches against 25 different opponents.
 - **Royal Court** · Very Rare: Play ranked matches against 50 different opponents.
+- **Triple Digits** · Legendary: Play ranked matches against 100 different opponents.
 - **Iron Man** · Rare: Play 100 ranked matches.
 - **Dawn Patrol** · Common: Finish a ranked match before 8 AM.
+- **Crown Jewel** · Impossible: Earn the magenta win % golf ball by winning 65% or more of your ranked matches.
 
 ### Road Trips
 
@@ -129,6 +138,8 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 - **Kingdom Hopper** · Rare: Win ranked matches in 5 different Kingdoms.
 - **Realm Raider** · Very Rare: Win 10 ranked matches outside your home Realm.
 - **The Conqueror** · Very Rare: Win ranked matches in 15 different Kingdoms.
+- **High King** · Legendary: Win a ranked match in 35 different Kingdoms.
+- **Fifty Crowns** · Impossible: Win a ranked match in all 50 Kingdoms.
 
 ### Milestones
 
@@ -144,96 +155,6 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 
 ---
 
-## Still missing (11)
+## Still missing (0)
 
 These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
-
-### Eagles
-
-#### Birds of Prey · Legendary
-- **How to complete (Ranked):** Make 2 eagle putts in the same ranked match.
-- **Badge:** Two golden eagles locked talon to talon in a mid-air spiral around a single golf ball, wings sweeping out to the rim, each wearing a tiny crown; feathers in hammered gold and bronze, a faint golden glow behind them.
-- **Banner:** Two enormous golden eagles diving side by side out of a storm-lit sunset sky toward a cliffside putting green above a crashing sea, each one clutching a golf ball in its talons, wind ripping through the flag. On the green, the King of Clubs has just holed his second eagle putt and points both arms at the sky, while the King of Spades and the King of Hearts stare up in disbelief and the King of Diamonds films it on his phone. Golden rim light, spray off the cliffs, scattered feathers drifting down. LAYOUT: keep the LEFT THIRD calmer (a round badge covers that spot), put the main action in the center and right, with the Kings’ crowns and faces in the upper middle of the frame.
-- **Files:** `badge-birds-of-prey.png`, `banner-birds-of-prey.png`
-
-
-### Money Rounds
-
-#### Long Live the King · Impossible
-- **How to complete (Ranked):** Sink 6 of the 9 balls on the first putt in the Long-putt round (Round 6) of a ranked match.
-- **Badge:** A golden crown floating above a putter, glowing like a holy relic.
-- **Banner:** A royal procession on a cathedral-lit green, crowds cheering as the King walks to the cup.
-- **Files:** `badge-long-live.png`, `banner-long-live.png`
-
-#### Royal Flush · Impossible
-- **How to complete (Ranked):** One-putt every ball in a regular round: all three sets, Short, Medium and Long.
-- **Badge:** Five cards fanned out, 10 to Ace of spades, with a golf ball for the Ace.
-- **Banner:** A high-roller table in green felt with a royal flush laid out and the four Kings in tuxedos.
-- **Files:** `badge-royal-flush.png`, `banner-royal-flush.png`
-
-
-### Scoring
-
-#### Untouchable · Impossible
-- **How to complete (Ranked):** Finish a ranked match at −12 or better.
-- **Badge:** A crown inside a shatterproof glass case.
-- **Banner:** A marble throne room with velvet ropes around the green and the King seated on his throne.
-- **Files:** `badge-untouchable.png`, `banner-untouchable.png`
-
-
-### Upsets
-
-#### Giant Slayer · Impossible
-- **How to complete (Ranked):** Beat a ranked opponent rated 1,000+ Elo higher than you.
-- **Badge:** A slingshot loaded with a golf ball.
-- **Banner:** A toppled giant King statue lying on a green, the challenger standing on top of it.
-- **Files:** `badge-giant-slayer.png`, `banner-giant-slayer.png`
-
-
-### Duos & Groups
-
-#### We’re Gonna Win Forever · Legendary
-- **How to complete (Ranked):** Win 20 ranked duos matches with the same partner.
-- **Badge:** A golden crown hanging on a basketball rim while a golf ball slams through the net, a small infinity sign (∞) woven into the net.
-- **Banner:** A legendary fast-break moment in a packed basketball arena at night, played by the two black Kings in black KOG jerseys with their suit emblems (no team names, no real logos). The King of Clubs is in the FOREGROUND, closest to the camera, turned away from the basket and walking toward us, arms spread wide like wings and palms open, calm and already celebrating. Behind him the King of Spades is high in the air at the rim, ball cocked back in one hand for a thunderous dunk. Down below, the two red Kings (Hearts and Diamonds) in red jerseys look up, beaten, too late to stop it. Camera flashes pop in the crowd. LAYOUT: shift the whole play to the right. Keep the LEFT THIRD of the banner as empty arena crowd and court (a round badge covers that spot), put the hoop just left of center, the dunking King of Spades in the center, and the celebrating King of Clubs in the right third. Keep both black Kings’ crowns and faces in the upper middle of the frame.
-- **Files:** `badge-win-forever.png`, `banner-win-forever.png`
-
-
-### The Climb
-
-#### Putt Master · Legendary
-- **How to complete (Ranked):** Reach Putt Master, the very top rank.
-- **Badge:** The magenta Putt Master crest shooting out rays of light.
-- **Banner:** A green floating among the stars, the King seated on a throne made of putters.
-- **Files:** `badge-putt-master.png`, `banner-putt-master.png`
-
-
-### Career
-
-#### Triple Digits · Legendary
-- **How to complete (Ranked):** Play ranked matches against 100 different opponents.
-- **Badge:** A crowned hand holding up a torn sheet of paper with “100” scrawled on it in thick black marker, inside a burst of old-fashioned camera flash.
-- **Banner:** A legendary vintage locker-room press photo, in grainy black and white like an old newspaper shot: right after the match, the King of Diamonds sits in a crowded clubhouse locker room in a sleeveless vintage KOG jersey, sweaty and grinning with quiet pride, holding up a plain sheet of paper with “100” hand-scrawled in thick black marker. A teammate’s hand pokes in from behind him with one finger pointed up, and reporters crowd the edges with old flashbulb cameras. The ONLY color in the whole image is the King’s gold crown. The “100” on the paper is the only writing allowed. LAYOUT: keep the LEFT THIRD as dim locker-room background (a round badge covers that spot); put the King in the center and the “100” sign in the right third, with his crown, face and the sign in the upper middle of the frame.
-- **Files:** `badge-triple-digits.png`, `banner-triple-digits.png`
-
-#### Crown Jewel · Impossible
-- **How to complete (Ranked):** Earn the magenta win % golf ball by winning 65% or more of your ranked matches.
-- **Badge:** The glowing magenta win % golf ball resting on a velvet pillow under a crown.
-- **Banner:** A royal vault full of jewels, the magenta golf ball under a single spotlight.
-- **Files:** `badge-crown-jewel.png`, `banner-crown-jewel.png`
-
-
-### Kingdoms & Realms
-
-#### High King · Legendary
-- **How to complete (Ranked):** Win a ranked match in 35 different Kingdoms.
-- **Badge:** A towering golden crown built from 35 smaller crowns stacked into a spire, set over a shield with a putter and a scepter crossed behind it; engraved laurels around the rim.
-- **Banner:** A grand open-air coronation on a hilltop putting green at sunrise: the King of Clubs, newly crowned High King, rides up a path lined with 35 Kingdom banners in every color, a sea of cheering subjects on both sides, the other three Kings kneeling by the green with their putters raised in salute, distant castles on the horizon catching the first light. LAYOUT: keep the LEFT THIRD calmer (a round badge covers that spot), put the main action in the center and right, with the Kings’ crowns and faces in the upper middle of the frame.
-- **Files:** `badge-high-king.png`, `banner-high-king.png`
-
-#### Fifty Crowns · Impossible
-- **How to complete (Ranked):** Win a ranked match in all 50 Kingdoms.
-- **Badge:** Fifty tiny crowns arranged in a ring around a golden map of the United States.
-- **Banner:** All four Kings seated at a round table shaped like the map of the country, fifty crowns glowing on it.
-- **Files:** `badge-fifty-crowns.png`, `banner-fifty-crowns.png`
-
