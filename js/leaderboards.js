@@ -5,7 +5,7 @@ import * as KG from './kingdoms.js';
 import * as MAP from './usmap.js';
 import * as PM from './realmpaint.js';
 import { mountGlobe } from './globe.js';
-import { ME, PEOPLE, plate, rankByName } from './lfg.js';
+import { ME, PEOPLE, plate, rankByName, addPlayers } from './lfg.js';
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const HOME = 'FL'; // example player's Kingdom (the state they signed up in)
@@ -15,7 +15,7 @@ const elo = (p) => p.rank.min + 20 + (p.pct - 50) * 3;
 const COLOR = { ivy: '#2fae7a', magnolia: '#e0528a', plains: '#e6b12e', desert: '#ec7a32', peaks: '#8b7cf6', pacific: '#3a9be0' };
 
 // A few more example players around the Empire, so every Realm has someone on its board.
-const X = (tag, sub, rank, pct, art, kingdom) => ({ tag, sub, rank: rankByName(rank), pct, art, kingdom });
+const X = (tag, sub, rank, pct, art, kingdom) => ({ id: `lb-${tag.toLowerCase().replace(/[^a-z]+/g, '-')}`, tag, sub, rank: rankByName(rank), pct, art, kingdom });
 const ELSEWHERE = [
   X('Jordan K.', '', 'Platinum II', 61, 'sniper', 'CA'),
   X('Maya Chen', '', 'Gold I', 57, 'west', 'WA'),
@@ -26,6 +26,7 @@ const ELSEWHERE = [
   X('Luis Ortega', '', 'Gold III', 56, 'underdog', 'TX'),
   X('Kevin L.', '', 'Silver I', 50, 'par-100', 'OH'),
 ];
+addPlayers(ELSEWHERE);
 const PLAYERS = [...new Set([ME, ...Object.values(PEOPLE), ...ELSEWHERE])]; // PEOPLE includes you as .me
 
 // Steady made-up numbers per Kingdom, so the example board doesn't reshuffle on every visit.

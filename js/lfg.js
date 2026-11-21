@@ -4,6 +4,8 @@ import * as RK from './ranked.js';
 import * as WR from './winrate.js';
 import { rankBadge } from './badges.js';
 import { badgeHtml, bannerClass } from './flair.js';
+import * as CH from './challenges.js';
+import { kingdomName as KINGDOM_NAME } from './kingdoms.js';
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 export const rankByName = (name) => RK.RANKS.find((r) => r.name === name);
@@ -29,6 +31,53 @@ export const PEOPLE = {
   alva: P('Alex V.', '', 'Diamond II', 63, 'goose-maverick', 'TX'),
 };
 
+// Every example player by id, so tapping a player card can open it.
+for (const [id, p] of Object.entries(PEOPLE)) p.id = id;
+ME.id = 'me';
+const BY_ID = new Map([[ME.id, ME], ...Object.values(PEOPLE).map((p) => [p.id, p])]);
+/** Add more example players (e.g. the Leaderboards' players around the country). Each needs an id. */
+export const addPlayers = (list) => list.forEach((p) => BY_ID.set(p.id, p));
+
+/** Steady made-up ranked stats for an example player: matches, wins and the last 10. */
+export function playerStats(p) {
+  let h = 7;
+  for (const ch of p.id) h = (h * 31 + ch.charCodeAt(0)) % 9973;
+  const played = p.me ? 38 : 24 + (h % 170);
+  const wins = Math.round((played * p.pct) / 100);
+  const last10 = Math.max(2, Math.min(9, Math.round(p.pct / 10) + ((h >> 3) % 3) - 1));
+  return { played, wins, last10, lost10: 10 - last10 };
+}
+
+/** Tap a player card: their whole banner and badge, rank, name, win % and ranked stats. */
+export function playerSheetHtml(id) {
+  const p = BY_ID.get(id);
+  if (!p) return '';
+  const st = playerStats(p);
+  const level = WR.levelFor(p.pct, 100);
+  const ch = CH.CHALLENGES.find((c) => c.id === p.art);
+  return `<div class="ch-pop" data-action="ch-close">
+    <section class="ch-sheet pl-sheet" role="dialog" aria-label="Player card: ${esc(p.tag)}" data-action="ch-stay">
+      <div class="ch-grab" aria-hidden="true"></div>
+      <div class="pl-hero">
+        <img class="pl-banner" src="assets/challenges/banner-${p.art}.webp" alt="" draggable="false">
+        <img class="pl-badge" src="assets/challenges/badge-${p.art}.webp" alt="" draggable="false">
+        <div class="pl-stats">
+          <span><small>Ranked matches played</small><b>${st.played}</b></span>
+          <span><small>Wins</small><b>${st.wins}</b></span>
+          <span><small>Last 10 matches</small><b><i class="w">${st.last10}</i>-<i class="l">${st.lost10}</i></b></span>
+        </div>
+      </div>
+      <div class="pl-id">
+        ${rankBadge(p.rank, 44)}
+        <div class="pl-who">${nameHtml(p)}<span>${esc(p.rank.name)}${p.kingdom ? ` · ${esc(KINGDOM_NAME(p.kingdom))}` : ''}</span></div>
+        <div class="pl-win">${WR.winBall(level, 40)}<small>${p.pct}% wins</small></div>
+      </div>
+      ${ch ? `<p class="muted small pl-wearing">Wearing the <b>${esc(ch.name)}</b> badge and banner.</p>` : ''}
+      <button class="btn primary wide" data-action="ch-close">Close</button>
+    </section>
+  </div>`;
+}
+
 /** The name on a player card: a nickname gets the first name in small type underneath. */
 export const nameHtml = (p) => (p.sub
   ? `<span class="np-name"><b>${esc(p.tag)}</b><small>${esc(p.sub)}</small></span>`
@@ -43,7 +92,8 @@ const bannerStyle = (p) => (p.art ? ` style="background-image:linear-gradient(90
 /** [badge] [rank] name [win % ball] on the player's banner: the player card on every ranked screen. */
 export function plate(p, { badge = 20, ball = 15, check = false } = {}) {
   const level = WR.levelFor(p.pct, 100);
-  return `<span class="lf-plate np ${bannerCls(p)}${p.me ? ' me' : ''}"${bannerStyle(p)}>${badgeImg(p, badge)}${rankBadge(p.rank, badge)}${nameHtml(p)}${WR.winBall(level, ball + 2)}${check ? '<span class="check" title="Verified">✓</span>' : ''}</span>`;
+  const tap = p.id ? ` data-action="player-open" data-v="${p.id}" role="button" tabindex="0" aria-label="Open ${esc(p.tag)}’s player card"` : '';
+  return `<span class="lf-plate np ${bannerCls(p)}${p.me ? ' me' : ''}"${bannerStyle(p)}${tap}>${badgeImg(p, badge)}${rankBadge(p.rank, badge)}${nameHtml(p)}${WR.winBall(level, ball + 2)}${check ? '<span class="check" title="Verified">✓</span>' : ''}</span>`;
 }
 
 // ---------- courses near the user (example distances) ----------

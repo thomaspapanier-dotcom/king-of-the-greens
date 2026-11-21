@@ -1496,7 +1496,7 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 /* Find Match: each player is a full-width card strip */
 .lf-post .lf-mode { position: static; display: block; margin-bottom: 6px; }
 .lf-post .lf-who { flex-direction: column; align-items: stretch; gap: 6px; padding-right: 0; }
-.lf-post .lf-who .lf-plate { display: flex; width: 100%; min-height: 54px; padding: 6px 12px 6px 6px; font-size: 16px; gap: 8px; border-radius: 12px; }
+.lf-post .lf-who .lf-plate { display: flex; width: 100%; min-height: 74px; padding: 6px 12px 6px 6px; font-size: 16px; gap: 8px; border-radius: 12px; }
 .lf-post .lf-who .lf-plate .win-ball { margin-left: auto; }
 /* Home player card: name with a smaller first name under a nickname */
 .pb-name { display: inline-flex; flex-direction: column; min-width: 0; line-height: 1.02; }
@@ -1522,7 +1522,7 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .lb-list li { display: grid; grid-template-columns: 26px 1fr; align-items: center; gap: 6px; }
 .lb-pos { font-weight: 900; font-size: 16px; color: #f5d76e; text-align: center; }
 .lb-card { display: grid; gap: 3px; min-width: 0; }
-.lb-card .lf-plate { display: flex; width: 100%; min-height: 46px; padding: 5px 10px 5px 5px; font-size: 15px; gap: 7px; border-radius: 11px; }
+.lb-card .lf-plate { display: flex; width: 100%; min-height: 66px; padding: 5px 10px 5px 5px; font-size: 15px; gap: 7px; border-radius: 11px; }
 .lb-card .lf-plate .win-ball { margin-left: auto; }
 .lb-meta { font-size: 12px; color: var(--muted); padding-left: 4px; }
 .lb-list li.me .lf-plate { box-shadow: 0 0 0 2px #f5d76e, 0 0 12px rgba(245, 215, 110, 0.5); }
@@ -1620,3 +1620,23 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .lb-plift.anim, .lb-klift.anim { animation: lb-rise 0.55s 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 @keyframes lb-rise { from { transform: translateY(0); } }
 .lb-psvg .lb-abbr { font-size: inherit; }
+
+/* Player cards: taller banners, tap one to open the whole thing */
+.lf-plate[data-action] { cursor: pointer; }
+.lb-card .lf-plate, .lf-post .lf-who .lf-plate { background-position: center 30%; }
+.pl-hero { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.18); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); }
+.pl-banner { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.pl-badge { position: absolute; left: 10px; top: 10px; width: 23%; max-width: 110px; filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.7)); }
+.pl-stats { position: absolute; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 1.3fr 0.8fr 1fr; gap: 6px; padding: 26px 12px 10px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.82) 45%); }
+.pl-stats span { display: grid; gap: 1px; text-align: center; }
+.pl-stats small { font-size: 10.5px; font-weight: 700; color: rgba(255, 255, 255, 0.8); line-height: 1.15; }
+.pl-stats b { font-size: 20px; color: #fff; text-shadow: 0 1px 3px #000; }
+.pl-stats .w { font-style: normal; color: #51cf66; }
+.pl-stats .l { font-style: normal; color: #ff6b6b; }
+.pl-id { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; padding: 4px 2px; }
+.pl-who { display: grid; gap: 2px; min-width: 0; font-size: 20px; }
+.pl-who .np-name small { font-size: 13px; }
+.pl-who > span { font-size: 13px; color: var(--muted); font-weight: 600; }
+.pl-win { display: grid; justify-items: center; gap: 2px; }
+.pl-win small { font-size: 11px; font-weight: 700; color: var(--muted); }
+.pl-wearing { margin: 0; }

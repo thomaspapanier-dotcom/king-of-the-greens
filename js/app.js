@@ -2372,7 +2372,8 @@ function render() {
     (ui.kogFlash
       ? `<div class="kog-flash" data-action="flash-close" role="img" aria-label="You are the new King of the Greens"><img src="${KOG_CARD}" alt=""><div class="kog-flash-text">New KOG!</div></div>`
       : ui.kogPopup ? kogPopupHtml(ui.kogPopup) : ui.orderPopup ? orderPopupHtml(ui.orderPopup) : ui.ranksChart ? ranksChartHtml() : '') +
-    (ui.dialog ? dialogHtml(ui.dialog) : '');
+    (ui.dialog ? dialogHtml(ui.dialog) : '') +
+    (ui.playerOpen ? LF.playerSheetHtml(ui.playerOpen) : '');
   if (ui.view === 'rules' || ui.view === 'game') mountIllustrations($app);
   if (ui.view === 'leaderboards' && ui.lb) mountLeaderboards($app, ui.lb, render);
 }
@@ -2851,6 +2852,11 @@ const actions = {
   },
   'ch-close': () => {
     ui.chOpen = null;
+    ui.playerOpen = null;
+    render();
+  },
+  'player-open': (d) => {
+    ui.playerOpen = d.v;
     render();
   },
   'how-tab': (d) => {
@@ -3135,7 +3141,7 @@ document.addEventListener('touchend', () => {
   if (sheetDy > 90) {
     sheet.style.transition = 'transform 0.2s ease-in';
     sheet.style.transform = 'translateY(110%)';
-    setTimeout(() => { ui.chOpen = null; render(); }, 180);
+    setTimeout(() => { ui.chOpen = null; ui.playerOpen = null; render(); }, 180);
   } else {
     sheet.style.transition = 'transform 0.2s ease-out';
     sheet.style.transform = '';
