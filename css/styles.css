@@ -1605,3 +1605,18 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .lb-paint-home { position: absolute; transform: translate(-50%, -50%); display: grid; justify-items: center; pointer-events: none; }
 .lb-paint-home i { font-style: normal; font-size: 20px; line-height: 1; color: #f5d76e; text-shadow: 0 0 2px #000, 0 0 6px #000, 0 0 10px rgba(245, 215, 110, 0.9); }
 .lb-paint-home b { margin-top: 1px; padding: 1px 6px; border-radius: 8px; font-size: 10px; color: #f5d76e; background: rgba(12, 24, 17, 0.85); border: 1px solid rgba(245, 215, 110, 0.6); white-space: nowrap; }
+
+/* Realm and Kingdom views on the painting: the Realm lifts off as a cut-out, the rest dims */
+.lb-pmap { background: #0d2f42; }
+.lb-psvg { aspect-ratio: 16 / 9; }
+.lb-shade { fill: #04121b; opacity: 0.62; }
+.lb-shade2 { fill: #04121b; opacity: 0.45; pointer-events: none; }
+.lb-phit { fill: transparent; stroke: rgba(255, 255, 255, 0.0); stroke-width: 1; cursor: pointer; }
+.lb-phit.pick { stroke: #f5d76e; stroke-width: 2; }
+.lb-kedge { fill: none; stroke: #fff6cf; stroke-width: 2; pointer-events: none; }
+.lb-klift { cursor: pointer; }
+.lb-zoom.anim { animation: lb-zoom 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes lb-zoom { from { transform: var(--z0); } }
+.lb-plift.anim, .lb-klift.anim { animation: lb-rise 0.55s 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes lb-rise { from { transform: translateY(0); } }
+.lb-psvg .lb-abbr { font-size: inherit; }

@@ -1,9 +1,9 @@
 // Leaderboards: players, Kingdoms, Realms and Empires. Start on a globe of the world, tap an Empire
-// (a country) to zoom into its 3D map, then tap around its Realms and Kingdoms to filter the boards.
+// (a country) to zoom into its painted Realm map, then tap around its Realms and Kingdoms to filter the boards.
 // Example numbers until ranked play is live.
 import * as KG from './kingdoms.js';
 import * as MAP from './usmap.js';
-import { CASTLES, CASTLE_DEFS } from './realmcastles.js';
+import * as PM from './realmpaint.js';
 import { mountGlobe } from './globe.js';
 import { ME, PEOPLE, plate, rankByName } from './lfg.js';
 
@@ -77,7 +77,6 @@ export function lbMapTap(st, v) {
       st.kingdom = st.kingdom === v ? null : v;
     }
   }
-  st.anim = st.realm; // play the break-off once
   if (wasWorld && !st.world) st.enter = true; // the Empire map grows in as the globe zooms
 }
 
@@ -87,7 +86,6 @@ export function lbMapTap(st, v) {
 const PAINT_GRID = [80, 45];
 const PAINT_REALM = { b: 'pacific', p: 'peaks', y: 'plains', o: 'desert', m: 'magnolia', g: 'ivy' };
 const PAINT_MASK = '252.3b74.2b1.9b51.2g15.12b9p4y4.1y2.2y29.3g14.11b10p16y25.4g14.10b12p17y2.1y13.1g2.1g2.7g11.11b12p24y6.1g1.5g1.8g10.11b13p26y4.1g1.2g1.10g11.10b15p8y1.16y2.1y9g2.3g13.10b15p8y1.11y1.4y2.1y9g2.3g12.11b15p8y1.17y1.2y14g11.11b2p1.5p1.1p1.4p19y1.6y1.2y14g10.11b1.9p2.3p15y1.5y1.7y14g11.11b3p1.7p2.2p29y13g11.12b2p1.3p1.3p3.2p29y11g13.11b3p3.7p1.3p28y11g12.12b11p1.5p26y6m6g13.12b18p23y10m4g14.12b17p21y14m1g14.15b15p19y17m14.10b2.3b10o4p2o16y19m15.3b1.10b22o8y21m14.4b1.9b25o1y26m15.4b3.6b25o26m17.8b2.1b26o25m20.9b26o24m23.6b27o23m27.3b27o22m31.27o21m23.5b6.25o21m23.5b9.2o2.18o21m21.8b13.17o21m22.7b6.1o7.16o8m5.9m20.8b9.2b4.3o1.10o3.6m9.6m19.5b2.2b8.1b1.1b4.1o3.7o20.6m20.2b5.2b5.6b7.6o22.6m18.1b15.2b1.2b8.4o24.5m34.2b12.3o25.4m77.3m77.3m254.'.replace(/(\d+)(.)/g, (_, n, c) => c.repeat(+n));
-const PAINT_HOME = [79, 80]; // where Florida (your Kingdom) is on the painting, in %
 
 /** Called after the screen is drawn: start the globe, or listen for taps on the painted map. */
 export function mountLeaderboards(root, st, rerender) {
@@ -121,10 +119,13 @@ export function mountLeaderboards(root, st, rerender) {
   });
 }
 
-// ---------- the map ----------
-const CENTER = [487, 305];
-const SMALL = new Set(['RI', 'DE', 'CT', 'NJ', 'MD', 'VT', 'NH', 'MA']); // too small for a label
-const avgPt = (codes) => codes.reduce((a, c) => [a[0] + MAP.LABEL[c][0] / codes.length, a[1] + MAP.LABEL[c][1] / codes.length], [0, 0]);
+// ---------- the painted map, zoomed into a Realm or a Kingdom ----------
+// The Realm and Kingdom views use the same painting as the Empire view. A Realm lifts off the
+// painting as a cut-out (assets/realms/<id>.webp) while the rest of the map dims; a Kingdom lifts
+// off its Realm the same way. The state outlines are lined up with the painting (js/realmpaint.js)
+// so each Kingdom can be tapped and cut out.
+const [PW, PH] = PM.SIZE;
+const SMALL = new Set(['RI', 'DE', 'CT', 'NJ', 'MD', 'VT', 'NH', 'MA']); // too small for a label until zoomed in
 const STAR = (() => {
   const p = [];
   for (let i = 0; i < 10; i++) {
@@ -134,91 +135,79 @@ const STAR = (() => {
   }
   return p.join(' ');
 })();
-
-// The map is drawn like a board tilted away from you: squashed top to bottom (TILT), each state a raised
-// slab with darker sides (DEPTH). The open Realm lifts up off the board (LIFT) and zooms in.
-const TILT = 0.8;
-const DEPTH = 18;
-const LIFT = 26;
-const VB = [-24, -36, 1023, 576]; // viewBox
-const darken = (hex, f) => '#' + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * f).toString(16).padStart(2, '0')).join('');
-// Where each Realm's landmark stands (a Kingdom near the middle of the Realm).
-const ANCHOR = { ivy: 'NY', magnolia: 'TN', plains: 'IA', desert: 'TX', peaks: 'UT', pacific: 'CA' };
-// How big a Realm's castle stands: smaller on the whole map, bigger (but not huge) when zoomed in.
-const castleK = (on, s) => (on ? 1.35 / Math.sqrt(s) : 1.35);
+/** The outline-to-painting matrix for a state: one per Realm, plus Alaska and Hawaii. */
+const matOf = (code) => PM.MATRIX[code === 'AK' || code === 'HI' ? code : KG.realmOf(code).id];
+const onPaint = (m, [x, y]) => [m[0] * x + m[2] * y + m[4], m[1] * x + m[3] * y + m[5]];
+const labelAt = (code) => onPaint(matOf(code), MAP.LABEL[code]);
+function stateBox(code) {
+  const [x0, y0, x1, y1] = MAP.BOX[code];
+  const pts = [[x0, y0], [x1, y0], [x0, y1], [x1, y1]].map((pt) => onPaint(matOf(code), pt));
+  return [Math.min(...pts.map((q) => q[0])), Math.min(...pts.map((q) => q[1])), Math.max(...pts.map((q) => q[0])), Math.max(...pts.map((q) => q[1]))];
+}
+const IDENT = `translate(${PW / 2}px,${PH / 2}px) scale(1) translate(${-PW / 2}px,${-PH / 2}px)`;
+/** Zoom that fits a box (painting pixels) on screen, with some room around it. */
+function zoomTo([x0, y0, x1, y1], pad, max) {
+  const w = (x1 - x0) * (1 + pad * 2);
+  const h = (y1 - y0) * (1 + pad * 2);
+  const s = Math.min(PW / w, PH / h, max);
+  // keep the view inside the painting (no empty strip past its edge)
+  const hw = PW / s / 2;
+  const hh = PH / s / 2;
+  const cx = Math.min(Math.max((x0 + x1) / 2, hw), PW - hw);
+  const cy = Math.min(Math.max((y0 + y1) / 2, hh), PH - hh);
+  return { s, css: `translate(${PW / 2}px,${PH / 2}px) scale(${s.toFixed(3)}) translate(${(-cx).toFixed(1)}px,${(-cy).toFixed(1)}px)` };
+}
+/** Your Kingdom on the Empire painting, in % (for the star). */
+const HOME_PCT = (() => {
+  const [x, y] = labelAt(HOME);
+  return [(x / PW) * 100, (y / PH) * 100];
+})();
 
 function mapHtml(st) {
-  // Zoom so the open Realm fills the map: s is how much bigger it draws.
-  let zoom = '';
-  let s = 1;
-  const open = st.realm ? KG.realmById(st.realm) : null;
-  const pull = (r) => {
-    // which way a Realm breaks away from the middle of the country
-    const [cx, cy] = avgPt(r.states);
-    const len = Math.hypot(cx - CENTER[0], cy - CENTER[1]) || 1;
-    return [((cx - CENTER[0]) / len) * 24, ((cy - CENTER[1]) / len) * 24];
-  };
-  if (open) {
-    const [ox, oy] = pull(open);
-    const b = open.states.reduce((a, c) => { const q = MAP.BOX[c]; return [Math.min(a[0], q[0]), Math.min(a[1], q[1]), Math.max(a[2], q[2]), Math.max(a[3], q[3])]; }, [1e9, 1e9, -1e9, -1e9]);
-    const w = (b[2] - b[0]) * 1.14 + 50;
-    const h = ((b[3] - b[1]) * 1.14 + DEPTH + LIFT + 60) * TILT;
-    s = Math.min(VB[2] / w, VB[3] / h, 3.2);
-    const mx = (b[0] + b[2]) / 2 + ox;
-    const my = ((b[1] + b[3]) / 2 + oy - LIFT / 2 - 18) * TILT;
-    zoom = ` style="transform:translate(${VB[0] + VB[2] / 2}px,${VB[1] + VB[3] / 2}px) scale(${s.toFixed(3)}) translate(${(-mx).toFixed(1)}px,${(-my).toFixed(1)}px)"`;
-  }
-  // Draw from the back (north) to the front (south) so nearer slabs cover the sides of farther ones;
-  // the open Realm goes last, on top.
-  const order = [...KG.REALMS].sort((a, b) => (a.id === st.realm) - (b.id === st.realm) || avgPt(a.states)[1] - avgPt(b.states)[1]);
-  const realms = order.map((r) => {
-    const on = r.id === st.realm;
-    const [cx, cy] = avgPt(r.states);
-    const [rx, ry] = pull(r);
-    const cls = `lb-realm${on ? ' on' : ''}${st.realm && !on ? ' dim' : ''}${on && st.anim === r.id ? ' anim' : ''}`;
-    const side = darken(COLOR[r.id], 0.5);
-    const depth = DEPTH + (on ? LIFT : 0);
-    const nudge = (code) => {
-      const [x, y] = MAP.LABEL[code];
-      return `--dx:${((x - cx) * 0.07).toFixed(1)}px;--dy:${((y - cy) * 0.07).toFixed(1)}px`;
-    };
-    const sides = r.states.map((code) => {
-      let u = '';
-      for (let d = depth; d > 0; d -= 3) u += `<use href="#lbp-${code}" y="${d}"/>`;
-      return `<g class="lb-side" style="${nudge(code)}">${u}</g>`;
+  const realm = KG.realmById(st.realm);
+  const kingdom = st.kingdom;
+  const [cx, cy, cw, ch] = PM.CUT[realm.id];
+  const z = kingdom ? zoomTo(stateBox(kingdom), 0.55, 6) : zoomTo([cx, cy, cx + cw, cy + ch], 0.04, 4);
+  // Zoom smoothly from wherever the map was (the whole painting, the Realm, another Kingdom).
+  const from = st.zPrev || IDENT;
+  const anim = from !== z.css;
+  st.zPrev = z.css;
+  const s = z.s;
+  const mat = (code) => `matrix(${matOf(code).join(' ')})`;
+  const cut = `<image href="assets/realms/${realm.id}.webp" x="${cx}" y="${cy}" width="${cw}" height="${ch}"/>`;
+  const defs = realm.states.map((c) => `<path id="lbq-${c}" d="${MAP.PATHS[c]}" vector-effect="non-scaling-stroke"/>`).join('');
+  const hits = realm.states.map((c) => `<use href="#lbq-${c}" transform="${mat(c)}" class="lb-phit${c === kingdom ? ' pick' : ''}" data-action="lb-map" data-v="${c}"><title>${esc(KG.kingdomName(c))}</title></use>`).join('');
+  const fs = (30 / s + 6).toFixed(1);
+  const labels = realm.states
+    .filter((c) => (kingdom ? c === kingdom : !(SMALL.has(c) && s < 3.5)) && c !== HOME)
+    .map((c) => {
+      const [x, y] = labelAt(c);
+      return `<text class="lb-abbr" x="${x.toFixed(1)}" y="${(y + 5 / s).toFixed(1)}" font-size="${kingdom ? (fs * 1.6).toFixed(1) : fs}">${c}</text>`;
     }).join('');
-    const tops = r.states.map((code) => {
-      const [x, y] = MAP.LABEL[code];
-      const home = code === HOME;
-      const fs = (40 / s).toFixed(1);
-      // labels are stretched back up so they read upright on the tilted board
-      const up = `transform="translate(0 ${(y * (1 - 1 / TILT)).toFixed(1)}) scale(1 ${(1 / TILT).toFixed(3)})"`;
-      // (the Kingdom under the castle gets its label on the castle's base instead)
-      const label = on && !(SMALL.has(code) && s < 2.5) && !home && code !== ANCHOR[r.id] ? `<text class="lb-abbr" x="${x}" y="${(y + 14 / s).toFixed(1)}" font-size="${fs}" ${up}>${code}</text>` : '';
-      const k = on ? 2.6 / s : 1.3;
-      const star = home ? `<g class="lb-star" transform="translate(${x} ${y}) scale(${k.toFixed(3)} ${(k / TILT).toFixed(3)})"><polygon points="${STAR}"/>${on ? '<text class="lb-you" x="-20" y="5">Your Kingdom</text>' : ''}</g>` : '';
-      return `<g class="lb-st${code === st.kingdom ? ' pick' : ''}" data-action="lb-map" data-v="${code}" style="${nudge(code)}"><title>${esc(KG.kingdomName(code))}</title><use class="top" href="#lbp-${code}"/>${label}${star}</g>`;
-    }).join('');
-    return `<g class="${cls}" style="--c:${COLOR[r.id]};--rx:${rx.toFixed(1)}px;--ry:${ry.toFixed(1)}px;--lift:${on ? LIFT : 0}px"><g fill="${side}" stroke="${side}">${sides}</g>${tops}</g>`;
-  }).join('');
-  // Each Realm's castle stands upright on top of the tilted board.
-  const marks = order.map((r) => {
-    const on = r.id === st.realm;
-    const [x, y] = MAP.LABEL[ANCHOR[r.id]];
-    const [rx, ry] = on ? pull(r) : [0, 0];
-    const k = castleK(on, s);
-    const code = ANCHOR[r.id];
-    // In an open Realm the castle stands for the Kingdom under it: a plaque on its base, and tapping it picks that Kingdom.
-    const plaque = on ? `<text class="lb-abbr lb-plaque${st.kingdom === code ? ' pick' : ''}" x="0" y="10" font-size="${(36 / s / k).toFixed(1)}">${code}</text>` : '';
-    return `<g class="lb-mark${st.realm && !on ? ' dim' : ''}" data-action="lb-map" data-v="${on ? code : `realm:${r.id}`}" style="--c:${COLOR[r.id]}" transform="translate(${(x + rx).toFixed(1)} ${((y + ry - (on ? LIFT : 0)) * TILT).toFixed(1)}) scale(${k.toFixed(3)})"><title>${esc(on ? KG.kingdomName(code) : r.name)}</title>${CASTLES[r.id]}${plaque}</g>`;
-  }).join('');
-  const defs = Object.keys(MAP.PATHS).map((c) => `<path id="lbp-${c}" d="${MAP.PATHS[c]}" vector-effect="non-scaling-stroke"/>`).join('');
-  return `<svg class="lb-svg" viewBox="${VB.join(' ')}" role="img" aria-label="Map of the six Realms. Tap a Realm to see its Kingdoms.">
-    <defs>${defs}${CASTLE_DEFS}<radialGradient id="lb-sea" cx="50%" cy="40%" r="75%"><stop offset="0" stop-color="#2b86b5"/><stop offset="1" stop-color="#0c3550"/></radialGradient></defs>
-    <rect x="${VB[0]}" y="${VB[1]}" width="${VB[2]}" height="${VB[3]}" fill="url(#lb-sea)" data-action="lb-map" data-v="empire"/>
-    <g class="lb-zoom${open && st.anim === open.id ? ' anim' : ''}"${zoom}>
-      <g transform="scale(1 ${TILT})">${realms}</g>
-      ${marks}
+  const homeHere = KG.realmOf(HOME).id === realm.id && (!kingdom || kingdom === HOME);
+  const [hx, hy] = labelAt(HOME);
+  const k = (kingdom ? 1.3 : 1.6) / s;
+  const star = homeHere ? `<g class="lb-star" transform="translate(${hx.toFixed(1)} ${hy.toFixed(1)}) scale(${(k * 1.4).toFixed(3)})"><polygon points="${STAR}"/><text class="lb-you" x="-20" y="5">Your Kingdom</text></g>` : '';
+  const lift = (n) => `style="transform:translateY(${(-n / s).toFixed(2)}px)"`;
+  const kingdomLift = kingdom
+    ? `<rect class="lb-shade2" width="${PW}" height="${PH}"/>
+      <g class="lb-klift${anim ? ' anim' : ''}" ${lift(18)} filter="url(#lbf-lift)" data-action="lb-map" data-v="${kingdom}">
+        <g clip-path="url(#lbc-k)">${cut}</g>
+        <use href="#lbq-${kingdom}" transform="${mat(kingdom)}" class="lb-kedge"/>
+      </g>`
+    : '';
+  return `<svg class="lb-svg lb-psvg" viewBox="0 0 ${PW} ${PH}" role="img" aria-label="${esc(realm.name)} on the painted map. Tap a Kingdom to pick it.">
+    <defs>${defs}
+      <filter id="lbf-lift" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="${(10 / s).toFixed(2)}" stdDeviation="${(7 / s).toFixed(2)}" flood-color="#000" flood-opacity="0.7"/></filter>
+      ${kingdom ? `<clipPath id="lbc-k"><use href="#lbq-${kingdom}" transform="${mat(kingdom)}"/></clipPath>` : ''}
+    </defs>
+    <rect width="${PW}" height="${PH}" fill="#0d2f42" data-action="lb-map" data-v="empire"/>
+    <g class="lb-zoom${anim ? ' anim' : ''}" style="transform:${z.css};--z0:${from}">
+      <image href="assets/realm-map.webp" width="${PW}" height="${PH}"/>
+      <rect class="lb-shade" width="${PW}" height="${PH}" data-action="lb-map" data-v="empire"/>
+      <g class="lb-plift${anim && !kingdom ? ' anim' : ''}" ${lift(kingdom ? 4 : 14)} filter="url(#lbf-lift)">${cut}${hits}</g>
+      ${kingdomLift}
+      ${labels}${star}
     </g>
   </svg>`;
 }
@@ -231,7 +220,6 @@ export function leaderboardsHtml(st) {
   const world = st.world;
   const empire = KG.EMPIRES.US;
   const enter = st.enter;
-  st.anim = null; // the next redraw shouldn't replay the break-off
   st.enter = false;
 
   // What's picked on the map
@@ -246,13 +234,13 @@ export function leaderboardsHtml(st) {
   const mapCard = `<section class="card lb-mapcard">
       <div class="lb-maphead">${head}</div>
       ${world
-    ? '<div class="lb-map lb-globe-wrap"><canvas class="lb-globe" aria-label="Globe of the world. Drag to spin it; tap the American Empire to zoom in."></canvas><p class="lb-globe-tip">Drag to spin the globe. Tap the American Empire.</p></div>'
+    ? `${(st.zPrev = null) || ''}<div class="lb-map lb-globe-wrap"><canvas class="lb-globe" aria-label="Globe of the world. Drag to spin it; tap the American Empire to zoom in."></canvas><p class="lb-globe-tip">Drag to spin the globe. Tap the American Empire.</p></div>`
     : !realm
-      ? `<div class="lb-map lb-paint${enter ? ' enter' : ''}" role="img" aria-label="Painted map of the six Realms of the American Empire. Tap a Realm to open it.">
+      ? `${(st.zPrev = null) || ''}<div class="lb-map lb-paint${enter ? ' enter' : ''}" role="img" aria-label="Painted map of the six Realms of the American Empire. Tap a Realm to open it.">
           <img src="assets/realm-map.webp" alt="" draggable="false">
-          <span class="lb-paint-home" style="left:${PAINT_HOME[0]}%;top:${PAINT_HOME[1]}%" title="Your Kingdom: Florida"><i>★</i><b>Your Kingdom</b></span>
+          <span class="lb-paint-home" style="left:${HOME_PCT[0].toFixed(1)}%;top:${HOME_PCT[1].toFixed(1)}%" title="Your Kingdom: Florida"><i>★</i><b>Your Kingdom</b></span>
         </div>`
-      : `<div class="lb-map${enter ? ' enter' : ''}">${mapHtml(st)}</div>`}
+      : `<div class="lb-map lb-pmap${enter ? ' enter' : ''}">${mapHtml(st)}</div>`}
       <div class="chips lb-chips">${quick('my-kingdom', 'My Kingdom', !world && kingdom === HOME)}${quick('my-realm', 'My Realm', !world && realm?.id === homeRealm.id && !kingdom)}${quick('my-empire', 'My Empire', !world && !realm)}${quick('world', 'World', world)}</div>
     </section>`;
 
