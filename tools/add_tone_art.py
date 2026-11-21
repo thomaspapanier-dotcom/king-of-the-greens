@@ -105,6 +105,9 @@ sw = re.sub(r"  '\./assets/(?:cards|challenges)/(?:queen-[^']+|[^']+-(?:brown|bl
 files = sorted({p for t in TONES for p in (f'{k}-{t}.webp' for k in toned[t])}
                | {k.replace('challenges/', 'challenges/queen-').replace('cards/king-', 'cards/queen-') + ('' if t == 'white' else f'-{t}') + '.webp'
                   for t in queened for k in queened[t]})
+# Only the cards are saved for offline when the app installs. The challenge versions (hundreds of pictures) are
+# saved the first time someone looks at one, so a new phone doesn't download 100+ MB up front.
+files = [f for f in files if f.startswith('cards/')]
 sw = sw.replace("  './js/tones.js',\n", "  './js/tones.js',\n" + ''.join(f"  './assets/{f}',\n" for f in files), 1)
 if added:
     v = int(re.search(r"const VERSION = 'kog-v(\d+)';", sw).group(1))

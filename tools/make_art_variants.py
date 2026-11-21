@@ -100,7 +100,44 @@ def reference_sheet(who, tone):
     return path
 
 
-def prompt_for(kind, variant, card_suit=None):
+# Queens get a different outfit in every challenge (the same one in all three skins of that challenge).
+QUEEN_LOOKS = [
+    'a sleeveless polo and a pleated skort',
+    'a cropped cable-knit sweater and tailored trousers',
+    'a fitted quarter-zip pullover and high-waisted plaid pants',
+    'an argyle sweater vest over a collared blouse with a pleated midi golf skirt',
+    'a vintage 1950s belted golf dress',
+    'a quilted puffer vest over a long-sleeve polo with slim pants',
+    'a tailored blazer and wide-leg trousers',
+    'a pleated tennis-style dress with a cardigan tied over her shoulders',
+    'a knit polo dress with knee socks',
+    'a windbreaker jacket and capri pants',
+    'a linen button-down shirt tucked into high-waisted shorts',
+    'a turtleneck under a tweed golf jacket with plus-fours',
+    'a racerback golf top and a flowing wrap skirt',
+    'a cardigan over a fitted polo with Bermuda shorts',
+    'a mock-neck top and a pleated skirt with leg warmers',
+    'a cropped golf jacket and tailored culottes',
+    'a satin bomber jacket over a fitted top with a mini skort',
+    'a striped rugby shirt and slim chinos',
+]
+QUEEN_HATS = ['a visor', 'a bucket hat', 'a wide-brim sun hat', 'a headband', 'a newsboy cap', 'no hat', 'no hat', 'no hat']
+SUIT_COLORS = {'spades': 'black, charcoal and silver', 'hearts': 'red, cream and gold',
+               'clubs': 'forest green, cream and gold', 'diamonds': 'red, white and gold'}
+
+
+def queen_outfits(cid):
+    """A different look for each Queen in this challenge, the same for every skin tone."""
+    lines = []
+    for suit in SUITS:
+        rnd = random.Random(f'{cid}:{suit}')
+        hat = rnd.choice(QUEEN_HATS)
+        lines.append(f'the Queen of {suit.title()} wears {rnd.choice(QUEEN_LOOKS)} in {SUIT_COLORS[suit]}'
+                     + ('' if hat == 'no hat' else f', with {hat} worn under or beside her crown'))
+    return '; '.join(lines) + '.'
+
+
+def prompt_for(kind, variant, card_suit=None, cid=None):
     who, tone = variant.split('-')
     shape = ('Keep the transparent background, the round badge shape and its rim exactly.' if kind == 'badge'
              else 'Keep the same wide framing and size.')
@@ -120,9 +157,15 @@ def prompt_for(kind, variant, card_suit=None):
             f'background, lighting, linework and crosshatching. {shape} The only change: replace every King with the '
             'Queen of the same suit. Image 2 is the reference sheet: the Queen of Spades, Queen of Hearts, Queen of '
             'Clubs and Queen of Diamonds, left to right. King of Spades becomes the Queen of Spades, King of Hearts the '
-            'Queen of Hearts, King of Clubs the Queen of Clubs, King of Diamonds the Queen of Diamonds. Each Queen does '
-            'exactly what that King was doing, in the same pose and place. Each Queen must look exactly like her card on '
-            'the reference sheet: the same face, skin, hair and style, wearing her own outfit from the sheet. '
+            'Queen of Hearts, King of Clubs the Queen of Clubs, King of Diamonds the Queen of Diamonds. First work out '
+            'each King\'s suit from the suit symbols (spade, heart, club, diamond) on his clothes and crown, and put that '
+            'same suit\'s Queen exactly where he stands, even if the order differs from the sheet. Each Queen does '
+            'exactly what that King was doing, in the same pose and place, holding the same things. Each Queen must have '
+            'exactly the face, skin tone, hair and crown from her card on the reference sheet. '
+            'Do NOT copy the clothes from her card: dress her in a new outfit for this scene. '
+            f'Outfits: {queen_outfits(cid)} Adjust each outfit to the setting and weather in image 1 (add a coat, gloves '
+            'or scarf in the cold, keep it light in the heat), and if a King wears a royal robe or cape, the Queen keeps '
+            'a matching robe or cape over her outfit. Each outfit is stylish, tasteful golf wear. '
             'If you can\'t tell a King\'s suit, use the Queen whose colors fit him best. Change nothing else.')
 
 
@@ -186,7 +229,7 @@ def multipart(fields, files):
 
 def edit(key, job, ref, args):
     size = {'banner': '1536x1024', 'badge': '1024x1024', 'card': '1024x1536'}[job['kind']]
-    fields = {'model': args.model, 'prompt': prompt_for(job['kind'], job['variant']), 'size': size,
+    fields = {'model': args.model, 'prompt': prompt_for(job['kind'], job['variant'], cid=job['id']), 'size': size,
               'quality': args.quality, 'output_format': 'png', 'n': '1'}
     if job['kind'] == 'badge':
         fields['background'] = 'transparent'
