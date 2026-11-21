@@ -12,6 +12,14 @@ export const LIVE = {
   Canada: { code: 'CA', name: 'Canadian Empire', center: [-100, 58] },
   Australia: { code: 'AU', name: 'Australian Empire', center: [134, -25] },
   Japan: { code: 'JP', name: 'Cherry Blossom Empire', center: [138, 37] },
+  Germany: { code: 'DE', name: 'Black Eagle Empire', center: [10.4, 51.2] },
+  Sweden: { code: 'SE', name: 'Three Crowns Empire', center: [15.5, 62] },
+  China: { code: 'CN', name: 'Jade Dragon Empire', center: [104, 35] },
+  France: { code: 'FR', name: 'Fleur-de-Lis Empire', center: [2.4, 46.6] },
+  Netherlands: { code: 'NL', name: 'Tulip Empire', center: [5.5, 52.2] },
+  'New Zealand': { code: 'NZ', name: 'Silver Fern Empire', center: [172.5, -41.5] },
+  Spain: { code: 'ES', name: 'Golden Sun Empire', center: [-3.7, 40.2] },
+  'South Korea': { code: 'KR', name: 'Morning Calm Empire', center: [127.8, 36.4] },
 };
 // Next up (shown a little brighter, "coming soon").
 const SOON = new Set([]);
@@ -126,15 +134,25 @@ export async function mountGlobe(canvas, st, { onEmpire, onInfo, zoomOut }) {
     ctx.stroke();
     // a crowned tag on each live Empire facing you
     tags = [];
-    for (const [, e] of Object.entries(LIVE)) {
-      if (d3.geoDistance(e.center, [-rot[0], -rot[1]]) > Math.PI / 2 - 0.55) continue; // only Empires turned well into view
+    // Empires facing you, the one nearest the middle first. Crowded corners (Europe) get each tag only where it
+    // fits: it slides up or down a step to dodge the others, and is left off if there's no room (tapping the
+    // country still opens it).
+    const facing = Object.values(LIVE)
+      .map((e) => ({ e, d: d3.geoDistance(e.center, [-rot[0], -rot[1]]) }))
+      .filter((o) => o.d <= Math.PI / 2 - 0.55) // only Empires turned well into view
+      .sort((a, b) => a.d - b.d);
+    for (const { e } of facing) {
       const [px, py] = proj(e.center);
       ctx.font = '800 13px system-ui, sans-serif';
       const tw = ctx.measureText(e.name).width;
       const bw = tw + 30;
       // keep the whole tag inside the frame
       const x = Math.min(Math.max(px + (e.tag ? e.tag[0] : 0), bw / 2 + 4), W - bw / 2 - 4);
-      const y = Math.min(Math.max(py + (e.tag ? e.tag[1] : 0), 16), H - 16);
+      const y0 = py + (e.tag ? e.tag[1] : 0);
+      const clash = (yy) => tags.some((t) => x - bw / 2 - 6 < t.x1 && x + bw / 2 + 6 > t.x0 && yy - 15 < t.y1 && yy + 15 > t.y0);
+      const fit = (yy) => Math.min(Math.max(yy, 16), H - 16);
+      const y = [0, -30, 30, -60, 60].map((dy) => fit(y0 + dy)).find((yy) => !clash(yy));
+      if (y === undefined) continue;
       ctx.fillStyle = 'rgba(12,24,17,0.86)';
       ctx.strokeStyle = '#f5d76e';
       ctx.lineWidth = 1.2;

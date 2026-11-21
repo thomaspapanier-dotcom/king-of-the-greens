@@ -115,6 +115,26 @@ def kingdom_of(empire, p):
         return p['iso_3166_2']
     if empire == 'JP':
         return p['iso_3166_2'] if a3 == 'JPN' else None
+    iso = p['iso_3166_2']
+    if empire in ('DE', 'SE', 'KR', 'CN'):
+        return iso if a3 == A3[empire] and not iso.endswith('~') else None
+    if empire == 'NL':
+        return iso if a3 == 'NLD' and not iso.startswith('NL-BQ') else None  # leave out the Caribbean islands
+    if empire == 'NZ':
+        return iso if a3 == 'NZL' and iso.startswith('NZ-') and not iso.endswith('~') and iso != 'NZ-CIT' else None
+    if empire == 'FR':  # departments -> the 13 regions of mainland France and Corsica
+        code = 'FR-' + p['region_cod'].strip().removeprefix('FR-')
+        return code if a3 == 'FRA' and code not in FR_OVERSEAS else None
+    if empire == 'ES':  # provinces -> the 17 autonomous communities
+        if a3 != 'ESP' or p['region'] in ('Ceuta', 'Melilla'):
+            return None
+        return 'ES-' + p['region_cod'].strip().split('.')[-1]
+
+
+A3 = {'DE': 'DEU', 'SE': 'SWE', 'KR': 'KOR', 'CN': 'CHN'}
+FR_OVERSEAS = {'FR-GUF', 'FR-MTQ', 'FR-GUA', 'FR-LRE', 'FR-MAY'}
+# Islands drawn closer in, as on most maps of the country: (degrees east, degrees north).
+SHIFT = {'ES-CN': (5, 6)}
 
 
 def union_rings(rings):
@@ -207,7 +227,9 @@ def build(feats, empire, width=1000):
     for f in feats:
         k = kingdom_of(empire, f['props'])
         if k:
-            groups.setdefault(k, []).extend(f['rings'])
+            dx, dy = SHIFT.get(k, (0, 0))
+            rings = [[(x + dx, y + dy) for x, y in r] for r in f['rings']] if (dx or dy) else f['rings']
+            groups.setdefault(k, []).extend(rings)
     merged = {k: union_rings(r) for k, r in groups.items()}
     lats = [p[1] for rs in merged.values() for r in rs for p in r]
     lons = [p[0] for rs in merged.values() for r in rs for p in r]
@@ -244,8 +266,8 @@ def build(feats, empire, width=1000):
 
 if __name__ == '__main__':
     src = sys.argv[1]
-    feats = ne.read(src, {'GBR', 'IRL', 'CAN', 'AUS', 'JPN'})
-    maps = {e: build(feats, e) for e in ['GB', 'IE', 'CA', 'AU', 'JP']}
+    feats = ne.read(src, {'GBR', 'IRL', 'CAN', 'AUS', 'JPN', 'DEU', 'SWE', 'CHN', 'FRA', 'NLD', 'NZL', 'ESP', 'KOR'})
+    maps = {e: build(feats, e) for e in ['GB', 'IE', 'CA', 'AU', 'JP', 'DE', 'SE', 'CN', 'FR', 'NL', 'NZ', 'ES', 'KR']}
     js = ('// Kingdom outlines for the Empires outside the U.S. (Natural Earth, public domain).\n'
           '// Built by tools/build_empires.py; names and Realms are in js/kingdoms.js.\n'
           'export const EMPIRE_MAPS = ' + json.dumps(maps, separators=(',', ':')) + ';\n')

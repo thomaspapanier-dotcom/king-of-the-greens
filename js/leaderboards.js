@@ -41,6 +41,22 @@ const ELSEWHERE = [
   X('Matilda Reid', '', 'Platinum II', 61, 'west', 'AU-VIC'),
   X('Kenji S.', '', 'Diamond III', 63, 'sniper', 'JP-13'),
   X('Hana Takahashi', '', 'Gold V', 54, 'smooth', 'JP-27'),
+  X('Lukas Becker', '', 'Platinum I', 61, 'iron-man', 'DE-BY'),
+  X('Mia Schulz', '', 'Gold II', 56, 'spotless', 'DE-HH'),
+  X('Erik Lindqvist', '', 'Gold IV', 55, 'ice-cold', 'SE-AB'),
+  X('Elsa N.', '', 'Silver I', 51, 'north', 'SE-M'),
+  X('Wei Zhang', '', 'Diamond IV', 62, 'calculated', 'CN-SH'),
+  X('Li Na', '', 'Platinum III', 60, 'dead-center', 'CN-GD'),
+  X('Hugo Martin', '', 'Gold I', 57, 'smooth', 'FR-IDF'),
+  X('Camille R.', '', 'Platinum V', 59, 'royal-flush', 'FR-PAC'),
+  X('Daan de Vries', '', 'Gold III', 55, 'two-better', 'NL-NH'),
+  X('Sanne B.', '', 'Silver II', 52, 'fresh-blood', 'NL-NB'),
+  X('Kiwi', 'Tama', 'Platinum II', 60, 'king-of-skies', 'NZ-AUK'),
+  X('Aroha Ngata', '', 'Gold V', 54, 'heater', 'NZ-OTA'),
+  X('Pablo García', '', 'Diamond V', 61, 'sniper', 'ES-AN'),
+  X('Lucía Fernández', '', 'Gold II', 56, 'hat-trick', 'ES-CT'),
+  X('Min-jun Kim', '', 'Diamond II', 64, 'sharpshooter', 'KR-11'),
+  X('Seo-yeon Park', '', 'Platinum IV', 59, 'dawn-patrol', 'KR-26'),
 ];
 addPlayers(ELSEWHERE);
 const PLAYERS = [...new Set([ME, ...Object.values(PEOPLE), ...ELSEWHERE])]; // PEOPLE includes you as .me
@@ -307,7 +323,7 @@ export function leaderboardsHtml(st) {
 
   // What's picked on the map
   const head = world
-    ? '<b>The World</b><span>Six Empires · spin the globe and tap one to zoom in</span>'
+    ? `<b>The World</b><span>${Object.keys(KG.EMPIRES).length} Empires · spin the globe and tap one to zoom in</span>`
     : kingdom
     ? `<b>${esc(KG.kingdomName(kingdom))}</b><span>${esc(realm.name)}${kingdom === HOME ? ' · <em>Your Kingdom</em>' : ''}</span>`
     : realm

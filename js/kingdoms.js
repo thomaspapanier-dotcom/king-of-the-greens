@@ -3,7 +3,7 @@
 // Leaderboards and challenges compare them.
 //
 // Kingdom codes: U.S. states use their two letters (FL); everywhere else the code starts with the Empire
-// (GB-surrey, IE-kerry, CA-ON, AU-NSW, JP-13). Outlines: js/usmap.js (U.S.) and js/empiremaps.js (the rest).
+// (GB-surrey, IE-kerry, CA-ON, AU-NSW, JP-13, DE-BY, FR-IDF, KR-11). Outlines: js/usmap.js (U.S.) and js/empiremaps.js (the rest).
 
 export const STATES = {
   AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California', CO: 'Colorado', CT: 'Connecticut',
@@ -67,11 +67,50 @@ const NAMES = {
   'JP-30': 'Wakayama', 'JP-31': 'Tottori', 'JP-32': 'Shimane', 'JP-33': 'Okayama', 'JP-34': 'Hiroshima', 'JP-35': 'Yamaguchi', 'JP-36': 'Tokushima',
   'JP-37': 'Kagawa', 'JP-38': 'Ehime', 'JP-39': 'Kochi', 'JP-40': 'Fukuoka', 'JP-41': 'Saga', 'JP-42': 'Nagasaki', 'JP-43': 'Kumamoto',
   'JP-44': 'Oita', 'JP-45': 'Miyazaki', 'JP-46': 'Kagoshima', 'JP-47': 'Okinawa',
+  // Germany (states)
+  'DE-SH': 'Schleswig-Holstein', 'DE-HH': 'Hamburg', 'DE-HB': 'Bremen', 'DE-NI': 'Lower Saxony', 'DE-MV': 'Mecklenburg-Vorpommern',
+  'DE-NW': 'North Rhine-Westphalia', 'DE-HE': 'Hesse', 'DE-RP': 'Rhineland-Palatinate', 'DE-SL': 'Saarland',
+  'DE-BE': 'Berlin', 'DE-BB': 'Brandenburg', 'DE-SN': 'Saxony', 'DE-ST': 'Saxony-Anhalt', 'DE-TH': 'Thuringia',
+  'DE-BY': 'Bavaria', 'DE-BW': 'Baden-Württemberg',
+  // Sweden (counties)
+  'SE-BD': 'Norrbotten', 'SE-AC': 'Västerbotten', 'SE-Y': 'Västernorrland', 'SE-Z': 'Jämtland', 'SE-X': 'Gävleborg',
+  'SE-AB': 'Stockholm', 'SE-C': 'Uppsala', 'SE-D': 'Södermanland', 'SE-U': 'Västmanland', 'SE-T': 'Örebro', 'SE-S': 'Värmland',
+  'SE-W': 'Dalarna', 'SE-O': 'Västra Götaland', 'SE-N': 'Halland', 'SE-E': 'Östergötland', 'SE-F': 'Jönköping', 'SE-G': 'Kronoberg',
+  'SE-H': 'Kalmar', 'SE-I': 'Gotland', 'SE-K': 'Blekinge', 'SE-M': 'Skåne',
+  // China (provinces, regions and cities)
+  'CN-BJ': 'Beijing', 'CN-TJ': 'Tianjin', 'CN-HE': 'Hebei', 'CN-SX': 'Shanxi', 'CN-NM': 'Inner Mongolia',
+  'CN-LN': 'Liaoning', 'CN-JL': 'Jilin', 'CN-HL': 'Heilongjiang',
+  'CN-SH': 'Shanghai', 'CN-JS': 'Jiangsu', 'CN-ZJ': 'Zhejiang', 'CN-AH': 'Anhui', 'CN-FJ': 'Fujian', 'CN-JX': 'Jiangxi', 'CN-SD': 'Shandong',
+  'CN-HA': 'Henan', 'CN-HB': 'Hubei', 'CN-HN': 'Hunan', 'CN-GD': 'Guangdong', 'CN-GX': 'Guangxi', 'CN-HI': 'Hainan',
+  'CN-CQ': 'Chongqing', 'CN-SC': 'Sichuan', 'CN-GZ': 'Guizhou', 'CN-YN': 'Yunnan', 'CN-XZ': 'Tibet',
+  'CN-SN': 'Shaanxi', 'CN-GS': 'Gansu', 'CN-QH': 'Qinghai', 'CN-NX': 'Ningxia', 'CN-XJ': 'Xinjiang',
+  // France (regions)
+  'FR-IDF': 'Île-de-France', 'FR-HDF': 'Hauts-de-France', 'FR-NOR': 'Normandy', 'FR-GES': 'Grand Est', 'FR-BFC': 'Burgundy-Franche-Comté',
+  'FR-BRE': 'Brittany', 'FR-PDL': 'Pays de la Loire', 'FR-CVL': 'Centre-Val de Loire', 'FR-NAQ': 'Nouvelle-Aquitaine', 'FR-OCC': 'Occitanie',
+  'FR-ARA': 'Auvergne-Rhône-Alpes', 'FR-PAC': 'Provence-Alpes-Côte d’Azur', 'FR-COR': 'Corsica',
+  // Netherlands (provinces)
+  'NL-GR': 'Groningen', 'NL-FR': 'Friesland', 'NL-DR': 'Drenthe', 'NL-NH': 'North Holland', 'NL-ZH': 'South Holland', 'NL-UT': 'Utrecht',
+  'NL-OV': 'Overijssel', 'NL-GE': 'Gelderland', 'NL-FL': 'Flevoland', 'NL-ZE': 'Zeeland', 'NL-NB': 'North Brabant', 'NL-LI': 'Limburg',
+  // New Zealand (regions)
+  'NZ-NTL': 'Northland', 'NZ-AUK': 'Auckland', 'NZ-WKO': 'Waikato', 'NZ-BOP': 'Bay of Plenty', 'NZ-GIS': 'Gisborne',
+  'NZ-HKB': 'Hawke’s Bay', 'NZ-TKI': 'Taranaki', 'NZ-MWT': 'Manawatū-Whanganui', 'NZ-WGN': 'Wellington',
+  'NZ-TAS': 'Tasman', 'NZ-NSN': 'Nelson', 'NZ-MBH': 'Marlborough', 'NZ-WTC': 'West Coast', 'NZ-CAN': 'Canterbury', 'NZ-OTA': 'Otago', 'NZ-STL': 'Southland',
+  // Spain (autonomous communities)
+  'ES-GA': 'Galicia', 'ES-AS': 'Asturias', 'ES-CB': 'Cantabria', 'ES-PV': 'Basque Country', 'ES-NA': 'Navarre', 'ES-LO': 'La Rioja',
+  'ES-MD': 'Madrid', 'ES-CL': 'Castile and León', 'ES-CM': 'Castilla-La Mancha', 'ES-EX': 'Extremadura',
+  'ES-CT': 'Catalonia', 'ES-AR': 'Aragon', 'ES-VC': 'Valencia', 'ES-PM': 'Balearic Islands', 'ES-MU': 'Murcia',
+  'ES-AN': 'Andalusia', 'ES-CN': 'Canary Islands',
+  // South Korea (provinces and cities)
+  'KR-11': 'Seoul', 'KR-28': 'Incheon', 'KR-41': 'Gyeonggi', 'KR-42': 'Gangwon', 'KR-43': 'North Chungcheong', 'KR-44': 'South Chungcheong',
+  'KR-30': 'Daejeon', 'KR-50': 'Sejong', 'KR-26': 'Busan', 'KR-27': 'Daegu', 'KR-31': 'Ulsan', 'KR-47': 'North Gyeongsang',
+  'KR-48': 'South Gyeongsang', 'KR-29': 'Gwangju', 'KR-45': 'North Jeolla', 'KR-46': 'South Jeolla', 'KR-49': 'Jeju',
 };
 const R = (id, name, region, suit, states) => ({ id, name, region, suit, states });
 const jp = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => `JP-${String(a + i).padStart(2, '0')}`);
 const gb = (s) => s.split(' ').map((k) => `GB-${k}`);
 const ie = (s) => s.split(' ').map((k) => `IE-${k}`);
+/** 'DE', 'SH HH HB' -> ['DE-SH', 'DE-HH', 'DE-HB'] */
+const ks = (empire, s) => s.split(' ').map((k) => `${empire}-${k}`);
 
 // The Empires (countries) and their Realms.
 export const EMPIRES = {
@@ -117,6 +156,71 @@ export const EMPIRES = {
       R('jp-kansai', 'Realm of the Ancient Capital', 'Kansai', 'diamonds', jp(24, 30)),
       R('jp-inland', 'Realm of the Inland Sea', 'Chugoku and Shikoku', 'spades', jp(31, 39)),
       R('jp-isles', 'Realm of the Southern Isles', 'Kyushu and Okinawa', 'hearts', jp(40, 47)),
+    ],
+  },
+  DE: {
+    code: 'DE', name: 'Black Eagle Empire', country: 'Germany', realms: [
+      R('de-north', 'Realm of the Northern Seas', 'Northern Germany', 'spades', ks('DE', 'SH HH HB NI MV')),
+      R('de-rhine', 'Realm of the Rhine', 'Western Germany', 'hearts', ks('DE', 'NW HE RP SL')),
+      R('de-linden', 'Realm of the Linden Crown', 'Eastern Germany', 'clubs', ks('DE', 'BE BB SN ST TH')),
+      R('de-alps', 'Realm of the Alpine Castles', 'Southern Germany', 'diamonds', ks('DE', 'BY BW')),
+    ],
+  },
+  SE: {
+    code: 'SE', name: 'Three Crowns Empire', country: 'Sweden', realms: [
+      R('se-norrland', 'Realm of the Midnight Sun', 'Norrland', 'spades', ks('SE', 'BD AC Y Z X')),
+      R('se-svealand', 'Realm of the Royal Lakes', 'Svealand', 'hearts', ks('SE', 'AB C D U T S W')),
+      R('se-gotaland', 'Realm of the Rune Stones', 'Götaland', 'clubs', ks('SE', 'O N E F G H I K M')),
+    ],
+  },
+  CN: {
+    code: 'CN', name: 'Jade Dragon Empire', country: 'China', realms: [
+      R('cn-wall', 'Realm of the Great Wall', 'North China', 'spades', ks('CN', 'BJ TJ HE SX NM')),
+      R('cn-ice', 'Realm of the Ice Lanterns', 'Northeast China', 'hearts', ks('CN', 'LN JL HL')),
+      R('cn-east', 'Realm of the Eastern Pearl', 'East China', 'clubs', ks('CN', 'SH JS ZJ AH FJ JX SD')),
+      R('cn-south', 'Realm of the Pearl River', 'Central and South China', 'diamonds', ks('CN', 'HA HB HN GD GX HI')),
+      R('cn-mist', 'Realm of the Misty Mountains', 'Southwest China', 'spades', ks('CN', 'CQ SC GZ YN XZ')),
+      R('cn-silk', 'Realm of the Silk Road', 'Northwest China', 'hearts', ks('CN', 'SN GS QH NX XJ')),
+    ],
+  },
+  FR: {
+    code: 'FR', name: 'Fleur-de-Lis Empire', country: 'France', realms: [
+      R('fr-seine', 'Realm of the Seine', 'Paris and the North', 'spades', ks('FR', 'IDF HDF NOR')),
+      R('fr-champagne', 'Realm of Champagne', 'The East', 'hearts', ks('FR', 'GES BFC')),
+      R('fr-loire', 'Realm of the Loire Castles', 'The West', 'clubs', ks('FR', 'BRE PDL CVL')),
+      R('fr-pyrenees', 'Realm of the Pyrenees', 'The South West', 'diamonds', ks('FR', 'NAQ OCC')),
+      R('fr-riviera', 'Realm of the Riviera', 'The South East and Corsica', 'spades', ks('FR', 'ARA PAC COR')),
+    ],
+  },
+  NL: {
+    code: 'NL', name: 'Tulip Empire', country: 'Netherlands', realms: [
+      R('nl-wadden', 'Realm of the Wadden', 'The North', 'spades', ks('NL', 'GR FR DR')),
+      R('nl-canals', 'Realm of the Canals', 'Holland and Utrecht', 'hearts', ks('NL', 'NH ZH UT')),
+      R('nl-veluwe', 'Realm of the Veluwe', 'The East', 'clubs', ks('NL', 'OV GE FL')),
+      R('nl-dikes', 'Realm of the Dikes', 'The South', 'diamonds', ks('NL', 'ZE NB LI')),
+    ],
+  },
+  NZ: {
+    code: 'NZ', name: 'Silver Fern Empire', country: 'New Zealand', realms: [
+      R('nz-kauri', 'Realm of the Kauri Coast', 'Upper North Island', 'spades', ks('NZ', 'NTL AUK WKO BOP GIS')),
+      R('nz-fire', 'Realm of the Fire Mountains', 'Lower North Island', 'hearts', ks('NZ', 'HKB TKI MWT WGN')),
+      R('nz-alps', 'Realm of the Southern Alps', 'South Island', 'clubs', ks('NZ', 'TAS NSN MBH WTC CAN OTA STL')),
+    ],
+  },
+  ES: {
+    code: 'ES', name: 'Golden Sun Empire', country: 'Spain', realms: [
+      R('es-green', 'Realm of the Green Coast', 'The North', 'spades', ks('ES', 'GA AS CB PV NA LO')),
+      R('es-castles', 'Realm of the Castles', 'The Centre', 'hearts', ks('ES', 'MD CL CM EX')),
+      R('es-med', 'Realm of the Mediterranean', 'The East and the Balearics', 'clubs', ks('ES', 'CT AR VC PM MU')),
+      R('es-alhambra', 'Realm of the Alhambra', 'Andalusia and the Canaries', 'diamonds', ks('ES', 'AN CN')),
+    ],
+  },
+  KR: {
+    code: 'KR', name: 'Morning Calm Empire', country: 'South Korea', realms: [
+      R('kr-han', 'Realm of the Han River', 'Seoul and the capital area', 'spades', ks('KR', '11 28 41')),
+      R('kr-diamond', 'Realm of the Diamond Mountains', 'Gangwon and Chungcheong', 'hearts', ks('KR', '42 43 44 30 50')),
+      R('kr-silla', 'Realm of the Silla Crown', 'Gyeongsang', 'clubs', ks('KR', '26 27 31 47 48')),
+      R('kr-bamboo', 'Realm of the Bamboo Groves', 'Jeolla and Jeju', 'diamonds', ks('KR', '29 45 46 49')),
     ],
   },
 };
