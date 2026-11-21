@@ -1729,3 +1729,13 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 /* Setup: 16px text in the boxes so iPhones don't zoom in when you tap one */
 .ob-join { display: grid; gap: 12px; }
 .ob-fields input { font-size: 16px; }
+
+/* Unlocked challenges: wear the banner and badge in any version */
+.ver-pick { display: grid; gap: 6px; }
+.ver-head { font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.ver-opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.ver-opt { display: grid; justify-items: center; gap: 4px; padding: 6px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-2); color: inherit; font-weight: 800; font-size: 12.5px; cursor: pointer; }
+.ver-opt img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 7px; }
+.ver-opt small { font-size: 10px; font-weight: 600; color: var(--muted); }
+.ver-opt[aria-pressed="true"] { border-color: #f5d76e; box-shadow: 0 0 0 2px #f5d76e inset; color: #f5d76e; }
+.ver-opt:disabled { opacity: 0.5; cursor: default; }

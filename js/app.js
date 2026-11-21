@@ -2034,6 +2034,7 @@ function viewChallenges() {
       ${challengeTile(open, isDone(open), 'big')}
       <div class="ch-title"><h2>${esc(open.name)}</h2>${rarityInk(open.rarity)}</div>
       <div class="ch-mode">${open.mode}${isDone(open) ? ' · <b class="ch-earned">Earned</b>' : ' · Locked'}</div>
+      ${isDone(open) ? versionPicker(open) : ''}
       <p class="ch-how">${esc(open.how)}</p>
       <p class="muted small ch-reward">Earn it and you get both this badge and this banner. Mix and match them with your other badges and banners on your nameplate.</p>
       <details class="ch-artnote"><summary>Art idea</summary>
@@ -2071,6 +2072,24 @@ function viewChallenges() {
     </div>
   </main>
   ${sheet}${cardSheet}`;
+}
+
+/** The version you picked for each unlocked challenge. */
+function artPicks() {
+  try { return JSON.parse(getPref('kog.artPick', '{}')) || {}; } catch { return {}; }
+}
+/** On an unlocked challenge: wear its banner and badge as King (or Queen) v1, v2 or v3. */
+function versionPicker(ch) {
+  if (CH.NO_ROYALS.has(ch.id)) return '';
+  const cur = TN.pickFor(ch.id);
+  const banner = `assets/challenges/banner-${ch.id}.webp`;
+  const opt = ([v]) => {
+    const ready = TN.hasVersion(banner, v);
+    return `<button class="ver-opt" data-action="art-pick" data-v="${v}" data-id="${ch.id}" aria-pressed="${cur === v}" ${ready ? '' : 'disabled'}>
+      <img src="${ready ? TN.art(banner, v) : banner}" alt="" draggable="false"><span>${TN.lookName(v)}</span>${ready ? '' : '<small>coming soon</small>'}</button>`;
+  };
+  return `<div class="ver-pick"><div class="ver-head">Wear it as</div><div class="ver-opts">${TN.TONES.map(opt).join('')}</div>
+    <p class="muted small">Unlock it once and it’s yours in every ${rulerWord()} version.</p></div>`;
 }
 
 // ---------- accounts ----------
@@ -2478,6 +2497,7 @@ function ask(opts) {
 function render() {
   TN.setTone(getPref('kog.tone', 'white'));
   TN.setRuler(getPref('kog.ruler', 'king')); // King or Queen: picked when you first open the app
+  TN.setPicks(artPicks());
   if (!getPref('kog.onboarded', '') && ui.view === 'home') ui.view = 'onboard';
   applyBackground();
   const views = {
@@ -2957,6 +2977,13 @@ const actions = {
   },
   'king-tone': (d) => {
     setPref('kog.tone', d.v);
+    ui.chIntroDone = true;
+    render();
+  },
+  'art-pick': (d) => {
+    const picks = artPicks();
+    picks[d.id] = d.v;
+    setPref('kog.artPick', JSON.stringify(picks));
     ui.chIntroDone = true;
     render();
   },

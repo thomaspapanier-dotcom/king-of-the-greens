@@ -29,9 +29,23 @@ export const lookName = (t = tone, r = ruler) => `${r === 'queen' ? 'Queen' : 'K
 /** How many pictures have a version in this look (for Settings). */
 export const tonedCount = (t) => (TONED[t] ? TONED[t].size : 0);
 
-/** The picture to show for an art path like 'assets/cards/king-spades.webp', in the chosen look. */
-export function art(path, t = tone, r = ruler) {
+// The version you picked for each challenge you've unlocked ({ north: 'black', … }); others follow your deck.
+let picks = {};
+export const setPicks = (p) => { picks = p && typeof p === 'object' ? p : {}; };
+const challengeId = (path) => (path.match(/^assets\/challenges\/(?:badge|banner)-(.+)\.webp$/) || [])[1];
+/** The version a challenge shows: the one you picked for it, or your deck. */
+export const pickFor = (id) => (picks[id] && TONES.some(([v]) => v === picks[id]) ? picks[id] : tone);
+/** Does this picture exist in that version yet? (v1 King art always does.) */
+export function hasVersion(path, t, r = ruler) {
   const key = path.replace(/^assets\//, '').replace(/\.webp$/, '');
+  if (r === 'queen') return QUEENED[t] ? QUEENED[t].has(key) : false;
+  return t === 'white' || (TONED[t] ? TONED[t].has(key) : false);
+}
+
+/** The picture to show for an art path like 'assets/cards/king-spades.webp', in the chosen look. */
+export function art(path, t, r = ruler) {
+  const key = path.replace(/^assets\//, '').replace(/\.webp$/, '');
+  if (t === undefined) t = challengeId(path) ? pickFor(challengeId(path)) : tone; // challenge art follows your pick
   const queen = (look) => {
     const q = path.replace('assets/challenges/', 'assets/challenges/queen-').replace('assets/cards/king-', 'assets/cards/queen-');
     return look === 'white' ? q : q.replace(/\.webp$/, `-${look}.webp`);
