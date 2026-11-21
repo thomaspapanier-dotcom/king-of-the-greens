@@ -2368,6 +2368,7 @@ function ask(opts) {
 
 function render() {
   TN.setTone(getPref('kog.tone', 'white'));
+  TN.setRuler(getPref('kog.ruler', 'king')); // King or Queen: picked at sign-up once accounts are on
   const views = {
     home: viewHome, new: viewNew, game: viewGame, card: viewCard, players: viewPlayers, player: viewPlayer,
     history: viewHistory, rules: viewRules, join: viewJoin, whoami: viewWhoami, share: viewShare, settings: viewSettings,

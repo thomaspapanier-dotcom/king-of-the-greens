@@ -9,3 +9,6 @@ publish/
 
 __pycache__/
 *.pyc
+
+# Built locally by tools/review_art.py
+tools/review/
