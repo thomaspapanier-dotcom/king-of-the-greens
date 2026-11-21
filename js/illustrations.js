@@ -598,6 +598,7 @@ function setFigure() {
       <text class="lbl" x="81" y="34" text-anchor="middle">2 birdie balls</text>
       <path d="M108 78 v5 h16 v-5" fill="none" stroke="#fff" stroke-width="1.4"/>
       <text class="lbl" x="116" y="99" text-anchor="middle">1 par ball</text>
+      <text class="lbl small" x="116" y="113" text-anchor="middle">looks different</text>
       <text class="lbl small" x="208" y="50" text-anchor="middle">birdie balls first, par ball last</text>
       ${hole(296, 62).replace('url(#cup)', `url(#${p}-cup)`)}
     </svg></div>

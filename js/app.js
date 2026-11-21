@@ -754,6 +754,7 @@ function viewNew() {
       <input id="course" data-bind="course" value="${esc(d.course)}" placeholder="Where are you playing?" autocomplete="off">
     </label>
     ${coop ? `<p class="muted small coop-note">Teammates split each set’s 3 balls: one birdie ball each, and the par ball takes turns. The app shows whose ball is whose.</p>` : ''}
+    <p class="irl-note small"><b>${coop ? 'Each team' : 'Each player'} needs 3 balls:</b> 2 birdie balls and 1 par ball that looks clearly different from them (another color, another brand or a bold marking).</p>
     <div class="section-head"><h2>Who’s playing?</h2><span class="muted">${n}/${max}</span></div>
     ${db.players.length ? `<div class="chips">${chips}</div>` : '<p class="muted">Add everyone who’s playing.</p>'}
     ${addPlayerForm(full)}
@@ -2312,6 +2313,7 @@ function viewRules() {
 
     <h2>3 · Each set</h2>
     <p>Putt both <b>birdie balls</b> first, then the <b>par ball</b>. Balls in the way stay put, but you may knock into them. Then hole out every ball that missed, closest first.</p>
+    <p class="irl-note"><b>Your par ball must look clearly different from your two birdie balls.</b> It doesn’t need to be a solid color: a different color, a different brand or a bold marking all work. It scores differently, so everyone should be able to tell at a glance which ball is the par ball.</p>
     ${fig.set}
     <table class="stats rules-table">
       <thead><tr><th>Ball</th><th>1 putt</th><th>2 putts</th><th>3 putts</th></tr></thead>
