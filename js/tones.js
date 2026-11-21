@@ -4,8 +4,8 @@
 
 export const TONES = [['white', 'White'], ['brown', 'Brown'], ['black', 'Black']];
 export const TONED = {
-  brown: new Set([]),
-  black: new Set([]),
+  brown: new Set(['cards/king-clubs', 'cards/king-diamonds', 'cards/king-hearts', 'cards/king-spades']),
+  black: new Set(['cards/king-clubs', 'cards/king-diamonds', 'cards/king-hearts', 'cards/king-spades']),
 };
 
 let tone = 'white';
