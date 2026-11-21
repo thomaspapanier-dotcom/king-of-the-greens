@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v127';
+const VERSION = 'kog-v128';
 const SHELL = [
   './',
   './index.html',
@@ -47,6 +47,7 @@ const SHELL = [
   './js/lfg.js',
   './js/flair.js',
   './js/challenges.js',
+  './js/tones.js',
   './assets/challenges/badge-north.webp',
   './assets/challenges/banner-north.webp',
   './assets/challenges/badge-west.webp',

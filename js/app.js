@@ -14,6 +14,7 @@ import { kingRain, preloadKings } from './confetti.js';
 import * as LF from './lfg.js';
 import { badgeHtml, bannerClass } from './flair.js';
 import * as CH from './challenges.js';
+import * as TN from './tones.js';
 import { leaderboardsHtml, lbMapTap, mountLeaderboards } from './leaderboards.js';
 
 // Per-device preferences (theme, sound).
@@ -1880,9 +1881,9 @@ function challengeTile(ch, on, cls = '') {
   const title = cls.includes('big') ? '' : `<span class="ch-name ink-glow-${ch.rarity}">${esc(ch.name)}</span>`;
   if (CH.ART.has(ch.id)) {
     return `<span class="ch-art rar-${ch.rarity} ${on ? 'on' : 'locked'} ${cls}">
-    <img class="ch-bg" src="assets/challenges/banner-${ch.id}.webp" alt="" loading="lazy" draggable="false">
-    <img class="ch-bn" src="assets/challenges/banner-${ch.id}.webp" alt="" loading="lazy" draggable="false">
-    <img class="ch-bd" src="assets/challenges/badge-${ch.id}.webp" alt="" loading="lazy" draggable="false">
+    <img class="ch-bg" src="${TN.art(`assets/challenges/banner-${ch.id}.webp`)}" alt="" loading="lazy" draggable="false">
+    <img class="ch-bn" src="${TN.art(`assets/challenges/banner-${ch.id}.webp`)}" alt="" loading="lazy" draggable="false">
+    <img class="ch-bd" src="${TN.art(`assets/challenges/badge-${ch.id}.webp`)}" alt="" loading="lazy" draggable="false">
     ${title}${lock}
   </span>`;
   }
@@ -1954,7 +1955,7 @@ function viewChallenges() {
   <main class="page challenges-page">
     <section class="ch-stage ${intro ? 'intro' : 'done'}" aria-label="The four Kings">
       ${intro ? '<div class="ch-neon" aria-hidden="true"><img class="nl" src="assets/neon-left.webp" alt="" draggable="false"><img class="nr" src="assets/neon-right.webp" alt="" draggable="false"></div>' : ''}
-      <div class="ch-cards">${['spades', 'hearts', 'clubs', 'diamonds'].map((k) => `<img src="assets/cards/king-${k}.webp" alt="King of ${k[0].toUpperCase() + k.slice(1)}" draggable="false">`).join('')}</div>
+      <div class="ch-cards">${['spades', 'hearts', 'clubs', 'diamonds'].map((k) => `<img src="${TN.art(`assets/cards/king-${k}.webp`)}" alt="King of ${k[0].toUpperCase() + k.slice(1)}" draggable="false">`).join('')}</div>
     </section>
     <div class="ch-body ${intro ? 'intro' : ''}">
     <section class="card ch-intro">
@@ -2009,10 +2010,10 @@ function profileBox() {
     // A challenge banner across the box, its badge on the left, then rank, name and win % ball.
     const gold2 = RK.RANKS.find((r) => r.name === 'Gold II');
     const dn = displayName(myName());
-    return `<div class="profile-box pb-example" role="img" aria-label="Player card: ${esc(dn.main)}, Gold II, 59% wins. Press and hold to see the whole banner." data-peek="assets/challenges/banner-west.webp">
-      <img class="pb-bn" src="assets/challenges/banner-west.webp" alt="" draggable="false">
+    return `<div class="profile-box pb-example" role="img" aria-label="Player card: ${esc(dn.main)}, Gold II, 59% wins. Press and hold to see the whole banner." data-peek="${TN.art('assets/challenges/banner-west.webp')}">
+      <img class="pb-bn" src="${TN.art('assets/challenges/banner-west.webp')}" alt="" draggable="false">
       <span class="pb-plate">
-        <img class="pb-badge" src="assets/challenges/badge-west.webp" alt="" draggable="false">
+        <img class="pb-badge" src="${TN.art('assets/challenges/badge-west.webp')}" alt="" draggable="false">
         ${rankBadge(gold2, 40)}
         <span class="pb-name"><b class="pb-tag">${esc(dn.main)}</b>${dn.sub ? `<small class="pb-sub">${esc(dn.sub)}</small>` : ''}</span>
         ${WR.winBall(WR.levelFor(59, 100), 34)}
@@ -2227,10 +2228,21 @@ function nameSettings() {
     </section>`;
 }
 
+function kingLookSettings() {
+  const t = TN.currentTone();
+  const opt = ([v, label]) => `<button class="seg-opt look-opt" data-action="king-tone" data-v="${v}" aria-pressed="${t === v}"><img src="${TN.art('assets/cards/king-spades.webp', v)}" alt="" draggable="false"><span>${label}</span></button>`;
+  return `<div class="section-head"><h2>How your Kings look</h2></div>
+    <section class="card look-card">
+      <div class="seg-wide look-opts" role="group" aria-label="How your Kings look">${TN.TONES.map(opt).join('')}</div>
+      <p class="muted small">Pick the skin tone for the Kings on the cards, badges and banners. Only their skin changes; everything else in the art stays the same. ${t === 'white' ? '' : `The ${t === 'brown' ? 'Brown' : 'Black'} art is still being made, so pictures that aren’t ready yet show the original for now.`}</p>
+    </section>`;
+}
+
 function viewSettings() {
   return `${topbar('Settings')}
   <main class="page">
     ${nameSettings()}
+    ${kingLookSettings()}
     <div class="section-head"><h2>Account</h2></div>
     <button class="btn wide" data-action="nav" data-view="account">${A.currentUser() ? (ui.profile ? `@${esc(ui.profile.gamertag)}` : 'Finish setting up your account') : 'Sign in'}</button>
     <div class="section-head"><h2>Sound</h2></div>
@@ -2355,6 +2367,7 @@ function ask(opts) {
 }
 
 function render() {
+  TN.setTone(getPref('kog.tone', 'white'));
   const views = {
     home: viewHome, new: viewNew, game: viewGame, card: viewCard, players: viewPlayers, player: viewPlayer,
     history: viewHistory, rules: viewRules, join: viewJoin, whoami: viewWhoami, share: viewShare, settings: viewSettings,
@@ -2828,6 +2841,10 @@ const actions = {
   },
   'lb-map': (d) => {
     lbMapTap(ui.lb, d.v);
+    render();
+  },
+  'king-tone': (d) => {
+    setPref('kog.tone', d.v);
     render();
   },
   'name-style': (d) => {

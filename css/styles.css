@@ -1640,3 +1640,8 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .pl-win { display: grid; justify-items: center; gap: 2px; }
 .pl-win small { font-size: 11px; font-weight: 700; color: var(--muted); }
 .pl-wearing { margin: 0; }
+
+/* Settings: How your Kings look */
+.look-opts .look-opt { display: grid; justify-items: center; gap: 4px; min-height: 0; padding: 8px 4px; }
+.look-opt img { width: 54px; aspect-ratio: 2 / 3; border-radius: 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4); }
+.look-opt[aria-pressed="false"] img { opacity: 0.7; }

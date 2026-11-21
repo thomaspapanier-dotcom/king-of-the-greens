@@ -56,7 +56,7 @@ if added:
     js = re.sub(r'export const ART = new Set\(\[.*?\]\);', 'export const ART = new Set([' + ', '.join(f"'{c}'" for c in order) + ']);', js)
     (ROOT / 'js/challenges.js').write_text(js, encoding='utf8')
     sw = (ROOT / 'sw.js').read_text(encoding='utf8')
-    sw = re.sub(r"  '\./assets/challenges/[^']+',\r?\n", '', sw)
+    sw = re.sub(r"  '\./assets/challenges/(?![^']*-(?:brown|black)\.webp)[^']+',\r?\n", '', sw)  # keep skin-tone versions
     lines = ''.join(f"  './assets/challenges/{k}-{c}.webp',\n" for c in order for k in ('badge', 'banner'))
     sw = sw.replace("  './js/challenges.js',\n", "  './js/challenges.js',\n" + lines, 1)
     v = int(re.search(r"const VERSION = 'kog-v(\d+)';", sw).group(1))

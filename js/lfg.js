@@ -5,6 +5,7 @@ import * as WR from './winrate.js';
 import { rankBadge } from './badges.js';
 import { badgeHtml, bannerClass } from './flair.js';
 import * as CH from './challenges.js';
+import * as TN from './tones.js';
 import { kingdomName as KINGDOM_NAME } from './kingdoms.js';
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -59,8 +60,8 @@ export function playerSheetHtml(id) {
     <section class="ch-sheet pl-sheet" role="dialog" aria-label="Player card: ${esc(p.tag)}" data-action="ch-stay">
       <div class="ch-grab" aria-hidden="true"></div>
       <div class="pl-hero">
-        <img class="pl-banner" src="assets/challenges/banner-${p.art}.webp" alt="" draggable="false">
-        <img class="pl-badge" src="assets/challenges/badge-${p.art}.webp" alt="" draggable="false">
+        <img class="pl-banner" src="${TN.art(`assets/challenges/banner-${p.art}.webp`)}" alt="" draggable="false">
+        <img class="pl-badge" src="${TN.art(`assets/challenges/badge-${p.art}.webp`)}" alt="" draggable="false">
         <div class="pl-stats">
           <span><small>Ranked matches played</small><b>${st.played}</b></span>
           <span><small>Wins</small><b>${st.wins}</b></span>
@@ -83,11 +84,11 @@ export const nameHtml = (p) => (p.sub
   ? `<span class="np-name"><b>${esc(p.tag)}</b><small>${esc(p.sub)}</small></span>`
   : `<b>${esc(p.tag)}</b>`);
 const badgeImg = (p, size) => (p.art
-  ? `<img class="np-art-badge" src="assets/challenges/badge-${p.art}.webp" width="${size}" height="${size}" alt="" draggable="false">`
+  ? `<img class="np-art-badge" src="${TN.art(`assets/challenges/badge-${p.art}.webp`)}" width="${size}" height="${size}" alt="" draggable="false">`
   : badgeHtml(p.badge, size));
 const bannerCls = (p) => (p.art ? 'has-art' : bannerClass(p.banner));
 // The image goes inline (not through a CSS variable) so its path resolves from the page, not from css/.
-const bannerStyle = (p) => (p.art ? ` style="background-image:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.2) 70%),url('assets/challenges/banner-${p.art}.webp')"` : '');
+const bannerStyle = (p) => (p.art ? ` style="background-image:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.2) 70%),url('${TN.art(`assets/challenges/banner-${p.art}.webp`)}')"` : '');
 
 /** [badge] [rank] name [win % ball] on the player's banner: the player card on every ranked screen. */
 export function plate(p, { badge = 20, ball = 15, check = false } = {}) {
