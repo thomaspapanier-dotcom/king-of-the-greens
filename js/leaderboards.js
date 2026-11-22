@@ -334,7 +334,7 @@ export function leaderboardsHtml(st) {
   const mapCard = `<section class="card lb-mapcard">
       <div class="lb-maphead">${head}</div>
       ${world
-    ? `${(st.zPrev = null) || ''}<div class="lb-map lb-globe-wrap"><canvas class="lb-globe" aria-label="Globe of the world. Drag to spin it; tap a gold Empire to zoom in."></canvas><p class="lb-globe-tip">Drag to spin the globe. Tap a gold Empire.</p></div>`
+    ? `${(st.zPrev = null) || ''}<div class="lb-map lb-globe-wrap"><canvas class="lb-globe" aria-label="Globe of the world. Drag to spin it, pinch or use the buttons to zoom, tap an Empire to open it."></canvas><div class="globe-zoom"><button type="button" data-globe-zoom="in" aria-label="Zoom in">+</button><button type="button" data-globe-zoom="out" aria-label="Zoom out">−</button></div><p class="lb-globe-tip">Drag to spin, pinch to zoom. Tap an Empire.</p></div>`
     : !painted
       ? `<div class="lb-map lb-vmap${enter ? ' enter' : ''}">${vmapHtml(st)}</div>`
     : !realm

@@ -82,7 +82,11 @@ export async function mountGlobe(canvas, st, { onEmpire, onInfo, zoomOut }) {
   const us = LIVE['United States of America'];
 
   let rot = st.rot || [-us.center[0] + 10, -us.center[1] + 14, 0];
-  let scale = R;
+  // Zoom: 1 is the whole globe; up to 6 times closer. Kept on the screen's state so it survives a redraw.
+  const MIN = R;
+  const MAX = R * 6;
+  const clampScale = (v) => Math.min(MAX, Math.max(MIN, v));
+  let scale = clampScale(R * (st.zoom || 1));
   let spin = 0; // inertia, degrees per frame
   let dragging = null;
   let busy = false; // zooming in or out
@@ -262,15 +266,52 @@ export async function mountGlobe(canvas, st, { onEmpire, onInfo, zoomOut }) {
     fly(back, R, 900);
   }
 
+  // ---------- zoom: pinch with two fingers, the mouse wheel, or the + and − buttons ----------
+  const touches = new Map(); // pointers down right now
+  let pinch = null; // { d: starting distance, s: starting scale }
+  let pinched = false; // the gesture was a pinch, so lifting a finger isn't a tap
+  const gap = () => { const [a, b] = [...touches.values()]; return Math.hypot(a.x - b.x, a.y - b.y); };
+  function setZoom(v) {
+    scale = clampScale(v);
+    st.zoom = scale / R;
+    lastTouch = performance.now();
+  }
+  canvas.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    spin = 0;
+    setZoom(scale * Math.exp(-e.deltaY * 0.0015));
+  }, { passive: false });
+  const wrap = canvas.parentElement;
+  wrap && wrap.querySelectorAll('[data-globe-zoom]').forEach((btn) => btn.addEventListener('click', () => {
+    if (busy) return;
+    spin = 0;
+    const to = clampScale(scale * (btn.dataset.globeZoom === 'in' ? 1.6 : 1 / 1.6));
+    fly(rot, to, 260, () => { st.zoom = scale / R; });
+  }));
+
   // ---------- thumb controls ----------
   canvas.addEventListener('pointerdown', (e) => {
     if (busy) return;
     canvas.setPointerCapture(e.pointerId);
-    dragging = { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, t: performance.now() };
+    touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
     spin = 0;
     lastTouch = performance.now();
+    if (touches.size === 2) {
+      // second finger down: stop spinning, start pinching
+      dragging = null;
+      pinch = { d: gap() || 1, s: scale };
+      pinched = true;
+      return;
+    }
+    if (touches.size === 1) pinched = false;
+    dragging = { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, t: performance.now() };
   });
   canvas.addEventListener('pointermove', (e) => {
+    if (touches.has(e.pointerId)) touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch && touches.size >= 2) {
+      setZoom(pinch.s * (gap() / pinch.d));
+      return;
+    }
     if (!dragging) return;
     const k = 72 / scale; // degrees per pixel: feels like rolling the ball under your thumb
     const dx = e.clientX - dragging.x;
@@ -284,6 +325,13 @@ export async function mountGlobe(canvas, st, { onEmpire, onInfo, zoomOut }) {
     lastTouch = now;
   });
   const end = (e) => {
+    touches.delete(e.pointerId);
+    if (touches.size < 2) pinch = null;
+    if (pinched) {
+      if (!touches.size) pinched = false;
+      dragging = null; // after a pinch, lifting the fingers is neither a spin nor a tap
+      return;
+    }
     if (!dragging) return;
     const moved = Math.hypot(e.clientX - dragging.sx, e.clientY - dragging.sy);
     dragging = null;
@@ -301,13 +349,13 @@ export async function mountGlobe(canvas, st, { onEmpire, onInfo, zoomOut }) {
     const live = tag ? tag.e : LIVE[f.properties.name];
     if (live) {
       onInfo(`Entering the ${live.name}…`);
-      fly([-live.center[0], -live.center[1], 0], R * 3.2, 850, () => onEmpire(live.code));
+      fly([-live.center[0], -live.center[1], 0], Math.max(scale, R * 3.2), 850, () => { st.zoom = 1; onEmpire(live.code); });
     } else {
       onInfo(`${f.properties.name}: ${SOON.has(f.properties.name) ? 'Empire coming soon.' : 'not an Empire yet.'} Tap a gold Empire.`);
     }
   };
   canvas.addEventListener('pointerup', end);
-  canvas.addEventListener('pointercancel', () => { dragging = null; });
+  canvas.addEventListener('pointercancel', (e) => { touches.delete(e.pointerId); pinch = null; dragging = null; });
 
   requestAnimationFrame(frame);
 }

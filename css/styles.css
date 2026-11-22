@@ -1862,3 +1862,9 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 
 /* Leaderboards: the tiny flag before an Empire's name */
 .flag { display: inline-block; vertical-align: -0.1em; border-radius: 2px; box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.45); object-fit: fill; }
+
+/* Leaderboards globe: zoom buttons in the corner */
+.globe-zoom { position: absolute; top: 8px; right: 8px; z-index: 2; display: grid; gap: 6px; }
+.globe-zoom button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(245, 215, 110, 0.7); background: rgba(8, 20, 14, 0.78); color: #f5d76e; font: 800 20px/1 system-ui, sans-serif; display: grid; place-items: center; cursor: pointer; }
+.globe-zoom button:active { transform: scale(0.94); }
+.globe-zoom button:focus-visible { outline: 2px solid #f5d76e; outline-offset: 2px; }
