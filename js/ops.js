@@ -59,6 +59,20 @@ const APPLY = {
     if (g.status !== 'puttoff') return false;
     R.setPuttOffWinner(g, op.pid);
   },
+  // Ask to change a finished round, or to end the match; the other side votes from their own phone.
+  request: (g, op) => {
+    R.addRequest(g, op.req);
+  },
+  vote: (g, op) => {
+    R.castVote(g, op.id, op.who, op.yes);
+  },
+  // Fix a set in a round opened by an approved change, then lock it again.
+  fix: (g, op) => {
+    R.fixSet(g, op.stage, op.pid, op.k, op.score);
+  },
+  relock: (g, op) => {
+    R.relockStage(g, op.stage);
+  },
 };
 
 /**

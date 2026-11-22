@@ -484,15 +484,15 @@ const RING_PRESETS = {
   M: { label: dn('M'), show: ['M'], markers: [['M', 205]], text: `${dn('M')} putts: 6–9 ft from the hole.`, dims: 'M' },
   L: { label: dn('L'), show: ['L'], markers: [['L', 320]], text: `${dn('L')} putts: 10–15 ft from the hole.`, dims: 'L' },
   round: {
-    label: 'Classic round',
+    label: 'Remix round',
     show: ['S', 'M', 'L'],
     markers: [['S', 125], ['M', 205], ['L', 320]],
-    text: `A Classic round: one marker in each ring. Everyone putts ${dn('S')}, then ${dn('M')}, then ${dn('L')}.`,
+    text: `A Remix round (coming soon): one marker in each ring. Everyone putts ${dn('S')}, then ${dn('M')}, then ${dn('L')}.`,
   },
   // Standard's rounds: all three markers at one distance.
-  xS: { label: `${dn('S')} round`, show: ['S'], markers: [['S', 100], ['S', 200], ['S', 330]], text: `${dn('S')} round: all three markers 3–5 ft. Round 1 of Standard.`, short: `All three markers ${dn('S')}, 3–5 ft from the hole.` },
-  xM: { label: `${dn('M')} round`, show: ['M'], markers: [['M', 20], ['M', 140], ['M', 225]], text: `${dn('M')} round: all three markers 6–9 ft. Round 2 of Standard.`, short: `All three markers ${dn('M')}, 6–9 ft from the hole.` },
-  xL: { label: `${dn('L')} round`, show: ['L'], markers: [['L', 35], ['L', 155], ['L', 305]], text: `${dn('L')} round: all three markers 10–15 ft. Round 3 of Standard.`, short: `All three markers ${dn('L')}, 10–15 ft from the hole.` },
+  xS: { label: `${dn('S')} round`, show: ['S'], markers: [['S', 100], ['S', 200], ['S', 330]], text: `${dn('S')} round: all three markers 3–5 ft. Round 1.`, short: `All three markers ${dn('S')}, 3–5 ft from the hole.` },
+  xM: { label: `${dn('M')} round`, show: ['M'], markers: [['M', 20], ['M', 140], ['M', 225]], text: `${dn('M')} round: all three markers 6–9 ft. Round 2.`, short: `All three markers ${dn('M')}, 6–9 ft from the hole.` },
+  xL: { label: `${dn('L')} round`, show: ['L'], markers: [['L', 35], ['L', 155], ['L', 305]], text: `${dn('L')} round: all three markers 10–15 ft. Round 3.`, short: `All three markers ${dn('L')}, 10–15 ft from the hole.` },
 };
 
 function ringsSvg(p) {
@@ -750,10 +750,10 @@ export function nextRoundFigure(def) {
 export function figures() {
   return {
     toss: tossFigure(),
-    markers: ringsFigure('markers', 'Where the KOG can put the markers', ['S', 'M', 'L', 'round']),
+    markers: ringsFigure('markers', 'Where the KOG can put the markers', ['S', 'M', 'L']),
     set: setFigure(),
     anyHole: anyHoleFigure(),
-    special: ringsFigure('special', 'The rounds of each version', ['xS', 'xM', 'xL', 'round']),
+    special: ringsFigure('special', 'The first three rounds', ['xS', 'xM', 'xL']),
     eagle: sequenceFigure('eagle', 'Eagle round, step by step', eagleSvg(), EAGLE.steps),
     tiebreak: tiebreakFigure(),
   };

@@ -30,11 +30,12 @@ export const FORMATS = {
     rounds: 4,
     stages: [special(1, 'S'), special(2, 'M'), special(3, 'L'), eagle(4)],
   },
-  // The alternate, also 4 rounds: Short, Medium and Long in every round, then the Eagle round.
-  // Same balls as Standard (9 Short, 9 Medium, 9 Long, 3 Eagle), so scores compare directly.
+  // K.O.G. Remix (coming soon, under Alternate games), also 4 rounds: Short, Medium and Long in every round,
+  // then the Eagle round. Same balls as Standard (9 Short, 9 Medium, 9 Long, 3 Eagle), so scores compare directly.
   classic4: {
     key: 'classic4',
-    name: 'Classic',
+    name: 'Remix',
+    soon: true,
     blurb: 'Short, Medium and Long every round, then the Eagle round',
     rounds: 4,
     stages: [normal(1), normal(2), normal(3), eagle(4)],
@@ -356,6 +357,99 @@ export function setPuttOffWinner(game, pid) {
   game.winnerId = pid;
   game.puttOff = true;
   game.status = 'done';
+}
+
+// ---------- Requests: changing a finished round, ending a match early ----------
+// A finished round is locked. Anyone can ask to change its scores; the other side has to allow it (one
+// "yes" from each opposing player or team). Ending a match early needs the other player to agree, and in
+// Duos three of the four people (the one asking counts).
+
+/** Ask for something. `req` = { id, kind: 'change' | 'end', stage (for a change), by (a person id) }. */
+export function addRequest(game, req) {
+  if (!['change', 'end'].includes(req.kind)) throw new Error('Unknown request');
+  if (game.status === 'toss') throw new Error('The game hasn’t started');
+  if (req.kind === 'end' && game.status === 'done') throw new Error('The game is over');
+  if (!people(game).some((p) => p.id === req.by)) throw new Error('Only a player can ask');
+  if (req.kind === 'change') {
+    const st = game.stages[req.stage];
+    if (!st || !st.result) throw new Error('Only a finished round can be changed');
+    if (st.unlocked) throw new Error('That round is already open');
+  }
+  game.requests = game.requests || [];
+  if (game.requests.some((r) => r.status === 'pending' && r.kind === req.kind && r.stage === req.stage)) throw new Error('Already asked');
+  game.requests.push({ id: req.id, kind: req.kind, stage: req.kind === 'change' ? req.stage : null, by: req.by, votes: {}, status: 'pending' });
+}
+
+/** Who still has a say: for a change, people on the other side(s); for ending, everyone else. */
+export function canVote(game, req, personId) {
+  if (req.status !== 'pending' || personId === req.by || personId in req.votes) return false;
+  if (!people(game).some((p) => p.id === personId)) return false;
+  return req.kind === 'end' || unitOf(game, personId) !== unitOf(game, req.by);
+}
+
+/** 'pending', 'approved' or 'denied', from the votes so far. */
+export function requestOutcome(game, req) {
+  const votes = Object.entries(req.votes);
+  if (req.kind === 'change') {
+    const mine = unitOf(game, req.by);
+    const sides = game.players.map((p) => p.id).filter((u) => u !== mine);
+    if (votes.some(([who, yes]) => !yes && unitOf(game, who) !== mine)) return 'denied';
+    return sides.every((u) => votes.some(([who, yes]) => yes && unitOf(game, who) === u)) ? 'approved' : 'pending';
+  }
+  const others = people(game).filter((p) => p.id !== req.by);
+  const need = isCoop(game) ? 2 : others.length; // Duos: three of four, counting the one who asked
+  const yes = votes.filter(([, v]) => v).length;
+  const no = votes.filter(([, v]) => !v).length;
+  if (yes >= need) return 'approved';
+  return others.length - no < need ? 'denied' : 'pending';
+}
+
+/** Record a yes or no. When it's decided, an approved change opens the round; an approved end finishes the game. */
+export function castVote(game, id, personId, yes) {
+  const req = (game.requests || []).find((r) => r.id === id);
+  if (!req || !canVote(game, req, personId)) throw new Error('Not your vote');
+  req.votes[personId] = Boolean(yes);
+  req.status = requestOutcome(game, req);
+  if (req.status !== 'approved') return;
+  if (req.kind === 'change') game.stages[req.stage].unlocked = true;
+  else endMatch(game);
+}
+
+/** Both sides agreed to stop: the lowest total so far wins (a tie for the lead has no winner). */
+export function endMatch(game) {
+  const s = standings(game);
+  const top = s.filter((x) => x.total === s[0].total);
+  game.endedEarly = { stage: currentStageIdx(game) };
+  game.winnerId = top.length === 1 ? top[0].id : null;
+  game.tiedIds = top.length === 1 ? null : top.map((x) => x.id);
+  game.puttOff = false;
+  game.status = 'done';
+}
+
+/** Fix one set's score in a round that was opened by an approved request. */
+export function fixSet(game, si, pid, k, score) {
+  const st = game.stages[si];
+  if (!st || !st.unlocked || !st.entries[pid] || !st.entries[pid][k]) throw new Error('That round is locked');
+  if (!Number.isInteger(score)) throw new Error('Pick a score');
+  st.entries[pid][k] = { ...st.entries[pid][k], mode: 'quick', score };
+}
+
+/** Done fixing: lock the round again and update its result (who was KOG next stays as it was played). */
+export function relockStage(game, si) {
+  const st = game.stages[si];
+  if (!st || !st.unlocked) throw new Error('That round isn’t open');
+  delete st.unlocked;
+  const scores = Object.fromEntries(game.players.map((p) => [p.id, playerStageScore(game, si, p.id)]));
+  const low = Math.min(...Object.values(scores));
+  st.result = { ...st.result, scores, low, lowIds: game.players.filter((p) => scores[p.id] === low).map((p) => p.id) };
+  // The last round decides the game: settle the winner again with the fixed scores.
+  if (si === stagesFor(game).length - 1 && ['done', 'puttoff'].includes(game.status) && !game.endedEarly) {
+    game.winnerId = null;
+    game.tiedIds = null;
+    game.puttOff = false;
+    delete game.tieTosses;
+    resolveFinal(game);
+  }
 }
 
 export function formatScore(n) {

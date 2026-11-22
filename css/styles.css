@@ -1747,5 +1747,114 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .marker-x::before { transform: translate(-50%, -50%) rotate(45deg); }
 .marker-x::after { transform: translate(-50%, -50%) rotate(-45deg); }
 
-/* New game: Standard or Classic */
-.fmt-pick .fmt-main { font-style: normal; font-size: 10px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #f5d76e; margin-left: 4px; }
+/* Alternate games: K.O.G. Remix (coming soon), the four Kings faint behind the words */
+.remix-choice { position: relative; overflow: hidden; isolation: isolate; }
+.remix-scene { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: url("../assets/four-kings.webp") center 35% / cover no-repeat; opacity: 0.3; }
+
+/* Phones are narrower than the background picture: show its full width (so no King or Queen at the edge
+   gets cut off) and continue its sunset sky above and its grass below. */
+@media (max-aspect-ratio: 2/3) {
+  #app::before {
+    background:
+      linear-gradient(color-mix(in srgb, var(--bg) var(--bg-wash, 62%), transparent), color-mix(in srgb, var(--bg) var(--bg-wash, 62%), transparent)),
+      var(--app-bg, url("../assets/app-background.webp")) center 32% / 100% auto no-repeat,
+      linear-gradient(#e2ab99 0%, #d49c8a 18%, #7d7a2c 70%, #6b6922 100%);
+  }
+  .splash { background: linear-gradient(#e2ab99 0%, #d49c8a 18%, #7d7a2c 70%, #6b6922 100%); }
+  .splash img { object-fit: contain; object-position: center 32%; }
+}
+
+/* Challenges box: the neon logo slowly breathes (grows a little and glows brighter), so the eye goes to it */
+.challenges-art { animation: ch-breathe 3.2s ease-in-out infinite; transform-origin: 50% 50%; }
+@keyframes ch-breathe {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.55)) drop-shadow(0 0 8px rgba(255, 40, 40, 0.3)); }
+  50% { transform: scale(1.07); filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 18px rgba(255, 40, 40, 0.75)); }
+}
+@media (prefers-reduced-motion: reduce) { .challenges-art { animation: none; } }
+
+/* Round 1 tip: the scorecard button circled in red, with a small note under it */
+.topbar-right { position: relative; }
+.icon-btn.tip-ring { box-shadow: 0 0 0 3px #e03131, 0 0 14px rgba(224, 49, 49, 0.7); border-radius: 50%; animation: tip-pulse 1.6s ease-in-out infinite; }
+@keyframes tip-pulse { 50% { box-shadow: 0 0 0 5px #e03131, 0 0 20px rgba(224, 49, 49, 0.9); } }
+.coach {
+  position: absolute; top: calc(100% + 12px); right: 0; z-index: 30; width: min(250px, calc(100vw - 32px));
+  display: grid; gap: 8px; padding: 12px; border-radius: 14px; text-align: left;
+  background: var(--surface); color: var(--ink); border: 2px solid #e03131; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+.coach::before { content: ""; position: absolute; top: -9px; right: 14px; width: 14px; height: 14px; background: var(--surface); border-left: 2px solid #e03131; border-top: 2px solid #e03131; transform: rotate(45deg); }
+.coach p { margin: 0; font-size: 14px; font-weight: 500; line-height: 1.35; }
+.coach-never { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
+.coach-never input { width: 18px; height: 18px; }
+.coach .btn { justify-self: end; }
+@media (prefers-reduced-motion: reduce) { .icon-btn.tip-ring { animation: none; } }
+
+/* Scorecard: each player's banner on top of their card (Duos: the team, then both teammates stacked) */
+.sc-head, .sc-team { display: grid; gap: 6px; margin-bottom: 8px; }
+.sc-head { grid-template-columns: 1fr auto; align-items: center; }
+.sc-head .sc-total, .sc-team-head .sc-total { font-size: 18px; }
+.sc-card { position: relative; overflow: hidden; min-height: 64px; border-radius: 14px; border: 1px solid rgba(245, 215, 110, 0.45); background: #0f1d16; isolation: isolate; }
+.sc-card.me { border-color: #f5d76e; box-shadow: 0 0 0 1px #f5d76e inset; }
+.sc-card-bn { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; z-index: -1; }
+.sc-card::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(8, 16, 11, 0.85) 0%, rgba(8, 16, 11, 0.55) 55%, rgba(8, 16, 11, 0.2) 100%); }
+.sc-card-plate { display: flex; align-items: center; gap: 8px; min-height: 64px; padding: 6px 10px 6px 6px; color: #fff; }
+.sc-card-badge { width: 46px; height: 46px; object-fit: contain; flex: none; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6)); }
+.sc-card-name { flex: 1; min-width: 0; font-weight: 800; font-size: 16px; overflow-wrap: anywhere; text-shadow: 0 1px 3px #000; }
+.sc-card-name .you { font-size: 11px; }
+.sc-team { padding: 8px; border-radius: 16px; background: var(--surface-2); border: 1px solid var(--line); }
+.sc-team.team-red { border-color: rgba(224, 49, 49, 0.55); }
+.sc-team.team-black { border-color: rgba(200, 210, 205, 0.45); }
+.sc-team-head { display: flex; align-items: center; gap: 8px; }
+.sc-team-head b { flex: 1; font-size: 15px; }
+/* Rounds across the top are buttons; finished ones carry a small lock */
+.sc th .sc-rd { all: unset; display: grid; justify-items: center; cursor: pointer; padding: 2px 4px; border-radius: 6px; font: inherit; }
+.sc th .sc-rd:disabled { cursor: default; opacity: 0.55; }
+.sc th .sc-rd:focus-visible { outline: 2px solid #f5d76e; }
+.sc th.locked .sc-rd::after { content: "🔒"; font-size: 9px; line-height: 1; margin-top: 1px; opacity: 0.8; }
+.sc th.now { box-shadow: inset 0 -3px 0 #f5d76e; }
+.sc td .sc-d { display: block; font-size: 9px; font-weight: 700; opacity: 0.6; }
+
+/* One round, read-only (or open for fixes) */
+.rv-player { display: grid; gap: 6px; }
+.rv-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 16px; }
+.rv-sets { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.rv-set { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-top: 1px solid var(--line); }
+.rv-label { flex: 1; font-weight: 600; font-size: 14px; }
+.rv-balls { display: flex; gap: 4px; }
+.rv-ball { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800; background: #fff; color: #15211a; border: 1px solid rgba(0, 0, 0, 0.35); }
+.rv-ball.par { background: #e03131; color: #fff; }
+.rv-ball.eagle { background: #f5d76e; }
+.rv-step { display: flex; align-items: center; gap: 8px; }
+.rv-step b { min-width: 34px; text-align: center; font-size: 17px; }
+.rv-step .icon-btn { font-size: 20px; font-weight: 800; }
+
+/* Requests: a score change or ending the match, waiting on the other side */
+.req-card { display: grid; gap: 8px; border: 2px solid #f5d76e; }
+.req-card p { margin: 0; }
+.req-vote { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.req-vote span { flex: 1; min-width: 80px; font-weight: 700; }
+.sc-block > .sc-head, .sc-block > .sc-team { margin: 8px; }
+
+/* Home: your player card opens your profile */
+.profile-box.tappable { cursor: pointer; }
+.profile-box.tappable:active { transform: scale(0.99); }
+.profile-box.tappable:focus-visible { outline: 2px solid #f5d76e; outline-offset: 2px; }
+
+/* My profile: your banner big, your plate on it, then the ranked strip and your stats */
+.me-hero { position: relative; overflow: hidden; border-radius: 18px; border: 2px solid #7c3aed; min-height: 170px; display: grid; align-items: end; isolation: isolate; }
+.me-banner { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; z-index: -1; }
+.me-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(rgba(0, 0, 0, 0) 30%, rgba(6, 12, 8, 0.88) 100%); }
+.me-plate { display: flex; align-items: center; gap: 8px; padding: 10px; color: #fff; }
+.me-badge { width: 58px; height: 58px; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7)); }
+.me-name { flex: 1; min-width: 0; display: grid; line-height: 1.15; text-shadow: 0 1px 3px #000; }
+.me-name b { font-size: 20px; overflow-wrap: anywhere; }
+.me-name small { font-size: 12px; opacity: 0.85; }
+.me-name span { font-size: 12px; font-weight: 600; opacity: 0.85; margin-top: 2px; }
+.me-win { display: grid; justify-items: center; gap: 2px; }
+.me-win small { font-size: 11px; font-weight: 700; text-shadow: 0 1px 2px #000; }
+.me-ranked { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 10px 0 4px; }
+.me-ranked span { display: grid; justify-items: center; padding: 10px 4px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); }
+.me-ranked small { font-size: 11px; color: var(--muted); text-align: center; }
+.me-ranked b { font-size: 20px; }
+.me-ranked i { font-style: normal; }
+.me-ranked i.w { color: #2fae7a; }
+.me-ranked i.l { color: #e03131; }

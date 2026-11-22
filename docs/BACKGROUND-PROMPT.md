@@ -39,3 +39,19 @@ LAYOUT (it sits behind the app's buttons and text, so keep it easy to read over)
 - Text or logos show up: *"Remove all text and logos, keep everything else."*
 
 Save it in the KOG Images folder as **`kog-background.png`** and tell me. I'll make it the background behind every screen and on the opening screen, in place of the player's card. Setup stays the same: players still choose their Ruler, deck and House.
+
+## Fix (November 2026): the right Kings, and nobody at the edges
+
+The first picture came out with the **King of Spades** and the **King of Diamonds** in the wrong skin (both v1), and the players spread so wide that phones cut off the King on the left. In a **new** ChatGPT chat, attach **two** files: the current background (`kog-app-background.png`) and the reference sheet (`Background reference - players and crowd.png`). Send:
+
+```
+Image 1 is our app background. Image 2 is the reference sheet of the characters in it. Recreate image 1 with two fixes and nothing else changed (same scene, same style, same lighting, portrait 1024x1536, no text, no logos):
+
+1. The King of Spades standing on the left with his arms crossed must look exactly like the King of Spades labeled v2 on the sheet: his warm medium-brown skin, face, white curled hair and beard, crown and outfit. The King of Diamonds putting on the right must look exactly like the King of Diamonds labeled v3 on the sheet: his deep dark-brown skin, face, white curled hair and beard, crown and outfit.
+
+2. Bring the four players closer together toward the middle. All four players and the three watchers must sit inside the middle 70% of the width, with nothing important in the outer 15% on the left or the right (phones crop the sides). Fill the edges with grass, trees and sky instead.
+
+Keep the Queen of Hearts (crouching, reading the putt) and the Queen of Clubs (with her pull cart and lemonade) exactly as they are.
+```
+
+Save it in the KOG Images folder as **`kog-app-background.png`** (replacing the old one) and tell me; I'll put it in.

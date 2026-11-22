@@ -415,8 +415,20 @@ function liveButton(g) {
   return `<button class="pill live ${ui.sync}" data-action="nav" data-view="share" aria-label="${label}. Game code ${g.sync.code}"><span class="pill-dot" aria-hidden="true"></span>${label}</button>`;
 }
 function gameRight(g) {
-  const card = g.stages.length ? `<button class="icon-btn" data-action="nav" data-view="card" data-game="${g.id}" data-back="game" aria-label="Scorecard">${ICON.card}</button>` : '';
-  return liveButton(g) + card;
+  const tip = cardTipOn(g);
+  const card = g.stages.length ? `<button class="icon-btn${tip ? ' tip-ring' : ''}" data-action="nav" data-view="card" data-game="${g.id}" data-back="game" aria-label="Scorecard">${ICON.card}</button>` : '';
+  return liveButton(g) + card + (tip ? cardTip() : '');
+}
+/** First round of a game: point out the scorecard button, until someone closes the tip (or says never again). */
+function cardTipOn(g) {
+  return ui.view === 'game' && g.status === 'playing' && R.currentStageIdx(g) === 0 && !ui.cardTipDone && getPref('kog.tip.card', 'on') !== 'off';
+}
+function cardTip() {
+  return `<div class="coach" role="dialog" aria-label="Scorecard tip">
+    <p><b>Tap here to see your scorecard.</b> Every round and every set, for everyone.</p>
+    <label class="coach-never"><input type="checkbox" id="card-tip-never"> Don’t show this again</label>
+    <button class="btn small-btn primary" data-action="card-tip-ok">Got it</button>
+  </div>`;
 }
 
 // ---------- views ----------
@@ -464,7 +476,7 @@ function viewHome() {
     ${lagResumeCard()}
     <div class="stack">
       <div class="play-choices">
-        <button class="choice primary art-choice art-ranked" data-action="nav" data-view="ranked-modes" data-confetti="kings">
+        <button class="choice primary art-choice art-ranked" data-action="nav" data-view="ranked-modes">
           <span class="choice-ico">${ICON.crown}</span>
           <span class="choice-title">K.O.G. Ranked <span class="soon-tag">(coming soon)</span></span>
           <span class="choice-sub">Climb from the depths of Copper V to Putt Master</span>
@@ -487,6 +499,11 @@ function viewHome() {
         </button>
         <hr class="alt-rule" aria-hidden="true">
         <div class="alt-head"><h2>Alternate games</h2></div>
+        <button class="choice wide-choice remix-choice locked" disabled aria-disabled="true">
+          <span class="remix-scene" aria-hidden="true"></span><span class="mode-lock" aria-hidden="true">${ICON.lock}</span>
+          <span class="choice-ico">${ICON.crown}</span>
+          <span class="choice-text"><span class="choice-title">K.O.G. Remix <span class="mode-soon">(coming soon)</span></span><span class="choice-sub">The same 4-round game, mixed up: Short, Medium and Long in every round, then the Eagle round</span></span>
+        </button>
         <button class="choice wide-choice quick-choice locked" disabled aria-disabled="true">
           ${COMPASS_SCENE}<span class="mode-lock" aria-hidden="true">${ICON.lock}</span>
           <span class="choice-ico">${ICON.clock}</span>
@@ -714,9 +731,6 @@ function addPlayerForm(disabled) {
   </form>`;
 }
 
-/** The versions you can start: the main game first. */
-const PLAY_FORMATS = Object.keys(R.FORMATS).filter((k) => !R.FORMATS[k].old);
-
 function viewNew() {
   const d = ui.draft;
   const coop = d.mode === 'coop';
@@ -758,8 +772,6 @@ function viewNew() {
     </label>
     ${coop ? `<p class="muted small coop-note">Teammates split each set’s 3 balls: one birdie ball each, and the par ball takes turns. The app shows whose ball is whose.</p>` : ''}
     <p class="irl-note small"><b>${coop ? 'Each team' : 'Each player'} needs 3 balls:</b> 2 birdie balls and 1 par ball that looks clearly different from them (another color, another brand or a bold marking).</p>
-    <div class="section-head"><h2>Version</h2><span class="muted small">4 rounds either way</span></div>
-    <div class="seg-wide name-styles fmt-pick" role="group" aria-label="Game version">${PLAY_FORMATS.map((k) => `<button class="seg-opt" data-action="draft-format" data-v="${k}" aria-pressed="${(d.format || 'kog4') === k}">${R.FORMATS[k].name}${k === 'kog4' ? ' <em class="fmt-main">Main</em>' : ''}<small>${R.FORMATS[k].blurb}</small></button>`).join('')}</div>
     <div class="section-head"><h2>Who’s playing?</h2><span class="muted">${n}/${max}</span></div>
     ${db.players.length ? `<div class="chips">${chips}</div>` : '<p class="muted">Add everyone who’s playing.</p>'}
     ${addPlayerForm(full)}
@@ -1007,6 +1019,7 @@ function viewPlay(g) {
 
   return `${topbar(stageTitle(def, g), 'home', gameRight(g))}
   <main class="page">
+    ${requestsPanel(g)}
     ${def.kind === 'eagle' ? `<div class="banner eagle">🦅 ${isLastStage(g, idx) ? 'Final round' : 'Bonus round'}: Eagle round · leader putts first</div>` : def.kind === 'special' ? `<div class="banner special">${specialTitle(def)}</div>` : ''}
     <section class="king-card">
       <div class="king-crown">${ICON.crown}</div>
@@ -1062,8 +1075,9 @@ function viewSummary(g) {
     else note = `<b>${nk}</b> had the low ${what} and ${team ? 'are' : 'is'} the new KOG.`;
   }
   const order = next.kind === 'eagle' ? 'The leader putts first, so trailing players get to read the green.' : 'The leader (lowest total) putts first.';
-  return `${topbar(`${roundName(def)} done`, 'home', gameRight(g))}
+  return `${topbar(def.num ? `Review of Rd ${def.num}` : 'Review of the Eagle round', 'home', gameRight(g))}
   <main class="page">
+    ${requestsPanel(g)}
     ${note ? `<section class="card callout">${ICON.crown}<div>${note}</div></section>` : ''}
     <div class="section-head"><h2>${def.kind === 'eagle' ? 'Eagle scores' : 'This round'}</h2></div>
     <ol class="board plain">${rows}</ol>
@@ -1079,7 +1093,7 @@ function viewSummary(g) {
     ${nextRoundFigure(next)}
   </main>
   <footer class="dock row">
-    <button class="btn" data-action="reopen">Edit scores</button>
+    <button class="btn" data-action="open-round" data-game="${g.id}" data-i="${idx}">Request a score change</button>
     <button class="btn primary" data-action="next-stage">Start ${roundName(next)}</button>
   </footer>`;
 }
@@ -1113,22 +1127,23 @@ function viewFinal(g) {
       <div class="section-head"><h2>Final totals</h2></div>
       ${leaderboard(g)}
     </main>
-    <footer class="dock row"><button class="btn" data-action="reopen">Edit ${roundName(R.stageDef(g.stages[R.currentStageIdx(g)]))}</button><button class="btn" data-action="nav" data-view="card" data-game="${g.id}" data-back="game">Scorecard</button></footer>`;
+    <footer class="dock row"><button class="btn" data-action="open-round" data-game="${g.id}" data-i="${R.currentStageIdx(g)}">Request a score change</button><button class="btn" data-action="nav" data-view="card" data-game="${g.id}" data-back="game">Scorecard</button></footer>`;
   }
   const w = s.find((p) => p.id === g.winnerId);
   return `${topbar('Final', 'home', gameRight(g))}
   <main class="page">
     <section class="winner">
       <div class="hero-crown">${ICON.crown}</div>
-      <div class="eyebrow">King of the Greens</div>
-      <div class="winner-name">${esc(w.name)}</div>
-      <div>${scoreTag(w.total, 'big')}${g.puttOff ? ` <span class="muted small">won the tie-breaker${(g.tieTosses || 1) > 1 ? ` on toss ${g.tieTosses}` : ''}</span>` : ''}</div>
+      <div class="eyebrow">${w ? 'King of the Greens' : 'Match ended'}</div>
+      <div class="winner-name">${w ? esc(w.name) : `Tied at ${fs(s[0].total)}`}</div>
+      ${w ? `<div>${scoreTag(w.total, 'big')}${g.puttOff ? ` <span class="muted small">won the tie-breaker${(g.tieTosses || 1) > 1 ? ` on toss ${g.tieTosses}` : ''}</span>` : ''}</div>` : ''}
+      ${g.endedEarly ? `<p class="muted small">Ended early after ${esc(roundName(R.stagesFor(g)[g.endedEarly.stage]))}, by agreement.</p>` : ''}
     </section>
     <div class="section-head"><h2>Final standings</h2></div>
     ${leaderboard(g)}
     <div class="stack">
       <button class="btn" data-action="nav" data-view="card" data-game="${g.id}" data-back="game">Scorecard</button>
-      <button class="btn ghost" data-action="reopen">Edit ${roundName(R.stageDef(g.stages[R.currentStageIdx(g)]))}</button>
+      ${g.endedEarly ? '' : `<button class="btn ghost" data-action="open-round" data-game="${g.id}" data-i="${R.currentStageIdx(g)}">Request a score change</button>`}
     </div>
   </main>
   <footer class="dock row">
@@ -1146,65 +1161,219 @@ function viewGame() {
   return viewFinal(g);
 }
 
+// ---------- player cards (example data until accounts are live) ----------
+const SAMPLE_RANKS = ['Bronze II', 'Silver IV', 'Silver I', 'Gold V', 'Gold III', 'Platinum IV', 'Platinum II', 'Diamond V'];
+const SAMPLE_ART = [...CH.ART].filter((id) => !CH.NO_ROYALS.has(id) && !['north', 'west', 'east', 'south'].includes(id));
+const seedOf = (s) => { let h = 7; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) % 100003; return h; };
+/** Is this person you? A live game knows; on one phone it's the player with your name from Settings. */
+function isMePerson(g, person) {
+  if (g.sync && g.sync.me) return g.sync.me === person.id;
+  const n = myName();
+  if (!n || n === NAME_EXAMPLE) return false;
+  const norm = (x) => String(x || '').trim().toLowerCase();
+  return [n.first, n.nick, displayName(n).main].filter(Boolean).some((x) => norm(x) === norm(person.name));
+}
+/** Yours matches the card on the home screen; everyone else gets a steady example card. */
+function plateFor(g, person) {
+  if (isMePerson(g, person)) return { me: true, art: 'west', rank: 'Gold II', pct: 59 };
+  const h = seedOf(person.name);
+  return { me: false, art: SAMPLE_ART[h % SAMPLE_ART.length], rank: SAMPLE_RANKS[h % SAMPLE_RANKS.length], pct: 44 + (h % 17) };
+}
+/** A player's banner: challenge art behind, then badge, rank, name and win % ball. */
+function scPlayerCard(g, person) {
+  const c = plateFor(g, person);
+  const rank = RK.RANKS.find((r) => r.name === c.rank);
+  return `<div class="sc-card${c.me ? ' me' : ''}">
+    <img class="sc-card-bn" src="${TN.art(`assets/challenges/banner-${c.art}.webp`)}" alt="" draggable="false">
+    <span class="sc-card-plate"><img class="sc-card-badge" src="${TN.art(`assets/challenges/badge-${c.art}.webp`)}" alt="" draggable="false">${rankBadge(rank, 30)}<span class="sc-card-name">${esc(person.name)}${c.me ? ' <em class="you">you</em>' : ''}</span>${WR.winBall(WR.levelFor(c.pct, 100), 24)}</span>
+  </div>`;
+}
+
+/** Tap a round on the scorecard: the round being played opens the game; a finished one opens read-only. */
+function openRound(g, i, back) {
+  if (g.id === db.activeGameId && g.status === 'playing' && i === R.currentStageIdx(g)) return go('game');
+  if (!g.stages[i]) return toast(`${roundName(R.stagesFor(g)[i])} hasn’t started yet.`);
+  go('round', { game: g.id, i, back });
+}
+
 function viewCard() {
   const g = db.games.find((x) => x.id === ui.params.game);
   if (!g) return viewHome();
   const back = ui.params.back || 'history';
-  const rows = ['S', 'M', 'L'];
   const t = R.totals(g);
   const stages = R.stagesFor(g);
-  const head = `<tr><th class="sticky"></th>${stages.map((d) => `<th class="${d.kind}">${d.kind === 'eagle' ? `${d.num ? d.col : ''}<small>🦅</small>` : d.col}${d.kind === 'special' ? `<small>${dn(d.sets[0])}</small>` : ''}</th>`).join('')}<th class="tot">Total</th></tr>`;
+  const cur = R.currentStageIdx(g);
+  // Rounds across the top (tap one to open it), Set 1–3 and the round score down the side.
+  const head = `<tr><th class="sticky"></th>${stages.map((d, i) => `<th class="${d.kind}${g.stages[i] && g.stages[i].result ? ' locked' : ''}${i === cur && g.status === 'playing' ? ' now' : ''}"><button class="sc-rd" data-action="open-round" data-game="${g.id}" data-i="${i}" ${g.stages[i] ? '' : 'disabled'} aria-label="Open ${esc(roundName(d))}">${d.kind === 'eagle' ? `${d.num ? d.col : ''}<small>🦅</small>` : d.col}${d.kind === 'special' ? `<small>${dn(d.sets[0])}</small>` : ''}</button></th>`).join('')}<th class="tot">Total</th></tr>`;
+  const table = (p) => {
+    const body = [0, 1, 2]
+      .map((r) => {
+        const cells = stages.map((def, i) => {
+          const st = g.stages[i];
+          if (def.kind === 'eagle') {
+            if (r > 0) return '';
+            const v = st ? R.playerStageScore(g, i, p.id, { partial: true }) : null;
+            return `<td rowspan="3" class="eagle">${st && v !== null ? fs(v) : ''}</td>`;
+          }
+          if (!st) return `<td class="${def.kind}"></td>`;
+          const v = R.setScore(st.entries[p.id][r], R.ballTypes(def));
+          const dist = def.kind === 'normal' ? `<small class="sc-d">${def.sets[r]}</small>` : '';
+          return `<td class="${def.kind} ${scoreClass(v)}">${v === null ? '' : fs(v)}${dist}</td>`;
+        }).join('');
+        return `<tr><th class="sticky">Set ${r + 1}</th>${cells}<td class="tot"></td></tr>`;
+      })
+      .join('');
+    const roundRow = stages.map((def, i) => {
+      const v = g.stages[i] ? R.playerStageScore(g, i, p.id, { partial: true }) : null;
+      return `<td class="${def.kind} ${scoreClass(v)}">${v === null ? '' : fs(v)}</td>`;
+    }).join('');
+    return `<div class="sc-scroll"><table class="sc">
+      <thead>${head}</thead>
+      <tbody>${body}<tr class="round-row"><th class="sticky">Round</th>${roundRow}<td class="tot">${fs(t[p.id])}</td></tr></tbody>
+    </table></div>`;
+  };
   const blocks = g.players
     .map((p) => {
-      const body = rows
-        .map((key, r) => {
-          let byDist = null;
-          const cells = stages.map((def, i) => {
-            const st = g.stages[i];
-            if (def.kind === 'eagle') {
-              if (r > 0) return '';
-              const v = st ? R.playerStageScore(g, i, p.id, { partial: true }) : null;
-              return `<td rowspan="3" class="eagle">${st && v !== null ? fs(v) : ''}</td>`;
-            }
-            if (!st) return `<td class="${def.kind}"></td>`;
-            const types = R.ballTypes(def);
-            st.entries[p.id].forEach((e, k) => {
-              const sc = R.setScore(e, types);
-              if (def.sets[k] === key && sc !== null) byDist = (byDist ?? 0) + sc;
-            });
-            const v = R.setScore(st.entries[p.id][r], types);
-            return `<td class="${def.kind} ${scoreClass(v)}">${v === null ? '' : fs(v)}</td>`;
-          }).join('');
-          return `<tr><th class="sticky">${dn(key)}</th>${cells}<td class="tot">${fs(byDist)}</td></tr>`;
-        })
-        .join('');
-      const roundRow = stages.map((def, i) => {
-        const v = g.stages[i] ? R.playerStageScore(g, i, p.id, { partial: true }) : null;
-        return `<td class="${def.kind} ${scoreClass(v)}">${v === null ? '' : fs(v)}</td>`;
-      }).join('');
+      const crown = g.winnerId === p.id ? `<span class="gold">${ICON.crown}</span>` : '';
+      if (R.isCoop(g)) {
+        const ti = Object.keys(g.teams).indexOf(p.id);
+        return `<div class="sc-block">
+          <div class="sc-team ${TEAM_THEMES[ti].cls}">
+            <div class="sc-team-head">${teamCards(ti, 'mini')}<b>${crown}${TEAM_THEMES[ti].name}:</b><span class="sc-total">${scoreTag(t[p.id])}</span></div>
+            ${g.teams[p.id].map((m) => scPlayerCard(g, m)).join('')}
+          </div>
+          ${table(p)}
+        </div>`;
+      }
       return `<div class="sc-block">
-        ${R.isCoop(g)
-          ? (() => { const ti = Object.keys(g.teams).indexOf(p.id); return `<div class="sc-name team-bar team-${ti + 1} ${TEAM_THEMES[ti].cls}">${teamCards(ti, 'mini')}<span class="team-names"><span class="team-label">${TEAM_THEMES[ti].name}</span><span>${g.winnerId === p.id ? ICON.crown : ''}${g.teams[p.id].map((m) => esc(m.name)).join(' &amp; ')}</span></span><span class="sc-total">${scoreTag(t[p.id])}</span></div>`; })()
-          : `<div class="sc-name">${g.winnerId === p.id ? `<span class="gold">${ICON.crown}</span>` : ''}${esc(p.name)} <span class="sc-total">${scoreTag(t[p.id])}</span></div>`}
-        <div class="sc-scroll"><table class="sc">
-          <thead>${head}</thead>
-          <tbody>${body}<tr class="round-row"><th class="sticky">Round</th>${roundRow}<td class="tot">${fs(t[p.id])}</td></tr></tbody>
-        </table></div>
+        <div class="sc-head">${scPlayerCard(g, p)}<span class="sc-total">${crown}${scoreTag(t[p.id])}</span></div>
+        ${table(p)}
       </div>`;
     })
     .join('');
   const canDelete = back === 'history';
+  const live = g.id === db.activeGameId;
   return `${topbar('Scorecard', back === 'game' ? 'game' : 'history')}
   <main class="page">
     <div class="card-meta">${g.course ? `<b>${esc(g.course)}</b> · ` : ''}${fmtDate(g.date)}${g.sync ? ` · live game ${g.sync.code}` : ''}</div>
+    ${live ? requestsPanel(g) : ''}
     ${blocks}
-    ${(() => {
-      const one = R.stagesFor(g).filter((s) => s.kind === 'special').map((s) => s.col);
-      // Standard's Short, Medium and Long rounds (or an old 7-round game's R2, R4, R6); Classic has none
-      return one.length ? `<p class="muted small">In the Short, Medium and Long rounds (${one.join(', ')}) the three rows are sets 1–3, all the same distance. Distance totals add them where they belong.</p>` : '';
-    })()}
+    <p class="muted small">Tap a round to open it. Finished rounds are locked: to fix one, open it and request a score change.</p>
+    ${live && !['toss', 'done'].includes(g.status) && !pendingReq(g, 'end') ? `<button class="btn ghost danger" data-action="req-start" data-kind="end" data-game="${g.id}">Request to end the match</button>` : ''}
     ${canDelete ? `<button class="btn ghost danger" data-action="delete-game" data-game="${g.id}">Delete this game</button>` : ''}
-  </main>`;
+  </main>
+  ${reqAskModal(g)}`;
+}
+
+// ---------- one finished round, read-only (or open for fixes after an approved request) ----------
+function viewRound() {
+  const g = db.games.find((x) => x.id === ui.params.game);
+  if (!g) return viewHome();
+  const i = ui.params.i;
+  const st = g.stages[i];
+  if (!st) return viewCard();
+  const def = R.stageDef(st);
+  const types = R.ballTypes(def);
+  const open = Boolean(st.unlocked);
+  const live = g.id === db.activeGameId;
+  const players = g.players
+    .map((p) => {
+      const sets = st.entries[p.id]
+        .map((e, k) => {
+          const v = R.setScore(e, types);
+          const label = def.kind === 'eagle' ? 'Eagle balls' : `Set ${k + 1} · ${dn(def.sets[k])}`;
+          const balls = e.mode === 'balls'
+            ? `<span class="rv-balls">${e.balls.map((b, j) => `<span class="rv-ball ${R.typeAt(types, j)}" title="${R.typeAt(types, j)} ball">${b ?? '–'}</span>`).join('')}</span>`
+            : '<span class="muted small">typed in</span>';
+          const right = open
+            ? `<span class="rv-step"><button class="icon-btn" data-action="fix-set" data-game="${g.id}" data-i="${i}" data-pid="${p.id}" data-k="${k}" data-d="-1" aria-label="Lower">−</button><b>${fs(v ?? 0)}</b><button class="icon-btn" data-action="fix-set" data-game="${g.id}" data-i="${i}" data-pid="${p.id}" data-k="${k}" data-d="1" aria-label="Raise">+</button></span>`
+            : `${balls}${scoreTag(v)}`;
+          return `<li class="rv-set"><span class="rv-label">${label}</span>${right}</li>`;
+        })
+        .join('');
+      return `<section class="card rv-player"><div class="rv-head"><b>${esc(p.name)}</b>${scoreTag(R.playerStageScore(g, i, p.id, { partial: true }))}</div><ol class="rv-sets">${sets}</ol></section>`;
+    })
+    .join('');
+  const asked = pendingReq(g, 'change', i);
+  let note = '';
+  let dock = '';
+  if (open) {
+    note = `<section class="card callout">${ICON.lock}<div><b>Approved.</b> Fix the scores below, then tap <b>Done</b> to lock the round again.</div></section>`;
+    dock = `<footer class="dock"><button class="btn primary big" data-action="relock" data-game="${g.id}" data-i="${i}">Done: lock ${esc(roundName(def))}</button></footer>`;
+  } else if (st.result) {
+    note = `<p class="muted small">${ICON.lock} This round is finished, so its scores are locked.</p>`;
+    if (live && !asked) dock = `<footer class="dock"><button class="btn big" data-action="req-start" data-kind="change" data-stage="${i}" data-game="${g.id}">Request a score change</button></footer>`;
+  }
+  const cardBack = ui.params.back || 'game';
+  return `<header class="topbar">
+    <div class="topbar-left"><button class="icon-btn" data-action="nav" data-view="card" data-game="${g.id}" data-back="${cardBack}" aria-label="Back to the scorecard">${ICON.back}</button></div>
+    <h1>${esc(roundName(def))}${def.kind === 'special' ? ` · ${esc(specialTitle(def))}` : ''}</h1>
+    <div class="topbar-right"></div>
+  </header>
+  <main class="page">
+    ${live ? requestsPanel(g) : ''}
+    ${note}
+    ${players}
+  </main>
+  ${dock}
+  ${reqAskModal(g)}`;
+}
+
+// ---------- requests: change a finished round, end the match ----------
+const pendingReq = (g, kind, stage = null) => (g.requests || []).find((r) => r.status === 'pending' && r.kind === kind && (kind === 'end' || r.stage === stage));
+
+/** Open requests, with Allow / Deny for whoever gets a say (on one phone: everyone who does, by name). */
+function requestsPanel(g) {
+  const reqs = (g.requests || []).filter((r) => r.status === 'pending');
+  if (!reqs.length) return '';
+  const meId = g.sync && g.sync.me;
+  const coop = R.isCoop(g);
+  return reqs
+    .map((r) => {
+      const what = r.kind === 'change' ? `change the scores for ${roundName(R.stageDef(g.stages[r.stage]))}` : 'end the match now';
+      const voters = R.people(g).filter((p) => R.canVote(g, r, p.id));
+      const mine = meId ? voters.filter((p) => p.id === meId) : voters;
+      const need = r.kind === 'end'
+        ? (coop ? '3 of the 4 players need to agree.' : 'Everyone else needs to agree.')
+        : `${coop ? 'Someone on the other team' : g.players.length > 2 ? 'Each other player' : 'The other player'} needs to allow it.`;
+      const buttons = mine
+        .map((p) => `<div class="req-vote"><span>${meId ? 'Your answer' : esc(p.name)}</span><button class="btn small-btn primary" data-action="req-vote" data-game="${g.id}" data-id="${r.id}" data-who="${p.id}" data-yes="1">Allow</button><button class="btn small-btn" data-action="req-vote" data-game="${g.id}" data-id="${r.id}" data-who="${p.id}" data-yes="0">Deny</button></div>`)
+        .join('');
+      return `<section class="card req-card">
+        <p><b>${esc(personName(g, r.by))}</b> asked to ${what}. ${need}</p>
+        ${!meId && voters.length ? '<p class="muted small">Pass the phone so they can answer.</p>' : ''}
+        ${buttons}
+        ${meId && !mine.length ? `<p class="muted small">Waiting for ${voters.map((v) => esc(v.name)).join(', ')}.</p>` : ''}
+      </section>`;
+    })
+    .join('');
+}
+
+/** On one shared phone: who's asking? (A live game already knows who you are.) */
+function reqAskModal(g) {
+  const a = ui.reqAsk;
+  if (!a || a.game !== g.id) return '';
+  const who = R.people(g)
+    .map((p) => `<button class="rank-btn" data-action="req-by" data-pid="${p.id}"><span class="rank-name">${esc(p.name)}</span>${ICON.chevron}</button>`)
+    .join('');
+  return `<div class="modal-backdrop" data-action="req-cancel"></div>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="req-title">
+    <h2 id="req-title">${a.kind === 'end' ? 'Who wants to end the match?' : 'Who’s asking for the change?'}</h2>
+    <div class="rank-list">${who}</div>
+    <button class="btn" data-action="req-cancel">Cancel</button>
+  </div>`;
+}
+
+/** Apply a change to the game on screen: through the live queue for the active game, straight in otherwise. */
+function gameOp(g, op) {
+  if (g.id === db.activeGameId) return dispatch(op);
+  if (applyOp(g, op)) commit();
+  else render();
+}
+function sendRequest(g, kind, stage, by) {
+  const n = (g.requests || []).length;
+  gameOp(g, { type: 'request', req: { id: uid(), kind, stage, by } });
+  if ((g.requests || []).length > n) toast(kind === 'end' ? 'Asked to end the match.' : 'Asked for a score change.');
 }
 
 /** A player's round picture: their photo, or their initial. */
@@ -1238,6 +1407,25 @@ function viewPlayers() {
 function viewPlayer() {
   const p = db.players.find((x) => x.id === ui.params.pid);
   if (!p) return viewPlayers();
+  return `${topbar(esc(p.name), 'players')}
+  <main class="page">
+    <section class="profile-head">
+      ${avatarHtml(p, 'xl')}
+      <div class="profile-actions">
+        <label class="btn small-btn">${p.photo ? 'Change photo' : 'Add photo'}<input type="file" accept="image/*" class="visually-hidden" data-photo-pid="${p.id}"></label>
+        ${p.photo ? `<button class="btn ghost small-btn" data-action="remove-photo" data-pid="${p.id}">Remove</button>` : ''}
+      </div>
+    </section>
+    ${playerStatsHtml(p)}
+    <div class="stack">
+      <button class="btn" data-action="rename-player" data-pid="${p.id}">Rename</button>
+      <button class="btn ghost danger" data-action="delete-player" data-pid="${p.id}">Remove player</button>
+    </div>
+  </main>`;
+}
+
+/** Everything a saved player has done: putts made by distance, wins, scores, KOG rounds, Compass and Lag 21. */
+function playerStatsHtml(p) {
   const s = R.playerStats(db.games, idsOf(p));
   const tile = (label, val) => `<div class="tile"><div class="tile-val">${val}</div><div class="tile-label">${label}</div></div>`;
   // First putts from each distance: birdie balls and the par ball together.
@@ -1257,15 +1445,7 @@ function viewPlayer() {
       return `<tr><th>${dn(d.key)}<small>${d.range}</small></th><td>${pctText(b.birdiePct)}<small>${b.birdie[0]}/${b.birdie[1]}</small></td><td>${pctText(b.parPct)}<small>${b.par[0]}/${b.par[1]}</small></td><td>${avgText(b.avgSet)}</td></tr>`;
     })
     .join('');
-  return `${topbar(esc(p.name), 'players')}
-  <main class="page">
-    <section class="profile-head">
-      ${avatarHtml(p, 'xl')}
-      <div class="profile-actions">
-        <label class="btn small-btn">${p.photo ? 'Change photo' : 'Add photo'}<input type="file" accept="image/*" class="visually-hidden" data-photo-pid="${p.id}"></label>
-        ${p.photo ? `<button class="btn ghost small-btn" data-action="remove-photo" data-pid="${p.id}">Remove</button>` : ''}
-      </div>
-    </section>
+  return `
     ${qs.sessions ? `<p class="muted small">Includes ${qs.sessions} Compass Putt ${qs.sessions === 1 ? 'session' : 'sessions'}${qs.wins ? ` (${qs.wins} head-to-head ${qs.wins === 1 ? 'win' : 'wins'})` : ''}.</p>` : ''}
     ${(() => {
       const ls = L.lagStats(db.lag, idsOf(p));
@@ -1294,11 +1474,42 @@ function viewPlayer() {
       <thead><tr><th></th><th>Birdie balls</th><th>Par ball</th><th>Avg set</th></tr></thead>
       <tbody>${ballRows}</tbody>
     </table>
-    <p class="muted small">Stats count finished games only. Sets entered as a typed-in score count toward totals but not make percentages.</p>
-    <div class="stack">
-      <button class="btn" data-action="rename-player" data-pid="${p.id}">Rename</button>
-      <button class="btn ghost danger" data-action="delete-player" data-pid="${p.id}">Remove player</button>
+    <p class="muted small">Stats count finished games only. Sets entered as a typed-in score count toward totals but not make percentages.</p>`;
+}
+
+// ---------- My profile: your player card on top, then your stats ----------
+/** The saved player who is you: the one with your name from Settings. */
+function myPlayer() {
+  const n = myName();
+  if (!n || n === NAME_EXAMPLE) return null;
+  const norm = (x) => String(x || '').trim().toLowerCase();
+  const names = [n.first, n.nick, displayName(n).main].filter(Boolean).map(norm);
+  return db.players.find((p) => names.includes(norm(p.name))) || null;
+}
+function viewMe() {
+  const dn2 = displayName(myName());
+  const gold2 = RK.RANKS.find((r) => r.name === 'Gold II');
+  const me = myPlayer();
+  const banner = TN.art('assets/challenges/banner-west.webp');
+  return `${topbar('My profile')}
+  <main class="page">
+    <section class="me-hero">
+      <img class="me-banner" src="${banner}" alt="" draggable="false">
+      <div class="me-plate">
+        <img class="me-badge" src="${TN.art('assets/challenges/badge-west.webp')}" alt="" draggable="false">
+        ${rankBadge(gold2, 46)}
+        <span class="me-name"><b>${esc(dn2.main)}</b>${dn2.sub ? `<small>${esc(dn2.sub)}</small>` : ''}<span>Gold II · Florida Kingdom</span></span>
+        <span class="me-win">${WR.winBall(WR.levelFor(59, 100), 40)}<small>59% wins</small></span>
+      </div>
+    </section>
+    <div class="me-ranked">
+      <span><small>Ranked matches</small><b>48</b></span>
+      <span><small>Wins</small><b>28</b></span>
+      <span><small>Last 10</small><b><i class="w">6</i>-<i class="l">4</i></b></span>
     </div>
+    <p class="muted small">Ranked numbers are an example until ranked play goes live. Change your banner on Challenges and your name in <button class="link" data-action="nav" data-view="settings">Settings</button>.</p>
+    <div class="section-head"><h2>Your stats</h2><span class="muted small">from games on this phone</span></div>
+    ${me ? playerStatsHtml(me) : `<section class="card"><p>Your stats show up here once you play. Add yourself as a player named <b>${esc(dn2.main)}</b> when you start a game (or match the name in Settings), and every finished game counts.</p></section>`}
   </main>`;
 }
 
@@ -2157,7 +2368,7 @@ function profileBox() {
     // A challenge banner across the box, its badge on the left, then rank, name and win % ball.
     const gold2 = RK.RANKS.find((r) => r.name === 'Gold II');
     const dn = displayName(myName());
-    return `<div class="profile-box pb-example" role="img" aria-label="Player card: ${esc(dn.main)}, Gold II, 59% wins. Press and hold to see the whole banner." data-peek="${TN.art('assets/challenges/banner-west.webp')}">
+    return `<div class="profile-box pb-example tappable" role="button" tabindex="0" data-action="nav" data-view="me" aria-label="Your player card: ${esc(dn.main)}, Gold II, 59% wins. Tap for your profile and stats." data-peek="${TN.art('assets/challenges/banner-west.webp')}">
       <img class="pb-bn" src="${TN.art('assets/challenges/banner-west.webp')}" alt="" draggable="false">
       <span class="pb-plate">
         <img class="pb-badge" src="${TN.art('assets/challenges/badge-west.webp')}" alt="" draggable="false">
@@ -2166,7 +2377,7 @@ function profileBox() {
         ${WR.winBall(WR.levelFor(59, 100), 34)}
       </span>
     </div>
-    <p class="pb-note">(Your player profile is coming soon · choose how your name shows in <button class="link" data-action="nav" data-view="settings">Settings</button>)</p>`;
+    <p class="pb-note">Tap your card for your profile and stats · choose how your name shows in <button class="link" data-action="nav" data-view="settings">Settings</button></p>`;
   }
   let inner;
   let sub;
@@ -2314,7 +2525,7 @@ function viewRules() {
     ${fig.toss}
 
     <h2>2 · The KOG sets the markers</h2>
-    <p>Each round the current KOG places three markers, one per set, at that round’s distances: ${dn('S')} 3–5 ft, ${dn('M')} 6–9 ft or ${dn('L')} 10–15 ft (see the two versions below). Lowest score each round becomes the next KOG. Any tie, and the current KOG sets again.</p>
+    <p>Each round the current KOG places three markers, one per set, all at that round’s distance: ${dn('S')} 3–5 ft, ${dn('M')} 6–9 ft or ${dn('L')} 10–15 ft. Lowest score each round becomes the next KOG. Any tie, and the current KOG sets again.</p>
     <p class="marker-note"><span class="marker-x" aria-hidden="true"></span><span><b>Markers can be tees (recommended), ball markers, coins, etc.</b> In the pictures a marker is a small yellow <b>X</b>.</span></p>
     <p>The KOG can set the markers around <b>any hole</b> on the practice green, so pick one that reads tricky.</p>
     ${fig.anyHole}
@@ -2334,13 +2545,9 @@ function viewRules() {
     </table>
     <p class="muted small">No maximum and no pick-ups: every ball is holed out.</p>
 
-    <h2>4 · Two versions, 4 rounds each</h2>
-    <p>Every game is <b>4 rounds</b>. Pick the version when you start a game:</p>
-    <ul>
-      <li><b>Standard</b> (the main game): Round 1 is all ${dn('S')}, Round 2 all ${dn('M')}, Round 3 all ${dn('L')}, then the 🦅 Eagle round. The putts get longer as the game goes on.</li>
-      <li><b>Classic</b>: Rounds 1, 2 and 3 each have one ${dn('S')}, one ${dn('M')} and one ${dn('L')} set, then the 🦅 Eagle round.</li>
-    </ul>
-    <p>Both use the same 30 balls (9 ${dn('S')}, 9 ${dn('M')}, 9 ${dn('L')} and 3 Eagle balls), so scores compare directly and both count for ranked.</p>
+    <h2>4 · Four rounds</h2>
+    <p>Every game is <b>4 rounds</b>: Round 1 is all ${dn('S')}, Round 2 all ${dn('M')}, Round 3 all ${dn('L')}, then the 🦅 Eagle round. The putts get longer as the game goes on. That’s 30 balls in all.</p>
+    <p class="muted small">Coming soon under Alternate games: <b>K.O.G. Remix</b>, with ${dn('S')}, ${dn('M')} and ${dn('L')} in every round.</p>
     ${fig.special}
 
     <h2>5 · 🦅 Eagle round</h2>
@@ -2537,7 +2744,7 @@ function render() {
   if (!getPref('kog.onboarded', '') && ui.view === 'home') ui.view = 'onboard';
   applyBackground();
   const views = {
-    home: viewHome, new: viewNew, game: viewGame, card: viewCard, players: viewPlayers, player: viewPlayer,
+    home: viewHome, new: viewNew, game: viewGame, card: viewCard, round: viewRound, me: viewMe, players: viewPlayers, player: viewPlayer,
     history: viewHistory, rules: viewRules, join: viewJoin, whoami: viewWhoami, share: viewShare, settings: viewSettings,
     'quick-setup': viewQuickSetup, quick: viewQuick, 'lag-setup': viewLagSetup, lag: viewLag, ranked: viewRanked, account: viewAccount, winballs: viewWinBalls,
     'ranked-modes': () => viewModes('ranked'), 'casual-modes': () => viewModes('casual'),
@@ -2581,7 +2788,7 @@ function currentStage() {
 
 function startGame(playerIds, course = '', pairs = null, format = 'kog4') {
   const find = (id) => db.players.find((p) => p.id === id);
-  if (!R.FORMATS[format] || R.FORMATS[format].old) format = 'kog4'; // rematches of old 7- or 9-round games play the 4-round game
+  if (!R.FORMATS[format] || R.FORMATS[format].old || R.FORMATS[format].soon) format = 'kog4'; // rematches of older games play the main game
   const g = pairs
     ? R.createGame({ id: uid(), teams: pairs.map((team) => team.map(find)), course, format })
     : R.createGame({ id: uid(), players: playerIds.map(find), course, format });
@@ -2640,17 +2847,13 @@ const actions = {
   nav: (d) => {
     if (d.view === 'lfg' && ui.lfg) ui.lfg.pick = null; // opening the board always starts at the list
     if (d.view === 'challenges') ui.chIntroDone = false; // play the neon intro each time the menu opens
+    if (d.view === 'card') ui.cardTipDone = true; // found the scorecard: the Round 1 tip has done its job
     go(d.view, { pid: d.pid, game: d.game, back: d.back });
     if (d.confetti === 'kings') kingRain();
   },
   'new-game': (d) => {
-    ui.draft = { course: '', selected: [], live: true, mode: d.mode === 'coop' ? 'coop' : 'group', pair: 0, format: getPref('kog.format', 'kog4') };
+    ui.draft = { course: '', selected: [], live: true, mode: d.mode === 'coop' ? 'coop' : 'group', pair: 0, format: 'kog4' }; // K.O.G. Remix comes later, under Alternate games
     go('new');
-  },
-  'draft-format': (d) => {
-    ui.draft.format = R.FORMATS[d.v] && !R.FORMATS[d.v].old ? d.v : 'kog4';
-    setPref('kog.format', ui.draft.format); // remember the version you like
-    render();
   },
   'open-join': () => {
     ui.join = { code: '', error: '', busy: false };
@@ -2699,6 +2902,54 @@ const actions = {
   'copy-code': () => copyText(activeGame().sync.code, 'Code copied'),
   'toss-pick': (d) => {
     if (!ui.toss.includes(d.pid) && ui.toss.length < 2) ui.toss.push(d.pid); // the KOG, then (three players) who putts first
+    render();
+  },
+  'open-round': (d) => {
+    const g = db.games.find((x) => x.id === d.game);
+    if (g) openRound(g, Number(d.i), ui.view === 'card' ? ui.params.back : 'game');
+  },
+  'req-start': (d) => {
+    const g = db.games.find((x) => x.id === d.game);
+    if (!g) return;
+    const stage = d.stage === undefined ? null : Number(d.stage);
+    if (g.sync && g.sync.me) return sendRequest(g, d.kind, stage, g.sync.me);
+    ui.reqAsk = { game: g.id, kind: d.kind, stage };
+    render();
+  },
+  'req-by': (d) => {
+    const a = ui.reqAsk;
+    ui.reqAsk = null;
+    const g = a && db.games.find((x) => x.id === a.game);
+    if (g) sendRequest(g, a.kind, a.stage, d.pid);
+  },
+  'req-cancel': () => {
+    ui.reqAsk = null;
+    render();
+  },
+  'req-vote': (d) => {
+    const g = db.games.find((x) => x.id === d.game);
+    if (!g) return;
+    const req = (g.requests || []).find((r) => r.id === d.id);
+    gameOp(g, { type: 'vote', id: d.id, who: d.who, yes: d.yes === '1' });
+    if (req && req.status === 'approved') toast(req.kind === 'end' ? 'Match ended.' : 'Approved: the round is open to fix.');
+    else if (req && req.status === 'denied') toast('Request denied.');
+  },
+  'fix-set': (d) => {
+    const g = db.games.find((x) => x.id === d.game);
+    const st = g && g.stages[Number(d.i)];
+    if (!st) return;
+    const now = R.setScore(st.entries[d.pid][Number(d.k)], R.ballTypes(R.stageDef(st))) ?? 0;
+    gameOp(g, { type: 'fix', stage: Number(d.i), pid: d.pid, k: Number(d.k), score: now + Number(d.d) });
+  },
+  relock: (d) => {
+    const g = db.games.find((x) => x.id === d.game);
+    if (!g) return;
+    gameOp(g, { type: 'relock', stage: Number(d.i) });
+    toast('Round locked with the new scores.');
+  },
+  'card-tip-ok': () => {
+    if (document.getElementById('card-tip-never')?.checked) setPref('kog.tip.card', 'off');
+    ui.cardTipDone = true;
     render();
   },
   'toss-reset': () => {

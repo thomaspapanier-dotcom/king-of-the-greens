@@ -37,10 +37,10 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 
 ### Money Rounds
 
-- **Flawless Shawty** · Very Rare: One-putt all 9 balls in the Short round (Round 1 of Standard) of a ranked match.
-- **Dead Center** · Very Rare: Sink 7 of the 9 balls on the first putt in the Medium round (Round 2 of Standard) of a ranked match.
-- **Long Live the King** · Impossible: Sink 6 of the 9 balls on the first putt in the Long round (Round 3 of Standard) of a ranked match.
-- **Royal Flush** · Impossible: One-putt every ball in a Classic round of a ranked match: all three sets, Short, Medium and Long.
+- **Flawless Shawty** · Very Rare: One-putt all 9 balls in the Short round (Round 1) of a ranked match.
+- **Dead Center** · Very Rare: Sink 7 of the 9 balls on the first putt in the Medium round (Round 2) of a ranked match.
+- **Long Live the King** · Impossible: Sink 6 of the 9 balls on the first putt in the Long round (Round 3) of a ranked match.
+- **Royal Flush** · Impossible: One-putt every ball in a K.O.G. Remix round of a ranked match: all three sets, Short, Medium and Long.
 - **Triple Threat** · Very Rare: One-putt all 3 balls of a Long set (both birdie balls and the par ball, from 10–15 ft).
 
 ### Scoring

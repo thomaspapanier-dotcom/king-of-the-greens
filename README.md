@@ -31,7 +31,7 @@ Then open http://localhost:5173. Rules tests are at http://localhost:5173/tests/
   - Par ball: 1 putt E, 2 putts +1, and so on.
   - Eagle ball: 1 putt −2, 2 putts −1, 3 putts E, and so on.
   - No maximum and no pick-ups.
-- **Game length:** 4 rounds, 30 balls, in two versions. **Standard** (the main game): all Short, all Medium, all Long, then the Eagle round. **Classic:** Short, Medium and Long in each of Rounds 1–3, then the Eagle round. Both use the same balls, so scores compare and both can be ranked. Games saved earlier keep their 7- or 9-round layout.
+- **Game length:** 4 rounds, 30 balls: all Short, all Medium, all Long, then the Eagle round. **K.O.G. Remix** (coming soon, under Alternate games) plays Short, Medium and Long in each of Rounds 1–3, then the Eagle round, with the same balls so scores compare. Games saved earlier keep their 7- or 9-round layout.
 - **Opening tee flip:** someone flips a tee; whoever it points at is the KOG for Round 1, and the other player (or duo) putts first. Three players flip again for who putts first.
 - **KOG:** the outright low round score becomes the current King of the Greens (KOG) and sets the markers. On any tie, the current KOG sets again.
 - **Putting order:** from Round 2 on, including the Eagle round, the leader (lowest running total) goes first. Ties keep the previous order.

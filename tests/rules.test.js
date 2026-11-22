@@ -84,7 +84,7 @@ test('Standard (the main game): 4 rounds, all Short, all Medium, all Long, then 
   eq(R.stagesFor(g).map((s) => [s.num, s.kind, s.sets.join('')]), [[1, 'special', 'SSS'], [2, 'special', 'MMM'], [3, 'special', 'LLL'], [4, 'eagle', '']]);
   eq(R.roundsIn(g), 4);
 });
-test('Classic: 4 rounds, Short-Medium-Long three times, then the Eagle round', () => {
+test('K.O.G. Remix (coming soon): 4 rounds, Short-Medium-Long three times, then the Eagle round', () => {
   const g = R.createGame({ id: 'g', players: P(2), format: 'classic4' });
   eq(R.stagesFor(g).map((s) => [s.num, s.kind, s.sets.join('')]), [[1, 'normal', 'SML'], [2, 'normal', 'SML'], [3, 'normal', 'SML'], [4, 'eagle', '']]);
 });
@@ -276,6 +276,66 @@ test('stats follow a person across ids (alias from a joined game)', () => {
   eq(R.playerStats([g], ['local-tom', 'remote-tom']).games, 1);
 });
 
+
+// ---- Requests: change a finished round, end the match ----
+test('score change: the other player must allow it; then the round opens, and locks again with new scores', () => {
+  const g = R.createGame({ id: 'g', players: P(2) });
+  R.applyTeeFlip(g, 'p1');
+  playStage(g, { p1: [-1, 0, 0], p2: [0, 0, 0] });
+  throws(() => R.fixSet(g, 0, 'p2', 0, -2), 'locked');
+  R.addRequest(g, { id: 'r1', kind: 'change', stage: 0, by: 'p2' });
+  throws(() => R.castVote(g, 'r1', 'p2', true), 'cannot approve your own');
+  R.castVote(g, 'r1', 'p1', true);
+  eq([g.requests[0].status, g.stages[0].unlocked], ['approved', true]);
+  R.fixSet(g, 0, 'p2', 0, -2);
+  R.relockStage(g, 0);
+  eq([g.stages[0].unlocked, g.stages[0].result.scores.p2, g.stages[0].result.nextKingId], [undefined, -2, 'p1']);
+  eq(R.totals(g), { p1: -1, p2: -2 });
+});
+test('score change: a no from the other side denies it', () => {
+  const g = R.createGame({ id: 'g', players: P(2) });
+  R.applyTeeFlip(g, 'p1');
+  playStage(g, { p1: [0, 0, 0], p2: [0, 0, 0] });
+  R.addRequest(g, { id: 'r', kind: 'change', stage: 0, by: 'p1' });
+  R.castVote(g, 'r', 'p2', false);
+  eq([g.requests[0].status, Boolean(g.stages[0].unlocked)], ['denied', false]);
+});
+test('duos score change: one yes from the other team is enough; teammates can’t vote', () => {
+  const g = R.createGame({ id: 'g', teams: [[{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }], [{ id: 'c', name: 'C' }, { id: 'd', name: 'D' }]] });
+  R.applyTeeFlip(g, 'team1');
+  playStage(g, { team1: [0, 0, 0], team2: [0, 0, 0] });
+  R.addRequest(g, { id: 'r', kind: 'change', stage: 0, by: 'a' });
+  throws(() => R.castVote(g, 'r', 'b', true), 'teammate');
+  R.castVote(g, 'r', 'd', true);
+  eq(g.requests[0].status, 'approved');
+});
+test('end match: 1 v 1 needs the other player; duos needs three of four', () => {
+  const g = R.createGame({ id: 'g', players: P(2) });
+  R.applyTeeFlip(g, 'p1');
+  playStage(g, { p1: [-1, 0, 0], p2: [0, 0, 0] });
+  R.addRequest(g, { id: 'e', kind: 'end', by: 'p2' });
+  R.castVote(g, 'e', 'p1', true);
+  eq([g.status, g.winnerId, g.endedEarly.stage], ['done', 'p1', 0]);
+  const d = R.createGame({ id: 'd', teams: [[{ id: 'a', name: 'A' }, { id: 'b', name: 'B' }], [{ id: 'c', name: 'C' }, { id: 'e2', name: 'E' }]] });
+  R.applyTeeFlip(d, 'team1');
+  R.addRequest(d, { id: 'x', kind: 'end', by: 'a' });
+  R.castVote(d, 'x', 'c', true);
+  eq([d.requests[0].status, d.status], ['pending', 'playing']);
+  R.castVote(d, 'x', 'b', true);
+  eq([d.requests[0].status, d.status, d.winnerId], ['approved', 'done', null]); // tied at E: no winner
+});
+test('ops: requests and votes sync like any other change', () => {
+  const g = R.createGame({ id: 'g', players: P(2) });
+  applyOp(g, { type: 'flip', king: 'p1' });
+  fillStage(g, { p1: [0, 0, 0], p2: [0, 0, 0] });
+  applyOp(g, { type: 'finish', stage: 0 });
+  eq(applyOp(g, { type: 'request', req: { id: 'r', kind: 'change', stage: 0, by: 'p1' } }), true);
+  eq(applyOp(g, { type: 'vote', id: 'r', who: 'p1', yes: true }), false); // can't approve your own
+  eq(applyOp(g, { type: 'vote', id: 'r', who: 'p2', yes: true }), true);
+  eq(applyOp(g, { type: 'fix', stage: 0, pid: 'p1', k: 2, score: 1 }), true);
+  eq(applyOp(g, { type: 'relock', stage: 0 }), true);
+  eq(applyOp(g, { type: 'fix', stage: 0, pid: 'p1', k: 2, score: 0 }), false); // locked again
+});
 
 // ---- Co-op (2 vs 2) ----
 const FOUR = [{ id: 'a', name: 'Ann' }, { id: 'b', name: 'Bo' }, { id: 'c', name: 'Cy' }, { id: 'd', name: 'Di' }];
