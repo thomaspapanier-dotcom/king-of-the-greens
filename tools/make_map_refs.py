@@ -17,7 +17,13 @@ OUT = pathlib.Path(r'C:/Users/thoma/OneDrive/Desktop/KOG Images/Map references')
 # The Realm colors in the order the Empire lists its Realms (the same palette the app uses).
 PALETTE = ['#2fae7a', '#e0528a', '#e6b12e', '#ec7a32', '#8b7cf6', '#3a9be0']
 SEA = '#0f4f5c'
-W, H, PAD = 1536, 1024, 70
+PAD = 40
+
+
+def canvas(m):
+    """Landscape 1536 x 1024, or portrait 1024 x 1536 for tall countries, so the country fills the picture."""
+    vw, vh = m['view']
+    return (1024, 1536) if vh > vw * 1.05 else (1536, 1024)
 
 
 def empire_maps():
@@ -57,6 +63,7 @@ def rings(d):
 
 def draw(code, m, realms):
     vw, vh = m['view']
+    W, H = canvas(m)
     k = min((W - 2 * PAD) / vw, (H - 2 * PAD) / vh)
     ox, oy = (W - vw * k) / 2, (H - vh * k) / 2
     im = Image.new('RGB', (W, H), SEA)

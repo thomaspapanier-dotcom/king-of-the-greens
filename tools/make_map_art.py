@@ -37,7 +37,11 @@ def prompts():
 
 
 def paint(key, code, prompt, args):
-    fields = {'model': args.model, 'prompt': prompt, 'size': '1536x1024', 'quality': args.quality, 'output_format': 'png', 'n': '1'}
+    from PIL import Image
+    ref = REFS / f'map-reference-{code}.png'
+    w, h = Image.open(ref).size
+    size = '1024x1536' if h > w else '1536x1024'  # same shape as the reference, so the country isn't squeezed
+    fields = {'model': args.model, 'prompt': prompt, 'size': size, 'quality': args.quality, 'output_format': 'png', 'n': '1'}
     body, ctype = m.multipart(fields, [('image[]', REFS / f'map-reference-{code}.png'), ('image[]', STYLE)])
     for attempt in range(6):
         req = urllib.request.Request(m.API, data=body, method='POST', headers={'Authorization': f'Bearer {key}', 'Content-Type': ctype})
