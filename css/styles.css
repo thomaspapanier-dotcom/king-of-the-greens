@@ -1868,3 +1868,8 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .globe-zoom button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(245, 215, 110, 0.7); background: rgba(8, 20, 14, 0.78); color: #f5d76e; font: 800 20px/1 system-ui, sans-serif; display: grid; place-items: center; cursor: pointer; }
 .globe-zoom button:active { transform: scale(0.94); }
 .globe-zoom button:focus-visible { outline: 2px solid #f5d76e; outline-offset: 2px; }
+
+/* Leaderboards: a slimmer rank number so the banner gets the width, and a taller banner so more of the picture shows */
+.lb-list li { grid-template-columns: 16px 1fr; gap: 4px; }
+.lb-pos { font-size: 13px; }
+.lb-card .lf-plate { min-height: 86px; padding: 6px 10px 6px 6px; border-radius: 12px; background-position: center 32%; }
