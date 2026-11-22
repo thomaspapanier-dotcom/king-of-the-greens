@@ -9,7 +9,7 @@ Each Realm's color on the reference must stay that color in the painting (green 
 ## The shared instructions (sent with every Empire)
 
 ```
-Image 1 is the reference map for this Empire. Trace it: the country must keep EXACTLY the same outline, size, proportions and position as in image 1 (do not stretch, bend, enlarge or rearrange it; the painted map must line up with image 1 if laid on top of it). Follow its Realm borders and its Kingdom lines exactly, and keep EXACTLY the Realm colors shown on it (green #2fae7a, pink #e0528a, gold #e6b12e, orange #ec7a32, purple #8b7cf6, blue #3a9be0). Image 2 is our finished American map: paint in exactly its style. A vintage illustrated map with an ornate gold frame, a deep teal sea with soft clouds, each Realm raised slightly like a relief map in its own bold color with a light painted texture, thin dark lines between the Kingdoms, and ONE detailed 3D miniature castle standing in the middle of each Realm, with a little putting green and a flag beside it. Keep each castle inside its own Realm and don't paint over the borders more than you need to. Landscape. No text, no labels, no letters, no logos.
+Image 1 is the reference map for this Empire. Trace it: the country must keep EXACTLY the same outline, size, proportions and position as in image 1 (do not stretch, bend, enlarge or rearrange it; the painted map must line up with image 1 if laid on top of it). Follow its Realm borders and its Kingdom lines exactly, and keep EXACTLY the Realm colors shown on it (green #2fae7a, pink #e0528a, gold #e6b12e, orange #ec7a32, purple #8b7cf6, blue #3a9be0). Image 2 is our finished American map: paint in exactly its style. A vintage illustrated map with an ornate gold frame, a deep teal sea with soft clouds, each Realm raised slightly like a relief map in its own bold color with a light painted texture, thin dark lines between the Kingdoms, and ONE detailed 3D miniature castle for each Realm, with a little putting green and a flag beside it, standing in the middle of its Realm unless the Empire's own instructions below say where. Keep each castle with its own Realm and don't paint over the borders more than you need to. Landscape. No text, no labels, no letters, no logos.
 ```
 
 ## One prompt per Empire
@@ -53,7 +53,7 @@ AUSTRALIAN EMPIRE. Three Realms, each with its castle:
 
 **Cherry Blossom Empire (Japan)** `JP`
 ```
-CHERRY BLOSSOM EMPIRE (Japan). Six Realms, each with its castle:
+CHERRY BLOSSOM EMPIRE (Japan). Japan is long and thin: keep the islands EXACTLY as thin as in image 1 and never widen them. Instead of standing on the land, each castle stands on its own small natural rocky islet (grey rock and green trees, NOT painted in a Realm color) in the sea right beside its own Realm, joined to it by a tiny arched bridge. Six Realms, each with its castle:
 - GREEN, Realm of the Northern Snow (Hokkaido and Tohoku): Hirosaki Castle in snow with cherry blossoms, red-crowned cranes.
 - PINK, Realm of the Eastern Capital (Kanto): Edo Castle's stone walls and gate with a city skyline behind, cherry blossoms.
 - GOLD, Realm of the Sacred Mountain (Chubu): the black Matsumoto Castle over its moat, Mount Fuji behind.
@@ -73,7 +73,7 @@ BLACK EAGLE EMPIRE (Germany). Four Realms, each with its castle:
 
 **Three Crowns Empire (Sweden)** `SE`
 ```
-THREE CROWNS EMPIRE (Sweden). Three Realms, each with its castle:
+THREE CROWNS EMPIRE (Sweden). Sweden is long and thin: keep the land EXACTLY as thin as in image 1 and never widen it. Instead of standing on the land, each castle stands on its own small natural rocky islet (grey rock and green trees, NOT painted in a Realm color) in the sea right beside its own Realm, joined to it by a tiny arched bridge. Three Realms, each with its castle:
 - GREEN, Realm of the Midnight Sun (Norrland): a sparkling ice castle in the snow under the midnight sun, reindeer and pine forest.
 - PINK, Realm of the Royal Lakes (Svealand): Gripsholm Castle's round red-brick towers on a lake shore.
 - GOLD, Realm of the Rune Stones (Götaland): Kalmar Castle on the water with its round towers, rune stones in a green field.
@@ -111,7 +111,7 @@ TULIP EMPIRE (Netherlands). Four Realms, each with its castle:
 
 **Silver Fern Empire (New Zealand)** `NZ`
 ```
-SILVER FERN EMPIRE (New Zealand). Three Realms, each with its castle:
+SILVER FERN EMPIRE (New Zealand). New Zealand is long and thin: keep the land EXACTLY as thin as in image 1 and never widen it. Instead of standing on the land, each castle stands on its own small natural rocky islet (grey rock and green trees, NOT painted in a Realm color) in the sea right beside its own Realm, joined to it by a tiny arched bridge. Three Realms, each with its castle:
 - GREEN, Realm of the Kauri Coast (upper North Island): a wooden castle among giant kauri trees, a harbor and green islands.
 - PINK, Realm of the Fire Mountains (lower North Island): a stone castle on the slopes of a snow-capped volcano, geothermal steam.
 - GOLD, Realm of the Southern Alps (South Island): Larnach Castle on its hill, the snowy Southern Alps and a fiord behind.
