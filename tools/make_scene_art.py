@@ -25,20 +25,23 @@ import make_art_variants as m  # noqa: E402  (key, upload and cost helpers)
 
 DOC = m.ROOT / 'docs/LEADERBOARDS-AND-HOW-TO-PLAY-ART.md'
 REF = m.IMAGES / 'Leaderboards reference - all Kings and Queens.png'
-OUT = m.OUT / 'how-to-play'
+OUT = m.OUT / 'how-to-play'  # menu pictures land here too
 
 
 def scenes():
     """[(name, size, prompt)] from the doc: the shared paragraph, then each scene's own block."""
     s = DOC.read_text(encoding='utf8')
-    part = s[s.index('## 2. How to play'):]
-    blocks = re.findall(r'```\n(.*?)\n```', part, re.S)
-    shared = blocks[0].strip()
     out = []
-    for m_ in re.finditer(r"\*\*\d+ · [^*]+\*\* \(`(htp-[^`]+)\.png`([^)]*)\)\n```\n(.*?)\n```", part, re.S):
-        name, note, scene = m_.group(1), m_.group(2), m_.group(3).strip()
-        size = '1024x1536' if 'portrait' in note else '1536x1024'
-        out.append((name, size, f'{shared}\n\n{scene}'))
+    # Each section from "## 2" on: its first code block is the shared paragraph, then one block per picture.
+    for part in re.split(r'\n## ', s)[1:]:
+        if not re.match(r'[23]\. ', part):
+            continue
+        blocks = re.findall(r'```\n(.*?)\n```', part, re.S)
+        shared = blocks[0].strip()
+        for m_ in re.finditer(r"\*\*[^*]+\*\* \(`((?:htp|menu)-[^`]+)\.png`([^)]*)\)\n```\n(.*?)\n```", part, re.S):
+            name, note, scene = m_.group(1), m_.group(2), m_.group(3).strip()
+            size = '1024x1536' if 'portrait' in note else '1024x1024' if 'square' in note else '1536x1024'
+            out.append((name, size, f'{shared}\n\n{scene}'))
     return out
 
 

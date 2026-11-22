@@ -82,3 +82,25 @@ Save each one in the KOG Images folder with the file name shown and tell me when
 **Videos:** ChatGPT's image tool makes still pictures. The new pages will animate on top of the pictures (like the tee flip does now). If you'd like real short video clips too, a video tool like Sora can turn each of these pictures into a few seconds of motion; I can write those prompts once the pictures exist.
 
 **Faster option:** I can make all of these with the OpenAI image API instead (about 6¢ each, roughly 50¢ for the set), using the same prompts and the card sheet, and show you the results to approve first. Just say the word.
+
+---
+
+## 3. Menu backgrounds: K.O.G. Ranked and K.O.G. Casual
+
+The two boxes on the home screen are small squares with the picture shown faintly behind the words, so each one is a single bold, centered picture. These replace the old pictures, which showed real golf brands' logos. Square, **1024x1024**.
+
+Every prompt starts with this paragraph:
+
+```
+Using the attached character sheet, draw the named characters exactly as they look on their cards (face, skin tone, hair, crown, outfit). Vintage engraved playing-card illustration style, bold ink linework, fine crosshatching, rich warm colors. No text, no letters, no numbers, no logos or brand names on any clothing or object. One bold, centered composition that still reads when shown small and faint behind words: big simple shapes, the characters filling the middle, a plain soft background.
+```
+
+**K.O.G. Ranked** (`menu-ranked.png`, square)
+```
+A royal crest for competitive play: the King of Spades v3, the Queen of Hearts v2, the King of Diamonds v1 and the Queen of Clubs v3 stand shoulder to shoulder behind a gold shield, serious and focused, putters held upright like scepters. A golden crown sits on top of the shield, a laurel wreath wraps around its base, and a single golf ball rests at the bottom of the wreath. Behind them, a soft green fairway and sky.
+```
+
+**K.O.G. Casual** (`menu-casual.png`, square)
+```
+A relaxed afternoon on a clubhouse patio overlooking a putting green: the Queen of Diamonds v1 laughs with a lemonade, the King of Clubs v2 leans back in a wicker chair with an iced coffee, the Queen of Spades v3 holds a putter over her shoulders, and the King of Hearts v1 tells a story with his hands. A small round table with a bowl of golf balls in front of them, ivy on a stone arch above.
+```

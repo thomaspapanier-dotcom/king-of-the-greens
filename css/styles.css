@@ -472,8 +472,8 @@ input {
 /* Ranked / Casual: a faint picture behind the words */
 .art-choice { position: relative; overflow: hidden; isolation: isolate; min-height: 150px; }
 .art-choice::before { content: ""; position: absolute; inset: 0; z-index: -1; background-repeat: no-repeat; pointer-events: none; }
-.art-ranked::before { background-image: url("../assets/ranked-crest.webp"); background-size: cover; background-position: center 30%; opacity: 0.22; }
-.art-casual::before { background-image: url("../assets/casual-lounge.webp"); background-size: cover; background-position: center 35%; opacity: 0.22; }
+.art-ranked::before { background-image: url("../assets/menu-ranked.webp"); background-size: cover; background-position: center 35%; opacity: 0.22; }
+.art-casual::before { background-image: url("../assets/menu-casual.webp"); background-size: cover; background-position: center 40%; opacity: 0.22; }
 .art-choice .choice-ico, .art-choice .choice-title, .art-choice .choice-sub { text-shadow: 0 1px 2px color-mix(in srgb, var(--surface) 60%, transparent); }
 .art-ranked .choice-title, .art-ranked .choice-sub { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }
 .modes { grid-template-columns: 1fr; }
