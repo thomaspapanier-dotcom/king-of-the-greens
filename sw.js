@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v148';
+const VERSION = 'kog-v149';
 const SHELL = [
   './',
   './index.html',
@@ -18,6 +18,7 @@ const SHELL = [
   './assets/eagle.wav',
   './assets/four-kings.webp',
   './assets/menu-ranked.webp',
+  './assets/leaderboards-banner.webp',
   './assets/h2h-banner.webp',
   './assets/duos-banner.webp',
   './assets/menu-casual.webp',
@@ -25,7 +26,6 @@ const SHELL = [
   './assets/casual-duos.webp',
   './assets/quickplay-compass.webp',
   './assets/neon-suits.webp',
-  './assets/suits-banner.svg',
   './assets/neon-left.webp',
   './assets/neon-right.webp',
   './assets/cards/king-spades.webp',
@@ -289,6 +289,7 @@ const SHELL = [
   './assets/realms/magnolia.webp',
   './assets/realms/ivy.webp',
   './js/globe.js',
+  './js/flags.js',
   './js/vendor/d3-array.min.js',
   './js/vendor/d3-geo.min.js',
   './assets/world-110m.json',

@@ -7,6 +7,7 @@ import * as MAP from './usmap.js';
 import * as PM from './realmpaint.js';
 import { EMPIRE_MAPS } from './empiremaps.js';
 import { mountGlobe } from './globe.js';
+import { flagImg } from './flags.js';
 import { ME, PEOPLE, plate, rankByName, addPlayers } from './lfg.js';
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -328,7 +329,7 @@ export function leaderboardsHtml(st) {
     ? `<b>${esc(KG.kingdomName(kingdom))}</b><span>${esc(realm.name)}${kingdom === HOME ? ' · <em>Your Kingdom</em>' : ''}</span>`
     : realm
       ? `<b style="color:${COLOR[realm.id]}">${esc(realm.name)}</b><span>${realm.region} · ${realm.states.length} Kingdoms${realm.id === homeRealm.id ? ' · <em>Your Realm</em>' : ''} · tap a Kingdom</span>`
-      : `<b>${empire.name}</b><span>${empire.country} · ${empire.realms.length} Realms, ${empire.realms.reduce((n, r) => n + r.states.length, 0)} Kingdoms${isHomeEmpire ? ' · <em>Your Empire</em>' : ''} · tap a Realm</span>`;
+      : `<b>${flagImg(empire.code, 15)} ${empire.name}</b><span>${empire.country} · ${empire.realms.length} Realms, ${empire.realms.reduce((n, r) => n + r.states.length, 0)} Kingdoms${isHomeEmpire ? ' · <em>Your Empire</em>' : ''} · tap a Realm</span>`;
   const quick = (v, label, on) => `<button class="chip ${on ? 'on' : ''}" data-action="lb-map" data-v="${v}">${label}</button>`;
   const mapCard = `<section class="card lb-mapcard">
       <div class="lb-maphead">${head}</div>
@@ -363,7 +364,7 @@ export function leaderboardsHtml(st) {
     const list = KINGDOMS.filter((k) => (realm ? k.realm.id === realm.id : world || KG.empireOf(k.code) === st.empire)).sort((a, b) => b.avg - a.avg).slice(0, world ? 50 : 99);
     body = `${world ? '<p class="muted small lb-note">The top 50 Kingdoms in the world.</p>' : ''}<ol class="lb-table">${list.map((k, i) => `<li class="${k.code === (kingdom || HOME) ? 'me' : ''}" data-action="lb-map" data-v="${k.code}">
         <span class="lb-pos">${i + 1}</span>
-        <span class="lb-name"><b>${esc(k.name)}</b><small>${esc(k.realm.name)}${world ? ` · ${esc(KG.EMPIRES[k.realm.empire].name)}` : ''}</small></span>
+        <span class="lb-name"><b>${esc(k.name)}</b><small>${esc(k.realm.name)}${world ? ` · ${flagImg(k.realm.empire, 9)} ${esc(KG.EMPIRES[k.realm.empire].name)}` : ''}</small></span>
         <span class="lb-num"><b>${k.avg}</b><small>avg Elo</small></span>
         <span class="lb-num"><b>${k.players}</b><small>players</small></span>
       </li>`).join('')}</ol>`;
@@ -371,7 +372,7 @@ export function leaderboardsHtml(st) {
     const list = [...EMPIRE_ROWS].sort((a, b) => b.avg - a.avg);
     body = `<ol class="lb-table">${list.map((e, i) => `<li class="${!world && e.code === st.empire ? 'me' : ''}" data-action="lb-map" data-v="empire:${e.code}">
         <span class="lb-pos">${i + 1}</span>
-        <span class="lb-name"><b>${esc(e.name)}</b><small>${esc(e.country)} · ${e.realms.length} Realms · ${e.kingdoms} Kingdoms${e.code === KG.empireOf(HOME) ? ' · <em>Your Empire</em>' : ''}</small></span>
+        <span class="lb-name"><b>${flagImg(e.code, 13)} ${esc(e.name)}</b><small>${esc(e.country)} · ${e.realms.length} Realms · ${e.kingdoms} Kingdoms${e.code === KG.empireOf(HOME) ? ' · <em>Your Empire</em>' : ''}</small></span>
         <span class="lb-num"><b>${e.avg}</b><small>avg Elo</small></span>
         <span class="lb-num"><b>${e.players.toLocaleString()}</b><small>players</small></span>
       </li>`).join('')}</ol>`;
@@ -379,7 +380,7 @@ export function leaderboardsHtml(st) {
     const list = REALM_ROWS.filter((r) => world || r.empire === st.empire).sort((a, b) => b.avg - a.avg);
     body = `<ol class="lb-table realms">${list.map((r, i) => `<li class="${r.id === (realm || homeRealm).id ? 'me' : ''}" data-action="lb-map" data-v="realm:${r.id}" style="--c:${COLOR[r.id]}">
         <span class="lb-pos">${i + 1}</span>
-        <span class="lb-name"><b><i class="lb-dot"></i>${esc(r.name)}</b><small>${world ? `${esc(KG.EMPIRES[r.empire].name)} · ` : ''}${r.region} · ${r.states.length} Kingdoms · top: ${esc(r.top.name)}</small></span>
+        <span class="lb-name"><b><i class="lb-dot"></i>${esc(r.name)}</b><small>${world ? `${flagImg(r.empire, 9)} ${esc(KG.EMPIRES[r.empire].name)} · ` : ''}${r.region} · ${r.states.length} Kingdoms · top: ${esc(r.top.name)}</small></span>
         <span class="lb-num"><b>${r.avg}</b><small>avg Elo</small></span>
         <span class="lb-num"><b>${r.players.toLocaleString()}</b><small>players</small></span>
       </li>`).join('')}</ol>`;

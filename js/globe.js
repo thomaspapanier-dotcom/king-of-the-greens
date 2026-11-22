@@ -2,6 +2,8 @@
 // (a country) to zoom into it. Uses the d3-geo map library and Natural Earth country outlines,
 // both kept in the app (js/vendor, assets/world-110m.json) and loaded the first time the globe opens.
 
+import { flagImage } from './flags.js';
+
 // Empires that are live, keyed by their name in the outlines file. More countries join later.
 // `tag` nudges the name tag (in pixels) so neighbours like Great Britain and Ireland don't overlap.
 // The globe's outlines put Northern Ireland with the United Kingdom, so tapping it opens Great Britain's map.
@@ -87,6 +89,28 @@ export async function mountGlobe(canvas, st, { onEmpire, onInfo, zoomOut }) {
   let lastTouch = zoomOut ? performance.now() : 0;
   let tags = []; // where each Empire's name tag was drawn, so tapping the tag works too
 
+  /** Paint an Empire's flag, faintly, inside its borders: once per piece of land (so Alaska and the
+   *  lower 48 each get the whole flag), clipped to the coastline. */
+  const bounds = d3.geoPath(proj);
+  function flagInside(f, code) {
+    const img = flagImage(code);
+    if (!img) return;
+    const g = f.geometry;
+    const polys = g.type === 'MultiPolygon' ? g.coordinates : [g.coordinates];
+    for (const coords of polys) {
+      const piece = { type: 'Polygon', coordinates: coords };
+      const [[x0, y0], [x1, y1]] = bounds.bounds(piece);
+      if (!(x1 - x0 > 3 && y1 - y0 > 2) || !Number.isFinite(x0)) continue; // tiny islands, or turned away
+      ctx.save();
+      ctx.beginPath();
+      path(piece);
+      ctx.clip();
+      ctx.globalAlpha = 0.5;
+      ctx.drawImage(img, x0, y0, x1 - x0, y1 - y0);
+      ctx.restore();
+    }
+  }
+
   function draw() {
     proj.rotate(rot).scale(scale);
     ctx.clearRect(0, 0, W, H);
@@ -114,8 +138,13 @@ export async function mountGlobe(canvas, st, { onEmpire, onInfo, zoomOut }) {
       const name = f.properties.name;
       ctx.beginPath();
       path(f);
-      ctx.fillStyle = LIVE[name] ? '#f2c84b' : SOON.has(name) ? '#86ad8f' : '#55765f';
+      ctx.fillStyle = LIVE[name] ? '#7d9a7f' : SOON.has(name) ? '#86ad8f' : '#55765f';
       ctx.fill();
+      if (LIVE[name]) {
+        flagInside(f, LIVE[name].code);
+        ctx.beginPath(); // the flag drew its own pieces: outline the whole country again
+        path(f);
+      }
       ctx.strokeStyle = LIVE[name] ? '#fff6cf' : 'rgba(10,25,18,0.55)';
       ctx.lineWidth = LIVE[name] ? 1.2 : 0.5;
       ctx.stroke();
@@ -161,19 +190,27 @@ export async function mountGlobe(canvas, st, { onEmpire, onInfo, zoomOut }) {
       ctx.roundRect(x - bw / 2, y - 13, bw, 26, 13);
       ctx.fill();
       ctx.stroke();
-      // crown
+      // the Empire's flag (a crown until the flag has loaded)
       const cx = x - bw / 2 + 13;
-      ctx.beginPath();
-      ctx.moveTo(cx - 6, y + 4);
-      ctx.lineTo(cx - 6, y - 4);
-      ctx.lineTo(cx - 3, y - 1);
-      ctx.lineTo(cx, y - 6);
-      ctx.lineTo(cx + 3, y - 1);
-      ctx.lineTo(cx + 6, y - 4);
-      ctx.lineTo(cx + 6, y + 4);
-      ctx.closePath();
-      ctx.fillStyle = '#f5d76e';
-      ctx.fill();
+      const fl = flagImage(e.code);
+      if (fl) {
+        ctx.drawImage(fl, cx - 7, y - 4.7, 14, 9.4);
+        ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+        ctx.lineWidth = 0.6;
+        ctx.strokeRect(cx - 7, y - 4.7, 14, 9.4);
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(cx - 6, y + 4);
+        ctx.lineTo(cx - 6, y - 4);
+        ctx.lineTo(cx - 3, y - 1);
+        ctx.lineTo(cx, y - 6);
+        ctx.lineTo(cx + 3, y - 1);
+        ctx.lineTo(cx + 6, y - 4);
+        ctx.lineTo(cx + 6, y + 4);
+        ctx.closePath();
+        ctx.fillStyle = '#f5d76e';
+        ctx.fill();
+      }
       ctx.fillStyle = '#fff';
       ctx.textBaseline = 'middle';
       ctx.fillText(e.name, cx + 10, y + 1);

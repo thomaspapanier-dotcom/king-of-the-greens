@@ -104,3 +104,20 @@ A royal crest for competitive play: the King of Spades v3, the Queen of Hearts v
 ```
 A relaxed afternoon on a clubhouse patio overlooking a putting green: the Queen of Diamonds v1 laughs with a lemonade, the King of Clubs v2 leans back in a wicker chair with an iced coffee, the Queen of Spades v3 holds a putter over her shoulders, and the King of Hearts v1 tells a story with his hands. A small round table with a bowl of golf balls in front of them, ivy on a stone arch above.
 ```
+
+---
+
+## 4. Leaderboards banner, made with the API
+
+The same picture as section 1, set up for `tools/make_scene_art.py`. It's made wide and the middle strip is cropped to the 4-to-1 banner.
+
+```
+The attached sheet shows all of our characters: the King and Queen of each suit (Spades, Hearts, Clubs, Diamonds), each in three versions (v1, v2, v3). Draw each character exactly as they look on their card: the same face, skin tone, hair, crown and outfit. Vintage engraved playing-card illustration style (bold ink linework, fine crosshatching, rich warm colors), one open scene: no card borders, no corner letters, no text, no numbers, no logos or brand names.
+```
+
+**Leaderboards** (`menu-leaderboards.png`, wide)
+```
+A grand clubhouse putting green at golden hour, themed around a leaderboard. On the left, a few Kings and Queens putting and lining up putts. In the middle, a tall old-fashioned golf leaderboard made of dark wood and gold trim, with blank name slots and small crowns at the top. On the right, a crowd of Kings and Queens standing by: some looking up at the leaderboard and pointing at it, some cheering, one holding a trophy. Use as many different characters from the sheet as fit, mixing all three versions.
+
+LAYOUT (very important, it gets cropped to a thin strip): put ALL the characters and the leaderboard inside the middle horizontal band, between 35% and 65% of the height, with nothing important above or below it. Keep the very center of that band a little darker and calmer (the shaded front of the leaderboard), because a title is written over it. Above the band: soft sunset sky. Below the band: smooth green grass.
+```

@@ -34,7 +34,7 @@ def scenes():
     out = []
     # Each section from "## 2" on: its first code block is the shared paragraph, then one block per picture.
     for part in re.split(r'\n## ', s)[1:]:
-        if not re.match(r'[23]\. ', part):
+        if not re.match(r'[234]\. ', part):
             continue
         blocks = re.findall(r'```\n(.*?)\n```', part, re.S)
         shared = blocks[0].strip()
