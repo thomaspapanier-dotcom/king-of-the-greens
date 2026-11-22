@@ -39,7 +39,7 @@ Using the attached character sheet, draw the named characters exactly as they lo
 
 **1 · Flip a tee** (`htp-1-tee-flip.png`)
 ```
-The King of Spades v2 flips a white golf tee into the air with his thumb like a coin, mid-flip, the tee spinning. The Queen of Hearts v3 and the King of Diamonds v1 lean in watching where it will land. On the grass in front of them, a second tee lies pointing straight at the Queen of Hearts.
+The King of Spades v2 flips a white golf tee into the air with his thumb like a coin, mid-flip, the tee spinning. The Queen of Hearts v3 and the King of Diamonds v1 lean in watching where it will land. On the grass in front of them, a second white tee lies flat on its side, its pointed end aiming straight at the Queen of Hearts.
 ```
 
 **2 · The KOG sets the markers** (`htp-2-markers.png`)
