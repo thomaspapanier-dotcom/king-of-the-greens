@@ -1,6 +1,6 @@
 // Offline support: cache the app shell so KOG works on the course with no signal.
 // Bump VERSION whenever app files change so phones pick up the update.
-const VERSION = 'kog-v151';
+const VERSION = 'kog-v152';
 const SHELL = [
   './',
   './index.html',
@@ -282,6 +282,7 @@ const SHELL = [
   './js/usmap.js',
   './js/realmpaint.js',
   './js/empiremaps.js',
+  './js/empirepaint.js',
   './assets/realms/pacific.webp',
   './assets/realms/peaks.webp',
   './assets/realms/plains.webp',

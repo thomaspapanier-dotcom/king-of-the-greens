@@ -6,6 +6,7 @@ import * as KG from './kingdoms.js';
 import * as MAP from './usmap.js';
 import * as PM from './realmpaint.js';
 import { EMPIRE_MAPS } from './empiremaps.js';
+import { EMPIRE_PAINT } from './empirepaint.js';
 import { mountGlobe } from './globe.js';
 import { flagImg } from './flags.js';
 import { ME, PEOPLE, plate, rankByName, addPlayers } from './lfg.js';
@@ -254,6 +255,69 @@ function vmapHtml(st) {
     </g>
   </svg>`;
 }
+// ---------- the other Empires' paintings: the same tap areas, laid over the painted map ----------
+function emapHtml(st) {
+  const E = KG.EMPIRES[st.empire];
+  const M = EMPIRE_MAPS[st.empire];
+  const P = EMPIRE_PAINT[st.empire];
+  const [sx, sy, tx, ty] = P.m;
+  const W = P.w;
+  const H = P.h;
+  const T = `matrix(${sx} 0 0 ${sy} ${tx} ${ty})`; // outline coordinates -> painting pixels
+  const tb = ([x0, y0, x1, y1]) => [sx * x0 + tx, sy * y0 + ty, sx * x1 + tx, sy * y1 + ty];
+  const realm = st.realm ? KG.realmById(st.realm) : null;
+  const kingdom = st.kingdom;
+  const boxOf = (codes) => codes.reduce((a, c) => { const b = M.box[c]; return [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])]; }, [1e9, 1e9, -1e9, -1e9]);
+  const z = kingdom ? zoomTo(tb(M.box[kingdom]), 0.6, 8, W, H) : realm ? zoomTo(tb(boxOf(realm.states)), 0.08, 5, W, H) : { s: 1, css: identity(W, H) };
+  const from = st.zPrev || identity(W, H);
+  const anim = from !== z.css;
+  st.zPrev = z.css;
+  const s = z.s;
+  const all = E.realms.flatMap((r) => r.states);
+  const img = `<image href="${P.src}" width="${W}" height="${H}"/>`;
+  const defs = all.map((c) => `<path id="lbe-${c}" d="${M.paths[c]}" vector-effect="non-scaling-stroke"/>`).join('');
+  const use = (c, cls = '', tap = true) => `<use href="#lbe-${c}" transform="${T}" class="${cls}"${tap ? ` data-action="lb-map" data-v="${c}"` : ''}>${tap ? `<title>${esc(KG.kingdomName(c))}</title>` : ''}</use>`;
+  const lift = (n) => `style="transform:translateY(${(-n / s).toFixed(2)}px)"`;
+  const fs = ((26 / s + 4) * (W / 1000)).toFixed(1);
+  const labels = realm
+    ? realm.states.filter((c) => !kingdom || c === kingdom).map((c) => {
+      const [x0, , x1] = tb(M.box[c]);
+      const name = KG.kingdomPlain(c);
+      if (!kingdom && (x1 - x0) * s < name.length * 9) return ''; // too small to label at this zoom
+      const [lx, ly] = M.label[c];
+      return `<text class="lb-abbr lb-vname" x="${(sx * lx + tx).toFixed(1)}" y="${(sy * ly + ty - 8 / s).toFixed(1)}" font-size="${kingdom ? (fs * 1.4).toFixed(1) : fs}">${esc(name)}</text>`;
+    }).join('')
+    : '';
+  let body;
+  if (!realm) {
+    // the whole painting; every Kingdom is an invisible tap area that opens its Realm
+    body = `${img}${all.map((c) => use(c, 'lb-phit')).join('')}`;
+  } else {
+    const realmLift = `<g class="lb-plift${anim && !kingdom ? ' anim' : ''}" ${lift(kingdom ? 4 : 14)} filter="url(#lbf-elift)">
+        <g clip-path="url(#lbc-er)">${img}</g>${realm.states.map((c) => use(c, `lb-phit lb-ephit${c === kingdom ? ' pick' : ''}`)).join('')}
+      </g>`;
+    const kingdomLift = kingdom
+      ? `<rect class="lb-shade2" width="${W}" height="${H}"/>
+        <g class="lb-klift${anim ? ' anim' : ''}" ${lift(18)} filter="url(#lbf-elift)" data-action="lb-map" data-v="${kingdom}">
+          <g clip-path="url(#lbc-ek)">${img}</g>${use(kingdom, 'lb-kedge', false)}
+        </g>`
+      : '';
+    body = `${img}<rect class="lb-shade" width="${W}" height="${H}" data-action="lb-map" data-v="empire"/>${realmLift}${kingdomLift}`;
+  }
+  return `<svg class="lb-svg lb-psvg lb-esvg" viewBox="0 0 ${W} ${H}" style="aspect-ratio:${W} / ${H}" role="img" aria-label="Painted map of the ${esc(E.name)}. Tap a Realm, then a Kingdom.">
+    <defs>${defs}
+      <filter id="lbf-elift" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="${(10 / s).toFixed(2)}" stdDeviation="${(7 / s).toFixed(2)}" flood-color="#000" flood-opacity="0.7"/></filter>
+      ${realm ? `<clipPath id="lbc-er">${realm.states.map((c) => use(c, '', false)).join('')}</clipPath>` : ''}
+      ${kingdom ? `<clipPath id="lbc-ek">${use(kingdom, '', false)}</clipPath>` : ''}
+    </defs>
+    <rect width="${W}" height="${H}" fill="#0d2f42" data-action="lb-map" data-v="empire"/>
+    <g class="lb-zoom${anim ? ' anim' : ''}" style="transform:${z.css};--z0:${from}">
+      ${body}
+      ${labels}
+    </g>
+  </svg>`;
+}
+
 /** Your Kingdom on the Empire painting, in % (for the star). */
 const HOME_PCT = (() => {
   const [x, y] = labelAt(HOME);
@@ -336,7 +400,9 @@ export function leaderboardsHtml(st) {
       ${world
     ? `${(st.zPrev = null) || ''}<div class="lb-map lb-globe-wrap"><canvas class="lb-globe" aria-label="Globe of the world. Drag to spin it, pinch or use the buttons to zoom, tap an Empire to open it."></canvas><div class="globe-zoom"><button type="button" data-globe-zoom="in" aria-label="Zoom in">+</button><button type="button" data-globe-zoom="out" aria-label="Zoom out">−</button></div><p class="lb-globe-tip">Drag to spin, pinch to zoom. Tap an Empire.</p></div>`
     : !painted
-      ? `<div class="lb-map lb-vmap${enter ? ' enter' : ''}">${vmapHtml(st)}</div>`
+      ? (EMPIRE_PAINT[st.empire]
+        ? `<div class="lb-map lb-pmap lb-emap${enter ? ' enter' : ''}">${emapHtml(st)}</div>`
+        : `<div class="lb-map lb-vmap${enter ? ' enter' : ''}">${vmapHtml(st)}</div>`)
     : !realm
       ? `${(st.zPrev = null) || ''}<div class="lb-map lb-paint${enter ? ' enter' : ''}" role="img" aria-label="Painted map of the six Realms of the American Empire. Tap a Realm to open it.">
           <img src="assets/realm-map.webp" alt="" draggable="false">

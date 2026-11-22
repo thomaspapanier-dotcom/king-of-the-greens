@@ -1873,3 +1873,9 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .lb-list li { grid-template-columns: 16px 1fr; gap: 4px; }
 .lb-pos { font-size: 13px; }
 .lb-card .lf-plate { min-height: 86px; padding: 6px 10px 6px 6px; border-radius: 12px; background-position: center 32%; }
+
+/* The other Empires' painted maps: the painting fills the card at its own shape */
+.lb-emap { display: grid; justify-items: center; }
+.lb-esvg { width: 100%; height: auto; max-height: 520px; }
+.lb-emap.enter .lb-svg { animation: lb-enter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.lb-ephit { stroke: rgba(255, 255, 255, 0.55); stroke-width: 1; vector-effect: non-scaling-stroke; }
