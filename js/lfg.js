@@ -245,7 +245,7 @@ export function challengeHtml(post, st) {
         <section class="card lf-show">
           <div class="eyebrow">Sat · 8:47 AM · check-in</div>
           <ul class="lf-checks"><li class="ok">You checked in at ${esc(c.name)} ✓</li><li class="ok">${esc(them)} checked in ✓</li></ul>
-          <p>The match opens on every phone. Play the 7 rounds; each player scores their own balls and the other side confirms each round. When both sides sign off, ranks update and you head to your tee time.</p>
+          <p>The match opens on every phone. Play the 4 rounds; each player scores their own balls and the other side confirms each round. When both sides sign off, ranks update and you head to your tee time.</p>
         </section>`;
     body += '<button class="btn wide" data-action="lfg-done">Back to Find Match</button>';
   }
@@ -371,7 +371,7 @@ function slides1v1() {
         ${mkBtn(`Start ranked match${tap}`, 'primary')}`,
     },
     {
-      title: 'Play the 7 rounds', text: 'About 30 minutes. Each of you enters your own balls, and the other confirms every round.',
+      title: 'Play the 4 rounds', text: 'About 15–20 minutes. Each of you enters your own balls, and the other confirms every round.',
       screen: `${mkTop('Round 3 of 7')}
         <div class="mk-card"><div class="mk-label">Totals</div>${mkRow(ME, '<b class="mk-score">−2</b>', 'lead')}${mkRow(friend, '<b class="mk-score">−1</b>')}</div>
         <div class="mk-card"><div class="mk-label">Your balls this round</div>

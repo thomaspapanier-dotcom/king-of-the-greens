@@ -22,16 +22,35 @@ const legacyNormal = (n) => ({ ...normal(n), id: `R${n}` });
 const legacySpecial = (n, d) => ({ ...special(n, d), id: `R${n}` });
 
 export const FORMATS = {
-  // The main game: the Eagle round comes last, so the lead can change right at the end.
+  // The main game, 4 rounds: all Short, all Medium, all Long, then the Eagle round, so it builds to the finish.
+  kog4: {
+    key: 'kog4',
+    name: 'Standard',
+    blurb: 'Short, Medium, Long, then the Eagle round',
+    rounds: 4,
+    stages: [special(1, 'S'), special(2, 'M'), special(3, 'L'), eagle(4)],
+  },
+  // The alternate, also 4 rounds: Short, Medium and Long in every round, then the Eagle round.
+  // Same balls as Standard (9 Short, 9 Medium, 9 Long, 3 Eagle), so scores compare directly.
+  classic4: {
+    key: 'classic4',
+    name: 'Classic',
+    blurb: 'Short, Medium and Long every round, then the Eagle round',
+    rounds: 4,
+    stages: [normal(1), normal(2), normal(3), eagle(4)],
+  },
+  // Games saved before the 4-round versions: 7 rounds.
   standard: {
     key: 'standard',
-    name: 'Standard',
+    name: 'Original (7 rounds)',
+    old: true,
     rounds: 7,
     stages: [normal(1), special(2, 'S'), normal(3), special(4, 'M'), normal(5), special(6, 'L'), eagle(7)],
   },
   legacy: {
     key: 'legacy',
-    name: 'Classic',
+    name: 'Original (9 rounds)',
+    old: true,
     rounds: 9,
     stages: [
       legacyNormal(1), legacyNormal(2), legacySpecial(3, 'S'), legacyNormal(4), legacyNormal(5), legacySpecial(6, 'M'), legacyNormal(7),
@@ -169,7 +188,7 @@ function pushStage(game, idx, kingId, order) {
  * New game. Regular: `players` (1–3). Co-op: `teams`, two pairs of players; each team then
  * plays as one unit (one score, one turn) and its members split the balls.
  */
-export function createGame({ id, players, teams, course = '', date = new Date().toISOString(), format = 'standard' }) {
+export function createGame({ id, players, teams, course = '', date = new Date().toISOString(), format = 'kog4' }) {
   if (!FORMATS[format]) throw new Error('Unknown game format');
   let teamMap;
   if (teams) {

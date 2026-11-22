@@ -78,9 +78,23 @@ function playGame(g, scores) {
 }
 
 // ---- Game formats ----
-test('standard game: 7 rounds, Short R2, Medium R4, Long R6, Eagle last (R7)', () => {
+test('Standard (the main game): 4 rounds, all Short, all Medium, all Long, then the Eagle round', () => {
   const g = R.createGame({ id: 'g', players: P(2) });
-  eq(g.format, 'standard');
+  eq(g.format, 'kog4');
+  eq(R.stagesFor(g).map((s) => [s.num, s.kind, s.sets.join('')]), [[1, 'special', 'SSS'], [2, 'special', 'MMM'], [3, 'special', 'LLL'], [4, 'eagle', '']]);
+  eq(R.roundsIn(g), 4);
+});
+test('Classic: 4 rounds, Short-Medium-Long three times, then the Eagle round', () => {
+  const g = R.createGame({ id: 'g', players: P(2), format: 'classic4' });
+  eq(R.stagesFor(g).map((s) => [s.num, s.kind, s.sets.join('')]), [[1, 'normal', 'SML'], [2, 'normal', 'SML'], [3, 'normal', 'SML'], [4, 'eagle', '']]);
+});
+test('both versions use the same balls: 9 Short, 9 Medium, 9 Long sets-worth and 1 Eagle set', () => {
+  const count = (k) => R.FORMATS[k].stages.flatMap((s) => s.sets).reduce((m, d) => ({ ...m, [d || 'E']: (m[d || 'E'] || 0) + 1 }), {});
+  eq(count('kog4'), count('classic4'));
+  eq(count('kog4'), { S: 3, M: 3, L: 3, E: 1 });
+});
+test('7-round games saved before the 4-round versions still load', () => {
+  const g = R.createGame({ id: 'g', players: P(2), format: 'standard' });
   eq(R.stagesFor(g).map((s) => [s.num, s.kind, s.sets.join('')]), [
     [1, 'normal', 'SML'], [2, 'special', 'SSS'], [3, 'normal', 'SML'], [4, 'special', 'MMM'],
     [5, 'normal', 'SML'], [6, 'special', 'LLL'], [7, 'eagle', ''],
@@ -171,7 +185,7 @@ test('rounds 2+: the leader (lowest total) putts first, ties keep previous order
   eq(g.stages[1].kingId, 'p1');
 });
 test('eagle round is last: leader putts first and it can decide the game', () => {
-  const g = R.createGame({ id: 'g', players: P(3) });
+  const g = R.createGame({ id: 'g', players: P(3), format: 'standard' }); // the 7-round layout, so R2–R6 are even
   R.applyToss(g, ['p1', 'p2', 'p3']);
   // R1: p1 −2, p2 +1, p3 0; R2–R6 all even
   playStage(g, { p1: [-1, -1, 0], p2: [1, 0, 0], p3: [0, 0, 0] });
@@ -192,9 +206,9 @@ test('eagle round is last: leader putts first and it can decide the game', () =>
 test('full standard game: lowest total wins; eagle counts toward total', () => {
   const g = R.createGame({ id: 'g', players: P(2) });
   R.applyToss(g, ['p1', 'p2']);
-  playGame(g, (def) => (def.kind === 'eagle' ? { p1: [0], p2: [-3] } : { p1: [-1, 0, 0], p2: [0, 0, 0] }));
-  eq(g.stages.length, 7);
-  eq(R.totals(g), { p1: -6, p2: -3 });
+  playGame(g, (def) => (def.kind === 'eagle' ? { p1: [0], p2: [-2] } : { p1: [-1, 0, 0], p2: [0, 0, 0] }));
+  eq(g.stages.length, 4);
+  eq(R.totals(g), { p1: -3, p2: -2 });
   eq(g.status, 'done');
   eq(g.winnerId, 'p1');
 });
@@ -232,13 +246,13 @@ test('stats: make % by distance, eagle %, wins, KOG rounds', () => {
   );
   const s = R.playerStats([g], 'p1');
   eq([s.games, s.wins], [1, 1]);
-  // 3 normal rounds × 1 Short set + the Short round × 3 = 6 Short sets: 12 birdie balls, 6 par balls
-  eq(s.byDist.S.birdie, [6, 12]);
-  eq(s.byDist.S.par, [6, 6]);
-  eq(s.byDist.L.birdie, [6, 12]);
+  // Standard: the Short round has 3 Short sets: 6 birdie balls, 3 par balls
+  eq(s.byDist.S.birdie, [3, 6]);
+  eq(s.byDist.S.par, [3, 3]);
+  eq(s.byDist.L.birdie, [3, 6]);
   eq(s.byDist.M.avgSet, -1);
   eq(s.eagle, [1, 3]);
-  eq([s.kingRounds, s.roundWins, s.threePlus, s.balls], [7, 7, 1, 57]);
+  eq([s.kingRounds, s.roundWins, s.threePlus, s.balls], [4, 4, 1, 30]); // 9 sets × 3 + 3 Eagle balls
   // Quick-entered sets count toward totals but not ball stats
   const s2 = R.playerStats([g], 'p2');
   eq([s2.games, s2.wins, s2.byDist.S.birdie, s2.byDist.S.avgSet], [1, 0, [0, 0], 0]);
@@ -291,7 +305,7 @@ test('co-op balls: birdie 1 = A, birdie 2 = B, par ball alternates; Eagle round 
   const owners = (si) => [0, 1, 2].map((k) => [0, 1, 2].map((j) => R.ballOwner(g, si, 'team1', k, j)).join(''));
   eq(owners(0), ['aba', 'abb', 'aba']); // Round 1: par ball A, B, A
   eq(owners(1), ['abb', 'aba', 'abb']); // Round 2 starts with B
-  eq([0, 1, 2, 3].map((j) => R.ballOwner(g, 6, 'team1', 0, j)), ['a', 'b', 'a', 'b']); // Eagle: two each
+  eq([0, 1, 2, 3].map((j) => R.ballOwner(g, 3, 'team1', 0, j)), ['a', 'b', 'a', 'b']); // Eagle (Round 4): two each
 });
 test('co-op stats credit each ball to the teammate who putted it', () => {
   const g = coopGame();
@@ -303,9 +317,9 @@ test('co-op stats credit each ball to the teammate who putted it', () => {
   const ann = R.playerStats([g], 'a');
   const bo = R.playerStats([g], 'b');
   eq([ann.games, ann.wins, bo.games, bo.wins], [1, 1, 1, 1]);
-  eq(ann.balls + bo.balls, 18 * 3 + 4); // every ball credited once (4 Eagle balls)
-  eq(ann.byDist.S.birdie, [6, 6]); // Ann always has birdie ball 1, which always dropped
-  eq(bo.byDist.S.birdie, [0, 6]); // Bo’s birdie ball 2 always took 2 putts
+  eq(ann.balls + bo.balls, 9 * 3 + 4); // every ball credited once (4 Eagle balls)
+  eq(ann.byDist.S.birdie, [3, 3]); // Ann always has birdie ball 1, which always dropped
+  eq(bo.byDist.S.birdie, [0, 3]); // Bo’s birdie ball 2 always took 2 putts
   eq([ann.eagle, bo.eagle], [[2, 2], [0, 2]]); // two Eagle putts each
   eq(R.playerStats([g], 'c').byDist.S.birdie, [0, 0]); // typed-in scores: no ball credit
 });
@@ -313,24 +327,24 @@ test('co-op stats credit each ball to the teammate who putted it', () => {
 test('co-op Eagle round: 4 balls per team, scored and finished like any set', () => {
   const g = coopGame();
   R.applyToss(g, ['a', 'c', 'b', 'd']);
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 3; i++) {
     if (i) R.startNextStage(g);
     playStage(g, { team1: [0, 0, 0], team2: [0, 0, 0] });
   }
   R.startNextStage(g);
-  eq(g.stages[6].entries.team1[0].balls.length, 4);
-  eq(R.minSetScore(R.stageDef(g.stages[6]), 4), -8);
+  eq(g.stages[3].entries.team1[0].balls.length, 4);
+  eq(R.minSetScore(R.stageDef(g.stages[3]), 4), -8);
   playStage(g, { team1: [balls(1, 1, 1, 1)], team2: [balls(2, 2, 2, 3)] }); // −8 vs −3
   eq([g.status, g.winnerId], ['done', 'team1']);
 });
 test('regular Eagle round stays 3 balls', () => {
   const g = R.createGame({ id: 'g', players: P(1) });
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 3; i++) {
     if (i) R.startNextStage(g);
     playStage(g, { p1: [0, 0, 0] });
   }
   R.startNextStage(g);
-  eq(g.stages[6].entries.p1[0].balls.length, 3);
+  eq(g.stages[3].entries.p1[0].balls.length, 3);
 });
 
 // ---- Tie-breaker ----

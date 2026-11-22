@@ -714,6 +714,9 @@ function addPlayerForm(disabled) {
   </form>`;
 }
 
+/** The versions you can start: the main game first. */
+const PLAY_FORMATS = Object.keys(R.FORMATS).filter((k) => !R.FORMATS[k].old);
+
 function viewNew() {
   const d = ui.draft;
   const coop = d.mode === 'coop';
@@ -755,6 +758,8 @@ function viewNew() {
     </label>
     ${coop ? `<p class="muted small coop-note">Teammates split each set’s 3 balls: one birdie ball each, and the par ball takes turns. The app shows whose ball is whose.</p>` : ''}
     <p class="irl-note small"><b>${coop ? 'Each team' : 'Each player'} needs 3 balls:</b> 2 birdie balls and 1 par ball that looks clearly different from them (another color, another brand or a bold marking).</p>
+    <div class="section-head"><h2>Version</h2><span class="muted small">4 rounds either way</span></div>
+    <div class="seg-wide name-styles fmt-pick" role="group" aria-label="Game version">${PLAY_FORMATS.map((k) => `<button class="seg-opt" data-action="draft-format" data-v="${k}" aria-pressed="${(d.format || 'kog4') === k}">${R.FORMATS[k].name}${k === 'kog4' ? ' <em class="fmt-main">Main</em>' : ''}<small>${R.FORMATS[k].blurb}</small></button>`).join('')}</div>
     <div class="section-head"><h2>Who’s playing?</h2><span class="muted">${n}/${max}</span></div>
     ${db.players.length ? `<div class="chips">${chips}</div>` : '<p class="muted">Add everyone who’s playing.</p>'}
     ${addPlayerForm(full)}
@@ -1193,7 +1198,11 @@ function viewCard() {
   <main class="page">
     <div class="card-meta">${g.course ? `<b>${esc(g.course)}</b> · ` : ''}${fmtDate(g.date)}${g.sync ? ` · live game ${g.sync.code}` : ''}</div>
     ${blocks}
-    <p class="muted small">In the Short, Medium and Long rounds (R2, R4, R6) the three rows are sets 1–3, all the same distance. Distance totals add them where they belong.</p>
+    ${(() => {
+      const one = R.stagesFor(g).filter((s) => s.kind === 'special').map((s) => s.col);
+      // Standard's Short, Medium and Long rounds (or an old 7-round game's R2, R4, R6); Classic has none
+      return one.length ? `<p class="muted small">In the Short, Medium and Long rounds (${one.join(', ')}) the three rows are sets 1–3, all the same distance. Distance totals add them where they belong.</p>` : '';
+    })()}
     ${canDelete ? `<button class="btn ghost danger" data-action="delete-game" data-game="${g.id}">Delete this game</button>` : ''}
   </main>`;
 }
@@ -2305,7 +2314,7 @@ function viewRules() {
     ${fig.toss}
 
     <h2>2 · The KOG sets the markers</h2>
-    <p>Each round the current KOG places three markers, one per set: ${dn('S')} 3–5 ft, ${dn('M')} 6–9 ft and ${dn('L')} 10–15 ft. Lowest score each round becomes the next KOG. Any tie, and the current KOG sets again.</p>
+    <p>Each round the current KOG places three markers, one per set, at that round’s distances: ${dn('S')} 3–5 ft, ${dn('M')} 6–9 ft or ${dn('L')} 10–15 ft (see the two versions below). Lowest score each round becomes the next KOG. Any tie, and the current KOG sets again.</p>
     <p class="marker-note"><span class="marker-x" aria-hidden="true"></span><span><b>Markers can be tees (recommended), ball markers, coins, etc.</b> In the pictures a marker is a small yellow <b>X</b>.</span></p>
     <p>The KOG can set the markers around <b>any hole</b> on the practice green, so pick one that reads tricky.</p>
     ${fig.anyHole}
@@ -2325,12 +2334,17 @@ function viewRules() {
     </table>
     <p class="muted small">No maximum and no pick-ups: every ball is holed out.</p>
 
-    <h2>4 · Special rounds</h2>
-    <p>Three rounds use one distance for all three sets: a ${dn('S')} round, a ${dn('M')} round and a ${dn('L')} round. They’re Rounds 2, 4 and 6.</p>
+    <h2>4 · Two versions, 4 rounds each</h2>
+    <p>Every game is <b>4 rounds</b>. Pick the version when you start a game:</p>
+    <ul>
+      <li><b>Standard</b> (the main game): Round 1 is all ${dn('S')}, Round 2 all ${dn('M')}, Round 3 all ${dn('L')}, then the 🦅 Eagle round. The putts get longer as the game goes on.</li>
+      <li><b>Classic</b>: Rounds 1, 2 and 3 each have one ${dn('S')}, one ${dn('M')} and one ${dn('L')} set, then the 🦅 Eagle round.</li>
+    </ul>
+    <p>Both use the same 30 balls (9 ${dn('S')}, 9 ${dn('M')}, 9 ${dn('L')} and 3 Eagle balls), so scores compare directly and both count for ranked.</p>
     ${fig.special}
 
     <h2>5 · 🦅 Eagle round</h2>
-    <p>The last round of every game, Round 7. The KOG picks the spot and the leader putts first, so trailing players get to watch the line. Each ball is worth −2 if it drops, so the lead can change right at the end.</p>
+    <p>The last round of every game, Round 4. The KOG picks the spot and the leader putts first, so trailing players get to watch the line. Each ball is worth −2 if it drops, so the lead can change right at the end.</p>
     <p class="muted small">Tap <b>Next</b> to step through it.</p>
     ${fig.eagle}
 
@@ -2565,11 +2579,12 @@ function currentStage() {
   return { g, idx, st, def: R.stageDef(st), pid: pickActive(g, idx) };
 }
 
-function startGame(playerIds, course = '', pairs = null) {
+function startGame(playerIds, course = '', pairs = null, format = 'kog4') {
   const find = (id) => db.players.find((p) => p.id === id);
+  if (!R.FORMATS[format] || R.FORMATS[format].old) format = 'kog4'; // rematches of old 7- or 9-round games play the 4-round game
   const g = pairs
-    ? R.createGame({ id: uid(), teams: pairs.map((team) => team.map(find)), course })
-    : R.createGame({ id: uid(), players: playerIds.map(find), course });
+    ? R.createGame({ id: uid(), teams: pairs.map((team) => team.map(find)), course, format })
+    : R.createGame({ id: uid(), players: playerIds.map(find), course, format });
   db.games.push(g);
   db.activeGameId = g.id;
   ui.toss = [];
@@ -2577,8 +2592,8 @@ function startGame(playerIds, course = '', pairs = null) {
 }
 
 /** Start a game; if it should be live, upload it and show the join code. */
-async function launch(playerIds, course, live, pairs = null) {
-  startGame(playerIds, course, pairs);
+async function launch(playerIds, course, live, pairs = null, format = 'kog4') {
+  startGame(playerIds, course, pairs, format);
   save(db);
   if (live && SYNC && playerIds.length > 1 && (await goLive())) go('share');
   else go('game');
@@ -2629,8 +2644,13 @@ const actions = {
     if (d.confetti === 'kings') kingRain();
   },
   'new-game': (d) => {
-    ui.draft = { course: '', selected: [], live: true, mode: d.mode === 'coop' ? 'coop' : 'group', pair: 0 };
+    ui.draft = { course: '', selected: [], live: true, mode: d.mode === 'coop' ? 'coop' : 'group', pair: 0, format: getPref('kog.format', 'kog4') };
     go('new');
+  },
+  'draft-format': (d) => {
+    ui.draft.format = R.FORMATS[d.v] && !R.FORMATS[d.v].old ? d.v : 'kog4';
+    setPref('kog.format', ui.draft.format); // remember the version you like
+    render();
   },
   'open-join': () => {
     ui.join = { code: '', error: '', busy: false };
@@ -2652,7 +2672,7 @@ const actions = {
     else if (s.length < max) s.push(d.pid);
     render();
   },
-  'start-game': () => afterAbandoningActive(() => launch(ui.draft.selected, ui.draft.course.trim(), ui.draft.live, ui.draft.mode === 'coop' ? coopPairs(ui.draft) : null)),
+  'start-game': () => afterAbandoningActive(() => launch(ui.draft.selected, ui.draft.course.trim(), ui.draft.live, ui.draft.mode === 'coop' ? coopPairs(ui.draft) : null, ui.draft.format)),
   'go-live': async () => {
     if (await goLive()) render();
   },
@@ -3190,12 +3210,12 @@ const actions = {
     if (R.isCoop(g)) {
       const pairs = Object.values(g.teams).map((team) => team.map((m) => rosterIdFor(m.id)));
       if (pairs.flat().some((id) => !id)) return;
-      launch(pairs.flat(), g.course, Boolean(g.sync), pairs);
+      launch(pairs.flat(), g.course, Boolean(g.sync), pairs, g.format);
       return;
     }
     const ids = g.players.map((p) => rosterIdFor(p.id)).filter(Boolean);
     if (!ids.length) return;
-    launch(ids, g.course, Boolean(g.sync));
+    launch(ids, g.course, Boolean(g.sync), null, g.format);
   },
   'rename-player': (d) => {
     const p = db.players.find((x) => x.id === d.pid);

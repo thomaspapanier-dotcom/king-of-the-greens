@@ -1746,3 +1746,6 @@ select { min-height: 46px; padding: 8px 10px; border-radius: 12px; border: 1px s
 .marker-x::before, .marker-x::after { content: ""; position: absolute; left: 50%; top: 50%; width: 18px; height: 4px; border-radius: 2px; background: #f4c430; box-shadow: 0 0 0 1px #6b4e00; }
 .marker-x::before { transform: translate(-50%, -50%) rotate(45deg); }
 .marker-x::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+/* New game: Standard or Classic */
+.fmt-pick .fmt-main { font-style: normal; font-size: 10px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #f5d76e; margin-left: 4px; }

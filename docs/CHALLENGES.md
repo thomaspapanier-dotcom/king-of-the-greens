@@ -37,10 +37,10 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 
 ### Money Rounds
 
-- **Flawless Shawty** · Very Rare: One-putt all 9 balls in the Short-putt round (Round 2) of a ranked match.
-- **Dead Center** · Very Rare: Sink 7 of the 9 balls on the first putt in the Medium-putt round (Round 4) of a ranked match.
-- **Long Live the King** · Impossible: Sink 6 of the 9 balls on the first putt in the Long-putt round (Round 6) of a ranked match.
-- **Royal Flush** · Impossible: One-putt every ball in a regular round: all three sets, Short, Medium and Long.
+- **Flawless Shawty** · Very Rare: One-putt all 9 balls in the Short round (Round 1 of Standard) of a ranked match.
+- **Dead Center** · Very Rare: Sink 7 of the 9 balls on the first putt in the Medium round (Round 2 of Standard) of a ranked match.
+- **Long Live the King** · Impossible: Sink 6 of the 9 balls on the first putt in the Long round (Round 3 of Standard) of a ranked match.
+- **Royal Flush** · Impossible: One-putt every ball in a Classic round of a ranked match: all three sets, Short, Medium and Long.
 - **Triple Threat** · Very Rare: One-putt all 3 balls of a Long set (both birdie balls and the par ball, from 10–15 ft).
 
 ### Scoring
@@ -48,17 +48,17 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 - **Even Steven** · Common: Finish a ranked match at E or better.
 - **Under the Radar** · Common: Finish a ranked match at −2 or better.
 - **Seeing Red** · Rare: Finish a ranked match at −4 or better.
-- **Lights Out** · Very Rare: Finish a ranked match at −8 or better.
-- **Untouchable** · Impossible: Finish a ranked match at −12 or better.
-- **Damage Control** · Common: Finish a solo ranked match (1 v 1 or 1v1v1) with fewer than 6 bogeys.
+- **Lights Out** · Very Rare: Finish a ranked match at −6 or better.
+- **Untouchable** · Impossible: Finish a ranked match at −9 or better.
+- **Damage Control** · Common: Finish a solo ranked match (1 v 1 or 1v1v1) with fewer than 4 bogeys.
 - **Spotless** · Very Rare: Finish a solo ranked match (1 v 1 or 1v1v1) with fewer than 2 bogeys.
 - **Clean Sheet** · Legendary: Finish a solo ranked match (1 v 1 or 1v1v1) without a single bogey.
 
 ### Beatdowns
 
-- **“I Might Be Him”** · Common: Win a ranked match by 3 or more strokes.
-- **Himothy** · Rare: Win a ranked match by 5 or more strokes.
-- **Him.** · Very Rare: Win a ranked match by 7 or more strokes.
+- **“I Might Be Him”** · Common: Win a ranked match by 2 or more strokes.
+- **Himothy** · Rare: Win a ranked match by 4 or more strokes.
+- **Him.** · Very Rare: Win a ranked match by 5 or more strokes.
 - **Calculated.** · Common: Win a ranked match by exactly 1 stroke.
 
 ### Upsets
@@ -71,15 +71,15 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 
 - **From Way Downtown** · Common: Make 2 Long putts (in on the first putt from the Long marker) in the same ranked match.
 - **Sharpshooter** · Rare: Make 3 Long putts in the same ranked match.
-- **Deadly Sniper** · Very Rare: Make 5 or more Long putts in the same ranked match.
+- **Deadly Sniper** · Very Rare: Make 4 or more Long putts in the same ranked match.
 - **Iso** · Common: Make the par ball on a Long putt (10–15 ft) on the first putt in a ranked match.
 
 ### Clutch
 
 - **Not So Fast** · Rare: Win a ranked match by taking the lead in the Eagle round (the last round).
 - **Wire to Wire** · Rare: Be the KOG (the leader) after every round of a ranked match, and win.
-- **Regicide** · Rare: Win a ranked match after taking the crown from a KOG who had held it for 3 or more rounds in a row.
-- **Comeback King** · Very Rare: Win a ranked match after being 5 or more strokes behind at the end of any round.
+- **Regicide** · Rare: Win a ranked match after taking the crown from a KOG who had held it for 2 or more rounds in a row.
+- **Comeback King** · Very Rare: Win a ranked match after being 3 or more strokes behind at the end of any round.
 - **Ice Cold** · Rare: Win a ranked match in a sudden-death putt-off.
 - **Smooth Operator** · Very Rare: Finish a ranked match without a single 3-putt.
 - **Back from the Dead** · Rare: Lose a ranked match, then beat the same opponent in your very next match.
@@ -92,12 +92,12 @@ Rarity ink: **Common** (silver), **Rare** (blue), **Very Rare** (purple), **Lege
 - **Dynamic Duo** · Rare: Win 5 ranked duos matches with the same partner.
 - **Full House** · Common: Win a 3-player (1v1v1) ranked match.
 - **Pickup Game** · Common: Win a ranked duos match with a partner who isn’t on your friends list.
-- **Shoulder the Burden** · Rare: Win a ranked duos match where your own balls score 4 or more strokes better than your partner’s.
-- **I’ll Lead the Way** · Rare: Win a ranked duos match where your team is the KOG for 5 or more rounds.
+- **Shoulder the Burden** · Rare: Win a ranked duos match where your own balls score 3 or more strokes better than your partner’s.
+- **I’ll Lead the Way** · Rare: Win a ranked duos match where your team is the KOG for 3 or more of the 4 rounds.
 - **Follow Me to Victory** · Rare: Win a ranked duos match with a partner who is playing their very first ranked match.
 - **Goose & Maverick** · Very Rare: Win 10 ranked duos matches with the same partner.
 - **We’re Gonna Win Forever** · Legendary: Win 20 ranked duos matches with the same partner.
-- **Scavenger** · Rare: Win a ranked duos match where your partner’s balls score 4 or more strokes better than yours.
+- **Scavenger** · Rare: Win a ranked duos match where your partner’s balls score 3 or more strokes better than yours.
 - **You Hit It, I’ll End It** · Rare: Win a ranked duos match where the Eagle round (the last round) decides it: you and your teammate’s Eagle-round scores together take the lead and seal the win.
 
 ### The Climb
@@ -177,7 +177,7 @@ These need art from ChatGPT. Ready-to-send prompts are in CHALLENGE-PROMPTS.md.
 ### Scoring
 
 #### Keep It Tidy · Rare
-- **How to complete (Ranked):** Finish a solo ranked match (1 v 1 or 1v1v1) with fewer than 4 bogeys.
+- **How to complete (Ranked):** Finish a solo ranked match (1 v 1 or 1v1v1) with fewer than 3 bogeys.
 - **Badge:** A crowned golf ball being polished with a white cloth until it sparkles.
 - **Banner:** The King of Spades in a crisp sweater on a perfectly manicured green at golden hour, wiping his ball clean with a handkerchief, every blade of grass trimmed to perfection.
 - **Files:** `badge-keep-it-tidy.png`, `banner-keep-it-tidy.png`
